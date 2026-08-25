@@ -515,30 +515,6 @@ const INITIAL_STRAINS: Strain[] = [
 ]
   },
   {
-    id: "strain-popcorn-thc",
-    name: "Pequenas Inflorescencias Ricas em THC (Pipocas THC)",
-    category: "flores",
-    type: "H\u00edbrida",
-    dominantCannabinoid: "THC",
-    thc: "18% - 22%",
-    cbd: "< 1%",
-    genetics: "Blend de Inflorescencias Pequenas (Buds 1-2cm)",
-    terpenes: ["Cariofileno", "Mirceno", "Limoneno"],
-    aromaFlavor: "Herbal, terroso e nuances citricas. Efeitos: Relaxamento corporal e bem-estar geral com excelente custo-beneficio.",
-    description: "Herbal, terroso e nuances citricas. Efeitos: Relaxamento corporal e bem-estar geral com excelente custo-beneficio.",
-    effects: ["Relaxamento", "Al\u00edvio de dores", "Equil\u00edbrio terap\u00eautico"],
-    associations: [
-      {
-            "associationId": "abrapango",
-            "associationName": "Abrapango",
-            "pricePerGram": 300.0,
-            "priceDisplay": "R$ 300,00 (10g)",
-            "inStock": true,
-            "cultivationType": "Certificado"
-      }
-]
-  },
-  {
     id: "strain-cheddar-z",
     name: "Cheddar Z",
     category: "flores",
@@ -691,30 +667,6 @@ const INITIAL_STRAINS: Strain[] = [
 ]
   },
   {
-    id: "strain-sortidas-thc",
-    name: "Sortidas (Mix de Flores THC)",
-    category: "flores",
-    type: "H\u00edbrida",
-    dominantCannabinoid: "THC",
-    thc: "18% - 22%",
-    cbd: "< 1%",
-    genetics: "Selecao de Geneticas Abrapango",
-    terpenes: ["Mirceno", "Cariofileno", "Limoneno"],
-    aromaFlavor: "Sele\u00e7\u00e3o sortida de pequenas flores (as famosas \u201cpipoquinhas\u201d) de diversas gen\u00e9ticas como Purple Haze, Super Silver Haze, Blackberry OG, Jack Herer, Kushberry, Tangie, Hindu Kush e Blueberry. Excelente op\u00e7\u00e3o custo-benef\u00edcio. Pedido m\u00ednimo de 10g.",
-    description: "Sele\u00e7\u00e3o sortida de pequenas flores (as famosas \u201cpipoquinhas\u201d) de diversas gen\u00e9ticas como Purple Haze, Super Silver Haze, Blackberry OG, Jack Herer, Kushberry, Tangie, Hindu Kush e Blueberry. Excelente op\u00e7\u00e3o custo-benef\u00edcio. Pedido m\u00ednimo de 10g.",
-    effects: ["Relaxamento", "Al\u00edvio de dores", "Equil\u00edbrio terap\u00eautico"],
-    associations: [
-      {
-            "associationId": "abrapango",
-            "associationName": "Abrapango",
-            "pricePerGram": 500.0,
-            "priceDisplay": "R$ 500,00 (10g) (Esgotado)",
-            "inStock": false,
-            "cultivationType": "Certificado"
-      }
-]
-  },
-  {
     id: "strain-sour-strawberry",
     name: "Sour Strawberry",
     category: "flores",
@@ -806,30 +758,6 @@ const INITIAL_STRAINS: Strain[] = [
             "pricePerGram": 500.0,
             "priceDisplay": "R$ 500,00 (10g) (Esgotado)",
             "inStock": false,
-            "cultivationType": "Certificado"
-      }
-]
-  },
-  {
-    id: "strain-inflorescencias-cbd-abrapango",
-    name: "Inflorescencias de CBD (Pipocas CBD Abrapango)",
-    category: "flores",
-    type: "H\u00edbrida",
-    dominantCannabinoid: "CBD",
-    thc: "< 1%",
-    cbd: "12% - 16%",
-    genetics: "Pequenas inflorescencias ricas em CBD (com Boveda)",
-    terpenes: ["Mirceno", "Bisabolol", "Cariofileno"],
-    aromaFlavor: "Herbal suave, floral e terroso leve. Efeitos: Ansiol\u00edtico, anti-inflamat\u00f3rio, relaxamento sem psicoatividade.",
-    description: "Herbal suave, floral e terroso leve. Efeitos: Ansiol\u00edtico, anti-inflamat\u00f3rio, relaxamento sem psicoatividade.",
-    effects: ["Relaxamento", "Al\u00edvio de dores", "Equil\u00edbrio terap\u00eautico"],
-    associations: [
-      {
-            "associationId": "abrapango",
-            "associationName": "Abrapango",
-            "pricePerGram": 300.0,
-            "priceDisplay": "R$ 300,00 (10g)",
-            "inStock": true,
             "cultivationType": "Certificado"
       }
 ]
@@ -1675,54 +1603,6 @@ const INITIAL_STRAINS: Strain[] = [
 ]
   },
   {
-    id: "strain-mix-de-flores-minimo-10g",
-    name: "Mix de Flores (M\u00ednimo 10g)",
-    category: "flores",
-    type: "H\u00edbrida",
-    dominantCannabinoid: "THC",
-    thc: "18% - 24%",
-    cbd: "< 1%",
-    genetics: "Mix de Flores (M\u00ednimo 10g)",
-    terpenes: ["Cariofileno", "Mirceno", "Limoneno"],
-    aromaFlavor: "Sele\u00e7\u00e3o sortida de pequenas flores (as famosas \u201cpipoquinhas\u201d) de diversas gen\u00e9ticas como Purple Haze, Super Silver Haze, Blackberry OG, Jack Herer, Kushberry, Tangie, Hindu Kush e Blueberry. Excelente op\u00e7\u00e3o custo-benef\u00edcio. Pedido m\u00ednimo de 10g.",
-    description: "Sele\u00e7\u00e3o sortida de pequenas flores (as famosas \u201cpipoquinhas\u201d) de diversas gen\u00e9ticas como Purple Haze, Super Silver Haze, Blackberry OG, Jack Herer, Kushberry, Tangie, Hindu Kush e Blueberry. Excelente op\u00e7\u00e3o custo-benef\u00edcio. Pedido m\u00ednimo de 10g.",
-    effects: ["Relaxamento", "Al\u00edvio de dores", "Equil\u00edbrio terap\u00eautico"],
-    associations: [
-      {
-            "associationId": "alca",
-            "associationName": "ALCA",
-            "pricePerGram": 25.0,
-            "priceDisplay": "R$ 25,00/g",
-            "inStock": true,
-            "cultivationType": "Certificado"
-      }
-]
-  },
-  {
-    id: "strain-flores-mistas-minimo-10g",
-    name: "Flores Mistas (M\u00ednimo 10g)",
-    category: "flores",
-    type: "H\u00edbrida",
-    dominantCannabinoid: "THC",
-    thc: "18% - 24%",
-    cbd: "< 1%",
-    genetics: "Flores Mistas (M\u00ednimo 10g)",
-    terpenes: ["Cariofileno", "Mirceno", "Limoneno"],
-    aromaFlavor: "Sele\u00e7\u00e3o variada de flores pequenas e m\u00e9dias, composta por diferentes gen\u00e9ticas, podendo incluir Bubba Kush, Gorilla Glue, Jack Herer, Golden Goat, entre outras. Pedido m\u00ednimo de 10g.",
-    description: "Sele\u00e7\u00e3o variada de flores pequenas e m\u00e9dias, composta por diferentes gen\u00e9ticas, podendo incluir Bubba Kush, Gorilla Glue, Jack Herer, Golden Goat, entre outras. Pedido m\u00ednimo de 10g.",
-    effects: ["Relaxamento", "Al\u00edvio de dores", "Equil\u00edbrio terap\u00eautico"],
-    associations: [
-      {
-            "associationId": "alca",
-            "associationName": "ALCA",
-            "pricePerGram": 35.0,
-            "priceDisplay": "R$ 35,00/g",
-            "inStock": true,
-            "cultivationType": "Certificado"
-      }
-]
-  },
-  {
     id: "strain-amnesia-haze",
     name: "Amnesia Haze",
     category: "flores",
@@ -2365,6 +2245,62 @@ const INITIAL_STRAINS: Strain[] = [
             "associationName": "Adapta-Cann",
             "pricePerGram": 125.0,
             "priceDisplay": "R$ 125,00 (1g)",
+            "inStock": true,
+            "cultivationType": "Certificado"
+      }
+]
+  },
+  {
+    id: "strain-pipoquinhas-thc",
+    name: "Pipoquinhas THC",
+    category: "flores",
+    type: "H\u00edbrida",
+    dominantCannabinoid: "THC",
+    thc: "15% - 22%",
+    cbd: "< 1%",
+    genetics: "Blend de Pipocas THC de Alta Qualidade",
+    terpenes: ["Cariofileno", "Limoneno", "Mirceno"],
+    aromaFlavor: "Infloresc\u00eancias menores (pipoquinhas) ricas em THC. Variedades sortidas e selecionadas com \u00f3timo aroma e pot\u00eancia.",
+    description: "Infloresc\u00eancias menores (pipoquinhas) ricas em THC. Variedades sortidas e selecionadas com \u00f3timo aroma e pot\u00eancia.",
+    effects: ["Relaxamento", "Al\u00edvio de dores", "Equil\u00edbrio terap\u00eautico"],
+    associations: [
+      {
+            "associationId": "abrapango",
+            "associationName": "Abrapango",
+            "pricePerGram": 300.0,
+            "priceDisplay": "R$ 300,00 (10g)",
+            "inStock": true,
+            "cultivationType": "Certificado"
+      },
+      {
+            "associationId": "alca",
+            "associationName": "ALCA",
+            "pricePerGram": 25.0,
+            "priceDisplay": "R$ 25,00/g",
+            "inStock": true,
+            "cultivationType": "Certificado"
+      }
+]
+  },
+  {
+    id: "strain-pipoquinhas-cbd",
+    name: "Pipoquinhas CBD",
+    category: "flores",
+    type: "Sativa",
+    dominantCannabinoid: "CBD",
+    thc: "< 1%",
+    cbd: "10% - 15%",
+    genetics: "Blend de Pipocas CBD de Alta Qualidade",
+    terpenes: ["Mirceno", "Cariofileno", "Pineno"],
+    aromaFlavor: "Infloresc\u00eancias menores (pipoquinhas) ricas em CBD. Sabor herbal e terroso suave com excelente rela\u00e7\u00e3o custo-benef\u00edcio.",
+    description: "Infloresc\u00eancias menores (pipoquinhas) ricas em CBD. Sabor herbal e terroso suave com excelente rela\u00e7\u00e3o custo-benef\u00edcio.",
+    effects: ["Relaxamento", "Al\u00edvio de dores", "Equil\u00edbrio terap\u00eautico"],
+    associations: [
+      {
+            "associationId": "abrapango",
+            "associationName": "Abrapango",
+            "pricePerGram": 300.0,
+            "priceDisplay": "R$ 300,00 (10g)",
             "inStock": true,
             "cultivationType": "Certificado"
       }
