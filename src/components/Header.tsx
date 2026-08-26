@@ -47,7 +47,7 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
     }
   };
 
-  // Menu Reorganizado: Catálogo | Fummelier IA | Associações | Guia do Paciente
+  // Menu Reorganizado e Limpo
   const navItems = [
     { id: 'catalogo-flores', label: 'Catálogo', icon: LayoutGrid },
     { id: 'sommelier', label: 'Fummelier IA', icon: Flame },
@@ -65,7 +65,7 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
             <Logo size="md" showText={true} />
           </div>
 
-          {/* Menu Central Otimizado */}
+          {/* Menu Central Limpo */}
           <nav className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto py-2">
             {navItems.map((item) => {
               const Icon = item.icon;
@@ -82,11 +82,6 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
                 >
                   <Icon className={`w-4 h-4 ${isActive ? 'text-white' : 'text-emerald-600'}`} />
                   {item.label}
-                  {item.id === 'sommelier' && (
-                    <span className="hidden sm:inline-block px-1.5 py-0.5 rounded-full text-[10px] bg-amber-400 text-slate-950 font-black tracking-wider uppercase">
-                      IA
-                    </span>
-                  )}
                 </button>
               );
             })}
