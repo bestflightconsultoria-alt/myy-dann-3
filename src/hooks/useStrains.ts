@@ -1020,7 +1020,7 @@ const INITIAL_STRAINS: Strain[] = [
   },
   {
     id: "strain-dr-cbd",
-    name: "DR CBD",
+    name: "Dr. CBD",
     category: "flores",
     type: "Sativa",
     dominantCannabinoid: "CBD",
@@ -1518,30 +1518,6 @@ const INITIAL_STRAINS: Strain[] = [
             "pricePerGram": 100.0,
             "priceDisplay": "R$ 100,00",
             "inStock": true,
-            "cultivationType": "Certificado"
-      }
-]
-  },
-  {
-    id: "strain-dr-cbd-60",
-    name: "DR CBD \ud83e\ude7a",
-    category: "flores",
-    type: "Sativa",
-    dominantCannabinoid: "CBD",
-    thc: "18% - 24%",
-    cbd: "< 1%",
-    genetics: "CBD asi\u00e1tico x CBD asi\u00e1tico",
-    terpenes: ["Cariofileno", "Mirceno", "Limoneno"],
-    aromaFlavor: "Gen\u00e9tica: CBD asi\u00e1tico x CBD asi\u00e1tico \u2192 Rico em CBD (Limoneno) Sativa Dominante Aroma c\u00edtrico e herbal. Efeito de relaxamento, redu\u00e7\u00e3o da ansiedade, pode auxiliar no manejo de dores e mant\u00e9m maior clareza mental.",
-    description: "Gen\u00e9tica: CBD asi\u00e1tico x CBD asi\u00e1tico \u2192 Rico em CBD (Limoneno) Sativa Dominante Aroma c\u00edtrico e herbal. Efeito de relaxamento, redu\u00e7\u00e3o da ansiedade, pode auxiliar no manejo de dores e mant\u00e9m maior clareza mental.",
-    effects: ["Controle de Ansiedade", "Foco & Criatividade", "Al\u00edvio de Dores"],
-    associations: [
-      {
-            "associationId": "institutodamasceno",
-            "associationName": "Instituto Damasceno",
-            "pricePerGram": 100.0,
-            "priceDisplay": "R$ 100,00 (1g) | R$ 1000,00 (10g) (Esgotado)",
-            "inStock": false,
             "cultivationType": "Certificado"
       }
 ]
