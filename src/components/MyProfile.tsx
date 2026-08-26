@@ -11,7 +11,11 @@ import {
   ShieldCheck,
   Stethoscope,
   Save,
-  Check
+  Check,
+  Crown,
+  Users,
+  Download,
+  FileSpreadsheet
 } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { useAssociations, Association } from '../hooks/useAssociations';
@@ -29,13 +33,15 @@ interface UserReview {
   side_effects: string[];
   comment: string;
   created_at: string;
+  patient_name?: string;
 }
 
 export const MyProfile: React.FC = () => {
   const [user, setUser] = useState<any>(null);
   const [reviews, setReviews] = useState<UserReview[]>([]);
+  const [allReviewsAdmin, setAllReviewsAdmin] = useState<any[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const [activeTab, setActiveTab] = useState<'profile' | 'reviews' | 'associations'>('profile');
+  const [activeTab, setActiveTab] = useState<'profile' | 'reviews' | 'associations' | 'admin'>('profile');
   const [selectedAssoc, setSelectedAssoc] = useState<Association | null>(null);
   const { associations } = useAssociations();
 
@@ -58,7 +64,6 @@ export const MyProfile: React.FC = () => {
       setUser(user);
 
       if (user) {
-        // Carrega dados de perfil dos metadados
         setFullName(user.user_metadata?.full_name || '');
         setMainCondition(user.user_metadata?.main_condition || 'Ansiedade & Estresse');
         setPrescribingDoctor(user.user_metadata?.prescribing_doctor || '');
@@ -71,9 +76,11 @@ export const MyProfile: React.FC = () => {
           const { data, error } = await supabase
             .from('reviews')
             .select('*')
-            .order('rating', { ascending: false });
+            .order('created_at', { ascending: false });
 
           if (!error && data) {
+            setAllReviewsAdmin(data);
+
             const filtered = data.filter((r: any) => 
               (r.user_id && r.user_id === user.id) ||
               (uName && r.patient_name?.toLowerCase().includes(uName.toLowerCase())) ||
@@ -122,6 +129,39 @@ export const MyProfile: React.FC = () => {
       }
     }
     setSavingProfile(false);
+  };
+
+  // Exportar Relatório Admin em CSV
+  const handleExportAdminCSV = () => {
+    if (allReviewsAdmin.length === 0) return;
+    
+    const headers = ["ID Avaliacao", "Data", "Nome Paciente", "Associacao", "Genetica / Produto", "Nota Rating", "Condicoes Tratadas", "Efeitos Positivos", "Efeitos Adversos", "Comentario"];
+    const csvRows = [headers.join(";")];
+
+    allReviewsAdmin.forEach(r => {
+      const row = [
+        r.id,
+        new Date(r.created_at).toLocaleDateString('pt-BR'),
+        `"${r.patient_name || 'Paciente Anônimo'}"`,
+        `"${r.association_name || 'Sob Consulta'}"`,
+        `"${r.strain_name || ''}"`,
+        r.rating || 5,
+        `"${(r.conditions || []).join(', ')}"`,
+        `"${(r.positive_effects || []).join(', ')}"`,
+        `"${(r.side_effects || []).join(', ')}"`,
+        `"${(r.comment || '').replace(/"/g, '""')}"`
+      ];
+      csvRows.push(row.join(";"));
+    });
+
+    const blob = new Blob([csvRows.join("\n")], { type: "text/csv;charset=utf-8-sig;" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute("download", `relatorio_pacientes_cannaguia_${new Date().toISOString().slice(0, 10)}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
 
   const myAssociatedEntities = React.useMemo(() => {
@@ -232,6 +272,17 @@ export const MyProfile: React.FC = () => {
         >
           <Building2 className="w-3.5 h-3.5" /> Minhas Associações ({myAssociatedEntities.length})
         </button>
+
+        <button
+          onClick={() => setActiveTab('admin')}
+          className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 whitespace-nowrap ${
+            activeTab === 'admin'
+              ? 'bg-amber-600 text-white shadow-sm'
+              : 'bg-amber-50 border border-amber-200 text-amber-900 hover:bg-amber-100'
+          }`}
+        >
+          <Crown className="w-3.5 h-3.5 text-amber-500" /> Painel Admin / Relatórios
+        </button>
       </div>
 
       {/* 1. CADASTRO TERAPÊUTICO DO PACIENTE */}
@@ -327,7 +378,107 @@ export const MyProfile: React.FC = () => {
         </form>
       )}
 
-      {/* 2. MINHAS AVALIAÇÕES */}
+      {/* 2. PAINEL ADMIN DE PACIENTES E RELATÓRIOS (EXCLUSIVO DO PROPRIETÁRIO) */}
+      {activeTab === 'admin' && (
+        <div className="bg-white rounded-3xl border border-amber-200 p-6 sm:p-8 shadow-xl space-y-6 animate-in fade-in">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-gray-100 pb-4">
+            <div>
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-100 text-amber-900 text-xs font-black mb-1">
+                <Crown className="w-3.5 h-3.5 text-amber-600" /> Gestão Geral CannaGuia
+              </div>
+              <h3 className="text-xl font-black text-gray-900">Relatório de Pacientes & Avaliações</h3>
+              <p className="text-xs text-gray-500 mt-0.5">
+                Consulte e exporte os relatos clínicos, notas e dados de uso dos pacientes cadastrados.
+              </p>
+            </div>
+
+            <button
+              type="button"
+              onClick={handleExportAdminCSV}
+              className="px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl shadow-md transition-all flex items-center gap-2"
+            >
+              <FileSpreadsheet className="w-4 h-4" /> Exportar Planilha CSV
+            </button>
+          </div>
+
+          {/* Cards de Métricas Admin */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div className="p-4 bg-emerald-50 rounded-2xl border border-emerald-100 text-center">
+              <Users className="w-5 h-5 text-emerald-600 mx-auto mb-1" />
+              <span className="text-2xl font-black text-emerald-950 block">{allReviewsAdmin.length}</span>
+              <span className="text-xs font-bold text-emerald-700">Relatos / Avaliações Registradas</span>
+            </div>
+
+            <div className="p-4 bg-amber-50 rounded-2xl border border-amber-100 text-center">
+              <Star className="w-5 h-5 text-amber-500 fill-amber-500 mx-auto mb-1" />
+              <span className="text-2xl font-black text-amber-950 block">
+                {allReviewsAdmin.length > 0 ? (allReviewsAdmin.reduce((a, b) => a + (b.rating || 5), 0) / allReviewsAdmin.length).toFixed(1) : '5.0'}
+              </span>
+              <span className="text-xs font-bold text-amber-800">Nota Média Geral do Catálogo</span>
+            </div>
+
+            <div className="p-4 bg-teal-50 rounded-2xl border border-teal-100 text-center">
+              <Building2 className="w-5 h-5 text-teal-600 mx-auto mb-1" />
+              <span className="text-2xl font-black text-teal-950 block">{associations.length}</span>
+              <span className="text-xs font-bold text-teal-700">Associações Mapeadas</span>
+            </div>
+          </div>
+
+          {/* Listagem Geral de Avaliações Registradas */}
+          <div className="space-y-3">
+            <h4 className="text-sm font-bold text-gray-800 uppercase tracking-wider">
+              Últimos Relatos Salvos no Banco de Dados:
+            </h4>
+
+            {allReviewsAdmin.length === 0 ? (
+              <div className="p-8 bg-gray-50 rounded-2xl text-center text-xs text-gray-500 border border-dashed">
+                Ainda não há registros no banco de dados. Quando os pacientes avaliarem as genéticas, eles aparecerão organizados nesta tabela.
+              </div>
+            ) : (
+              <div className="overflow-x-auto border border-gray-200 rounded-2xl">
+                <table className="w-full text-left text-xs">
+                  <thead className="bg-gray-50 text-gray-700 font-bold border-b border-gray-200">
+                    <tr>
+                      <th className="p-3">Data</th>
+                      <th className="p-3">Paciente</th>
+                      <th className="p-3">Genética / Produto</th>
+                      <th className="p-3">Associação</th>
+                      <th className="p-3">Nota</th>
+                      <th className="p-3">Sintomas Tratados</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-gray-100">
+                    {allReviewsAdmin.map((r) => (
+                      <tr key={r.id} className="hover:bg-emerald-50/40 transition-colors">
+                        <td className="p-3 font-medium text-gray-500">
+                          {new Date(r.created_at).toLocaleDateString('pt-BR')}
+                        </td>
+                        <td className="p-3 font-bold text-gray-900">
+                          {r.patient_name || 'Anônimo'}
+                        </td>
+                        <td className="p-3 font-bold text-emerald-800">
+                          {r.strain_name}
+                        </td>
+                        <td className="p-3 text-gray-600">
+                          {r.association_name}
+                        </td>
+                        <td className="p-3 font-black text-amber-600">
+                          ⭐ {r.rating}/5
+                        </td>
+                        <td className="p-3 text-gray-600">
+                          {(r.conditions || []).join(', ')}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
+      {/* 3. MINHAS AVALIAÇÕES */}
       {activeTab === 'reviews' && (
         <div className="space-y-4">
           {reviews.length === 0 ? (
@@ -404,7 +555,7 @@ export const MyProfile: React.FC = () => {
         </div>
       )}
 
-      {/* 3. MINHAS ASSOCIAÇÕES */}
+      {/* 4. MINHAS ASSOCIAÇÕES */}
       {activeTab === 'associations' && (
         <div className="space-y-4">
           {myAssociatedEntities.length === 0 ? (
