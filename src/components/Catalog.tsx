@@ -1,12 +1,20 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { Search, Filter, ShieldCheck, Sparkles, Flower2, Droplets, Package } from 'lucide-react';
 import { StrainCard } from './StrainCard';
 import { StrainModal } from './StrainModal';
 import { Strain, ProductCategory } from '../types/strain';
 import { useStrains } from '../hooks/useStrains';
+import { supabase } from '../lib/supabase';
 
 interface CatalogProps {
   currentCategory?: ProductCategory;
+}
+
+interface CommunityReviewStats {
+  [strainId: string]: {
+    avgRating: number;
+    count: number;
+  };
 }
 
 export const Catalog: React.FC<CatalogProps> = ({ currentCategory: initialCategory = 'flores' }) => {
@@ -15,9 +23,40 @@ export const Catalog: React.FC<CatalogProps> = ({ currentCategory: initialCatego
   const [search, setSearch] = useState('');
   const [selectedSubFilter, setSelectedSubFilter] = useState('ALL');
   const [selectedStrain, setSelectedStrain] = useState<Strain | null>(null);
+  const [communityStats, setCommunityStats] = useState<CommunityReviewStats>({});
 
   // Lista de subfiltros para flores
-  const flowerFilters = ['ALL', 'Híbrida', 'Indica', 'Sativa', 'THC', 'CBD', 'THC/CBD'];
+  const flowerFilters = ['ALL', '🔥 Mais Recomendadas', 'Híbrida', 'Indica', 'Sativa', 'THC', 'CBD', 'THC/CBD'];
+
+  // Busca avaliações reais para exibir estrelas e contagem nos cards
+  useEffect(() => {
+    async function loadStats() {
+      if (!supabase) return;
+      try {
+        const { data, error } = await supabase.from('reviews').select('strain_id, rating');
+        if (!error && data) {
+          const map: CommunityReviewStats = {};
+          data.forEach((r: any) => {
+            const sId = r.strain_id;
+            if (!map[sId]) {
+              map[sId] = { avgRating: 0, count: 0 };
+            }
+            map[sId].count += 1;
+            map[sId].avgRating += r.rating || 5;
+          });
+
+          Object.keys(map).forEach(sId => {
+            map[sId].avgRating = Number((map[sId].avgRating / map[sId].count).toFixed(1));
+          });
+
+          setCommunityStats(map);
+        }
+      } catch (e) {
+        console.error('Erro ao carregar estatísticas:', e);
+      }
+    }
+    loadStats();
+  }, []);
 
   const categoryTabs = [
     { id: 'flores' as ProductCategory, label: 'Flores in Natura', icon: Flower2, count: strains.filter(s => s.category === 'flores').length },
@@ -26,14 +65,17 @@ export const Catalog: React.FC<CatalogProps> = ({ currentCategory: initialCatego
   ];
 
   const filteredStrains = useMemo(() => {
-    return strains.filter((strain) => {
+    let result = strains.filter((strain) => {
       // 1. Filtro por Categoria Principal (Flores, Óleos, Outros)
       const matchCategory = activeCategory ? strain.category === activeCategory : true;
 
       // 2. Filtro Secundário em Flores
       let matchSubFilter = true;
       if (activeCategory === 'flores' && selectedSubFilter !== 'ALL') {
-        if (['Híbrida', 'Indica', 'Sativa'].includes(selectedSubFilter)) {
+        if (selectedSubFilter === '🔥 Mais Recomendadas') {
+          const stats = communityStats[strain.id];
+          matchSubFilter = !!(stats && stats.count > 0 && stats.avgRating >= 4.0);
+        } else if (['Híbrida', 'Indica', 'Sativa'].includes(selectedSubFilter)) {
           matchSubFilter = strain.type === selectedSubFilter;
         } else if (['THC', 'CBD', 'THC/CBD'].includes(selectedSubFilter)) {
           matchSubFilter = strain.dominantCannabinoid === selectedSubFilter;
@@ -50,7 +92,18 @@ export const Catalog: React.FC<CatalogProps> = ({ currentCategory: initialCatego
 
       return matchCategory && matchSubFilter && matchSearch;
     });
-  }, [strains, activeCategory, selectedSubFilter, search]);
+
+    // Se filtrou por Mais Recomendadas, ordena pelas maiores notas
+    if (selectedSubFilter === '🔥 Mais Recomendadas') {
+      result.sort((a, b) => {
+        const statsA = communityStats[a.id]?.avgRating || 0;
+        const statsB = communityStats[b.id]?.avgRating || 0;
+        return statsB - statsA;
+      });
+    }
+
+    return result;
+  }, [strains, activeCategory, selectedSubFilter, search, communityStats]);
 
   const titles: Record<ProductCategory, { title: string; subtitle: string }> = {
     flores: {
@@ -183,6 +236,7 @@ export const Catalog: React.FC<CatalogProps> = ({ currentCategory: initialCatego
             <StrainCard
               key={`${strain.id}-${idx}`}
               strain={strain}
+              ratingStats={communityStats[strain.id]}
               onClick={() => setSelectedStrain(strain)}
             />
           ))}

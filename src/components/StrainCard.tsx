@@ -1,13 +1,14 @@
 import React from 'react';
-import { ShieldCheck, ChevronRight } from 'lucide-react';
+import { ShieldCheck, ChevronRight, Star } from 'lucide-react';
 import { Strain } from '../types/strain';
 
 interface StrainCardProps {
   strain: Strain;
+  ratingStats?: { avgRating: number; count: number };
   onClick: () => void;
 }
 
-export const StrainCard: React.FC<StrainCardProps> = ({ strain, onClick }) => {
+export const StrainCard: React.FC<StrainCardProps> = ({ strain, ratingStats, onClick }) => {
   // Define etiquetagem estrita por categoria e subtipo real
   const displayBadge = () => {
     // 1. Categoria Óleos
@@ -52,16 +53,23 @@ export const StrainCard: React.FC<StrainCardProps> = ({ strain, onClick }) => {
       className="bg-white rounded-2xl border border-gray-200/90 p-5 hover:shadow-xl hover:border-emerald-500/60 transition-all cursor-pointer flex flex-col justify-between group hover:-translate-y-0.5 duration-200"
     >
       <div>
-        {/* Topo com badge limpa e especificada */}
+        {/* Topo com badge limpa e nota média de avaliações */}
         <div className="flex items-center justify-between gap-2 mb-3">
           <span className={`px-2.5 py-0.5 text-xs font-bold rounded-md border ${badge.bg}`}>
             {badge.text}
           </span>
-          {strain.associations?.length > 1 && (
+          
+          {ratingStats && ratingStats.count > 0 ? (
+            <span className="flex items-center gap-1 text-[11px] font-extrabold bg-amber-100/90 text-amber-900 px-2 py-0.5 rounded-full border border-amber-200">
+              <Star className="w-3 h-3 fill-amber-500 text-amber-500" />
+              <span>{ratingStats.avgRating}</span>
+              <span className="text-amber-800/80 font-medium">({ratingStats.count})</span>
+            </span>
+          ) : strain.associations?.length > 1 ? (
             <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
               {strain.associations.length} opções
             </span>
-          )}
+          ) : null}
         </div>
 
         {/* Nome do Produto */}

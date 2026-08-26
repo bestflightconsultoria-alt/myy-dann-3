@@ -335,7 +335,7 @@ export const StrainModal: React.FC<StrainModalProps> = ({ strain, onClose }) => 
               <div>
                 <h4 className="text-base font-extrabold text-gray-900 flex items-center gap-2">
                   <UserCheck className="w-5 h-5 text-emerald-600" />
-                  Avaliações de Pacientes Real-World ({reviews.length})
+                  Avaliações dos Pacientes ({reviews.length})
                 </h4>
                 <p className="text-xs text-gray-500">Relatos e desfechos clínicos reportados por pacientes</p>
               </div>
