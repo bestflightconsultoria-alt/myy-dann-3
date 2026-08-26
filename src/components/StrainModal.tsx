@@ -475,6 +475,10 @@ export const StrainModal: React.FC<StrainModalProps> = ({ strain, onClose }) => 
                   />
                 </div>
 
+                <p className="text-[10px] text-gray-500 flex items-center gap-1">
+                  🔒 Ao enviar, você concorda com o tratamento anônimo de dados em conformidade com a LGPD e os Termos do CannaGuia.
+                </p>
+
                 <button
                   type="submit"
                   disabled={submitting}
