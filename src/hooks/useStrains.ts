@@ -767,7 +767,7 @@ const INITIAL_STRAINS: Strain[] = [
     name: "Oleo CBD 1:1 THC 1500mg (Abrapango)",
     category: "oleos",
     type: "\u00d3leo",
-    dominantCannabinoid: "THC/CBD",
+    dominantCannabinoid: "THC",
     thc: "25mg/ml (750mg total)",
     cbd: "25mg/ml (750mg total)",
     genetics: "Extrato vegetal de Cannabis Sativa CBD/THC em \u00d3leo de MCT",
@@ -788,7 +788,7 @@ const INITIAL_STRAINS: Strain[] = [
   },
   {
     id: "strain-frozen-biscuit-thc",
-    name: "FROZEN BISCUIT  - THC",
+    name: "FROZEN BISCUIT - THC",
     category: "flores",
     type: "H\u00edbrida",
     dominantCannabinoid: "THC",
@@ -956,7 +956,7 @@ const INITIAL_STRAINS: Strain[] = [
   },
   {
     id: "strain-sour-diesel-thc",
-    name: "SOUR DIESEL \u26fd- THC",
+    name: "SOUR DIESEL - THC",
     category: "flores",
     type: "Sativa",
     dominantCannabinoid: "THC",
@@ -988,7 +988,7 @@ const INITIAL_STRAINS: Strain[] = [
   },
   {
     id: "strain-bubba-kush-thc",
-    name: "BUBBA KUSH  - THC",
+    name: "BUBBA KUSH - THC",
     category: "flores",
     type: "Indica",
     dominantCannabinoid: "THC",
@@ -1284,7 +1284,7 @@ const INITIAL_STRAINS: Strain[] = [
   },
   {
     id: "strain-super-og-thc",
-    name: "SUPER OG \ud83c\udf19 - THC",
+    name: "SUPER OG - THC",
     category: "flores",
     type: "Indica",
     dominantCannabinoid: "THC",
@@ -1308,7 +1308,7 @@ const INITIAL_STRAINS: Strain[] = [
   },
   {
     id: "strain-victory-thcv-1",
-    name: "Victory THCV 1 \ud83d\udc8e",
+    name: "Victory THCV 1",
     category: "flores",
     type: "Sativa",
     dominantCannabinoid: "THC",
@@ -1331,10 +1331,10 @@ const INITIAL_STRAINS: Strain[] = [
 ]
   },
   {
-    id: "strain-cbd-full-spectrum-1000mg",
+    id: "oil-cbd-full-spectrum-1000mg",
     name: "CBD Full Spectrum 1000mg",
-    category: "flores",
-    type: "H\u00edbrida",
+    category: "oleos",
+    type: "\u00d3leo",
     dominantCannabinoid: "CBD",
     thc: "18% - 24%",
     cbd: "< 1%",
@@ -1355,10 +1355,10 @@ const INITIAL_STRAINS: Strain[] = [
 ]
   },
   {
-    id: "strain-cbd-full-spectrum-500mg",
+    id: "oil-cbd-full-spectrum-500mg",
     name: "CBD Full Spectrum 500mg",
-    category: "flores",
-    type: "H\u00edbrida",
+    category: "oleos",
+    type: "\u00d3leo",
     dominantCannabinoid: "CBD",
     thc: "18% - 24%",
     cbd: "< 1%",
@@ -1451,10 +1451,10 @@ const INITIAL_STRAINS: Strain[] = [
 ]
   },
   {
-    id: "strain-thc-full-spectrum-1000mg",
+    id: "oil-thc-full-spectrum-1000mg",
     name: "THC Full Spectrum 1000mg",
-    category: "flores",
-    type: "H\u00edbrida",
+    category: "oleos",
+    type: "\u00d3leo",
     dominantCannabinoid: "THC",
     thc: "18% - 24%",
     cbd: "< 1%",
@@ -1475,10 +1475,10 @@ const INITIAL_STRAINS: Strain[] = [
 ]
   },
   {
-    id: "strain-thc-full-spectrum-500mg",
+    id: "oil-thc-full-spectrum-500mg",
     name: "THC Full Spectrum 500mg",
-    category: "flores",
-    type: "H\u00edbrida",
+    category: "oleos",
+    type: "\u00d3leo",
     dominantCannabinoid: "THC",
     thc: "18% - 24%",
     cbd: "< 1%",
@@ -2277,30 +2277,6 @@ const INITIAL_STRAINS: Strain[] = [
             "associationName": "ALCA",
             "pricePerGram": 25.0,
             "priceDisplay": "R$ 25,00/g",
-            "inStock": true,
-            "cultivationType": "Certificado"
-      }
-]
-  },
-  {
-    id: "strain-pipoquinhas-cbd",
-    name: "Pipoquinhas CBD",
-    category: "flores",
-    type: "Sativa",
-    dominantCannabinoid: "CBD",
-    thc: "< 1%",
-    cbd: "10% - 15%",
-    genetics: "Blend de Pipocas CBD de Alta Qualidade",
-    terpenes: ["Mirceno", "Cariofileno", "Pineno"],
-    aromaFlavor: "Infloresc\u00eancias menores (pipoquinhas) ricas em CBD. Sabor herbal e terroso suave com excelente rela\u00e7\u00e3o custo-benef\u00edcio.",
-    description: "Infloresc\u00eancias menores (pipoquinhas) ricas em CBD. Sabor herbal e terroso suave com excelente rela\u00e7\u00e3o custo-benef\u00edcio.",
-    effects: ["Al\u00edvio de Ansiedade", "Anti-inflamat\u00f3rio", "Clareza sem Psicoatividade"],
-    associations: [
-      {
-            "associationId": "abrapango",
-            "associationName": "Abrapango",
-            "pricePerGram": 300.0,
-            "priceDisplay": "R$ 300,00 (10g)",
             "inStock": true,
             "cultivationType": "Certificado"
       }
