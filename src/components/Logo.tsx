@@ -52,14 +52,14 @@ export const Logo: React.FC<LogoProps> = ({ size = 'md', showText = true }) => {
         </div>
       </div>
 
-      {/* Nome da Marca CannaGuia */}
+      {/* Nome da Marca CannaGuia e Tagline Acolhedora */}
       {showText && (
         <div className="flex flex-col">
           <span className={`${textSizes[size]} font-black tracking-tight text-gray-900 leading-none`}>
             Canna<span className="text-emerald-600">Guia</span>
           </span>
-          <span className="text-[9px] font-extrabold uppercase tracking-widest text-emerald-700/90 mt-1">
-            Cannabis Medicinal
+          <span className="text-[10px] font-medium text-emerald-800/90 mt-1 tracking-tight">
+            Seu Guia de Cannabis Medicinal
           </span>
         </div>
       )}

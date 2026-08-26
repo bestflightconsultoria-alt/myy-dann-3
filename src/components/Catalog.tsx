@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { Search, Filter } from 'lucide-react';
+import { Search, Filter, ShieldCheck, Sparkles } from 'lucide-react';
 import { StrainCard } from './StrainCard';
 import { StrainModal } from './StrainModal';
 import { Strain, ProductCategory } from '../types/strain';
@@ -47,34 +47,64 @@ export const Catalog: React.FC<CatalogProps> = ({ currentCategory = 'flores' }) 
 
   const titles: Record<ProductCategory, { title: string; subtitle: string }> = {
     flores: {
-      title: "Catálogo de Flores Medicinais",
-      subtitle: "Inflorescências in natura, perfis de terpenos, genéticas e associações."
+      title: "Flores Medicinais e Inflorescências",
+      subtitle: "Perfis de terpenos, linhagens genéticas e preços comparados entre associações do Brasil."
     },
     oleos: {
-      title: "Catálogo de Óleos Terapêuticos",
-      subtitle: "Extratos Full Spectrum, Isolados e proporções balanceadas de CBD e THC."
+      title: "Óleos Terapêuticos e Extratos",
+      subtitle: "Formulações Full Spectrum, Isolados e proporções balanceadas de CBD e THC."
     },
     outros: {
-      title: "Gummies e Outros Formatos",
-      subtitle: "Derivados comestíveis com dosagens padronizadas e praticidade de uso."
+      title: "Gummies, Pomadas e Concentrados",
+      subtitle: "Formatos alternativos com dosagens padronizadas, conveniência e praticidade."
     }
   };
 
   return (
     <div className="space-y-6">
-      {/* Topo do Catálogo */}
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-        <div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-gray-900 tracking-tight">
+      
+      {/* Banner Principal - CannaGuia: Seu Guia de Cannabis Medicinal */}
+      <div className="bg-gradient-to-r from-emerald-900 via-emerald-800 to-teal-900 rounded-3xl p-6 sm:p-8 text-white shadow-xl relative overflow-hidden">
+        <div className="absolute right-0 top-0 translate-x-12 -translate-y-8 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
+        
+        <div className="relative z-10 max-w-3xl space-y-3">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/20 border border-emerald-400/30 text-emerald-200 text-xs font-semibold backdrop-blur-md">
+            <Sparkles className="w-3.5 h-3.5 text-emerald-300" />
+            <span>CannaGuia — Seu Guia de Cannabis Medicinal</span>
+          </div>
+
+          <h1 className="text-2xl sm:text-4xl font-black tracking-tight text-white leading-tight">
             {titles[currentCategory].title}
           </h1>
-          <p className="text-sm text-gray-600 mt-1">
+
+          <p className="text-sm sm:text-base text-emerald-100/90 leading-relaxed">
             {titles[currentCategory].subtitle}
+          </p>
+
+          <div className="pt-2 flex flex-wrap items-center gap-4 text-xs font-medium text-emerald-200/80">
+            <span className="flex items-center gap-1.5">
+              <ShieldCheck className="w-4 h-4 text-emerald-400" /> Associações Regulamentadas
+            </span>
+            <span className="flex items-center gap-1.5">
+              🌿 Dados Terapêuticos Verificados
+            </span>
+          </div>
+        </div>
+      </div>
+
+      {/* Topo de Busca e Filtros */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-2">
+        <div>
+          <h2 className="text-lg font-bold text-gray-900">
+            Exibindo {filteredStrains.length} produtos medicinais
+          </h2>
+          <p className="text-xs text-gray-500">
+            Use os filtros abaixo ou digite o efeito desejado (ex: insônia, ansiedade, dor).
           </p>
         </div>
 
         {/* Campo de Busca */}
-        <div className="relative w-full md:w-80">
+        <div className="relative w-full sm:w-80">
           <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
           <input
             type="text"
@@ -90,7 +120,7 @@ export const Catalog: React.FC<CatalogProps> = ({ currentCategory = 'flores' }) 
       {currentCategory === 'flores' && (
         <div className="flex items-center gap-2 overflow-x-auto pb-2 pt-1">
           <span className="text-xs font-bold text-gray-500 flex items-center gap-1 mr-1">
-            <Filter className="w-3.5 h-3.5 text-emerald-600" /> Filtrar:
+            <Filter className="w-3.5 h-3.5 text-emerald-600" /> Filtrar por:
           </span>
           {flowerFilters.map((f) => (
             <button
