@@ -165,7 +165,7 @@ export const Catalog: React.FC<CatalogProps> = ({ currentCategory: initialCatego
         </div>
       )}
 
-      {/* Contagem e Status */}
+      {/* Contagem Dinâmica Real */}
       <div className="flex items-center justify-between text-xs text-gray-500 px-1">
         <span>Exibindo <strong>{filteredStrains.length}</strong> produtos medicinais disponíveis</span>
       </div>
@@ -179,9 +179,9 @@ export const Catalog: React.FC<CatalogProps> = ({ currentCategory: initialCatego
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredStrains.map((strain) => (
+          {filteredStrains.map((strain, idx) => (
             <StrainCard
-              key={strain.id}
+              key={`${strain.id}-${idx}`}
               strain={strain}
               onClick={() => setSelectedStrain(strain)}
             />

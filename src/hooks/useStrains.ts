@@ -275,7 +275,7 @@ const INITIAL_STRAINS: Strain[] = [
 ]
   },
   {
-    id: "strain-24k",
+    id: "strain-24k-gold",
     name: "24K Gold",
     category: "flores",
     type: "Indica",
@@ -339,7 +339,7 @@ const INITIAL_STRAINS: Strain[] = [
 ]
   },
   {
-    id: "strain-oil-cbd-full-3000",
+    id: "oil-oleo-cbd-full-spectrum-3000mg",
     name: "Oleo CBD Full Spectrum 3000mg",
     category: "oleos",
     type: "\u00d3leo",
@@ -371,7 +371,7 @@ const INITIAL_STRAINS: Strain[] = [
 ]
   },
   {
-    id: "strain-oil-balanced-1-1",
+    id: "oil-oleo-balanceado-1-1-thc-cbd",
     name: "Oleo Balanceado 1:1 THC:CBD",
     category: "oleos",
     type: "\u00d3leo",
@@ -395,7 +395,7 @@ const INITIAL_STRAINS: Strain[] = [
 ]
   },
   {
-    id: "strain-gummy-cbd-sleep",
+    id: "gummy-gummies-cbd-cbn-sono-perfeito",
     name: "Gummies CBD + CBN Sono Perfeito",
     category: "outros",
     type: "Gummies",
@@ -491,7 +491,7 @@ const INITIAL_STRAINS: Strain[] = [
 ]
   },
   {
-    id: "strain-punto-rojo",
+    id: "strain-punto-rojo-colombian-red",
     name: "Punto Rojo (Colombian Red)",
     category: "flores",
     type: "Sativa",
@@ -563,7 +563,7 @@ const INITIAL_STRAINS: Strain[] = [
 ]
   },
   {
-    id: "strain-dgusta",
+    id: "strain-d-gusta",
     name: "D'Gusta",
     category: "flores",
     type: "H\u00edbrida",
@@ -691,7 +691,7 @@ const INITIAL_STRAINS: Strain[] = [
 ]
   },
   {
-    id: "strain-watermelon",
+    id: "strain-watermelon-watermelon-zkittlez",
     name: "Watermelon (Watermelon Zkittlez)",
     category: "flores",
     type: "Indica",
@@ -739,7 +739,7 @@ const INITIAL_STRAINS: Strain[] = [
 ]
   },
   {
-    id: "strain-zkittle-cake",
+    id: "strain-zkittle-cake-zkittlez-cake",
     name: "Zkittle Cake (Zkittlez Cake)",
     category: "flores",
     type: "Indica",
@@ -763,7 +763,7 @@ const INITIAL_STRAINS: Strain[] = [
 ]
   },
   {
-    id: "oil-cbd-1-1-thc-1500mg-abrapango",
+    id: "oil-oleo-cbd-1-1-thc-1500mg-abrapango",
     name: "Oleo CBD 1:1 THC 1500mg (Abrapango)",
     category: "oleos",
     type: "\u00d3leo",
@@ -811,7 +811,7 @@ const INITIAL_STRAINS: Strain[] = [
 ]
   },
   {
-    id: "strain-oleo-de-thc-10ml-100mg-ml",
+    id: "oil-leo-de-thc-10ml-100mg-ml",
     name: "\u00d3leo de THC - 10ML - 100mg/ml",
     category: "oleos",
     type: "\u00d3leo",
@@ -835,7 +835,7 @@ const INITIAL_STRAINS: Strain[] = [
 ]
   },
   {
-    id: "strain-oleo-de-thc-10ml-200mg-ml",
+    id: "oil-leo-de-thc-10ml-200mg-ml",
     name: "\u00d3leo de THC - 10ML - 200mg/ml",
     category: "oleos",
     type: "\u00d3leo",
@@ -859,7 +859,7 @@ const INITIAL_STRAINS: Strain[] = [
 ]
   },
   {
-    id: "strain-oleo-de-thc-10ml-50mg-ml",
+    id: "oil-leo-de-thc-10ml-50mg-ml",
     name: "\u00d3leo de THC - 10ML - 50mg/ml",
     category: "oleos",
     type: "\u00d3leo",
@@ -883,7 +883,7 @@ const INITIAL_STRAINS: Strain[] = [
 ]
   },
   {
-    id: "strain-oleo-de-thc-30ml-100mg-ml",
+    id: "oil-leo-de-thc-30ml-100mg-ml",
     name: "\u00d3leo de THC - 30ML - 100mg/ml",
     category: "oleos",
     type: "\u00d3leo",
@@ -907,7 +907,7 @@ const INITIAL_STRAINS: Strain[] = [
 ]
   },
   {
-    id: "strain-oleo-de-thc-30ml-200mg-ml",
+    id: "oil-leo-de-thc-30ml-200mg-ml",
     name: "\u00d3leo de THC - 30ML - 200mg/ml",
     category: "oleos",
     type: "\u00d3leo",
@@ -931,7 +931,7 @@ const INITIAL_STRAINS: Strain[] = [
 ]
   },
   {
-    id: "strain-oleo-de-thc-30ml-50mg-ml",
+    id: "oil-leo-de-thc-30ml-50mg-ml",
     name: "\u00d3leo de THC - 30ML - 50mg/ml",
     category: "oleos",
     type: "\u00d3leo",
@@ -1067,7 +1067,7 @@ const INITIAL_STRAINS: Strain[] = [
 ]
   },
   {
-    id: "strain-oleo-7-1-30ml-cbd-thc-100mg-ml",
+    id: "oil-leo-7-1-30ml-cbd-thc-100mg-ml",
     name: "\u00d3leo 7:1 - 30ML - (CBD + THC) 100mg/ml",
     category: "oleos",
     type: "\u00d3leo",
@@ -1091,7 +1091,7 @@ const INITIAL_STRAINS: Strain[] = [
 ]
   },
   {
-    id: "strain-oleo-7-1-30ml-cbd-thc-200mg-ml",
+    id: "oil-leo-7-1-30ml-cbd-thc-200mg-ml",
     name: "\u00d3leo 7:1 - 30ML - (CBD + THC) 200mg/ml",
     category: "oleos",
     type: "\u00d3leo",
@@ -1115,7 +1115,7 @@ const INITIAL_STRAINS: Strain[] = [
 ]
   },
   {
-    id: "strain-oleo-7-1-30ml-cbd-thc-50mg-ml",
+    id: "oil-leo-7-1-30ml-cbd-thc-50mg-ml",
     name: "\u00d3leo 7:1 - 30ML - (CBD + THC) 50mg/ml",
     category: "oleos",
     type: "\u00d3leo",
@@ -1139,7 +1139,7 @@ const INITIAL_STRAINS: Strain[] = [
 ]
   },
   {
-    id: "strain-oleo-de-cbd-10ml-100mg-ml",
+    id: "oil-leo-de-cbd-10ml-100mg-ml",
     name: "\u00d3leo de CBD - 10ML - 100mg/ml",
     category: "oleos",
     type: "\u00d3leo",
@@ -1163,7 +1163,7 @@ const INITIAL_STRAINS: Strain[] = [
 ]
   },
   {
-    id: "strain-oleo-de-cbd-10ml-200mg-ml",
+    id: "oil-leo-de-cbd-10ml-200mg-ml",
     name: "\u00d3leo de CBD - 10ML - 200mg/ml",
     category: "oleos",
     type: "\u00d3leo",
@@ -1187,7 +1187,7 @@ const INITIAL_STRAINS: Strain[] = [
 ]
   },
   {
-    id: "strain-oleo-de-cbd-10ml-50mg-ml",
+    id: "oil-leo-de-cbd-10ml-50mg-ml",
     name: "\u00d3leo de CBD - 10ML - 50mg/ml",
     category: "oleos",
     type: "\u00d3leo",
@@ -1211,7 +1211,7 @@ const INITIAL_STRAINS: Strain[] = [
 ]
   },
   {
-    id: "strain-oleo-de-cbd-30ml-100mg-ml",
+    id: "oil-leo-de-cbd-30ml-100mg-ml",
     name: "\u00d3leo de CBD - 30ML - 100mg/ml",
     category: "oleos",
     type: "\u00d3leo",
@@ -1235,7 +1235,7 @@ const INITIAL_STRAINS: Strain[] = [
 ]
   },
   {
-    id: "strain-oleo-de-cbd-30ml-200mg-ml",
+    id: "oil-leo-de-cbd-30ml-200mg-ml",
     name: "\u00d3leo de CBD - 30ML - 200mg/ml",
     category: "oleos",
     type: "\u00d3leo",
@@ -1259,7 +1259,7 @@ const INITIAL_STRAINS: Strain[] = [
 ]
   },
   {
-    id: "strain-oleo-de-cbd-30ml-50mg-ml",
+    id: "oil-leo-de-cbd-30ml-50mg-ml",
     name: "\u00d3leo de CBD - 30ML - 50mg/ml",
     category: "oleos",
     type: "\u00d3leo",
@@ -1379,7 +1379,7 @@ const INITIAL_STRAINS: Strain[] = [
 ]
   },
   {
-    id: "strain-oleo-71-10ml-cbd-thc-100mgml",
+    id: "oil-leo-7-1-10ml-cbd-thc-100mg-ml",
     name: "\u00d3leo 7:1 - 10ML - (CBD + THC) 100mg/ml",
     category: "oleos",
     type: "\u00d3leo",
@@ -1403,7 +1403,7 @@ const INITIAL_STRAINS: Strain[] = [
 ]
   },
   {
-    id: "strain-oleo-71-10ml-cbd-thc-200mgml",
+    id: "oil-leo-7-1-10ml-cbd-thc-200mg-ml",
     name: "\u00d3leo 7:1 - 10ML - (CBD + THC) 200mg/ml",
     category: "oleos",
     type: "\u00d3leo",
@@ -1427,7 +1427,7 @@ const INITIAL_STRAINS: Strain[] = [
 ]
   },
   {
-    id: "strain-oleo-71-10ml-cbd-thc-50mgml",
+    id: "oil-leo-7-1-10ml-cbd-thc-50mg-ml",
     name: "\u00d3leo 7:1 - 10ML - (CBD + THC) 50mg/ml",
     category: "oleos",
     type: "\u00d3leo",
@@ -1499,7 +1499,7 @@ const INITIAL_STRAINS: Strain[] = [
 ]
   },
   {
-    id: "strain-pomada-in-natura",
+    id: "gummy-pomada-in-natura",
     name: "Pomada in Natura",
     category: "outros",
     type: "Gummies",
@@ -1523,7 +1523,7 @@ const INITIAL_STRAINS: Strain[] = [
 ]
   },
   {
-    id: "strain-dr-cbd",
+    id: "strain-dr-cbd-60",
     name: "DR CBD \ud83e\ude7a",
     category: "flores",
     type: "Sativa",
@@ -1915,7 +1915,7 @@ const INITIAL_STRAINS: Strain[] = [
 ]
   },
   {
-    id: "strain-zoap",
+    id: "strain-zoap-raw-genetics",
     name: "Zoap (Raw Genetics)",
     category: "flores",
     type: "H\u00edbrida",
@@ -2035,7 +2035,7 @@ const INITIAL_STRAINS: Strain[] = [
 ]
   },
   {
-    id: "strain-grandpas-stash",
+    id: "strain-grandpa-s-stash",
     name: "Grandpa's Stash",
     category: "flores",
     type: "Indica",
@@ -2107,7 +2107,7 @@ const INITIAL_STRAINS: Strain[] = [
 ]
   },
   {
-    id: "oil-full-spectrum-15mg",
+    id: "oil-leo-full-spectrum-15mg-ml-450mg",
     name: "\u00d3leo Full Spectrum 15mg/ml (450mg)",
     category: "oleos",
     type: "\u00d3leo",
@@ -2131,7 +2131,7 @@ const INITIAL_STRAINS: Strain[] = [
 ]
   },
   {
-    id: "oil-full-spectrum-30mg",
+    id: "oil-leo-full-spectrum-30mg-ml-900mg",
     name: "\u00d3leo Full Spectrum 30mg/ml (900mg)",
     category: "oleos",
     type: "\u00d3leo",
@@ -2155,7 +2155,7 @@ const INITIAL_STRAINS: Strain[] = [
 ]
   },
   {
-    id: "oil-full-spectrum-50mg",
+    id: "oil-leo-full-spectrum-50mg-ml-1500mg",
     name: "\u00d3leo Full Spectrum 50mg/ml (1500mg)",
     category: "oleos",
     type: "\u00d3leo",
@@ -2179,7 +2179,7 @@ const INITIAL_STRAINS: Strain[] = [
 ]
   },
   {
-    id: "oil-full-spectrum-100mg",
+    id: "oil-leo-full-spectrum-100mg-ml-3000mg",
     name: "\u00d3leo Full Spectrum 100mg/ml (3000mg)",
     category: "oleos",
     type: "\u00d3leo",
@@ -2203,7 +2203,7 @@ const INITIAL_STRAINS: Strain[] = [
 ]
   },
   {
-    id: "gummy-full-spectrum-15mg",
+    id: "gummy-gummies-full-spectrum-15mg",
     name: "Gummies Full Spectrum 15mg",
     category: "outros",
     type: "Gummies",
@@ -2227,7 +2227,7 @@ const INITIAL_STRAINS: Strain[] = [
 ]
   },
   {
-    id: "strain-hash-thca-static-dry-sift",
+    id: "gummy-hash-thca-static-dry-sift",
     name: "Hash THCA (Static Dry Sift)",
     category: "outros",
     type: "Gummies",
