@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Flower2, Droplets, Sparkles, Building2, Flame, BookOpen, LogOut, UserCheck } from 'lucide-react';
+import { Sparkles, Building2, Flame, BookOpen, LogOut, UserCheck, LayoutGrid } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { Logo } from './Logo';
 
@@ -47,12 +47,11 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
     }
   };
 
+  // Menu Reorganizado: Catálogo | Fummelier IA | Associações | Guia do Paciente
   const navItems = [
-    { id: 'catalogo-flores', label: 'Flores in Natura', icon: Flower2 },
-    { id: 'catalogo-oleos', label: 'Óleos Medicinais', icon: Droplets },
-    { id: 'catalogo-outros', label: 'Gummies & Outros', icon: Sparkles },
+    { id: 'catalogo-flores', label: 'Catálogo', icon: LayoutGrid },
+    { id: 'sommelier', label: 'Fummelier IA', icon: Flame },
     { id: 'associacoes', label: 'Associações', icon: Building2 },
-    { id: 'sommelier', label: 'IA Sommelier', icon: Flame },
     { id: 'blog', label: 'Guia do Paciente', icon: BookOpen },
   ];
 
@@ -61,28 +60,33 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 gap-4">
           
-          {/* Logo Oficial CannaGuia (Bússola + Folha + IA Sparkle) */}
+          {/* Logo Oficial CannaGuia */}
           <div onClick={() => setActiveTab('catalogo-flores')}>
             <Logo size="md" showText={true} />
           </div>
 
-          {/* Menu Central */}
-          <nav className="flex items-center gap-1 sm:gap-1.5 overflow-x-auto py-2">
+          {/* Menu Central Otimizado */}
+          <nav className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto py-2">
             {navItems.map((item) => {
               const Icon = item.icon;
-              const isActive = activeTab === item.id;
+              const isActive = activeTab === item.id || (item.id === 'catalogo-flores' && ['catalogo-oleos', 'catalogo-outros'].includes(activeTab));
               return (
                 <button
                   key={item.id}
                   onClick={() => setActiveTab(item.id)}
-                  className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-medium transition-all whitespace-nowrap ${
+                  className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-medium transition-all whitespace-nowrap ${
                     isActive
-                      ? 'bg-emerald-600 text-white shadow-md shadow-emerald-600/20 font-semibold scale-[1.02]'
-                      : 'text-gray-600 hover:text-emerald-700 hover:bg-emerald-50/70'
+                      ? 'bg-emerald-600 text-white shadow-md shadow-emerald-600/20 font-bold scale-[1.02]'
+                      : 'text-gray-600 hover:text-emerald-700 hover:bg-emerald-50/80'
                   }`}
                 >
                   <Icon className={`w-4 h-4 ${isActive ? 'text-white' : 'text-emerald-600'}`} />
                   {item.label}
+                  {item.id === 'sommelier' && (
+                    <span className="hidden sm:inline-block px-1.5 py-0.5 rounded-full text-[10px] bg-amber-400 text-slate-950 font-black tracking-wider uppercase">
+                      IA
+                    </span>
+                  )}
                 </button>
               );
             })}
