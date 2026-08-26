@@ -14,7 +14,6 @@ import {
   Check,
   Crown,
   Users,
-  Download,
   FileSpreadsheet
 } from 'lucide-react';
 import { supabase } from '../lib/supabase';
@@ -35,6 +34,13 @@ interface UserReview {
   created_at: string;
   patient_name?: string;
 }
+
+// Lista de e-mails autorizados para visualizar o Painel Admin Secreto
+const ADMIN_EMAILS = [
+  'bestflightconsultoria',
+  'lucas',
+  'admin@cannaguia.com.br'
+];
 
 export const MyProfile: React.FC = () => {
   const [user, setUser] = useState<any>(null);
@@ -97,6 +103,12 @@ export const MyProfile: React.FC = () => {
 
     checkUserAndLoadData();
   }, []);
+
+  const isAdmin = React.useMemo(() => {
+    if (!user || !user.email) return false;
+    const emailLower = user.email.toLowerCase();
+    return ADMIN_EMAILS.some(adminKeyword => emailLower.includes(adminKeyword.toLowerCase()));
+  }, [user]);
 
   const handleGoogleLogin = async () => {
     if (!supabase) return;
@@ -273,16 +285,19 @@ export const MyProfile: React.FC = () => {
           <Building2 className="w-3.5 h-3.5" /> Minhas Associações ({myAssociatedEntities.length})
         </button>
 
-        <button
-          onClick={() => setActiveTab('admin')}
-          className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 whitespace-nowrap ${
-            activeTab === 'admin'
-              ? 'bg-amber-600 text-white shadow-sm'
-              : 'bg-amber-50 border border-amber-200 text-amber-900 hover:bg-amber-100'
-          }`}
-        >
-          <Crown className="w-3.5 h-3.5 text-amber-500" /> Painel Admin / Relatórios
-        </button>
+        {/* ABA EXCLUSIVA DO ADMINISTRADOR DO SITE */}
+        {isAdmin && (
+          <button
+            onClick={() => setActiveTab('admin')}
+            className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 whitespace-nowrap ${
+              activeTab === 'admin'
+                ? 'bg-amber-600 text-white shadow-sm'
+                : 'bg-amber-50 border border-amber-200 text-amber-900 hover:bg-amber-100'
+            }`}
+          >
+            <Crown className="w-3.5 h-3.5 text-amber-500" /> Painel Admin (Restrito)
+          </button>
+        )}
       </div>
 
       {/* 1. CADASTRO TERAPÊUTICO DO PACIENTE */}
@@ -378,17 +393,17 @@ export const MyProfile: React.FC = () => {
         </form>
       )}
 
-      {/* 2. PAINEL ADMIN DE PACIENTES E RELATÓRIOS (EXCLUSIVO DO PROPRIETÁRIO) */}
-      {activeTab === 'admin' && (
+      {/* 2. PAINEL ADMIN RESTRICTO (EXCLUSIVO DO PROPRIETÁRIO DO SITE) */}
+      {isAdmin && activeTab === 'admin' && (
         <div className="bg-white rounded-3xl border border-amber-200 p-6 sm:p-8 shadow-xl space-y-6 animate-in fade-in">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-gray-100 pb-4">
             <div>
               <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-100 text-amber-900 text-xs font-black mb-1">
-                <Crown className="w-3.5 h-3.5 text-amber-600" /> Gestão Geral CannaGuia
+                <Crown className="w-3.5 h-3.5 text-amber-600" /> Acesso Exclusivo do Administrador
               </div>
-              <h3 className="text-xl font-black text-gray-900">Relatório de Pacientes & Avaliações</h3>
+              <h3 className="text-xl font-black text-gray-900">Relatório Geral de Pacientes & Avaliações</h3>
               <p className="text-xs text-gray-500 mt-0.5">
-                Consulte e exporte os relatos clínicos, notas e dados de uso dos pacientes cadastrados.
+                Esta aba é visível apenas para você. Consulte e exporte os relatos e dados cadastrados.
               </p>
             </div>
 
