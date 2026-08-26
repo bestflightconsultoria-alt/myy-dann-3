@@ -7,7 +7,11 @@ import {
   CheckCircle2, 
   AlertTriangle, 
   LogIn, 
-  ArrowUpRight
+  ArrowUpRight,
+  ShieldCheck,
+  Stethoscope,
+  Save,
+  Check
 } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { useAssociations, Association } from '../hooks/useAssociations';
@@ -31,9 +35,17 @@ export const MyProfile: React.FC = () => {
   const [user, setUser] = useState<any>(null);
   const [reviews, setReviews] = useState<UserReview[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const [activeTab, setActiveTab] = useState<'reviews' | 'associations'>('reviews');
+  const [activeTab, setActiveTab] = useState<'profile' | 'reviews' | 'associations'>('profile');
   const [selectedAssoc, setSelectedAssoc] = useState<Association | null>(null);
   const { associations } = useAssociations();
+
+  // Dados do Perfil Terapêutico
+  const [fullName, setFullName] = useState('');
+  const [mainCondition, setMainCondition] = useState('');
+  const [prescribingDoctor, setPrescribingDoctor] = useState('');
+  const [treatmentStatus, setTreatmentStatus] = useState('em_tratamento');
+  const [savedSuccess, setSavedSuccess] = useState(false);
+  const [savingProfile, setSavingProfile] = useState(false);
 
   useEffect(() => {
     async function checkUserAndLoadData() {
@@ -46,9 +58,15 @@ export const MyProfile: React.FC = () => {
       setUser(user);
 
       if (user) {
+        // Carrega dados de perfil dos metadados
+        setFullName(user.user_metadata?.full_name || '');
+        setMainCondition(user.user_metadata?.main_condition || 'Ansiedade & Estresse');
+        setPrescribingDoctor(user.user_metadata?.prescribing_doctor || '');
+        setTreatmentStatus(user.user_metadata?.treatment_status || 'em_tratamento');
+
         try {
-          const fullName = user.user_metadata?.full_name || '';
-          const email = user.email || '';
+          const uName = user.user_metadata?.full_name || '';
+          const uEmail = user.email || '';
 
           const { data, error } = await supabase
             .from('reviews')
@@ -58,8 +76,8 @@ export const MyProfile: React.FC = () => {
           if (!error && data) {
             const filtered = data.filter((r: any) => 
               (r.user_id && r.user_id === user.id) ||
-              (fullName && r.patient_name?.toLowerCase().includes(fullName.toLowerCase())) ||
-              (email && r.patient_name?.toLowerCase().includes(email.toLowerCase()))
+              (uName && r.patient_name?.toLowerCase().includes(uName.toLowerCase())) ||
+              (uEmail && r.patient_name?.toLowerCase().includes(uEmail.toLowerCase()))
             );
             setReviews(filtered.length > 0 ? filtered : data);
           }
@@ -81,6 +99,29 @@ export const MyProfile: React.FC = () => {
         redirectTo: window.location.origin
       }
     });
+  };
+
+  const handleSaveProfile = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setSavingProfile(true);
+
+    if (supabase && user) {
+      try {
+        await supabase.auth.updateUser({
+          data: {
+            full_name: fullName,
+            main_condition: mainCondition,
+            prescribing_doctor: prescribingDoctor,
+            treatment_status: treatmentStatus
+          }
+        });
+        setSavedSuccess(true);
+        setTimeout(() => setSavedSuccess(false), 3000);
+      } catch (err) {
+        console.error('Erro ao atualizar perfil:', err);
+      }
+    }
+    setSavingProfile(false);
   };
 
   const myAssociatedEntities = React.useMemo(() => {
@@ -111,12 +152,12 @@ export const MyProfile: React.FC = () => {
         <div className="space-y-2">
           <h2 className="text-2xl font-black text-gray-900">Espaço do Paciente</h2>
           <p className="text-xs text-gray-600 leading-relaxed">
-            Faça login com a sua conta Google para consultar seu histórico de genéticas avaliadas e consultar suas entidades dispensadoras.
+            Faça login com a sua conta Google para consultar seu histórico, salvar genéticas favoritas e receber recomendações personalizadas do Fummelier IA.
           </p>
         </div>
         <button
           onClick={handleGoogleLogin}
-          className="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white rounded-2xl text-xs font-bold transition-all shadow-md flex items-center justify-center gap-2"
+          className="w-full py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-2xl text-xs font-bold transition-all shadow-md flex items-center justify-center gap-2"
         >
           <LogIn className="w-4 h-4" /> Entrar com Google
         </button>
@@ -125,20 +166,20 @@ export const MyProfile: React.FC = () => {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 max-w-4xl mx-auto">
       
       {/* Header do Perfil */}
       <div className="bg-gradient-to-r from-emerald-800 to-teal-900 rounded-3xl p-6 sm:p-8 text-white shadow-xl flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div className="flex items-center gap-4">
           <div className="w-14 h-14 bg-white/10 rounded-2xl flex items-center justify-center border border-white/20 text-emerald-300 font-bold text-xl uppercase">
-            {user.user_metadata?.full_name?.[0] || user.email?.[0] || 'P'}
+            {fullName[0] || user.email?.[0] || 'P'}
           </div>
           <div>
-            <span className="text-emerald-300 text-xs font-bold uppercase tracking-wider bg-white/10 px-2.5 py-0.5 rounded-full inline-block mb-1">
-              Paciente Registrado
+            <span className="text-emerald-300 text-xs font-bold uppercase tracking-wider bg-white/10 px-2.5 py-0.5 rounded-full inline-flex items-center gap-1 mb-1">
+              <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" /> Paciente Verificado
             </span>
             <h1 className="text-xl sm:text-2xl font-black">
-              {user.user_metadata?.full_name || 'Meu Espaço'}
+              {fullName || 'Paciente CannaGuia'}
             </h1>
             <p className="text-xs text-emerald-200/80">{user.email}</p>
           </div>
@@ -157,22 +198,33 @@ export const MyProfile: React.FC = () => {
         </div>
       </div>
 
-      {/* Navegação de Abas */}
-      <div className="flex items-center gap-2 border-b border-gray-200 pb-2">
+      {/* Navegação de Abas do Perfil */}
+      <div className="flex items-center gap-2 border-b border-gray-200 pb-2 overflow-x-auto">
+        <button
+          onClick={() => setActiveTab('profile')}
+          className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 whitespace-nowrap ${
+            activeTab === 'profile'
+              ? 'bg-emerald-600 text-white shadow-sm'
+              : 'bg-white border border-gray-200 text-gray-700 hover:bg-gray-50'
+          }`}
+        >
+          <User className="w-3.5 h-3.5" /> Meu Cadastro Terapêutico
+        </button>
+
         <button
           onClick={() => setActiveTab('reviews')}
-          className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
+          className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 whitespace-nowrap ${
             activeTab === 'reviews'
               ? 'bg-emerald-600 text-white shadow-sm'
               : 'bg-white border border-gray-200 text-gray-700 hover:bg-gray-50'
           }`}
         >
-          <Sparkles className="w-3.5 h-3.5" /> Minhas Avaliações & Favoritas ({reviews.length})
+          <Sparkles className="w-3.5 h-3.5" /> Minhas Avaliações ({reviews.length})
         </button>
 
         <button
           onClick={() => setActiveTab('associations')}
-          className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
+          className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 whitespace-nowrap ${
             activeTab === 'associations'
               ? 'bg-emerald-600 text-white shadow-sm'
               : 'bg-white border border-gray-200 text-gray-700 hover:bg-gray-50'
@@ -182,7 +234,100 @@ export const MyProfile: React.FC = () => {
         </button>
       </div>
 
-      {/* Conteúdo 1: Avaliações do Paciente */}
+      {/* 1. CADASTRO TERAPÊUTICO DO PACIENTE */}
+      {activeTab === 'profile' && (
+        <form onSubmit={handleSaveProfile} className="bg-white rounded-3xl border border-gray-200/90 p-6 sm:p-8 shadow-xl space-y-5 animate-in fade-in">
+          <div>
+            <h3 className="text-lg font-black text-gray-900 flex items-center gap-2">
+              <Stethoscope className="w-5 h-5 text-emerald-600" />
+              Perfil Clínico & Prescrição Medicinal
+            </h3>
+            <p className="text-xs text-gray-500 mt-0.5">
+              Esses dados ajudam o Fummelier IA a recomendar as genéticas e dosagens exatas para a sua prescrição.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+            
+            {/* Nome Completo */}
+            <div className="space-y-1.5">
+              <label className="text-xs font-bold text-gray-700 block">Nome do Paciente:</label>
+              <input
+                type="text"
+                value={fullName}
+                onChange={(e) => setFullName(e.target.value)}
+                placeholder="Ex: Pedro Henrique Silva"
+                className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl text-xs font-medium outline-none focus:border-emerald-500"
+              />
+            </div>
+
+            {/* Condição Médica Principal */}
+            <div className="space-y-1.5">
+              <label className="text-xs font-bold text-gray-700 block">Condição Médica Principal:</label>
+              <select
+                value={mainCondition}
+                onChange={(e) => setMainCondition(e.target.value)}
+                className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl text-xs font-bold text-gray-800 outline-none focus:border-emerald-500"
+              >
+                <option value="Ansiedade & Estresse">🧘 Ansiedade & Estresse</option>
+                <option value="Insônia / Distúrbios do Sono">😴 Insônia / Distúrbios do Sono</option>
+                <option value="Dor Crônica / Fibromialgia">🦴 Dor Crônica / Fibromialgia</option>
+                <option value="TDAH / Foco">🧠 TDAH / Déficit de Atenção</option>
+                <option value="Depressão / Humor">😊 Depressão / Manejo do Humor</option>
+                <option value="Autismo (TEA)">🧩 Transtorno do Espectro Autista</option>
+                <option value="Epilepsia / Convulsões">⚡ Epilepsia / Crises Convulsivas</option>
+                <option value="Outra Condição">🩺 Outra Condição Específica</option>
+              </select>
+            </div>
+
+            {/* Médico Prescritor */}
+            <div className="space-y-1.5">
+              <label className="text-xs font-bold text-gray-700 block">Médico Prescritor (Opcional):</label>
+              <input
+                type="text"
+                value={prescribingDoctor}
+                onChange={(e) => setPrescribingDoctor(e.target.value)}
+                placeholder="Ex: Dr. Carlos Silva (ou deixe em branco)"
+                className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl text-xs font-medium outline-none focus:border-emerald-500"
+              />
+            </div>
+
+            {/* Status do Tratamento */}
+            <div className="space-y-1.5">
+              <label className="text-xs font-bold text-gray-700 block">Status do Tratamento:</label>
+              <select
+                value={treatmentStatus}
+                onChange={(e) => setTreatmentStatus(e.target.value)}
+                className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl text-xs font-bold text-gray-800 outline-none focus:border-emerald-500"
+              >
+                <option value="em_tratamento">🟢 Já estou em Tratamento Medicinal</option>
+                <option value="iniciando">🟡 Tenho receita e vou iniciar</option>
+                <option value="buscando_medico">🔵 Buscando Médico Prescritor</option>
+              </select>
+            </div>
+
+          </div>
+
+          <div className="pt-2 flex items-center justify-between">
+            {savedSuccess ? (
+              <span className="text-xs font-bold text-emerald-600 flex items-center gap-1">
+                <Check className="w-4 h-4" /> Perfil Terapêutico atualizado com sucesso!
+              </span>
+            ) : <span />}
+
+            <button
+              type="submit"
+              disabled={savingProfile}
+              className="px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl shadow-md transition-all flex items-center gap-2"
+            >
+              <Save className="w-4 h-4" />
+              {savingProfile ? 'Salvando...' : 'Salvar Perfil Terapêutico'}
+            </button>
+          </div>
+        </form>
+      )}
+
+      {/* 2. MINHAS AVALIAÇÕES */}
       {activeTab === 'reviews' && (
         <div className="space-y-4">
           {reviews.length === 0 ? (
@@ -191,7 +336,7 @@ export const MyProfile: React.FC = () => {
                 Você ainda não registrou avaliações para suas genéticas ou óleos.
               </p>
               <p className="text-[11px] text-gray-400">
-                Abra qualquer produto no catálogo e clique em <strong>+ Avaliar esta Genética</strong> para salvar no seu diário.
+                Abra qualquer produto no catálogo e clique em <strong>+ Avaliar em 1 Clique</strong> para salvar no seu diário.
               </p>
             </div>
           ) : (
@@ -242,9 +387,11 @@ export const MyProfile: React.FC = () => {
                       ))}
                     </div>
 
-                    <p className="text-xs text-gray-600 italic pt-1 bg-gray-50 p-2.5 rounded-xl border border-gray-100">
-                      "{rev.comment}"
-                    </p>
+                    {rev.comment && (
+                      <p className="text-xs text-gray-600 italic pt-1 bg-gray-50 p-2.5 rounded-xl border border-gray-100">
+                        "{rev.comment}"
+                      </p>
+                    )}
                   </div>
 
                   <span className="text-[10px] text-gray-400 block text-right pt-2 border-t border-gray-100">
@@ -257,7 +404,7 @@ export const MyProfile: React.FC = () => {
         </div>
       )}
 
-      {/* Conteúdo 2: Minhas Associações (Sem descrições genéricas) */}
+      {/* 3. MINHAS ASSOCIAÇÕES */}
       {activeTab === 'associations' && (
         <div className="space-y-4">
           {myAssociatedEntities.length === 0 ? (

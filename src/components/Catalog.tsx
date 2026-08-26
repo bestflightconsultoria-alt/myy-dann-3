@@ -14,6 +14,7 @@ interface CommunityReviewStats {
   [strainId: string]: {
     avgRating: number;
     count: number;
+    hasVerifiedReview?: boolean;
   };
 }
 
@@ -26,23 +27,26 @@ export const Catalog: React.FC<CatalogProps> = ({ currentCategory: initialCatego
   const [communityStats, setCommunityStats] = useState<CommunityReviewStats>({});
 
   // Lista de subfiltros para flores
-  const flowerFilters = ['ALL', '🔥 Mais Recomendadas', 'Híbrida', 'Indica', 'Sativa', 'THC', 'CBD', 'THC/CBD'];
+  const flowerFilters = ['ALL', '🔥 Mais Recomendadas', '🛡️ Verificados por Pacientes', 'Híbrida', 'Indica', 'Sativa', 'THC', 'CBD', 'THC/CBD'];
 
   // Busca avaliações reais para exibir estrelas e contagem nos cards
   useEffect(() => {
     async function loadStats() {
       if (!supabase) return;
       try {
-        const { data, error } = await supabase.from('reviews').select('strain_id, rating');
+        const { data, error } = await supabase.from('reviews').select('strain_id, rating, is_verified');
         if (!error && data) {
           const map: CommunityReviewStats = {};
           data.forEach((r: any) => {
             const sId = r.strain_id;
             if (!map[sId]) {
-              map[sId] = { avgRating: 0, count: 0 };
+              map[sId] = { avgRating: 0, count: 0, hasVerifiedReview: false };
             }
             map[sId].count += 1;
             map[sId].avgRating += r.rating || 5;
+            if (r.is_verified) {
+              map[sId].hasVerifiedReview = true;
+            }
           });
 
           Object.keys(map).forEach(sId => {
@@ -75,6 +79,9 @@ export const Catalog: React.FC<CatalogProps> = ({ currentCategory: initialCatego
         if (selectedSubFilter === '🔥 Mais Recomendadas') {
           const stats = communityStats[strain.id];
           matchSubFilter = !!(stats && stats.count > 0 && stats.avgRating >= 4.0);
+        } else if (selectedSubFilter === '🛡️ Verificados por Pacientes') {
+          const stats = communityStats[strain.id];
+          matchSubFilter = !!(stats && stats.hasVerifiedReview);
         } else if (['Híbrida', 'Indica', 'Sativa'].includes(selectedSubFilter)) {
           matchSubFilter = strain.type === selectedSubFilter;
         } else if (['THC', 'CBD', 'THC/CBD'].includes(selectedSubFilter)) {
