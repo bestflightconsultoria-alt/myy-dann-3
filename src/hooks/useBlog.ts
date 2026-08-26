@@ -3,6 +3,42 @@ import { BlogPost } from '../types/blog';
 
 export const MOCK_POSTS: BlogPost[] = [
   {
+    id: "3",
+    slug: "dentistas-podem-prescrever-cannabis-medicinal-brasil",
+    title: "Dentistas Podem Prescrever Cannabis Medicinal? Entenda Quem Pode Prescrever no Brasil",
+    excerpt: "Descubra o papel dos Cirurgiões-Dentistas no tratamento de DTM, bruxismo e dor orofacial com fitocanabinoides, e saiba quem são os profissionais habilitados pela lei.",
+    category: "Regulamentação & Direitos",
+    readTime: "4 min de leitura",
+    date: "26 de Agosto de 2026",
+    author: "Redação CannaGuia",
+    tags: ["Dentistas", "Prescrição Médica", "DTM", "Bruxismo", "Legislação"],
+    content: `
+      <h3>1. Sim! Cirurgiões-Dentistas Podem Prescrever Cannabis Medicinal</h3>
+      <p>Muitos pacientes não sabem, mas no Brasil os <strong>Cirurgiões-Dentistas devidamente registrados no CFO (Conselho Federal de Odontologia)</strong> possuem autorização legal e respaldo regulatório para prescrever produtos e fitocanabinoides à base de Cannabis (CBD e THC).</p>
+      
+      <p>A amparo legal apoia-se na <strong>Lei Federal nº 5.081/1966</strong> (Art. 6º, II), combinada com a <strong>Nota Técnica CFO-01/2020</strong> e as Resoluções RDC 660/2022 e RDC 327/2019 da Anvisa.</p>
+
+      <h3>2. Em Quais Casos a Odontologia Utiliza a Cannabis Medicinal?</h3>
+      <p>Os Cirurgiões-Dentistas prescrevem fitocanabinoides principalmente para condições da região buco-maxilo-facial e manifestações de dor e estresse orofacial:</p>
+      <ul>
+        <li><strong>DTM (Disfunção Temporomandibular):</strong> Alívio de dores nas articulações da mandíbula e músculos mastigatórios.</li>
+        <li><strong>Bruxismo Severo e Apertamento Dental:</strong> Relaxamento muscular e controle da ansiedade noturna que causa o ranger de dentes.</li>
+        <li><strong>Neuralgia do Trigêmeo:</strong> Manejo de dores neuropáticas faciais de alta intensidade.</li>
+        <li><strong>Analgesia e Anti-inflamatório Pós-Cirúrgico:</strong> Controle da dor e cicatrização pós-procedimentos invasivos.</li>
+      </ul>
+
+      <h3>3. Quem Mais Pode Prescrever no Brasil?</h3>
+      <ul>
+        <li><strong>Médicos (CRM):</strong> Qualquer médico generalista ou especialista com registro ativo no CRM tem autonomia técnica para prescrever fitocanabinoides para qualquer indicação clínica justificável.</li>
+        <li><strong>Cirurgiões-Dentistas (CRO):</strong> Habilitados para prescrição em condições no âmbito da odontologia e dor orofacial.</li>
+        <li><strong>Médicos Veterinários (CRMV):</strong> Para tratamentos em animais de companhia (como cães e gatos com dor crônica, epilepsia ou ansiedade de separação).</li>
+      </ul>
+
+      <h3>4. Como Agendar uma Consulta com Prescritor?</h3>
+      <p>No CannaGuia, você encontra o diretório de <strong>Médicos e Odontólogos Prescritores Verificados</strong>. Basta acessar a aba <strong>Médicos Prescritores</strong> no menu principal para encontrar profissionais que atendem presencialmente ou via Telemedicina em todo o Brasil.</p>
+    `
+  },
+  {
     id: "1",
     slug: "passo-a-passo-tratamento-cannabis-medicinal-brasil",
     title: "Como Iniciar o Tratamento com Cannabis Medicinal no Brasil: Guia Passo a Passo",

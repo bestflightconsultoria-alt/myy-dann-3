@@ -7,10 +7,7 @@ import {
   ShieldCheck, 
   Calendar, 
   Video, 
-  Phone,
-  Filter,
-  CheckCircle2,
-  Award
+  Filter
 } from 'lucide-react';
 
 export interface Doctor {
@@ -65,6 +62,22 @@ export const MOCK_DOCTORS: Doctor[] = [
     appointmentUrl: "https://wa.me/5531998765432?text=Ola!%20Vim%20pelo%20CannaGuia%20e%20gostaria%20de%20agendar%20uma%20consulta."
   },
   {
+    id: "dr-renato-machado-cro",
+    name: "Dr. Renato Machado",
+    crm: "CRO-SP 102.840 (Cirurgião-Dentista)",
+    specialty: "Odontologia & Dor Orofacial",
+    secondarySpecialty: "DTM & Bruxismo",
+    city: "São Paulo",
+    state: "SP",
+    isOnline: true,
+    rating: 4.9,
+    reviewsCount: 31,
+    bio: "Cirurgião-Dentista especialista em DTM, bruxismo severo e dor orofacial utilizando fitocanabinoides em odontologia.",
+    focusConditions: ["DTM", "Bruxismo", "Dor Orofacial", "Neuralgia do Trigêmeo"],
+    contactPhone: "(11) 97788-9900",
+    appointmentUrl: "https://wa.me/5511977889900?text=Ola!%20Encontrei%20seu%20contato%20no%20CannaGuia%20e%20gostaria%20de%20agendar%20uma%20consulta%20odontologica."
+  },
+  {
     id: "dr-marcelo-almeida",
     name: "Dr. Marcelo Almeida",
     crm: "CRM-RJ 95.830 | RQE 41.200",
@@ -105,6 +118,7 @@ export const Doctors: React.FC = () => {
     'ALL',
     'Neurologia & Medicina da Dor',
     'Psiquiatria',
+    'Odontologia & Dor Orofacial',
     'Medicina de Família & Geriatria',
     'Pediatria & Neurologia Infantil'
   ];
@@ -128,25 +142,25 @@ export const Doctors: React.FC = () => {
   return (
     <div className="space-y-6">
       
-      {/* Banner Principal de Médicos */}
+      {/* Banner Principal de Médicos e Dentistas */}
       <div className="bg-gradient-to-r from-teal-900 via-emerald-800 to-emerald-900 rounded-3xl p-6 sm:p-8 text-white shadow-xl relative overflow-hidden">
         <div className="relative z-10 max-w-3xl space-y-3">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-teal-500/20 border border-teal-400/30 text-teal-200 text-xs font-semibold backdrop-blur-md">
             <Stethoscope className="w-3.5 h-3.5 text-teal-300" />
-            <span>Diretório Oficial de Prescritores Verificados</span>
+            <span>Diretório de Médicos e Dentistas Prescritores Verificados</span>
           </div>
 
           <h1 className="text-2xl sm:text-4xl font-black tracking-tight text-white leading-tight">
-            Médicos Prescritores de Cannabis Medicinal
+            Médicos & Dentistas Prescritores de Cannabis Medicinal
           </h1>
 
           <p className="text-sm sm:text-base text-teal-100/90 leading-relaxed">
-            Encontre médicos especialistas com registro no CRM, experientes na prescrição de fitocanabinoides e atendimento presencial ou via Telemedicina em todo o Brasil.
+            Encontre médicos e cirurgiões-dentistas com registro ativo no CRM e CRO, experientes na prescrição de fitocanabinoides e atendimento presencial ou via Telemedicina em todo o Brasil.
           </p>
 
           <div className="pt-2 flex flex-wrap items-center gap-4 text-xs font-medium text-teal-200/80">
             <span className="flex items-center gap-1.5">
-              <ShieldCheck className="w-4 h-4 text-teal-400" /> Profissionais com CRM Ativo
+              <ShieldCheck className="w-4 h-4 text-teal-400" /> Profissionais com CRM / CRO Ativo
             </span>
             <span className="flex items-center gap-1.5">
               <Video className="w-4 h-4 text-teal-400" /> Atendimento Online (Telemedicina)
@@ -166,7 +180,7 @@ export const Doctors: React.FC = () => {
               type="text"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              placeholder="Buscar por médico, especialidade ou cidade..."
+              placeholder="Buscar por nome, especialidade, DTM, cirurgião-dentista..."
               className="w-full pl-10 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500"
             />
           </div>
@@ -206,7 +220,7 @@ export const Doctors: React.FC = () => {
         </div>
       </div>
 
-      {/* Grid de Médicos */}
+      {/* Grid de Médicos e Dentistas */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {filteredDoctors.map((doc) => (
           <div
@@ -220,7 +234,7 @@ export const Doctors: React.FC = () => {
                 <div>
                   <div className="flex items-center gap-2 flex-wrap mb-1">
                     <span className="text-[10px] font-bold bg-emerald-100 text-emerald-800 px-2.5 py-0.5 rounded-full border border-emerald-200 flex items-center gap-1">
-                      <ShieldCheck className="w-3 h-3 text-emerald-600" /> Médico Verificado
+                      <ShieldCheck className="w-3 h-3 text-emerald-600" /> Profissional Verificado
                     </span>
                     {doc.isOnline && (
                       <span className="text-[10px] font-bold bg-teal-100 text-teal-800 px-2.5 py-0.5 rounded-full flex items-center gap-1">
