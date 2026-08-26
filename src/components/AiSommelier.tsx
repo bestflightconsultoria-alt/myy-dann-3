@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
-import { Sparkles, CheckCircle2, ArrowRight, ShieldCheck, Flame, Zap, Award, ThumbsUp } from 'lucide-react';
+import { Sparkles, ArrowRight, ShieldCheck, Flame, Award, ThumbsUp, Check } from 'lucide-react';
 import { useStrains } from '../hooks/useStrains';
 import { Strain } from '../types/strain';
 import { StrainModal } from './StrainModal';
 
 export const AiSommelier: React.FC = () => {
   const { strains } = useStrains();
-  const [objective, setObjective] = useState<string>('ansiedade');
+  
+  // Objetivos Múltiplos (Array)
+  const [selectedObjectives, setSelectedObjectives] = useState<string[]>(['ansiedade']);
   const [timeOfDay, setTimeOfDay] = useState<string>('dia');
   const [experienceLevel, setExperienceLevel] = useState<string>('todos');
   const [preferredFormat, setPreferredFormat] = useState<string>('todos');
@@ -15,87 +17,123 @@ export const AiSommelier: React.FC = () => {
   const [hasSearched, setHasSearched] = useState<boolean>(false);
   const [selectedStrain, setSelectedStrain] = useState<Strain | null>(null);
 
+  const availableObjectives = [
+    { id: 'ansiedade', label: '🧘 Ansiedade & Estresse' },
+    { id: 'sono', label: '😴 Insônia & Sono Reparador' },
+    { id: 'foco', label: '🧠 Foco & Criatividade' },
+    { id: 'dor', label: '🦴 Dores Crônicas & Inflamação' },
+    { id: 'humor', label: '⚡ Disposição & Humor' },
+    { id: 'apetite', label: '🍔 Estímulo de Apetite' },
+  ];
+
+  const toggleObjective = (id: string) => {
+    if (selectedObjectives.includes(id)) {
+      if (selectedObjectives.length > 1) {
+        setSelectedObjectives(selectedObjectives.filter(item => item !== id));
+      }
+    } else {
+      setSelectedObjectives([...selectedObjectives, id]);
+    }
+  };
+
   const handleRecommend = () => {
     const scoredStrains = strains.map((s) => {
-      let score = 70; // Score base
+      let score = 50; // Score base
       const reasons: string[] = [];
 
       const nameLower = s.name.toLowerCase();
       const profileLower = (s.aromaFlavor || s.description || '').toLowerCase();
       const effectsLower = (s.effects || []).map(e => e.toLowerCase()).join(' ');
+      const terpenesLower = (s.terpenes || []).map(t => t.toLowerCase()).join(' ');
 
-      // 1. Filtro por Formato
+      // 1. Filtro de Formato
       if (preferredFormat !== 'todos') {
         if (s.category !== preferredFormat) {
-          score -= 40;
+          score -= 30;
         } else {
           score += 15;
         }
       }
 
-      // 2. Filtro por Objetivo Terapêutico
-      if (objective === 'ansiedade') {
-        if (s.dominantCannabinoid === 'CBD' || s.dominantCannabinoid === 'THC/CBD') {
-          score += 20;
-          reasons.push("Rico em CBD para modulação de ansiedade sem efeito eufórico excessivo.");
+      // 2. Pontuação por Objetivos Selecionados (Múltiplos)
+      selectedObjectives.forEach((obj) => {
+        if (obj === 'ansiedade') {
+          if (s.dominantCannabinoid === 'CBD' || s.dominantCannabinoid === 'THC/CBD') {
+            score += 20;
+            reasons.push("Alto teor de CBD/proporção balanceada para calmaria sem ansiedade.");
+          }
+          if (effectsLower.includes('ansiedade') || effectsLower.includes('calma') || terpenesLower.includes('linalol')) {
+            score += 15;
+          }
         }
-        if (effectsLower.includes('ansiedade') || effectsLower.includes('calma') || effectsLower.includes('estresse')) {
-          score += 15;
-          reasons.push("Perfil de terpenos com propriedades ansiolíticas comprovadas.");
-        }
-      } else if (objective === 'sono') {
-        if (s.type === 'Indica' || s.category === 'oleos' || nameLower.includes('sono') || nameLower.includes('cbn')) {
-          score += 25;
-          reasons.push("Genética de perfil sedativo ideal para indução do sono reparador.");
-        }
-        if (effectsLower.includes('sono') || effectsLower.includes('sedação') || effectsLower.includes('relaxamento')) {
-          score += 15;
-          reasons.push("Promove descompressão muscular e relaxamento físico profundo.");
-        }
-      } else if (objective === 'foco') {
-        if (s.type === 'Sativa') {
-          score += 25;
-          reasons.push("Perfil Sativa dominante recomendado para clareza mental e foco diurno.");
-        }
-        if (effectsLower.includes('foco') || effectsLower.includes('criatividade') || effectsLower.includes('disposição')) {
-          score += 15;
-          reasons.push("Estímulo sensorial sem causar agitação ou névoa mental.");
-        }
-      } else if (objective === 'dor') {
-        if (s.dominantCannabinoid === 'THC/CBD' || s.category === 'outros' || nameLower.includes('pomada') || nameLower.includes('hash')) {
-          score += 25;
-          reasons.push("Combinação analgésica ideal para alívio de dores crônicas e inflamações.");
-        }
-        if (effectsLower.includes('dor') || effectsLower.includes('muscular') || effectsLower.includes('inflam')) {
-          score += 15;
-          reasons.push("Eficaz no manejo de tensões musculares e dores articulares.");
-        }
-      } else if (objective === 'humor') {
-        if (s.type === 'Sativa' || s.type === 'Híbrida') {
-          score += 20;
-          reasons.push("Elevação de humor e sensação de bem-estar social.");
-        }
-      }
 
-      // 3. Filtro por Momento do Uso (Dia vs Noite)
+        if (obj === 'sono') {
+          if (s.type === 'Indica' || s.category === 'oleos' || nameLower.includes('sono') || nameLower.includes('cbn')) {
+            score += 25;
+            reasons.push("Perfil de Induição ao Sono Profundo e relaxamento noturno.");
+          }
+          if (terpenesLower.includes('mirceno') || effectsLower.includes('sono') || effectsLower.includes('sedação')) {
+            score += 15;
+          }
+        }
+
+        if (obj === 'foco') {
+          if (s.type === 'Sativa') {
+            score += 25;
+            reasons.push("Genética Sativa para clareza cognitiva e estimulação de foco.");
+          }
+          if (effectsLower.includes('foco') || effectsLower.includes('criatividade') || terpenesLower.includes('pineno')) {
+            score += 15;
+          }
+        }
+
+        if (obj === 'dor') {
+          if (s.dominantCannabinoid === 'THC/CBD' || s.category === 'outros' || nameLower.includes('pomada') || nameLower.includes('hash')) {
+            score += 25;
+            reasons.push("Ação analgésica e alívio de tensões neuromusculares.");
+          }
+          if (effectsLower.includes('dor') || effectsLower.includes('muscular') || terpenesLower.includes('cariofileno')) {
+            score += 15;
+          }
+        }
+
+        if (obj === 'humor') {
+          if (s.type === 'Sativa' || s.type === 'Híbrida' || terpenesLower.includes('limoneno')) {
+            score += 20;
+            reasons.push("Presença de Limoneno e perfil ativo para elevação do ânimo.");
+          }
+        }
+
+        if (obj === 'apetite') {
+          if (effectsLower.includes('apetite') || profileLower.includes('fome')) {
+            score += 25;
+            reasons.push("Estímulo de apetite e bem-estar gastrointestinal.");
+          }
+        }
+      });
+
+      // 3. Impacto REAL do Momento do Uso (Dia vs Noite)
       if (timeOfDay === 'dia') {
         if (s.type === 'Indica' && s.dominantCannabinoid === 'THC') {
-          score -= 20;
-        } else if (s.dominantCannabinoid === 'CBD' || s.type === 'Sativa') {
-          score += 10;
-          reasons.push("Compatível com rotina diurna sem gerar letargia.");
+          score -= 35; // Penaliza Indicas fortes de dia!
+        } else if (s.type === 'Sativa' || s.dominantCannabinoid === 'CBD') {
+          score += 20; // Favorece Sativas e CBD de dia!
+          reasons.push("Perfeito para uso diurno sem causar sonolência.");
         }
       } else if (timeOfDay === 'noite') {
-        if (s.type === 'Indica' || s.category === 'oleos') {
-          score += 10;
+        if (s.type === 'Sativa') {
+          score -= 25; // Penaliza Sativas estimulantes à noite!
+        } else if (s.type === 'Indica' || s.category === 'oleos' || nameLower.includes('cbn')) {
+          score += 20; // Favorece Indicas à noite!
+          reasons.push("Ideal para desacelerar o corpo no período noturno.");
         }
       }
 
-      // 4. Experiência / Tolerância
+      // 4. Perfil de Experiência
       if (experienceLevel === 'iniciante') {
         if (s.dominantCannabinoid === 'CBD' || s.dominantCannabinoid === 'THC/CBD') {
           score += 15;
-          reasons.push("Excelente para iniciantes devido ao perfil equilibrado e suave.");
+          reasons.push("Recomendado para iniciantes devido ao perfil suave.");
         }
       } else if (experienceLevel === 'experiente') {
         if (s.dominantCannabinoid === 'THC' || s.type === 'Concentrados') {
@@ -103,9 +141,8 @@ export const AiSommelier: React.FC = () => {
         }
       }
 
-      // Cap final
-      const finalScore = Math.min(99, Math.max(60, score));
-      const reasonText = reasons.length > 0 ? reasons[0] : "Excelente equilíbrio terpênico e alinhamento com sua busca.";
+      const finalScore = Math.min(99, Math.max(55, score));
+      const reasonText = reasons.length > 0 ? reasons.join(' ') : "Perfil terpênico perfeitamente harmonizado com o seu objetivo.";
 
       return { strain: s, score: finalScore, reason: reasonText };
     });
@@ -113,7 +150,7 @@ export const AiSommelier: React.FC = () => {
     // Ordena do maior score para o menor
     scoredStrains.sort((a, b) => b.score - a.score);
 
-    // Retorna até 8 melhores opções
+    // Exibe até 8 melhores resultados
     setRecommendations(scoredStrains.slice(0, 8));
     setHasSearched(true);
   };
@@ -127,7 +164,7 @@ export const AiSommelier: React.FC = () => {
         
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-500/20 border border-emerald-400/30 text-emerald-300 text-xs font-bold backdrop-blur-md">
           <Flame className="w-4 h-4 text-emerald-400" />
-          <span>Fummelier IA — Curadoria Terapêutica Inteligente</span>
+          <span>Fummelier IA — Curadoria Terapêutica Personalizada</span>
         </div>
 
         <h1 className="text-3xl sm:text-5xl font-black tracking-tight text-white">
@@ -135,33 +172,44 @@ export const AiSommelier: React.FC = () => {
         </h1>
 
         <p className="text-sm sm:text-base text-emerald-100/80 max-w-xl mx-auto leading-relaxed">
-          Selecione suas necessidades e nosso algoritmo de inteligência analisará genéticas, terpenos e perfis de 90+ opções para indicar as melhores escolhas.
+          Marque um ou mais objetivos terapêuticos e descubra as genéticas e produtos com maior compatibilidade para a sua rotina.
         </p>
       </div>
 
       {/* Formulário do Sommelier */}
       <div className="bg-white rounded-3xl border border-gray-200/90 p-6 sm:p-8 shadow-xl space-y-6">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          
-          {/* 1. Objetivo */}
-          <div className="space-y-2">
-            <label className="text-xs font-bold text-gray-700 uppercase tracking-wider block">
-              1. Qual o objetivo?
-            </label>
-            <select
-              value={objective}
-              onChange={(e) => setObjective(e.target.value)}
-              className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl text-xs font-bold text-gray-800 focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none"
-            >
-              <option value="ansiedade">🧘 Ansiedade / Estresse</option>
-              <option value="sono">😴 Insônia / Sono Reparador</option>
-              <option value="foco">🧠 Foco / Criatividade / TDAH</option>
-              <option value="dor">🦴 Dores Crônicas / Inflamação</option>
-              <option value="humor">⚡ Disposição & Humor</option>
-            </select>
+        
+        {/* 1. Seleção Múltipla de Objetivos */}
+        <div className="space-y-3">
+          <label className="text-xs font-bold text-gray-700 uppercase tracking-wider block">
+            1. Selecione um ou mais Objetivos Terapêuticos:
+          </label>
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
+            {availableObjectives.map((obj) => {
+              const isSelected = selectedObjectives.includes(obj.id);
+              return (
+                <button
+                  key={obj.id}
+                  type="button"
+                  onClick={() => toggleObjective(obj.id)}
+                  className={`p-3 rounded-2xl text-xs font-bold transition-all flex items-center justify-between border ${
+                    isSelected
+                      ? 'bg-emerald-600 text-white border-emerald-600 shadow-md shadow-emerald-600/20'
+                      : 'bg-gray-50 text-gray-700 border-gray-200 hover:bg-emerald-50/70 hover:border-emerald-300'
+                  }`}
+                >
+                  <span>{obj.label}</span>
+                  {isSelected && <Check className="w-4 h-4 text-white shrink-0" />}
+                </button>
+              );
+            })}
           </div>
+        </div>
 
-          {/* 2. Horário */}
+        {/* 2. Filtros Adicionais (Momento, Tolerância, Formato) */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2 border-t border-gray-100">
+          
+          {/* Momento do Uso */}
           <div className="space-y-2">
             <label className="text-xs font-bold text-gray-700 uppercase tracking-wider block">
               2. Momento de Uso
@@ -171,16 +219,16 @@ export const AiSommelier: React.FC = () => {
               onChange={(e) => setTimeOfDay(e.target.value)}
               className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl text-xs font-bold text-gray-800 focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none"
             >
-              <option value="dia">☀️ Durante o Dia (Sem letargia)</option>
-              <option value="noite">🌙 Noite / Antes de dormir</option>
-              <option value="qualquer">🔄 Qualquer Momento</option>
+              <option value="dia">☀️ Uso Diurno (Sem sonolência)</option>
+              <option value="noite">🌙 Uso Noturno (Sedativo/Repouso)</option>
+              <option value="qualquer">🔄 Qualquer Horário</option>
             </select>
           </div>
 
-          {/* 3. Tolerância */}
+          {/* Perfil / Experiência */}
           <div className="space-y-2">
             <label className="text-xs font-bold text-gray-700 uppercase tracking-wider block">
-              3. Perfil / Experiência
+              3. Perfil / Tolerância
             </label>
             <select
               value={experienceLevel}
@@ -188,12 +236,12 @@ export const AiSommelier: React.FC = () => {
               className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl text-xs font-bold text-gray-800 focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none"
             >
               <option value="todos">🌱 Todos os Perfis</option>
-              <option value="iniciante">🟢 Iniciante (Suave / CBD)</option>
+              <option value="iniciante">🟢 Iniciante (Leve / CBD)</option>
               <option value="experiente">🔥 Experiente (Mais Potente)</option>
             </select>
           </div>
 
-          {/* 4. Formato */}
+          {/* Formato Preferido */}
           <div className="space-y-2">
             <label className="text-xs font-bold text-gray-700 uppercase tracking-wider block">
               4. Formato Preferido
@@ -229,10 +277,10 @@ export const AiSommelier: React.FC = () => {
             <div>
               <h3 className="text-xl font-black text-gray-900 flex items-center gap-2">
                 <Award className="w-6 h-6 text-emerald-600" />
-                Opções Selecionadas pelo Fummelier IA:
+                Recomendações Personalizadas pelo Fummelier IA:
               </h3>
               <p className="text-xs text-gray-500 mt-0.5">
-                Exibindo as 8 opções com maior compatibilidade terapêutica para o seu perfil.
+                Calculado com base em {selectedObjectives.length} {selectedObjectives.length === 1 ? 'objetivo' : 'objetivos simultâneos'} e momento do uso ({timeOfDay === 'dia' ? 'Diurno' : 'Noturno'}).
               </p>
             </div>
             <span className="text-xs font-bold bg-emerald-100 text-emerald-800 px-3 py-1 rounded-full">
@@ -250,7 +298,7 @@ export const AiSommelier: React.FC = () => {
                 {/* Porcentagem de Compatibilidade */}
                 <div className="absolute top-0 right-0 bg-gradient-to-l from-emerald-600 to-teal-600 text-white text-[11px] font-black px-3 py-1 rounded-bl-xl shadow-sm flex items-center gap-1">
                   <ThumbsUp className="w-3 h-3 text-amber-300" />
-                  <span>{score}% de Compatibilidade</span>
+                  <span>{score}% Compatível</span>
                 </div>
 
                 <div>
