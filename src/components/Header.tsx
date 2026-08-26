@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Flower2, Droplets, Sparkles, Building2, Flame, BookOpen, LogOut, UserCheck } from 'lucide-react';
 import { supabase } from '../lib/supabase';
+import { Logo } from './Logo';
 
 interface HeaderProps {
   activeTab: string;
@@ -51,23 +52,18 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
     { id: 'catalogo-oleos', label: 'Óleos Medicinais', icon: Droplets },
     { id: 'catalogo-outros', label: 'Gummies & Outros', icon: Sparkles },
     { id: 'associacoes', label: 'Associações', icon: Building2 },
-    { id: 'sommelier', label: 'IA Fummelier', icon: Flame },
+    { id: 'sommelier', label: 'IA Sommelier', icon: Flame },
     { id: 'blog', label: 'Guia do Paciente', icon: BookOpen },
   ];
 
   return (
-    <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-gray-200 shadow-sm">
+    <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-gray-200/80 shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 gap-4">
           
-          {/* Logo */}
-          <div className="flex items-center gap-3 cursor-pointer shrink-0" onClick={() => setActiveTab('catalogo-flores')}>
-            <div className="w-10 h-10 rounded-xl bg-emerald-600 flex items-center justify-center text-white font-bold text-xl shadow-md shadow-emerald-200">
-              🌿
-            </div>
-            <div>
-              <span className="text-xl font-black text-gray-900 tracking-tight">Canna<span className="text-emerald-600">Guia</span></span>
-            </div>
+          {/* Logo Oficial CannaGuia (Bússola + Folha + IA Sparkle) */}
+          <div onClick={() => setActiveTab('catalogo-flores')}>
+            <Logo size="md" showText={true} />
           </div>
 
           {/* Menu Central */}
@@ -79,13 +75,13 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
                 <button
                   key={item.id}
                   onClick={() => setActiveTab(item.id)}
-                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs sm:text-sm font-medium transition-all whitespace-nowrap ${
+                  className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-medium transition-all whitespace-nowrap ${
                     isActive
-                      ? 'bg-emerald-600 text-white shadow-sm shadow-emerald-200 font-semibold'
-                      : 'text-gray-600 hover:text-emerald-700 hover:bg-emerald-50/60'
+                      ? 'bg-emerald-600 text-white shadow-md shadow-emerald-600/20 font-semibold scale-[1.02]'
+                      : 'text-gray-600 hover:text-emerald-700 hover:bg-emerald-50/70'
                   }`}
                 >
-                  <Icon className={`w-4 h-4 ${isActive ? 'text-white' : 'text-gray-500'}`} />
+                  <Icon className={`w-4 h-4 ${isActive ? 'text-white' : 'text-emerald-600'}`} />
                   {item.label}
                 </button>
               );
@@ -100,10 +96,10 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
                 <button
                   type="button"
                   onClick={() => setActiveTab('perfil')}
-                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold transition-all shadow-sm ${
+                  className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold transition-all shadow-sm ${
                     activeTab === 'perfil'
                       ? 'bg-emerald-600 text-white shadow-emerald-200'
-                      : 'bg-emerald-50 text-emerald-900 border border-emerald-200 hover:bg-emerald-100'
+                      : 'bg-emerald-50 text-emerald-900 border border-emerald-200/80 hover:bg-emerald-100'
                   }`}
                 >
                   <UserCheck className={`w-4 h-4 ${activeTab === 'perfil' ? 'text-white' : 'text-emerald-600'}`} />
@@ -117,17 +113,17 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
                   type="button"
                   onClick={handleLogout}
                   title="Sair da conta"
-                  className="p-1.5 rounded-xl text-gray-400 hover:text-red-600 hover:bg-red-50 border border-transparent hover:border-red-100 transition-all"
+                  className="p-2 rounded-xl text-gray-400 hover:text-red-600 hover:bg-red-50 border border-transparent hover:border-red-100 transition-all"
                 >
                   <LogOut className="w-4 h-4" />
                 </button>
               </div>
             ) : (
-              /* Apenas o botão de Login quando não estiver logado */
+              /* Botão de Login */
               <button
                 type="button"
                 onClick={handleLogin}
-                className="flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-bold text-gray-700 bg-white hover:bg-gray-50 border border-gray-300 hover:border-gray-400 rounded-2xl shadow-sm transition-all"
+                className="flex items-center gap-2 px-4 py-2 text-xs font-bold text-gray-800 bg-white hover:bg-gray-50 border border-gray-200 hover:border-emerald-300 rounded-xl shadow-sm transition-all"
               >
                 <img 
                   src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" 
