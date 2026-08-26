@@ -219,7 +219,7 @@ export const AiSommelier: React.FC = () => {
         {/* Presets Rápidos */}
         <div className="flex flex-wrap items-center justify-between gap-2 bg-emerald-50/60 p-3 rounded-2xl border border-emerald-100">
           <span className="text-xs font-bold text-emerald-900 flex items-center gap-1.5">
-            <SlidersHorizontal className="w-4 h-4 text-emerald-600" /> Atalias Rápidos:
+            <SlidersHorizontal className="w-4 h-4 text-emerald-600" /> Atalhos Rápidos:
           </span>
           <div className="flex flex-wrap gap-1.5 text-xs">
             <button
