@@ -11,7 +11,8 @@ import {
   ShieldCheck,
   Globe,
   Star,
-  Plus
+  Plus,
+  Sparkles
 } from 'lucide-react';
 import { Strain } from '../types/strain';
 import { supabase } from '../lib/supabase';
@@ -49,8 +50,7 @@ const COMMON_SIDE_EFFECTS = [
   'Olhos secos / vermelhidão',
   'Sonolência diurna',
   'Aumento de apetite',
-  'Leve tontura transitória',
-  'Taquicardia leve'
+  'Leve tontura transitória'
 ];
 
 interface StrainModalProps {
@@ -144,7 +144,6 @@ export const StrainModal: React.FC<StrainModalProps> = ({ strain, onClose }) => 
 
   const badge = displayBadge();
 
-  // Toggle de Condições
   const toggleCondition = (cond: string) => {
     if (selectedConditions.includes(cond)) {
       setSelectedConditions(selectedConditions.filter(c => c !== cond));
@@ -153,7 +152,6 @@ export const StrainModal: React.FC<StrainModalProps> = ({ strain, onClose }) => 
     }
   };
 
-  // Toggle de Contra-efeitos
   const toggleSideEffect = (effect: string) => {
     if (effect === 'Nenhum efeito adverso') {
       setSelectedSideEffects(['Nenhum efeito adverso']);
@@ -168,21 +166,19 @@ export const StrainModal: React.FC<StrainModalProps> = ({ strain, onClose }) => 
     }
   };
 
+  // SUBMETER AVALIAÇÃO (Relato não é mais obrigatório!)
   const handleSubmitReview = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!comment.trim()) return;
 
     setSubmitting(true);
     const finalName = user?.user_metadata?.full_name || (patientName.trim() || 'Paciente Anônimo');
     
-    // Junta condições selecionadas + customizada
     let allConditions = [...selectedConditions];
     if (customCondition.trim()) {
       allConditions.push(customCondition.trim());
     }
     if (allConditions.length === 0) allConditions = ['Uso Terapêutico Geral'];
 
-    // Junta efeitos adversos + customizado
     let allSides = [...selectedSideEffects];
     if (customSideEffect.trim()) {
       allSides = allSides.filter(s => s !== 'Nenhum efeito adverso');
@@ -191,11 +187,13 @@ export const StrainModal: React.FC<StrainModalProps> = ({ strain, onClose }) => 
 
     const finalPositives = positiveEffectInput.trim() 
       ? positiveEffectInput.split(',').map(s => s.trim()) 
-      : ['Melhora do quadro clínico'];
+      : ['Eficácia no tratamento'];
 
     const matchedAssoc = strain.associations?.find(a => a.associationName === selectedAssoc);
     const assocId = matchedAssoc?.associationId || selectedAssoc.toLowerCase().replace(/\s+/g, '-');
     const isVerified = !!user;
+
+    const finalComment = comment.trim() || `Avaliou com ${rating} estrelas para ${allConditions.join(', ')}.`;
 
     const newReview: PatientReview = {
       id: Date.now().toString(),
@@ -208,7 +206,7 @@ export const StrainModal: React.FC<StrainModalProps> = ({ strain, onClose }) => 
       conditions: allConditions,
       positiveEffects: finalPositives,
       sideEffects: allSides,
-      comment: comment.trim(),
+      comment: finalComment,
       isVerified,
       date: 'Hoje'
     };
@@ -225,7 +223,7 @@ export const StrainModal: React.FC<StrainModalProps> = ({ strain, onClose }) => 
           conditions: allConditions,
           positive_effects: finalPositives,
           side_effects: allSides,
-          comment: comment.trim(),
+          comment: finalComment,
           is_verified: isVerified
         });
       } catch (err) {
@@ -287,6 +285,14 @@ export const StrainModal: React.FC<StrainModalProps> = ({ strain, onClose }) => 
             </div>
           </div>
 
+          {/* Banner de Conexão com o Fummelier IA */}
+          <div className="bg-gradient-to-r from-emerald-900 to-teal-900 p-3.5 rounded-2xl text-white flex items-center justify-between text-xs">
+            <span className="flex items-center gap-2 font-medium">
+              <Sparkles className="w-4 h-4 text-amber-300 shrink-0" />
+              As avaliações publicadas alimentam diretamente o Fummelier IA em tempo real.
+            </span>
+          </div>
+
           {/* Onde Encontrar e Preços */}
           <div className="border border-emerald-200 bg-emerald-50/30 rounded-2xl p-5 shadow-sm">
             <h4 className="text-base font-bold text-gray-900 flex items-center gap-2 mb-3">
@@ -329,9 +335,9 @@ export const StrainModal: React.FC<StrainModalProps> = ({ strain, onClose }) => 
               <div>
                 <h4 className="text-base font-extrabold text-gray-900 flex items-center gap-2">
                   <UserCheck className="w-5 h-5 text-emerald-600" />
-                  Relatos e Avaliações Clínicas ({reviews.length})
+                  Avaliações de Pacientes Real-World ({reviews.length})
                 </h4>
-                <p className="text-xs text-gray-500">Desfechos terapêuticos e reações reportadas por pacientes</p>
+                <p className="text-xs text-gray-500">Relatos e desfechos clínicos reportados por pacientes</p>
               </div>
 
               <button
@@ -340,11 +346,11 @@ export const StrainModal: React.FC<StrainModalProps> = ({ strain, onClose }) => 
                 className="px-3.5 py-1.5 text-xs font-bold text-emerald-800 bg-emerald-100 hover:bg-emerald-200 rounded-xl transition-all flex items-center gap-1"
               >
                 <MessageSquarePlus className="w-3.5 h-3.5" />
-                {showReviewForm ? 'Fechar' : '+ Avaliar esta Genética'}
+                {showReviewForm ? 'Fechar' : '+ Avaliar em 1 Clique'}
               </button>
             </div>
 
-            {/* FORMULÁRIO DE AVALIAÇÃO */}
+            {/* FORMULÁRIO RÁPIDO DE AVALIAÇÃO */}
             {showReviewForm && (
               <form onSubmit={handleSubmitReview} className="bg-gray-50 border border-emerald-200 p-4 sm:p-5 rounded-2xl mb-6 space-y-4 animate-in fade-in">
                 
@@ -367,10 +373,31 @@ export const StrainModal: React.FC<StrainModalProps> = ({ strain, onClose }) => 
                   </div>
                 )}
 
-                {/* Associação & Nota */}
+                {/* Nota e Associação */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
-                    <label className="text-[11px] font-bold text-gray-700 block mb-1">Associação Dispensadora / Fornecedora:</label>
+                    <label className="text-[11px] font-bold text-gray-700 block mb-1">Sua Avaliação (Estrelas):</label>
+                    <div className="flex items-center gap-1.5 h-[38px]">
+                      {[1, 2, 3, 4, 5].map((star) => (
+                        <button
+                          key={star}
+                          type="button"
+                          onClick={() => setRating(star)}
+                          className="p-1 text-amber-400 hover:scale-110 transition-transform"
+                        >
+                          <Star
+                            className={`w-6 h-6 ${
+                              star <= rating ? 'fill-amber-400 text-amber-400' : 'text-gray-300'
+                            }`}
+                          />
+                        </button>
+                      ))}
+                      <span className="text-xs font-bold text-gray-700 ml-1">({rating}/5)</span>
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="text-[11px] font-bold text-gray-700 block mb-1">Associação Dispensadora:</label>
                     <select
                       value={selectedAssoc}
                       onChange={(e) => setSelectedAssoc(e.target.value)}
@@ -392,35 +419,14 @@ export const StrainModal: React.FC<StrainModalProps> = ({ strain, onClose }) => 
                       )}
                     </select>
                   </div>
-
-                  <div>
-                    <label className="text-[11px] font-bold text-gray-700 block mb-1">Sua Avaliação Geral:</label>
-                    <div className="flex items-center gap-1.5 h-[38px]">
-                      {[1, 2, 3, 4, 5].map((star) => (
-                        <button
-                          key={star}
-                          type="button"
-                          onClick={() => setRating(star)}
-                          className="p-1 text-amber-400 hover:scale-110 transition-transform"
-                        >
-                          <Star
-                            className={`w-6 h-6 ${
-                              star <= rating ? 'fill-amber-400 text-amber-400' : 'text-gray-300'
-                            }`}
-                          />
-                        </button>
-                      ))}
-                      <span className="text-xs font-bold text-gray-700 ml-1">({rating}/5)</span>
-                    </div>
-                  </div>
                 </div>
 
                 {/* Condições Tratadas */}
                 <div>
                   <label className="text-[11px] font-bold text-gray-700 block mb-1.5">
-                    Condição(ões) Clínica(s) Tratada(s) (Selecione uma ou mais):
+                    Condição(ões) Tratada(s):
                   </label>
-                  <div className="flex flex-wrap gap-1.5 mb-2">
+                  <div className="flex flex-wrap gap-1.5">
                     {COMMON_CONDITIONS.map((cond) => {
                       const isSelected = selectedConditions.includes(cond);
                       return (
@@ -439,69 +445,30 @@ export const StrainModal: React.FC<StrainModalProps> = ({ strain, onClose }) => 
                       );
                     })}
                   </div>
-                  <input
-                    type="text"
-                    placeholder="Outra condição clínica? Especifique aqui..."
-                    value={customCondition}
-                    onChange={(e) => setCustomCondition(e.target.value)}
-                    className="w-full p-2 bg-white border border-gray-200 rounded-xl text-xs outline-none focus:border-emerald-500"
-                  />
                 </div>
 
-                {/* Benefícios / Desfechos Positivos */}
+                {/* Benefícios Sentidos */}
                 <div>
                   <label className="text-[11px] font-bold text-emerald-800 block mb-1">
-                    Benefícios e Efeitos Terapêuticos Sentidos (separar por vírgula):
+                    Benefícios Rápido (ex: alívio rápido, relaxamento muscular):
                   </label>
                   <input
                     type="text"
-                    placeholder="Ex: Alívio rápido, Relaxamento muscular, Clareza mental"
+                    placeholder="Ex: Alívio em 15 minutos, bom para dormir"
                     value={positiveEffectInput}
                     onChange={(e) => setPositiveEffectInput(e.target.value)}
                     className="w-full p-2.5 bg-white border border-gray-200 rounded-xl text-xs outline-none focus:border-emerald-500"
                   />
                 </div>
 
-                {/* Contra-efeitos / Efeitos Adversos */}
+                {/* Comentário Opcional */}
                 <div>
-                  <label className="text-[11px] font-bold text-amber-800 block mb-1.5">
-                    Contra-efeito(s) / Reações Adversas Sentidas:
+                  <label className="text-[11px] font-bold text-gray-700 block mb-1">
+                    Comentário ou Relato (Opcional):
                   </label>
-                  <div className="flex flex-wrap gap-1.5 mb-2">
-                    {COMMON_SIDE_EFFECTS.map((effect) => {
-                      const isSelected = selectedSideEffects.includes(effect);
-                      return (
-                        <button
-                          key={effect}
-                          type="button"
-                          onClick={() => toggleSideEffect(effect)}
-                          className={`text-[11px] px-2.5 py-1 rounded-lg font-medium transition-all ${
-                            isSelected
-                              ? 'bg-amber-600 text-white shadow-sm'
-                              : 'bg-white text-gray-700 border border-gray-200 hover:bg-gray-100'
-                          }`}
-                        >
-                          {isSelected ? '✓ ' : '+ '}{effect}
-                        </button>
-                      );
-                    })}
-                  </div>
-                  <input
-                    type="text"
-                    placeholder="Sentiu outro contra-efeito? Especifique aqui..."
-                    value={customSideEffect}
-                    onChange={(e) => setCustomSideEffect(e.target.value)}
-                    className="w-full p-2 bg-white border border-gray-200 rounded-xl text-xs outline-none focus:border-emerald-500"
-                  />
-                </div>
-
-                {/* Relato Clínico */}
-                <div>
-                  <label className="text-[11px] font-bold text-gray-700 block mb-1">Seu Relato / Observações Clínicas:</label>
                   <textarea
-                    rows={3}
-                    required
-                    placeholder="Descreva sua experiência de uso (horário de administração, via utilizada, temperatura/dosagem e tempo de resposta)..."
+                    rows={2}
+                    placeholder="Comentários adicionais (opcional)..."
                     value={comment}
                     onChange={(e) => setComment(e.target.value)}
                     className="w-full p-2.5 bg-white border border-gray-200 rounded-xl text-xs outline-none focus:border-emerald-500"
@@ -511,10 +478,10 @@ export const StrainModal: React.FC<StrainModalProps> = ({ strain, onClose }) => 
                 <button
                   type="submit"
                   disabled={submitting}
-                  className="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl shadow-md transition-all flex items-center justify-center gap-1.5"
+                  className="w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl shadow-md transition-all flex items-center justify-center gap-1.5"
                 >
                   <Send className="w-3.5 h-3.5" />
-                  {submitting ? 'Salvando avaliação...' : 'Publicar Avaliação'}
+                  {submitting ? 'Enviando...' : 'Publicar Avaliação Rápida'}
                 </button>
               </form>
             )}
@@ -562,29 +529,20 @@ export const StrainModal: React.FC<StrainModalProps> = ({ strain, onClose }) => 
                       </div>
                     )}
 
-                    {/* Tags de Benefícios vs Contra-efeitos */}
+                    {/* Tags de Benefícios */}
                     <div className="flex flex-wrap gap-1.5 pt-0.5">
                       {rev.positiveEffects.map((pos, idx) => (
                         <span key={idx} className="text-[10px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200 px-2 py-0.5 rounded-md flex items-center gap-1">
                           <CheckCircle2 className="w-2.5 h-2.5 text-emerald-600" /> {pos}
                         </span>
                       ))}
-
-                      {rev.sideEffects.map((side, idx) => (
-                        <span key={idx} className={`text-[10px] font-semibold px-2 py-0.5 rounded-md flex items-center gap-1 border ${
-                          side.includes('Nenhum') 
-                            ? 'bg-gray-100 text-gray-600 border-gray-200' 
-                            : 'bg-amber-50 text-amber-800 border-amber-200'
-                        }`}>
-                          {!side.includes('Nenhum') && <AlertTriangle className="w-2.5 h-2.5 text-amber-600" />}
-                          {side}
-                        </span>
-                      ))}
                     </div>
 
-                    <p className="text-xs text-gray-700 leading-relaxed pt-1">
-                      "{rev.comment}"
-                    </p>
+                    {rev.comment && (
+                      <p className="text-xs text-gray-700 leading-relaxed pt-1">
+                        "{rev.comment}"
+                      </p>
+                    )}
                   </div>
                 ))}
               </div>
@@ -597,7 +555,7 @@ export const StrainModal: React.FC<StrainModalProps> = ({ strain, onClose }) => 
                   onClick={() => setShowReviewForm(true)}
                   className="text-xs font-bold text-emerald-700 hover:underline inline-flex items-center gap-1"
                 >
-                  <Plus className="w-3.5 h-3.5" /> Seja o primeiro a avaliar e compartilhar sua experiência clínica!
+                  <Plus className="w-3.5 h-3.5" /> Seja o primeiro a avaliar em 1 clique!
                 </button>
               </div>
             )}

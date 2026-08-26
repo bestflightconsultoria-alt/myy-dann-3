@@ -1,8 +1,17 @@
-import React, { useState } from 'react';
-import { Sparkles, ArrowRight, ShieldCheck, Flame, Award, ThumbsUp, Check, SlidersHorizontal } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Sparkles, ArrowRight, ShieldCheck, Flame, Award, ThumbsUp, Check, SlidersHorizontal, MessageSquare, Star } from 'lucide-react';
 import { useStrains } from '../hooks/useStrains';
 import { Strain } from '../types/strain';
 import { StrainModal } from './StrainModal';
+import { supabase } from '../lib/supabase';
+
+interface CommunityReviewStats {
+  [strainId: string]: {
+    avgRating: number;
+    count: number;
+    topComment?: string;
+  };
+}
 
 export const AiSommelier: React.FC = () => {
   const { strains } = useStrains();
@@ -12,12 +21,47 @@ export const AiSommelier: React.FC = () => {
   const [timeOfDay, setTimeOfDay] = useState<string>('dia');
   const [experienceLevel, setExperienceLevel] = useState<string>('todos');
   const [preferredFormat, setPreferredFormat] = useState<string>('todos');
+  const [communityStats, setCommunityStats] = useState<CommunityReviewStats>({});
   
-  const [recommendations, setRecommendations] = useState<Array<{ strain: Strain; score: number; reason: string }>>([]);
+  const [recommendations, setRecommendations] = useState<Array<{ strain: Strain; score: number; reason: string; reviewStats?: { avgRating: number; count: number; topComment?: string } }>>([]);
   const [hasSearched, setHasSearched] = useState<boolean>(false);
   const [selectedStrain, setSelectedStrain] = useState<Strain | null>(null);
 
-  // Lista Completa e Abrangente de Objetivos Medicinais
+  // Busca avaliações da comunidade no Supabase para alimentar a IA
+  useEffect(() => {
+    async function loadCommunityReviews() {
+      if (!supabase) return;
+      try {
+        const { data, error } = await supabase.from('reviews').select('*');
+        if (!error && data) {
+          const statsMap: CommunityReviewStats = {};
+          
+          data.forEach((rev: any) => {
+            const sId = rev.strain_id;
+            if (!statsMap[sId]) {
+              statsMap[sId] = { avgRating: 0, count: 0, topComment: '' };
+            }
+            statsMap[sId].count += 1;
+            statsMap[sId].avgRating += rev.rating || 5;
+            if (rev.comment && (!statsMap[sId].topComment || rev.rating >= 4)) {
+              statsMap[sId].topComment = rev.comment;
+            }
+          });
+
+          // Calcula médias
+          Object.keys(statsMap).forEach(sId => {
+            statsMap[sId].avgRating = Number((statsMap[sId].avgRating / statsMap[sId].count).toFixed(1));
+          });
+
+          setCommunityStats(statsMap);
+        }
+      } catch (e) {
+        console.error('Erro ao carregar avaliações para a IA:', e);
+      }
+    }
+    loadCommunityReviews();
+  }, []);
+
   const availableObjectives = [
     { id: 'ansiedade', label: '🧘 Ansiedade & Estresse', desc: 'Ansiolítico e descompressão da mente' },
     { id: 'relaxamento', label: '💆 Relaxamento Físico', desc: 'Soltura muscular e alívio de tensões' },
@@ -47,13 +91,22 @@ export const AiSommelier: React.FC = () => {
 
   const handleRecommend = () => {
     const scoredStrains = strains.map((s) => {
-      let score = 50; // Score base
+      let score = 50;
       const reasons: string[] = [];
 
       const nameLower = s.name.toLowerCase();
       const profileLower = (s.aromaFlavor || s.description || '').toLowerCase();
       const effectsLower = (s.effects || []).map(e => e.toLowerCase()).join(' ');
       const terpenesLower = (s.terpenes || []).map(t => t.toLowerCase()).join(' ');
+
+      // 0. Bônus por Avaliações Positivas de Pacientes Reais!
+      const stats = communityStats[s.id];
+      if (stats && stats.count > 0) {
+        if (stats.avgRating >= 4.5) {
+          score += 15;
+          reasons.push(`Aprovada por pacientes com média de ${stats.avgRating}★ na comunidade.`);
+        }
+      }
 
       // 1. Filtro de Formato
       if (preferredFormat !== 'todos') {
@@ -64,7 +117,7 @@ export const AiSommelier: React.FC = () => {
         }
       }
 
-      // 2. Pontuação por Objetivos Selecionados (Algoritmo Completo)
+      // 2. Pontuação por Objetivos Selecionados
       selectedObjectives.forEach((obj) => {
         if (obj === 'ansiedade') {
           if (s.dominantCannabinoid === 'CBD' || s.dominantCannabinoid === 'THC/CBD') {
@@ -152,16 +205,16 @@ export const AiSommelier: React.FC = () => {
       // 3. Impacto REAL do Momento do Uso (Dia vs Noite)
       if (timeOfDay === 'dia') {
         if (s.type === 'Indica' && s.dominantCannabinoid === 'THC') {
-          score -= 35; // Penaliza Indicas pesadas de dia!
+          score -= 35;
         } else if (s.type === 'Sativa' || s.dominantCannabinoid === 'CBD') {
-          score += 20; // Favorece Sativas e CBD de dia!
+          score += 20;
           reasons.push("Compatível com uso diurno sem gerar sonolência.");
         }
       } else if (timeOfDay === 'noite') {
         if (s.type === 'Sativa') {
-          score -= 25; // Penaliza Sativas de noite!
+          score -= 25;
         } else if (s.type === 'Indica' || s.category === 'oleos' || nameLower.includes('cbn')) {
-          score += 20; // Favorece Indicas e Óleos de noite!
+          score += 20;
           reasons.push("Auxilia na desaceleração noturna antes de deitar.");
         }
       }
@@ -181,7 +234,7 @@ export const AiSommelier: React.FC = () => {
       const finalScore = Math.min(99, Math.max(55, score));
       const reasonText = reasons.length > 0 ? Array.from(new Set(reasons)).slice(0, 2).join(' ') : "Perfil terpênico harmonizado com os seus objetivos.";
 
-      return { strain: s, score: finalScore, reason: reasonText };
+      return { strain: s, score: finalScore, reason: reasonText, reviewStats: stats };
     });
 
     // Ordena do maior score para o menor
@@ -201,7 +254,7 @@ export const AiSommelier: React.FC = () => {
         
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-500/20 border border-emerald-400/30 text-emerald-300 text-xs font-bold backdrop-blur-md">
           <Flame className="w-4 h-4 text-emerald-400" />
-          <span>Fummelier IA — Curadoria Terapêutica Completa</span>
+          <span>Fummelier IA — Curadoria Conectada aos Relatos de Pacientes</span>
         </div>
 
         <h1 className="text-3xl sm:text-5xl font-black tracking-tight text-white">
@@ -209,7 +262,7 @@ export const AiSommelier: React.FC = () => {
         </h1>
 
         <p className="text-sm sm:text-base text-emerald-100/80 max-w-xl mx-auto leading-relaxed">
-          Selecione os seus sintomas e preferências para receber a recomendação exata de genéticas, extratos e proporções de canabinoides.
+          Nossa inteligência cruza dados de terpenos com as avaliações reais publicadas pela comunidade de pacientes no CannaGuia.
         </p>
       </div>
 
@@ -362,7 +415,7 @@ export const AiSommelier: React.FC = () => {
                 Recomendações Personalizadas pelo Fummelier IA:
               </h3>
               <p className="text-xs text-gray-500 mt-0.5">
-                Calculado com base em {selectedObjectives.length} {selectedObjectives.length === 1 ? 'objetivo' : 'objetivos simultâneos'} e momento do uso ({timeOfDay === 'dia' ? 'Diurno' : 'Noturno'}).
+                Calculado com base em {selectedObjectives.length} {selectedObjectives.length === 1 ? 'objetivo' : 'objetivos simultâneos'}, momento do uso e relatos reais de pacientes.
               </p>
             </div>
             <span className="text-xs font-bold bg-emerald-100 text-emerald-800 px-3 py-1 rounded-full">
@@ -371,7 +424,7 @@ export const AiSommelier: React.FC = () => {
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-            {recommendations.map(({ strain, score, reason }) => (
+            {recommendations.map(({ strain, score, reason, reviewStats }) => (
               <div
                 key={strain.id}
                 onClick={() => setSelectedStrain(strain)}
@@ -388,6 +441,12 @@ export const AiSommelier: React.FC = () => {
                     <span className="px-2.5 py-0.5 text-xs font-bold rounded-md bg-emerald-50 text-emerald-800 border border-emerald-100">
                       {strain.dominantCannabinoid || strain.type}
                     </span>
+                    {reviewStats && reviewStats.count > 0 && (
+                      <span className="flex items-center gap-1 text-[10px] font-bold bg-amber-100 text-amber-900 px-2 py-0.5 rounded-full border border-amber-200">
+                        <Star className="w-2.5 h-2.5 fill-amber-500 text-amber-500" />
+                        {reviewStats.avgRating} ({reviewStats.count} {reviewStats.count === 1 ? 'relato' : 'relatos'})
+                      </span>
+                    )}
                   </div>
 
                   <h4 className="font-extrabold text-gray-900 text-lg group-hover:text-emerald-700 transition-colors">
@@ -403,6 +462,14 @@ export const AiSommelier: React.FC = () => {
                       {reason}
                     </p>
                   </div>
+
+                  {/* Citação de Avaliação da Comunidade */}
+                  {reviewStats?.topComment && (
+                    <div className="mt-2 bg-amber-50/60 border border-amber-200/60 p-2 rounded-xl text-[11px] text-amber-950 italic flex items-start gap-1.5">
+                      <MessageSquare className="w-3.5 h-3.5 text-amber-600 shrink-0 mt-0.5" />
+                      <span>"{reviewStats.topComment}"</span>
+                    </div>
+                  )}
                 </div>
 
                 <div className="mt-5 pt-3 border-t border-gray-100 flex items-center justify-between text-xs">
