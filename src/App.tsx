@@ -3,6 +3,7 @@ import { Header } from './components/Header';
 import { Catalog } from './components/Catalog';
 import { Associations } from './components/Associations';
 import { AiSommelier } from './components/AiSommelier';
+import { Doctors } from './components/Doctors';
 import { Blog } from './components/Blog';
 import { MyProfile } from './components/MyProfile';
 import { TermsModal } from './components/TermsModal';
@@ -21,6 +22,7 @@ export function App() {
         {activeTab === 'catalogo-outros' && <Catalog currentCategory="outros" />}
         {activeTab === 'associacoes' && <Associations />}
         {activeTab === 'sommelier' && <AiSommelier />}
+        {activeTab === 'medicos' && <Doctors />}
         {activeTab === 'blog' && <Blog />}
         {activeTab === 'perfil' && <MyProfile />}
       </main>

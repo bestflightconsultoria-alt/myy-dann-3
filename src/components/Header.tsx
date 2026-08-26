@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Sparkles, Building2, Flame, BookOpen, LogOut, UserCheck, LayoutGrid } from 'lucide-react';
+import { Sparkles, Building2, Flame, BookOpen, LogOut, UserCheck, LayoutGrid, Stethoscope } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { Logo } from './Logo';
 
@@ -47,11 +47,12 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
     }
   };
 
-  // Menu Reorganizado e Limpo
+  // Menu Principal Completo do CannaGuia
   const navItems = [
     { id: 'catalogo-flores', label: 'Catálogo', icon: LayoutGrid },
     { id: 'sommelier', label: 'Fummelier IA', icon: Flame },
     { id: 'associacoes', label: 'Associações', icon: Building2 },
+    { id: 'medicos', label: 'Médicos Prescritores', icon: Stethoscope },
     { id: 'blog', label: 'Guia do Paciente', icon: BookOpen },
   ];
 
@@ -65,7 +66,7 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
             <Logo size="md" showText={true} />
           </div>
 
-          {/* Menu Central Limpo */}
+          {/* Menu Central Limpo e Completo */}
           <nav className="flex items-center gap-1.5 sm:gap-2 overflow-x-auto py-2">
             {navItems.map((item) => {
               const Icon = item.icon;
@@ -74,7 +75,7 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
                 <button
                   key={item.id}
                   onClick={() => setActiveTab(item.id)}
-                  className={`flex items-center gap-2 px-4 py-2 rounded-xl text-xs sm:text-sm font-medium transition-all whitespace-nowrap ${
+                  className={`flex items-center gap-2 px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-medium transition-all whitespace-nowrap ${
                     isActive
                       ? 'bg-emerald-600 text-white shadow-md shadow-emerald-600/20 font-bold scale-[1.02]'
                       : 'text-gray-600 hover:text-emerald-700 hover:bg-emerald-50/80'
