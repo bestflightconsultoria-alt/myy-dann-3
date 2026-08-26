@@ -10,35 +10,46 @@ if sys.platform == 'win32':
 CSV_PATH = r"C:\Users\Lucas\.gemini\antigravity\brain\7e314b13-60ab-4aae-9690-d9eacd03d06a\planilha_strains_brasil_completa.csv"
 TS_PATH = r"c:\Users\Lucas\CANNA GUIA\myy-dann2-main\src\hooks\useStrains.ts"
 
-def extrair_efeitos_reais(nome, tipo, canabinoide, perfil, genetica):
+def extrair_efeitos_reais(nome, tipo, canabinoide, perfil, genetica, cat):
+    nome_lower = nome.lower()
+    
+    # Pomadas (Topicos) - Efeitos estritamente corporais e dermatologicos/musculares
+    if "pomada" in nome_lower or "tópico" in nome_lower or "topico" in nome_lower:
+        return ["Alívio de Dores Locais", "Ação Anti-inflamatória", "Conforto Muscular"]
+
+    # Hash e Concentrados
+    if "hash" in nome_lower or "dry sift" in nome_lower or "concentrado" in nome_lower:
+        return ["Alta Potência THCA", "Relaxamento Profundo", "Rápida Ação Terapêutica"]
+
+    # Gummies
+    if "gummies" in nome_lower or "gummy" in nome_lower or "goma" in nome_lower:
+        if "sono" in nome_lower or "cbn" in nome_lower:
+            return ["Indução ao Sono Profundo", "Sem Ressaca Diurna", "Relaxamento Mental"]
+        return ["Espectro Completo", "Dosagem Padronizada", "Conveniência Terapêutica"]
+
+    # Óleos
+    if cat == "oleos":
+        if "1:1" in nome_lower or "balanced" in nome_lower:
+            return ["Manejo de Dores Neuropáticas", "Relaxamento Neuromuscular", "Melhora do Sono"]
+        return ["Anti-inflamatório Sistêmico", "Modulação de Ansiedade", "Equilíbrio do Humor"]
+
+    # Flores (Inflorescências)
     texto = f"{nome} {tipo} {canabinoide} {perfil} {genetica}".lower()
     efeitos = []
 
-    # Sono e Sedação
     if any(w in texto for w in ["sono", "sedação", "sedacao", "noturno", "noturna", "dormir", "insônia", "insonia", "repouso"]):
         efeitos.append("Indução ao Sono")
-    
-    # Ansiedade e Estresse
     if any(w in texto for w in ["ansiedade", "ansiolítico", "ansiolitico", "estresse", "tensão", "tensao", "calmante", "calma", "serenidade"]):
         efeitos.append("Controle de Ansiedade")
-
-    # Foco, Criatividade e Energia
     if any(w in texto for w in ["foco", "concentração", "concentracao", "criativ", "disposição", "disposicao", "energia", "ânimo", "animo", "estímulo", "estimulo", "clareza"]):
         efeitos.append("Foco & Criatividade")
-
-    # Dores e Relaxamento Muscular
     if any(w in texto for w in ["dor", "dores", "analgésic", "analgesic", "muscular", "espasmo", "desconforto", "inflam", "cefaleia", "enxaqueca"]):
         efeitos.append("Alívio de Dores")
-
-    # Elevação de Humor
     if any(w in texto for w in ["humor", "eufor", "bem-estar", "bem estar", "alegria", "social"]):
         efeitos.append("Elevação de Humor")
-
-    # Estímulo de Apetite
     if any(w in texto for w in ["apetite", "fome"]):
         efeitos.append("Estímulo de Apetite")
 
-    # Se não capturou nenhum específico, atribui baseado no tipo botânico
     if not efeitos:
         if canabinoide == "CBD":
             efeitos = ["Alívio de Ansiedade", "Anti-inflamatório", "Clareza sem Psicoatividade"]
@@ -49,7 +60,6 @@ def extrair_efeitos_reais(nome, tipo, canabinoide, perfil, genetica):
         else:
             efeitos = ["Equilíbrio Físico e Mental", "Ansiolítico Suave", "Alívio de Estresse"]
 
-    # Limita a no máximo 3 efeitos únicos para não poluir
     return list(dict.fromkeys(efeitos))[:3]
 
 def gerar_use_strains_ts():
@@ -76,12 +86,19 @@ def gerar_use_strains_ts():
         perfil = r["Perfil Aromatico & Sabor"].strip()
         precos_raw = r["Associacoes que Dispensam & Precos"].strip()
 
-        # Classificação Estrita de Tipo (Sem sobreposição!)
+        nome_lower = nome.lower()
+
+        # Classificação Estrita de Subtipo
         tipo_ts = "Híbrida"
         if cat == "oleos":
             tipo_ts = "Óleo"
         elif cat == "outros":
-            tipo_ts = "Gummies"
+            if "pomada" in nome_lower:
+                tipo_ts = "Pomadas"
+            elif "hash" in nome_lower or "dry sift" in nome_lower:
+                tipo_ts = "Concentrados"
+            else:
+                tipo_ts = "Gummies"
         else:
             if "Indica" in tipo_raw and "Sativa" not in tipo_raw and "Híbrida" not in tipo_raw:
                 tipo_ts = "Indica"
@@ -92,9 +109,9 @@ def gerar_use_strains_ts():
 
         # Canabinoide Dominante
         can_ts = "THC"
-        if canabinoide == "CBD": 
+        if canabinoide == "CBD" or "cbd" in nome_lower: 
             can_ts = "CBD"
-        elif "1:1" in tipo_raw or "1:1" in thc or "1:1" in cbd:
+        if "1:1" in tipo_raw or "1:1" in thc or "1:1" in cbd or "1:1" in nome_lower:
             can_ts = "THC/CBD"
 
         terpenos_arr = [t.strip() for t in terpenos_raw.split(';') if t.strip() and t.strip() != "N/A"]
@@ -141,7 +158,7 @@ def gerar_use_strains_ts():
             })
 
         # Efeitos Reais e Específicos
-        efeitos_arr = extrair_efeitos_reais(nome, tipo_ts, can_ts, perfil, genetica)
+        efeitos_arr = extrair_efeitos_reais(nome, tipo_ts, can_ts, perfil, genetica, cat)
 
         obj_ts = f"""  {{
     id: {json.dumps(slug)},
@@ -208,7 +225,7 @@ export function useStrains() {{
 
     with open(TS_PATH, mode="w", encoding="utf-8") as f:
         f.write(conteudo_ts)
-    print(f"🎉 SUCESSO! {len(rows)} strains com efeitos reais e classificação estrita geradas em {TS_PATH}!")
+    print(f"🎉 SUCESSO! {len(rows)} strains geradas em {TS_PATH} com subtipos e efeitos estritamente alinhados!")
 
 if __name__ == "__main__":
     gerar_use_strains_ts()

@@ -350,7 +350,7 @@ const INITIAL_STRAINS: Strain[] = [
     terpenes: ["Bisabolol", "Mirceno", "Cariofileno"],
     aromaFlavor: "Herbal natural suave e terroso. Efeitos: Ansiol\u00edtico, anti-inflamat\u00f3rio e suporte ao sono.",
     description: "Herbal natural suave e terroso. Efeitos: Ansiol\u00edtico, anti-inflamat\u00f3rio e suporte ao sono.",
-    effects: ["Indu\u00e7\u00e3o ao Sono", "Controle de Ansiedade", "Al\u00edvio de Dores"],
+    effects: ["Anti-inflamat\u00f3rio Sist\u00eamico", "Modula\u00e7\u00e3o de Ansiedade", "Equil\u00edbrio do Humor"],
     associations: [
       {
             "associationId": "liva",
@@ -375,14 +375,14 @@ const INITIAL_STRAINS: Strain[] = [
     name: "Oleo Balanceado 1:1 THC:CBD",
     category: "oleos",
     type: "\u00d3leo",
-    dominantCannabinoid: "THC",
+    dominantCannabinoid: "THC/CBD",
     thc: "750mg (25mg/ml)",
     cbd: "750mg (25mg/ml)",
     genetics: "Blend Canabinoide em Oleo TCM",
     terpenes: ["Linalol", "Mirceno", "Humuleno"],
     aromaFlavor: "Herbal levemente picante. Efeitos: Analg\u00e9sico, miorrelaxante e modula\u00e7\u00e3o de ansiedade.",
     description: "Herbal levemente picante. Efeitos: Analg\u00e9sico, miorrelaxante e modula\u00e7\u00e3o de ansiedade.",
-    effects: ["Controle de Ansiedade", "Al\u00edvio de Dores"],
+    effects: ["Manejo de Dores Neurop\u00e1ticas", "Relaxamento Neuromuscular", "Melhora do Sono"],
     associations: [
       {
             "associationId": "cannabcura",
@@ -406,7 +406,7 @@ const INITIAL_STRAINS: Strain[] = [
     terpenes: ["Linalol", "Mirceno"],
     aromaFlavor: "Frutas Vermelhas / Amora. Efeitos: Sedativo suave, indu\u00e7\u00e3o e manuten\u00e7\u00e3o do sono.",
     description: "Frutas Vermelhas / Amora. Efeitos: Sedativo suave, indu\u00e7\u00e3o e manuten\u00e7\u00e3o do sono.",
-    effects: ["Indu\u00e7\u00e3o ao Sono"],
+    effects: ["Indu\u00e7\u00e3o ao Sono Profundo", "Sem Ressaca Diurna", "Relaxamento Mental"],
     associations: [
       {
             "associationId": "liva",
@@ -767,14 +767,14 @@ const INITIAL_STRAINS: Strain[] = [
     name: "Oleo CBD 1:1 THC 1500mg (Abrapango)",
     category: "oleos",
     type: "\u00d3leo",
-    dominantCannabinoid: "THC",
+    dominantCannabinoid: "THC/CBD",
     thc: "25mg/ml (750mg total)",
     cbd: "25mg/ml (750mg total)",
     genetics: "Extrato vegetal de Cannabis Sativa CBD/THC em \u00d3leo de MCT",
     terpenes: ["Bisabolol", "Mirceno", "Cariofileno"],
     aromaFlavor: "Herbal natural de Cannabis em TCM. Efeitos: Equil\u00edbrio sin\u00e9rgico (efeito entourage) para dores cr\u00f4nicas, modula\u00e7\u00e3o de ansiedade, dist\u00farbios do sono e rigidez muscular.",
     description: "Herbal natural de Cannabis em TCM. Efeitos: Equil\u00edbrio sin\u00e9rgico (efeito entourage) para dores cr\u00f4nicas, modula\u00e7\u00e3o de ansiedade, dist\u00farbios do sono e rigidez muscular.",
-    effects: ["Indu\u00e7\u00e3o ao Sono", "Controle de Ansiedade", "Al\u00edvio de Dores"],
+    effects: ["Manejo de Dores Neurop\u00e1ticas", "Relaxamento Neuromuscular", "Melhora do Sono"],
     associations: [
       {
             "associationId": "abrapango",
@@ -822,7 +822,7 @@ const INITIAL_STRAINS: Strain[] = [
     terpenes: ["Cariofileno", "Mirceno", "Limoneno"],
     aromaFlavor: "Full Spectrum",
     description: "Full Spectrum",
-    effects: ["Equil\u00edbrio F\u00edsico e Mental", "Ansiol\u00edtico Suave", "Al\u00edvio de Estresse"],
+    effects: ["Anti-inflamat\u00f3rio Sist\u00eamico", "Modula\u00e7\u00e3o de Ansiedade", "Equil\u00edbrio do Humor"],
     associations: [
       {
             "associationId": "institutodamasceno",
@@ -846,7 +846,7 @@ const INITIAL_STRAINS: Strain[] = [
     terpenes: ["Cariofileno", "Mirceno", "Limoneno"],
     aromaFlavor: "Full Spectrum",
     description: "Full Spectrum",
-    effects: ["Equil\u00edbrio F\u00edsico e Mental", "Ansiol\u00edtico Suave", "Al\u00edvio de Estresse"],
+    effects: ["Anti-inflamat\u00f3rio Sist\u00eamico", "Modula\u00e7\u00e3o de Ansiedade", "Equil\u00edbrio do Humor"],
     associations: [
       {
             "associationId": "institutodamasceno",
@@ -870,7 +870,7 @@ const INITIAL_STRAINS: Strain[] = [
     terpenes: ["Cariofileno", "Mirceno", "Limoneno"],
     aromaFlavor: "Full Spectrum",
     description: "Full Spectrum",
-    effects: ["Equil\u00edbrio F\u00edsico e Mental", "Ansiol\u00edtico Suave", "Al\u00edvio de Estresse"],
+    effects: ["Anti-inflamat\u00f3rio Sist\u00eamico", "Modula\u00e7\u00e3o de Ansiedade", "Equil\u00edbrio do Humor"],
     associations: [
       {
             "associationId": "institutodamasceno",
@@ -894,7 +894,7 @@ const INITIAL_STRAINS: Strain[] = [
     terpenes: ["Cariofileno", "Mirceno", "Limoneno"],
     aromaFlavor: "Full Spectrum",
     description: "Full Spectrum",
-    effects: ["Equil\u00edbrio F\u00edsico e Mental", "Ansiol\u00edtico Suave", "Al\u00edvio de Estresse"],
+    effects: ["Anti-inflamat\u00f3rio Sist\u00eamico", "Modula\u00e7\u00e3o de Ansiedade", "Equil\u00edbrio do Humor"],
     associations: [
       {
             "associationId": "institutodamasceno",
@@ -918,7 +918,7 @@ const INITIAL_STRAINS: Strain[] = [
     terpenes: ["Cariofileno", "Mirceno", "Limoneno"],
     aromaFlavor: "Full Spectrum",
     description: "Full Spectrum",
-    effects: ["Equil\u00edbrio F\u00edsico e Mental", "Ansiol\u00edtico Suave", "Al\u00edvio de Estresse"],
+    effects: ["Anti-inflamat\u00f3rio Sist\u00eamico", "Modula\u00e7\u00e3o de Ansiedade", "Equil\u00edbrio do Humor"],
     associations: [
       {
             "associationId": "institutodamasceno",
@@ -942,7 +942,7 @@ const INITIAL_STRAINS: Strain[] = [
     terpenes: ["Cariofileno", "Mirceno", "Limoneno"],
     aromaFlavor: "Full Spectrum",
     description: "Full Spectrum",
-    effects: ["Equil\u00edbrio F\u00edsico e Mental", "Ansiol\u00edtico Suave", "Al\u00edvio de Estresse"],
+    effects: ["Anti-inflamat\u00f3rio Sist\u00eamico", "Modula\u00e7\u00e3o de Ansiedade", "Equil\u00edbrio do Humor"],
     associations: [
       {
             "associationId": "institutodamasceno",
@@ -1078,7 +1078,7 @@ const INITIAL_STRAINS: Strain[] = [
     terpenes: ["Cariofileno", "Mirceno", "Limoneno"],
     aromaFlavor: "Full Spectrum",
     description: "Full Spectrum",
-    effects: ["Al\u00edvio de Ansiedade", "Anti-inflamat\u00f3rio", "Clareza sem Psicoatividade"],
+    effects: ["Anti-inflamat\u00f3rio Sist\u00eamico", "Modula\u00e7\u00e3o de Ansiedade", "Equil\u00edbrio do Humor"],
     associations: [
       {
             "associationId": "institutodamasceno",
@@ -1102,7 +1102,7 @@ const INITIAL_STRAINS: Strain[] = [
     terpenes: ["Cariofileno", "Mirceno", "Limoneno"],
     aromaFlavor: "Full Spectrum",
     description: "Full Spectrum",
-    effects: ["Al\u00edvio de Ansiedade", "Anti-inflamat\u00f3rio", "Clareza sem Psicoatividade"],
+    effects: ["Anti-inflamat\u00f3rio Sist\u00eamico", "Modula\u00e7\u00e3o de Ansiedade", "Equil\u00edbrio do Humor"],
     associations: [
       {
             "associationId": "institutodamasceno",
@@ -1126,7 +1126,7 @@ const INITIAL_STRAINS: Strain[] = [
     terpenes: ["Cariofileno", "Mirceno", "Limoneno"],
     aromaFlavor: "Full Spectrum",
     description: "Full Spectrum",
-    effects: ["Al\u00edvio de Ansiedade", "Anti-inflamat\u00f3rio", "Clareza sem Psicoatividade"],
+    effects: ["Anti-inflamat\u00f3rio Sist\u00eamico", "Modula\u00e7\u00e3o de Ansiedade", "Equil\u00edbrio do Humor"],
     associations: [
       {
             "associationId": "institutodamasceno",
@@ -1150,7 +1150,7 @@ const INITIAL_STRAINS: Strain[] = [
     terpenes: ["Cariofileno", "Mirceno", "Limoneno"],
     aromaFlavor: "Full Spectrum",
     description: "Full Spectrum",
-    effects: ["Al\u00edvio de Ansiedade", "Anti-inflamat\u00f3rio", "Clareza sem Psicoatividade"],
+    effects: ["Anti-inflamat\u00f3rio Sist\u00eamico", "Modula\u00e7\u00e3o de Ansiedade", "Equil\u00edbrio do Humor"],
     associations: [
       {
             "associationId": "institutodamasceno",
@@ -1174,7 +1174,7 @@ const INITIAL_STRAINS: Strain[] = [
     terpenes: ["Cariofileno", "Mirceno", "Limoneno"],
     aromaFlavor: "Full Spectrum",
     description: "Full Spectrum",
-    effects: ["Al\u00edvio de Ansiedade", "Anti-inflamat\u00f3rio", "Clareza sem Psicoatividade"],
+    effects: ["Anti-inflamat\u00f3rio Sist\u00eamico", "Modula\u00e7\u00e3o de Ansiedade", "Equil\u00edbrio do Humor"],
     associations: [
       {
             "associationId": "institutodamasceno",
@@ -1198,7 +1198,7 @@ const INITIAL_STRAINS: Strain[] = [
     terpenes: ["Cariofileno", "Mirceno", "Limoneno"],
     aromaFlavor: "Full Spectrum",
     description: "Full Spectrum",
-    effects: ["Al\u00edvio de Ansiedade", "Anti-inflamat\u00f3rio", "Clareza sem Psicoatividade"],
+    effects: ["Anti-inflamat\u00f3rio Sist\u00eamico", "Modula\u00e7\u00e3o de Ansiedade", "Equil\u00edbrio do Humor"],
     associations: [
       {
             "associationId": "institutodamasceno",
@@ -1222,7 +1222,7 @@ const INITIAL_STRAINS: Strain[] = [
     terpenes: ["Cariofileno", "Mirceno", "Limoneno"],
     aromaFlavor: "Full Spectrum",
     description: "Full Spectrum",
-    effects: ["Al\u00edvio de Ansiedade", "Anti-inflamat\u00f3rio", "Clareza sem Psicoatividade"],
+    effects: ["Anti-inflamat\u00f3rio Sist\u00eamico", "Modula\u00e7\u00e3o de Ansiedade", "Equil\u00edbrio do Humor"],
     associations: [
       {
             "associationId": "institutodamasceno",
@@ -1246,7 +1246,7 @@ const INITIAL_STRAINS: Strain[] = [
     terpenes: ["Cariofileno", "Mirceno", "Limoneno"],
     aromaFlavor: "Full Spectrum",
     description: "Full Spectrum",
-    effects: ["Al\u00edvio de Ansiedade", "Anti-inflamat\u00f3rio", "Clareza sem Psicoatividade"],
+    effects: ["Anti-inflamat\u00f3rio Sist\u00eamico", "Modula\u00e7\u00e3o de Ansiedade", "Equil\u00edbrio do Humor"],
     associations: [
       {
             "associationId": "institutodamasceno",
@@ -1270,7 +1270,7 @@ const INITIAL_STRAINS: Strain[] = [
     terpenes: ["Cariofileno", "Mirceno", "Limoneno"],
     aromaFlavor: "Full Spectrum",
     description: "Full Spectrum",
-    effects: ["Al\u00edvio de Ansiedade", "Anti-inflamat\u00f3rio", "Clareza sem Psicoatividade"],
+    effects: ["Anti-inflamat\u00f3rio Sist\u00eamico", "Modula\u00e7\u00e3o de Ansiedade", "Equil\u00edbrio do Humor"],
     associations: [
       {
             "associationId": "institutodamasceno",
@@ -1342,7 +1342,7 @@ const INITIAL_STRAINS: Strain[] = [
     terpenes: ["Cariofileno", "Mirceno", "Limoneno"],
     aromaFlavor: "CBD Full Spectrum 1000mg",
     description: "CBD Full Spectrum 1000mg",
-    effects: ["Al\u00edvio de Ansiedade", "Anti-inflamat\u00f3rio", "Clareza sem Psicoatividade"],
+    effects: ["Anti-inflamat\u00f3rio Sist\u00eamico", "Modula\u00e7\u00e3o de Ansiedade", "Equil\u00edbrio do Humor"],
     associations: [
       {
             "associationId": "institutodamasceno",
@@ -1366,7 +1366,7 @@ const INITIAL_STRAINS: Strain[] = [
     terpenes: ["Cariofileno", "Mirceno", "Limoneno"],
     aromaFlavor: "CBD Full Spectrum 500mg",
     description: "CBD Full Spectrum 500mg",
-    effects: ["Al\u00edvio de Ansiedade", "Anti-inflamat\u00f3rio", "Clareza sem Psicoatividade"],
+    effects: ["Anti-inflamat\u00f3rio Sist\u00eamico", "Modula\u00e7\u00e3o de Ansiedade", "Equil\u00edbrio do Humor"],
     associations: [
       {
             "associationId": "institutodamasceno",
@@ -1390,7 +1390,7 @@ const INITIAL_STRAINS: Strain[] = [
     terpenes: ["Cariofileno", "Mirceno", "Limoneno"],
     aromaFlavor: "Full Spectrum",
     description: "Full Spectrum",
-    effects: ["Al\u00edvio de Ansiedade", "Anti-inflamat\u00f3rio", "Clareza sem Psicoatividade"],
+    effects: ["Anti-inflamat\u00f3rio Sist\u00eamico", "Modula\u00e7\u00e3o de Ansiedade", "Equil\u00edbrio do Humor"],
     associations: [
       {
             "associationId": "institutodamasceno",
@@ -1414,7 +1414,7 @@ const INITIAL_STRAINS: Strain[] = [
     terpenes: ["Cariofileno", "Mirceno", "Limoneno"],
     aromaFlavor: "Full Spectrum",
     description: "Full Spectrum",
-    effects: ["Al\u00edvio de Ansiedade", "Anti-inflamat\u00f3rio", "Clareza sem Psicoatividade"],
+    effects: ["Anti-inflamat\u00f3rio Sist\u00eamico", "Modula\u00e7\u00e3o de Ansiedade", "Equil\u00edbrio do Humor"],
     associations: [
       {
             "associationId": "institutodamasceno",
@@ -1438,7 +1438,7 @@ const INITIAL_STRAINS: Strain[] = [
     terpenes: ["Cariofileno", "Mirceno", "Limoneno"],
     aromaFlavor: "Full Spectrum",
     description: "Full Spectrum",
-    effects: ["Al\u00edvio de Ansiedade", "Anti-inflamat\u00f3rio", "Clareza sem Psicoatividade"],
+    effects: ["Anti-inflamat\u00f3rio Sist\u00eamico", "Modula\u00e7\u00e3o de Ansiedade", "Equil\u00edbrio do Humor"],
     associations: [
       {
             "associationId": "institutodamasceno",
@@ -1462,7 +1462,7 @@ const INITIAL_STRAINS: Strain[] = [
     terpenes: ["Cariofileno", "Mirceno", "Limoneno"],
     aromaFlavor: "THC Full Spectrum 1000mg",
     description: "THC Full Spectrum 1000mg",
-    effects: ["Equil\u00edbrio F\u00edsico e Mental", "Ansiol\u00edtico Suave", "Al\u00edvio de Estresse"],
+    effects: ["Anti-inflamat\u00f3rio Sist\u00eamico", "Modula\u00e7\u00e3o de Ansiedade", "Equil\u00edbrio do Humor"],
     associations: [
       {
             "associationId": "institutodamasceno",
@@ -1486,7 +1486,7 @@ const INITIAL_STRAINS: Strain[] = [
     terpenes: ["Cariofileno", "Mirceno", "Limoneno"],
     aromaFlavor: "THC Full Spectrum 500mg",
     description: "THC Full Spectrum 500mg",
-    effects: ["Equil\u00edbrio F\u00edsico e Mental", "Ansiol\u00edtico Suave", "Al\u00edvio de Estresse"],
+    effects: ["Anti-inflamat\u00f3rio Sist\u00eamico", "Modula\u00e7\u00e3o de Ansiedade", "Equil\u00edbrio do Humor"],
     associations: [
       {
             "associationId": "institutodamasceno",
@@ -1502,7 +1502,7 @@ const INITIAL_STRAINS: Strain[] = [
     id: "gummy-pomada-in-natura",
     name: "Pomada in Natura",
     category: "outros",
-    type: "Gummies",
+    type: "Pomadas",
     dominantCannabinoid: "THC",
     thc: "18% - 24%",
     cbd: "< 1%",
@@ -1510,7 +1510,7 @@ const INITIAL_STRAINS: Strain[] = [
     terpenes: ["Cariofileno", "Mirceno", "Limoneno"],
     aromaFlavor: "Desenvolvida para uso t\u00f3pico, nossa Pomada de Cannabis \u00e9 produzida com folhas da planta e formulada para proporcionar sensa\u00e7\u00e3o de conforto, cuidado e bem-estar na regi\u00e3o aplicada. Modo de uso: aplicar uma pequena quantidade sobre a pele e massagear suavemente at\u00e9 a absor\u00e7\u00e3o, conforme orienta\u00e7\u00e3o do produto.",
     description: "Desenvolvida para uso t\u00f3pico, nossa Pomada de Cannabis \u00e9 produzida com folhas da planta e formulada para proporcionar sensa\u00e7\u00e3o de conforto, cuidado e bem-estar na regi\u00e3o aplicada. Modo de uso: aplicar uma pequena quantidade sobre a pele e massagear suavemente at\u00e9 a absor\u00e7\u00e3o, conforme orienta\u00e7\u00e3o do produto.",
-    effects: ["Eleva\u00e7\u00e3o de Humor"],
+    effects: ["Al\u00edvio de Dores Locais", "A\u00e7\u00e3o Anti-inflamat\u00f3ria", "Conforto Muscular"],
     associations: [
       {
             "associationId": "institutodamasceno",
@@ -2094,7 +2094,7 @@ const INITIAL_STRAINS: Strain[] = [
     terpenes: ["Cariofileno", "Mirceno", "Limoneno"],
     aromaFlavor: "Extrato vegetal completo de Cannabis Sativa em \u00d3leo MCT. Suporte de amplo espectro.",
     description: "Extrato vegetal completo de Cannabis Sativa em \u00d3leo MCT. Suporte de amplo espectro.",
-    effects: ["Equil\u00edbrio F\u00edsico e Mental", "Ansiol\u00edtico Suave", "Al\u00edvio de Estresse"],
+    effects: ["Anti-inflamat\u00f3rio Sist\u00eamico", "Modula\u00e7\u00e3o de Ansiedade", "Equil\u00edbrio do Humor"],
     associations: [
       {
             "associationId": "adaptacann",
@@ -2118,7 +2118,7 @@ const INITIAL_STRAINS: Strain[] = [
     terpenes: ["Cariofileno", "Mirceno", "Limoneno"],
     aromaFlavor: "Extrato vegetal completo de Cannabis Sativa em \u00d3leo MCT.",
     description: "Extrato vegetal completo de Cannabis Sativa em \u00d3leo MCT.",
-    effects: ["Equil\u00edbrio F\u00edsico e Mental", "Ansiol\u00edtico Suave", "Al\u00edvio de Estresse"],
+    effects: ["Anti-inflamat\u00f3rio Sist\u00eamico", "Modula\u00e7\u00e3o de Ansiedade", "Equil\u00edbrio do Humor"],
     associations: [
       {
             "associationId": "adaptacann",
@@ -2142,7 +2142,7 @@ const INITIAL_STRAINS: Strain[] = [
     terpenes: ["Cariofileno", "Mirceno", "Limoneno"],
     aromaFlavor: "Extrato concentrado de Cannabis Sativa em \u00d3leo MCT. A\u00e7\u00e3o prolongada e potente.",
     description: "Extrato concentrado de Cannabis Sativa em \u00d3leo MCT. A\u00e7\u00e3o prolongada e potente.",
-    effects: ["Equil\u00edbrio F\u00edsico e Mental", "Ansiol\u00edtico Suave", "Al\u00edvio de Estresse"],
+    effects: ["Anti-inflamat\u00f3rio Sist\u00eamico", "Modula\u00e7\u00e3o de Ansiedade", "Equil\u00edbrio do Humor"],
     associations: [
       {
             "associationId": "adaptacann",
@@ -2166,7 +2166,7 @@ const INITIAL_STRAINS: Strain[] = [
     terpenes: ["Cariofileno", "Mirceno", "Limoneno"],
     aromaFlavor: "Extrato ultra-concentrado de Cannabis Sativa em \u00d3leo MCT.",
     description: "Extrato ultra-concentrado de Cannabis Sativa em \u00d3leo MCT.",
-    effects: ["Equil\u00edbrio F\u00edsico e Mental", "Ansiol\u00edtico Suave", "Al\u00edvio de Estresse"],
+    effects: ["Anti-inflamat\u00f3rio Sist\u00eamico", "Modula\u00e7\u00e3o de Ansiedade", "Equil\u00edbrio do Humor"],
     associations: [
       {
             "associationId": "adaptacann",
@@ -2190,7 +2190,7 @@ const INITIAL_STRAINS: Strain[] = [
     terpenes: ["Cariofileno", "Mirceno", "Limoneno"],
     aromaFlavor: "Gomas medicinais de espectro completo (450mg total / 30 unidades). Uso pr\u00e1tico e saboroso.",
     description: "Gomas medicinais de espectro completo (450mg total / 30 unidades). Uso pr\u00e1tico e saboroso.",
-    effects: ["Equil\u00edbrio F\u00edsico e Mental", "Ansiol\u00edtico Suave", "Al\u00edvio de Estresse"],
+    effects: ["Espectro Completo", "Dosagem Padronizada", "Conveni\u00eancia Terap\u00eautica"],
     associations: [
       {
             "associationId": "adaptacann",
@@ -2206,7 +2206,7 @@ const INITIAL_STRAINS: Strain[] = [
     id: "gummy-hash-thca-static-dry-sift",
     name: "Hash THCA (Static Dry Sift)",
     category: "outros",
-    type: "Gummies",
+    type: "Concentrados",
     dominantCannabinoid: "THC",
     thc: "Alta Concentra\u00e7\u00e3o THCA",
     cbd: "< 1%",
@@ -2214,7 +2214,7 @@ const INITIAL_STRAINS: Strain[] = [
     terpenes: ["Cariofileno", "Mirceno"],
     aromaFlavor: "Extra\u00e7\u00e3o pura e artesanal em p\u00f3 resinoso Static Dry Sift de alta pot\u00eancia.",
     description: "Extra\u00e7\u00e3o pura e artesanal em p\u00f3 resinoso Static Dry Sift de alta pot\u00eancia.",
-    effects: ["Equil\u00edbrio F\u00edsico e Mental", "Ansiol\u00edtico Suave", "Al\u00edvio de Estresse"],
+    effects: ["Alta Pot\u00eancia THCA", "Relaxamento Profundo", "R\u00e1pida A\u00e7\u00e3o Terap\u00eautica"],
     associations: [
       {
             "associationId": "adaptacann",

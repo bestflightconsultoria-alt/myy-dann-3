@@ -8,19 +8,30 @@ interface StrainCardProps {
 }
 
 export const StrainCard: React.FC<StrainCardProps> = ({ strain, onClick }) => {
-  // Define apenas uma etiqueta principal limpa para o topo
+  // Define etiquetagem estrita por categoria e subtipo real
   const displayBadge = () => {
+    // 1. Categoria Óleos
+    if (strain.category === 'oleos') {
+      return { text: 'Óleo Terapêutico', bg: 'bg-amber-100 text-amber-900 border-amber-200' };
+    }
+
+    // 2. Categoria Outros Formatos (Gummies, Pomadas, Hash)
+    if (strain.category === 'outros') {
+      if (strain.type === 'Pomadas' || strain.name.toLowerCase().includes('pomada')) {
+        return { text: 'Pomada Medicinal', bg: 'bg-teal-100 text-teal-900 border-teal-200' };
+      }
+      if (strain.type === 'Concentrados' || strain.name.toLowerCase().includes('hash')) {
+        return { text: 'Hash / Concentrado', bg: 'bg-orange-100 text-orange-900 border-orange-200' };
+      }
+      return { text: 'Gummies', bg: 'bg-pink-100 text-pink-900 border-pink-200' };
+    }
+
+    // 3. Categoria Flores In Natura
     if (strain.dominantCannabinoid === 'THC/CBD') {
-      return { text: 'THC / CBD', bg: 'bg-purple-100 text-purple-800 border-purple-200' };
+      return { text: 'THC / CBD (1:1)', bg: 'bg-purple-100 text-purple-800 border-purple-200' };
     }
     if (strain.dominantCannabinoid === 'CBD') {
       return { text: 'CBD', bg: 'bg-blue-100 text-blue-800 border-blue-200' };
-    }
-    if (strain.category === 'oleos') {
-      return { text: 'Óleo', bg: 'bg-amber-100 text-amber-800 border-amber-200' };
-    }
-    if (strain.category === 'outros') {
-      return { text: 'Gummies', bg: 'bg-pink-100 text-pink-800 border-pink-200' };
     }
     return { text: strain.type, bg: 'bg-emerald-100 text-emerald-800 border-emerald-200' };
   };
@@ -41,7 +52,7 @@ export const StrainCard: React.FC<StrainCardProps> = ({ strain, onClick }) => {
       className="bg-white rounded-2xl border border-gray-200/90 p-5 hover:shadow-xl hover:border-emerald-500/60 transition-all cursor-pointer flex flex-col justify-between group hover:-translate-y-0.5 duration-200"
     >
       <div>
-        {/* Topo com badge limpa */}
+        {/* Topo com badge limpa e especificada */}
         <div className="flex items-center justify-between gap-2 mb-3">
           <span className={`px-2.5 py-0.5 text-xs font-bold rounded-md border ${badge.bg}`}>
             {badge.text}
@@ -53,12 +64,12 @@ export const StrainCard: React.FC<StrainCardProps> = ({ strain, onClick }) => {
           )}
         </div>
 
-        {/* Nome da Strain / Produto */}
+        {/* Nome do Produto */}
         <h3 className="text-lg font-bold text-gray-900 group-hover:text-emerald-700 transition-colors leading-snug">
           {strain.name}
         </h3>
 
-        {/* Canabinoides THC / CBD */}
+        {/* Canabinoides ou Concentração */}
         <div className="flex items-center gap-3 text-xs text-gray-500 mt-1.5">
           {strain.thc && <span><strong className="text-gray-700">THC:</strong> {strain.thc}</span>}
           {strain.cbd && <span><strong className="text-gray-700">CBD:</strong> {strain.cbd}</span>}
