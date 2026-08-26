@@ -1,4 +1,4 @@
-# 🌿 Plano Estratégico, Marketing & Modelo de Negócio — CannaGuia
+# 🌿 Plano Estratégico, Marketing, Jurídico & Modelo de Negócio — CannaGuia
 
 O **CannaGuia** é a **maior plataforma brasileira de inteligência, avaliação e conexão no ecossistema de Cannabis Medicinal**, unindo Pacientes, Associações, Médicos Prescritores e Marcas Especializadas.
 
@@ -13,14 +13,16 @@ flowchart TD
     A --> D[3. Review Engine & RWE]
     A --> E[4. Marketplace de Médicos]
     A --> F[5. Estratégia de Marketing & SEO]
-    A --> G[6. Hub de Monetização]
+    A --> G[6. Conformidade Jurídica & LGPD]
+    A --> H[7. Hub de Monetização]
 
     B --> B1[90+ Strains, Óleos & Gummies de Associações]
     C --> C1[Algoritmo por Sintoma & Momento do Uso]
     D --> D1[Relatos Verificados + Média da Associação]
     E --> E1[Diretório de Prescritores & Agendamento]
     F --> F1[SEO Orgânico + Social Media + Funil Leads]
-    G --> G1[SaaS Médico + Afiliados Vape + Mídia]
+    G --> G1[Termos de Uso + LGPD + Disclaimers Anvisa]
+    H --> H1[SaaS Médico + Afiliados Vape + Mídia]
 ```
 
 ---
@@ -77,7 +79,31 @@ Para escalar o CannaGuia e tornar o site a **referência #1 de consulta de canna
 
 ---
 
-## 💰 3. Modelo de Negócio & Fontes de Receita
+## ⚖️ 3. Análise da Base Jurídica, LGPD & 5 Cuidados Fundamentais
+
+### 📜 Enquadramento Constitucional & Regulatório (Anvisa & STJ)
+1. **Art. 5º, IX e XIV da CF/88:** Livre comunicação, expressão científica e direito à informação.
+2. **Resoluções Anvisa (RDC 660/2022 & RDC 327/2019):** Regulamentam importação por pessoa física e autorização sanitária.
+3. **Jurisprudência do STJ:** Validade jurídica do cultivo e dispensação por Associações de Pacientes Sem Fins Lucrativos.
+
+---
+
+### 🛡️ Os 5 Cuidados Operacionais Fundamentais para o Fundador:
+
+1. 🚫 **NUNCA Processar Vendas ou Pagamento de Remédios no Site:**
+   - O CannaGuia atua como plataforma informativa. A aquisição é feita diretamente pelo paciente junto à associação/farmácia parceira.
+2. 🩺 **NUNCA Garantir Cura ou Promessa de Resultado Clínico:**
+   - As informações são apresentadas como estatísticas terpênicas e relatos da comunidade.
+3. ⚖️ **Manter o Disclaimer de Isenção Visível:**
+   - Rodapé com aviso claro sobre a exigência de prescrição médica válida.
+4. 💨 **Divulgação Ética de Vaporizadores de Ervas Secas:**
+   - Aparelhos de redução de danos para administração inalatória sem combustão.
+5. 🔒 **Conformidade Estrita com a LGPD (Lei nº 13.709/2018):**
+   - Consentimento livre, anonimização de relatos e atendimento imediato a pedidos de exclusão.
+
+---
+
+## 💰 4. Modelo de Negócio & Fontes de Receita
 
 ```mermaid
 graph LR
@@ -93,7 +119,6 @@ graph LR
 ```
 
 ### 🏥 1. Marketplace & Listing de Médicos Prescritores (SaaS)
-* **Valor para o Médico:** O CannaGuia entrega pacientes educados, com receita/intenção de tratamento, prontos para agendar consulta.
 * **Planos:**
   * **Plano Essencial (R$ 149/mês):** Perfil listado no diretório + botão de WhatsApp.
   * **Plano Destaque (R$ 349/mês):** Destaque no topo do diretório, recomendação prioritária no Fummelier IA e selo de Médico Verificado.
@@ -101,41 +126,17 @@ graph LR
 ---
 
 ### 💨 2. Afiliados de Vaporizadores de Ervas Secas & Acessórios
-* **Por que é lucrativo:** Um vaporizador de qualidade (ex: Starry 4, Zigg, Mighty, Aria) custa de **R$ 400 a R$ 3.000**.
 * **Modelo:** Links de afiliados e cupons de desconto (`CANNAGUIA5`) em parceria com lojas nacionais de vaporizadores.
 * **Comissão Média:** 10% por venda. Com 100 vendas/mês de ticket médio R$ 600 = **R$ 6.000/mês só em afiliação de vapes**.
 
 ---
 
-### 🏛️ 3. Destaque de Associações & Inteligência de Mercado
-* Associações que desejam destacar seu cardápio, lançamentos de lote e selo de verificação pagam uma taxa de parceria ou oferecem cupons/descontos exclusivos para a comunidade CannaGuia.
-
----
-
-## ⭐️ 4. O Sistema de Avaliações (Review Engine & RWE)
-
-O CannaGuia é o **TripAdvisor / Leafly da Cannabis Medicinal no Brasil**:
-
-1. **Avaliação Rápida (1 Clique):** Paciente seleciona a nota (1 a 5 estrelas), sintomas tratados e benefícios. Relato opcional.
-2. **Identidade Verificada:** Login via Google atribui o selo **`🛡️ Relato Verificado`**.
-3. **Cruzamento com o Fummelier IA:** Notas altas da comunidade aumentam o score do produto na IA.
-4. **Reputação da Associação:** Notas das flores compõem a nota geral da associação.
-
----
-
-## 🛡️ 5. Privacidade & Governança LGPD
-
-* **Dados Criptografados no Supabase (Nuvem):** Tabela de usuários protegida com RLS (Row Level Security).
-* **Painel Admin Exclusivo:** Visível estritamente para o e-mail do administrador no "Meu Espaço", com botão de **Exportar Planilha CSV**.
-
----
-
-## 🗓️ 6. Roadmap de Execução (Próximos Passos)
+## 🗓️ 5. Roadmap de Execução (Linha do Tempo)
 
 ```mermaid
 timeline
     title Planejamento de Execução 2026
-    Q1 - Produto Base : 90+ Strains : Fummelier IA : Sistema de Reviews : Painel Admin
+    Q1 - Produto Base : 90+ Strains : Fummelier IA : Reviews LGPD : Painel Admin
     Q2 - Lançamento : Deploy Vercel : Registro Domínio .com.br : Lançamento SEO & Blog
     Q3 - Monetização : Cadastro de Médicos : Parcerias com Lojas de Vapes : E-book Leads
     Q4 - Escala : Aplicativo PWA : Comunidade VIP : Painel da Associação
