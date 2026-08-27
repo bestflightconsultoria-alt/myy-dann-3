@@ -3,10 +3,11 @@ export interface BlogPost {
   slug: string;
   title: string;
   excerpt: string;
-  category: 'Guia do Paciente' | 'Uso Medicinal' | 'Legislação';
+  category: string;
   readTime: string;
   date: string;
   author: string;
   tags: string[];
   content: string;
+  isPinned?: boolean;
 }

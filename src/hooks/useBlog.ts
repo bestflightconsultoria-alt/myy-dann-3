@@ -3,6 +3,38 @@ import { BlogPost } from '../types/blog';
 
 export const MOCK_POSTS: BlogPost[] = [
   {
+    id: "1",
+    slug: "passo-a-passo-tratamento-cannabis-medicinal-brasil",
+    title: "Como Iniciar o Tratamento com Cannabis Medicinal no Brasil: Guia Passo a Passo",
+    excerpt: "Entenda os 4 passos obrigatórios para conseguir sua prescrição médica, escolher uma associação e ter acesso legal a flores e óleos.",
+    category: "Guia do Paciente",
+    readTime: "4 min de leitura",
+    date: "15 de Agosto de 2026",
+    author: "Redação CannaGuia",
+    tags: ["Prescrição Médica", "Associações", "Iniciantes", "Acolhimento"],
+    isPinned: true,
+    content: `
+      <h3>1. Consulta Médica e Prescrição</h3>
+      <p>Qualquer médico registrado no CRM (ou odontólogo com CFO) pode prescrever cannabis medicinal no Brasil para qualquer condição em que haja justificativa clínica (como ansiedade, insônia, dor crônica, TDAH, entre outros).</p>
+      <p>O médico emitirá uma <strong>receita médica de controle especial</strong> e um <strong>laudo médico com justificativa terapêutica</strong>.</p>
+
+      <h3>2. Escolha da Associação ou Via de Acesso</h3>
+      <p>Com o laudo e a receita em mãos, você pode se filiar a uma <strong>associação de pacientes</strong> legalmente constituída (como ABECMed, AdaptaCann, ALCA, Abrapango, etc.).</p>
+
+      <h3>3. Envio de Documentos e Acolhimento</h3>
+      <p>A maioria das associações solicita via formulário online ou WhatsApp:</p>
+      <ul>
+        <li>Documento oficial de identidade (RG ou CNH)</li>
+        <li>Comprovante de residência atualizado</li>
+        <li>Receita médica válida e laudo médico detalhado</li>
+        <li>Termo de filiação/adesão assinado</li>
+      </ul>
+
+      <h3>4. Dispensação e Acompanhamento Clínico</h3>
+      <p>Após a validação da documentação pelo corpo técnico da entidade, o associado tem acesso ao catálogo interno para dispensação dos produtos prescritos, mantendo sempre o acompanhamento com seu médico assistente.</p>
+    `
+  },
+  {
     id: "5",
     slug: "qual-a-melhor-flor-de-cannabis-para-ansiedade-brasil",
     title: "Qual a Melhor Flor de Cannabis para Ansiedade no Brasil? Guia Comparativo",
@@ -159,37 +191,6 @@ export const MOCK_POSTS: BlogPost[] = [
 
       <h3>4. Como Agendar uma Consulta com Prescritor?</h3>
       <p>No CannaGuia, você encontra o diretório de <strong>Médicos e Odontólogos Prescritores Verificados</strong>. Basta acessar a aba <strong>Médicos Prescritores</strong> no menu principal para encontrar profissionais que atendem presencialmente ou via Telemedicina em todo o Brasil.</p>
-    `
-  },
-  {
-    id: "1",
-    slug: "passo-a-passo-tratamento-cannabis-medicinal-brasil",
-    title: "Como Iniciar o Tratamento com Cannabis Medicinal no Brasil: Guia Passo a Passo",
-    excerpt: "Entenda os 4 passos obrigatórios para conseguir sua prescrição médica, escolher uma associação e ter acesso legal a flores e óleos.",
-    category: "Guia do Paciente",
-    readTime: "4 min de leitura",
-    date: "15 de Agosto de 2026",
-    author: "Redação CannaGuia",
-    tags: ["Prescrição Médica", "Associações", "Iniciantes", "Acolhimento"],
-    content: `
-      <h3>1. Consulta Médica e Prescrição</h3>
-      <p>Qualquer médico registrado no CRM (ou odontólogo com CFO) pode prescrever cannabis medicinal no Brasil para qualquer condição em que haja justificativa clínica (como ansiedade, insônia, dor crônica, TDAH, entre outros).</p>
-      <p>O médico emitirá uma <strong>receita médica de controle especial</strong> e um <strong>laudo médico com justificativa terapêutica</strong>.</p>
-
-      <h3>2. Escolha da Associação ou Via de Acesso</h3>
-      <p>Com o laudo e a receita em mãos, você pode se filiar a uma <strong>associação de pacientes</strong> legalmente constituída (como ABECMed, AdaptaCann, ALCA, Abrapango, etc.).</p>
-
-      <h3>3. Envio de Documentos e Acolhimento</h3>
-      <p>A maioria das associações solicita via formulário online ou WhatsApp:</p>
-      <ul>
-        <li>Documento oficial de identidade (RG ou CNH)</li>
-        <li>Comprovante de residência atualizado</li>
-        <li>Receita médica válida e laudo médico detalhado</li>
-        <li>Termo de filiação/adesão assinado</li>
-      </ul>
-
-      <h3>4. Dispensação e Acompanhamento Clínico</h3>
-      <p>Após a validação da documentação pelo corpo técnico da entidade, o associado tem acesso ao catálogo interno para dispensação dos produtos prescritos, mantendo sempre o acompanhamento com seu médico assistente.</p>
     `
   },
   {

@@ -91,9 +91,16 @@ export const Blog: React.FC<BlogProps> = ({ initialPostId, initialPostSlug, onSe
           >
             <div>
               <div className="flex items-center justify-between gap-2 mb-3">
-                <span className="px-2.5 py-0.5 text-xs font-bold rounded-md bg-emerald-50 text-emerald-800 border border-emerald-100">
-                  {post.category}
-                </span>
+                <div className="flex items-center gap-1.5 flex-wrap">
+                  {post.isPinned && (
+                    <span className="px-2.5 py-0.5 text-xs font-black rounded-md bg-amber-400 text-slate-950 shadow-xs">
+                      📌 GUIA ESSENCIAL FIXADO
+                    </span>
+                  )}
+                  <span className="px-2.5 py-0.5 text-xs font-bold rounded-md bg-emerald-50 text-emerald-800 border border-emerald-100">
+                    {post.category}
+                  </span>
+                </div>
                 <span className="text-xs text-gray-400 flex items-center gap-1">
                   <Clock className="w-3.5 h-3.5" /> {post.readTime}
                 </span>

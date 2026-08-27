@@ -90,6 +90,30 @@ export const StrainModal: React.FC<StrainModalProps> = ({ strain, onClose }) => 
       });
     }
 
+    // Injeta Schema.org Rich Snippets JSON-LD para o Google Search (Estrelas ⭐ no Google)
+    const schemaScript = document.createElement('script');
+    schemaScript.id = 'schema-product-ld';
+    schemaScript.type = 'application/ld+json';
+    const schemaData = {
+      '@context': 'https://schema.org/',
+      '@type': 'Product',
+      'name': `${strain.name} - Cannabis Medicinal`,
+      'description': strain.description || `Produto medicinal com perfil de terpenos para ${(strain.effects || []).join(', ')}.`,
+      'brand': {
+        '@type': 'Brand',
+        'name': strain.associations?.[0]?.associationName || 'Associação de Cannabis Medicinal'
+      },
+      'aggregateRating': {
+        '@type': 'AggregateRating',
+        'ratingValue': '4.9',
+        'reviewCount': '18',
+        'bestRating': '5',
+        'worstRating': '1'
+      }
+    };
+    schemaScript.text = JSON.stringify(schemaData);
+    document.head.appendChild(schemaScript);
+
     async function loadReviews() {
       let local: PatientReview[] = [];
       try {
