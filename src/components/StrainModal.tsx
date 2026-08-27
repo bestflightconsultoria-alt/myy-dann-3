@@ -14,7 +14,9 @@ import {
   Plus,
   Sparkles,
   Tag,
-  Stethoscope
+  Stethoscope,
+  Share2,
+  Check
 } from 'lucide-react';
 import { Strain } from '../types/strain';
 import { supabase } from '../lib/supabase';
@@ -316,9 +318,28 @@ export const StrainModal: React.FC<StrainModalProps> = ({ strain, onClose }) => 
             </div>
             <h2 className="text-xl sm:text-2xl font-black text-gray-900 mt-1.5">{strain.name}</h2>
           </div>
-          <button onClick={onClose} className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-full transition-colors">
-            <X className="w-6 h-6" />
-          </button>
+          <div className="flex items-center gap-1.5">
+            <button
+              onClick={() => {
+                const shareUrl = `https://www.cannaguia.com.br/strains/${strain.id}`;
+                const text = `🌿 *${strain.name}* no CannaGuia\n\nConfira o perfil de terpenos, indicações clínicas e avaliações de pacientes:\n${shareUrl}`;
+                if (navigator.share) {
+                  navigator.share({ title: strain.name, text: text, url: shareUrl }).catch(() => {});
+                } else {
+                  navigator.clipboard.writeText(text);
+                  alert('Link e texto copiados para a área de transferência! Pode colar no WhatsApp ou Instagram.');
+                }
+              }}
+              title="Compartilhar no WhatsApp ou Redes Sociais"
+              className="p-2 text-emerald-800 bg-emerald-50 hover:bg-emerald-100 rounded-2xl transition-all flex items-center gap-1.5 text-xs font-bold px-3 py-1.5 border border-emerald-200"
+            >
+              <Share2 className="w-4 h-4 text-emerald-600" />
+              <span className="hidden sm:inline">Compartilhar</span>
+            </button>
+            <button onClick={onClose} className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-full transition-colors">
+              <X className="w-6 h-6" />
+            </button>
+          </div>
         </div>
 
         {/* Conteúdo com Scroll */}
