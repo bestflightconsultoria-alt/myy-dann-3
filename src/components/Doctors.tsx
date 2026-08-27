@@ -21,38 +21,8 @@ export interface Doctor {
   appointmentUrl?: string;
 }
 
-export const MOCK_DOCTORS: Doctor[] = [
-  {
-    id: "dr-carlos-silva",
-    name: "Dr. Carlos Eduardo Silva",
-    crm: "CRM-SP 184.920 | RQE 92.104",
-    city: "São Paulo",
-    state: "SP",
-    isOnline: true,
-    contactPhone: "(11) 98765-4321",
-    appointmentUrl: "https://wa.me/5511987654321?text=Ola!%20Encontrei%20seu%20contato%20pelo%20CannaGuia%20e%20gostaria%20de%20agendar%20uma%20consulta."
-  },
-  {
-    id: "dra-camila-vasconcelos",
-    name: "Dra. Camila Vasconcelos",
-    crm: "CRM-MG 72.410",
-    city: "Belo Horizonte",
-    state: "MG",
-    isOnline: true,
-    contactPhone: "(31) 99876-5432",
-    appointmentUrl: "https://wa.me/5531998765432?text=Ola!%20Vim%20pelo%20CannaGuia%20e%20gostaria%20de%20agendar%20uma%20consulta."
-  },
-  {
-    id: "dr-renato-machado-cro",
-    name: "Dr. Renato Machado",
-    crm: "CRO-SP 102.840 (Cirurgião-Dentista — Dor Orofacial & DTM)",
-    city: "São Paulo",
-    state: "SP",
-    isOnline: true,
-    contactPhone: "(11) 97788-9900",
-    appointmentUrl: "https://wa.me/5511977889900?text=Ola!%20Encontrei%20seu%20contato%20no%20CannaGuia%20e%20gostaria%20de%20agendar%20uma%20consulta%20odontologica."
-  }
-];
+// Lista zerada de prescritores conforme solicitação
+export const MOCK_DOCTORS: Doctor[] = [];
 
 export const Doctors: React.FC = () => {
   const [search, setSearch] = useState('');
@@ -145,55 +115,76 @@ export const Doctors: React.FC = () => {
         </button>
       </div>
 
-      {/* Grid de Médicos / Dentistas */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {filteredDoctors.map((doc) => (
-          <div
-            key={doc.id}
-            className="bg-white rounded-3xl border border-gray-200/90 p-6 shadow-sm hover:shadow-md transition-all space-y-4 flex flex-col justify-between"
-          >
-            <div className="space-y-2.5">
-              <div className="flex items-center gap-2 flex-wrap mb-1">
-                <span className="text-[10px] font-bold bg-emerald-100 text-emerald-800 px-2.5 py-0.5 rounded-full border border-emerald-200 flex items-center gap-1">
-                  <ShieldCheck className="w-3 h-3 text-emerald-600" /> Registro Verificado
-                </span>
-                {doc.isOnline && (
-                  <span className="text-[10px] font-bold bg-teal-100 text-teal-800 px-2.5 py-0.5 rounded-full flex items-center gap-1">
-                    <Video className="w-3 h-3 text-teal-600" /> Telemedicina
-                  </span>
-                )}
-              </div>
-
-              <h3 className="text-lg font-black text-gray-900">{doc.name}</h3>
-              <span className="text-xs font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-lg inline-block">
-                {doc.crm}
-              </span>
-
-              <div className="flex items-center gap-2 text-xs text-gray-500 pt-1">
-                <MapPin className="w-3.5 h-3.5 text-gray-400" />
-                <span>{doc.city} - {doc.state}</span>
-              </div>
-            </div>
-
-            {/* Ação de Agendamento */}
-            <div className="pt-3 border-t border-gray-100 flex items-center justify-between gap-3">
-              <span className="text-xs text-gray-500 font-medium">
-                {doc.contactPhone}
-              </span>
-
-              <a
-                href={doc.appointmentUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl shadow-md transition-all flex items-center gap-2"
-              >
-                <Calendar className="w-4 h-4" /> Agendar Consulta
-              </a>
-            </div>
-
+      {/* Grid ou Empty State dos Prescritores */}
+      {filteredDoctors.length === 0 ? (
+        <div className="bg-white rounded-3xl border border-dashed border-gray-300 p-8 sm:p-12 text-center space-y-4 shadow-sm">
+          <div className="w-16 h-16 bg-teal-50 text-teal-600 rounded-2xl flex items-center justify-center mx-auto border border-teal-100">
+            <Stethoscope className="w-8 h-8" />
           </div>
-        ))}
-      </div>
+          <div className="space-y-1.5 max-w-md mx-auto">
+            <h3 className="text-lg font-black text-gray-900">Nenhum prescritor cadastrado no momento</h3>
+            <p className="text-xs text-gray-500 leading-relaxed">
+              Você é médico (CRM) ou cirurgião-dentista (CRO)? Cadastre seu perfil de atendimento no CannaGuia e receba solicitações de novos pacientes.
+            </p>
+          </div>
+          <button
+            onClick={() => setIsContactOpen(true)}
+            className="px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl shadow-md transition-all inline-flex items-center gap-2"
+          >
+            <UserPlus className="w-4 h-4" />
+            <span>Cadastrar Meu Registro de Prescritor</span>
+          </button>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {filteredDoctors.map((doc) => (
+            <div
+              key={doc.id}
+              className="bg-white rounded-3xl border border-gray-200/90 p-6 shadow-sm hover:shadow-md transition-all space-y-4 flex flex-col justify-between"
+            >
+              <div className="space-y-2.5">
+                <div className="flex items-center gap-2 flex-wrap mb-1">
+                  <span className="text-[10px] font-bold bg-emerald-100 text-emerald-800 px-2.5 py-0.5 rounded-full border border-emerald-200 flex items-center gap-1">
+                    <ShieldCheck className="w-3 h-3 text-emerald-600" /> Registro Verificado
+                  </span>
+                  {doc.isOnline && (
+                    <span className="text-[10px] font-bold bg-teal-100 text-teal-800 px-2.5 py-0.5 rounded-full flex items-center gap-1">
+                      <Video className="w-3 h-3 text-teal-600" /> Telemedicina
+                    </span>
+                  )}
+                </div>
+
+                <h3 className="text-lg font-black text-gray-900">{doc.name}</h3>
+                <span className="text-xs font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-lg inline-block">
+                  {doc.crm}
+                </span>
+
+                <div className="flex items-center gap-2 text-xs text-gray-500 pt-1">
+                  <MapPin className="w-3.5 h-3.5 text-gray-400" />
+                  <span>{doc.city} - {doc.state}</span>
+                </div>
+              </div>
+
+              {/* Ação de Agendamento */}
+              <div className="pt-3 border-t border-gray-100 flex items-center justify-between gap-3">
+                <span className="text-xs text-gray-500 font-medium">
+                  {doc.contactPhone}
+                </span>
+
+                <a
+                  href={doc.appointmentUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl shadow-md transition-all flex items-center gap-2"
+                >
+                  <Calendar className="w-4 h-4" /> Agendar Consulta
+                </a>
+              </div>
+
+            </div>
+          ))}
+        </div>
+      )}
 
       {/* Modal de Formulário de Mensagem / Cadastro */}
       <ContactModal
