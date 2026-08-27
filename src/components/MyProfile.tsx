@@ -138,6 +138,18 @@ export const MyProfile: React.FC = () => {
             treatment_status: treatmentStatus
           }
         });
+
+        // Atualiza retroativamente o médico prescritor nas avaliações do usuário no banco
+        if (prescribingDoctor.trim()) {
+          await supabase
+            .from('reviews')
+            .update({ prescribing_doctor: prescribingDoctor.trim() })
+            .eq('user_id', user.id);
+            
+          // Atualiza estado local do admin
+          setAllReviewsAdmin(prev => prev.map(r => r.user_id === user.id ? { ...r, prescribing_doctor: prescribingDoctor.trim() } : r));
+        }
+
         setSavedSuccess(true);
         setTimeout(() => setSavedSuccess(false), 3000);
       } catch (err) {
@@ -506,7 +518,7 @@ export const MyProfile: React.FC = () => {
                           {r.patient_name || 'Anônimo'}
                         </td>
                         <td className="p-3 font-semibold text-teal-800">
-                          {r.prescribing_doctor || '—'}
+                          {r.prescribing_doctor || (r.user_id && r.user_id === user?.id ? (user?.user_metadata?.prescribing_doctor || prescribingDoctor) : null) || '—'}
                         </td>
                         <td className="p-3 font-bold text-emerald-800">
                           {r.strain_name}
