@@ -3,12 +3,14 @@ import { Search, MapPin, Building2, Star, DollarSign, ArrowUpDown, BookOpen, Use
 import { useAssociations, Association } from '../hooks/useAssociations';
 import { useStrains } from '../hooks/useStrains';
 import { AssociationModal } from './AssociationModal';
+import { ContactModal } from './ContactModal';
 
 interface AssociationsProps {
   setActiveTab?: (tab: string) => void;
+  openBlogArticle?: (articleId: string) => void;
 }
 
-export const Associations: React.FC<AssociationsProps> = ({ setActiveTab }) => {
+export const Associations: React.FC<AssociationsProps> = ({ setActiveTab, openBlogArticle }) => {
   const { associations, loading } = useAssociations();
   const { strains } = useStrains();
 
@@ -16,6 +18,7 @@ export const Associations: React.FC<AssociationsProps> = ({ setActiveTab }) => {
   const [selectedState, setSelectedState] = useState('ALL');
   const [sortBy, setSortBy] = useState<'rating' | 'reviews' | 'name'>('rating');
   const [selectedAssociation, setSelectedAssociation] = useState<Association | null>(null);
+  const [isContactOpen, setIsContactOpen] = useState(false);
 
   // Mapeia quantidade de produtos/strains cadastradas por associação
   const productCountMap = useMemo(() => {
@@ -66,10 +69,18 @@ export const Associations: React.FC<AssociationsProps> = ({ setActiveTab }) => {
     return result;
   }, [associations, selectedState, search, sortBy]);
 
+  const handleOpenBlogGuide = () => {
+    if (openBlogArticle) {
+      openBlogArticle('1');
+    } else if (setActiveTab) {
+      setActiveTab('blog-passo-a-passo');
+    }
+  };
+
   return (
     <div className="space-y-6">
       
-      {/* Banner Principal + Link para o Guia do Blog */}
+      {/* Banner Principal + Link Direto para o Texto do Blog */}
       <div className="bg-gradient-to-r from-emerald-900 via-emerald-800 to-teal-900 rounded-3xl p-6 sm:p-8 text-white shadow-xl relative overflow-hidden flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
         <div className="relative z-10 max-w-2xl space-y-3">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/20 border border-emerald-400/30 text-emerald-200 text-xs font-semibold backdrop-blur-md">
@@ -86,18 +97,18 @@ export const Associations: React.FC<AssociationsProps> = ({ setActiveTab }) => {
           </p>
         </div>
 
-        {/* Card Destaque: Guia de Como se Associar */}
+        {/* Card Destaque: Link direto para o artigo do blog */}
         <div className="relative z-10 shrink-0 w-full md:w-auto bg-white/10 backdrop-blur-md p-5 rounded-2xl border border-white/20 text-center space-y-2.5">
           <span className="text-xs font-extrabold text-emerald-200 block uppercase tracking-wider">Dúvidas sobre como se associar?</span>
           <p className="text-xs text-emerald-100 max-w-xs mx-auto">
-            Confira os 4 passos legais para obter laudo e se filiar.
+            Confira o texto explicativo com os 4 passos legais para se filiar.
           </p>
           <button
-            onClick={() => setActiveTab && setActiveTab('blog')}
+            onClick={handleOpenBlogGuide}
             className="w-full py-2.5 px-4 bg-emerald-500 hover:bg-emerald-400 text-emerald-950 font-black text-xs rounded-xl shadow-lg transition-all flex items-center justify-center gap-2"
           >
             <BookOpen className="w-4 h-4" />
-            <span>Ler Guia Passo a Passo</span>
+            <span>Ler Artigo Completo no Blog</span>
           </button>
         </div>
       </div>
@@ -195,11 +206,11 @@ export const Associations: React.FC<AssociationsProps> = ({ setActiveTab }) => {
                     {assoc.name}
                   </h3>
 
-                  {/* ITEM 1: Badge de Total de Produtos no Catálogo */}
+                  {/* Badge de Produtos Sem Redundância de Texto */}
                   <div className="mt-2">
                     <span className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-900 bg-emerald-100/90 px-2.5 py-1 rounded-xl border border-emerald-200">
                       <Sprout className="w-3.5 h-3.5 text-emerald-700" />
-                      {countProducts > 0 ? `${countProducts} produtos no catálogo` : 'Consulte cardápio'}
+                      {countProducts > 0 ? `${countProducts} produtos no catálogo` : 'Entidade Regulamentada'}
                     </span>
                   </div>
                 </div>
@@ -220,7 +231,7 @@ export const Associations: React.FC<AssociationsProps> = ({ setActiveTab }) => {
         </div>
       )}
 
-      {/* ITEM 3: Banner no Rodapé para Cadastro de Novas Associações */}
+      {/* ITEM 3: Banner de Cadastro por Formulário de Mensagem */}
       <div className="bg-gradient-to-br from-slate-900 to-emerald-950 rounded-3xl p-6 sm:p-8 text-white flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl">
         <div className="space-y-2 text-center md:text-left">
           <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 text-xs font-bold">
@@ -235,20 +246,27 @@ export const Associations: React.FC<AssociationsProps> = ({ setActiveTab }) => {
           </p>
         </div>
 
-        <a
-          href="https://wa.me/5511999999999?text=Ola!%20Represento%20uma%20associacao%20de%20pacientes%20e%20gostaria%20de%20cadastrar%20nossa%20entidade%20no%20CannaGuia."
-          target="_blank"
-          rel="noopener noreferrer"
+        <button
+          onClick={() => setIsContactOpen(true)}
           className="shrink-0 px-6 py-3 bg-emerald-500 hover:bg-emerald-400 text-emerald-950 font-black text-xs sm:text-sm rounded-2xl shadow-lg transition-all flex items-center gap-2"
         >
           <UserPlus className="w-4 h-4" />
           <span>Cadastrar Minha Associação</span>
-        </a>
+        </button>
       </div>
 
       <AssociationModal
         association={selectedAssociation}
         onClose={() => setSelectedAssociation(null)}
+      />
+
+      {/* Modal de Formulário de Mensagem / Cadastro */}
+      <ContactModal
+        isOpen={isContactOpen}
+        onClose={() => setIsContactOpen(false)}
+        title="Cadastrar Associação no CannaGuia"
+        subtitle="Envie os dados da sua entidade e nossa equipe retornará por e-mail."
+        defaultType="association"
       />
     </div>
   );
