@@ -1,20 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import { 
   User, 
+  ShieldCheck, 
   Star, 
+  LogOut, 
+  MessageSquare, 
   Building2, 
+  Save, 
+  Check, 
   Sparkles, 
-  CheckCircle2, 
-  AlertTriangle, 
-  LogIn, 
+  Users, 
+  SlidersHorizontal,
+  ChevronRight,
+  AlertTriangle,
+  CheckCircle2,
+  Lock,
   ArrowUpRight,
-  ShieldCheck,
-  Stethoscope,
-  Save,
-  Check,
-  Crown,
-  Users,
-  FileSpreadsheet
+  Filter
 } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { useAssociations, Association } from '../hooks/useAssociations';
@@ -24,7 +26,6 @@ interface UserReview {
   id: string;
   strain_id: string;
   strain_name: string;
-  association_id: string;
   association_name: string;
   rating: number;
   conditions: string[];
@@ -33,6 +34,7 @@ interface UserReview {
   comment: string;
   created_at: string;
   patient_name?: string;
+  is_verified?: boolean;
 }
 
 // Lista de e-mails autorizados para visualizar o Painel Admin Secreto
@@ -46,6 +48,7 @@ export const MyProfile: React.FC = () => {
   const [user, setUser] = useState<any>(null);
   const [reviews, setReviews] = useState<UserReview[]>([]);
   const [allReviewsAdmin, setAllReviewsAdmin] = useState<any[]>([]);
+  const [adminFilter, setAdminFilter] = useState<'all' | 'verified' | 'anonymous'>('all');
   const [loading, setLoading] = useState<boolean>(true);
   const [activeTab, setActiveTab] = useState<'profile' | 'reviews' | 'associations' | 'admin'>('profile');
   const [selectedAssoc, setSelectedAssoc] = useState<Association | null>(null);
@@ -53,11 +56,11 @@ export const MyProfile: React.FC = () => {
 
   // Dados do Perfil Terapêutico
   const [fullName, setFullName] = useState('');
-  const [mainCondition, setMainCondition] = useState('');
+  const [mainCondition, setMainCondition] = useState('Ansiedade & Estresse');
   const [prescribingDoctor, setPrescribingDoctor] = useState('');
   const [treatmentStatus, setTreatmentStatus] = useState('em_tratamento');
-  const [savedSuccess, setSavedSuccess] = useState(false);
   const [savingProfile, setSavingProfile] = useState(false);
+  const [savedSuccess, setSavedSuccess] = useState(false);
 
   useEffect(() => {
     async function checkUserAndLoadData() {
@@ -70,7 +73,7 @@ export const MyProfile: React.FC = () => {
       setUser(user);
 
       if (user) {
-        setFullName(user.user_metadata?.full_name || '');
+        setFullName(user.user_metadata?.full_name || user.email?.split('@')[0] || '');
         setMainCondition(user.user_metadata?.main_condition || 'Ansiedade & Estresse');
         setPrescribingDoctor(user.user_metadata?.prescribing_doctor || '');
         setTreatmentStatus(user.user_metadata?.treatment_status || 'em_tratamento');
@@ -144,293 +147,297 @@ export const MyProfile: React.FC = () => {
     setSavingProfile(false);
   };
 
-  // Exportar Relatório Admin em CSV
-  const handleExportAdminCSV = () => {
-    if (allReviewsAdmin.length === 0) return;
-    
-    const headers = ["ID Avaliacao", "Data", "Nome Paciente", "Associacao", "Genetica / Produto", "Nota Rating", "Condicoes Tratadas", "Efeitos Positivos", "Efeitos Adversos", "Comentario"];
-    const csvRows = [headers.join(";")];
-
-    allReviewsAdmin.forEach(r => {
-      const row = [
-        r.id,
-        new Date(r.created_at).toLocaleDateString('pt-BR'),
-        `"${r.patient_name || 'Paciente Anônimo'}"`,
-        `"${r.association_name || 'Sob Consulta'}"`,
-        `"${r.strain_name || ''}"`,
-        r.rating || 5,
-        `"${(r.conditions || []).join(', ')}"`,
-        `"${(r.positive_effects || []).join(', ')}"`,
-        `"${(r.side_effects || []).join(', ')}"`,
-        `"${(r.comment || '').replace(/"/g, '""')}"`
-      ];
-      csvRows.push(row.join(";"));
-    });
-
-    const blob = new Blob([csvRows.join("\n")], { type: "text/csv;charset=utf-8-sig;" });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement("a");
-    link.href = url;
-    link.setAttribute("download", `relatorio_pacientes_cannaguia_${new Date().toISOString().slice(0, 10)}.csv`);
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+  const handleLogout = async () => {
+    if (supabase) {
+      await supabase.auth.signOut();
+      setUser(null);
+    }
   };
 
+  // Filtragem exclusiva para o Painel Admin
+  const filteredAdminReviews = React.useMemo(() => {
+    if (adminFilter === 'verified') {
+      return allReviewsAdmin.filter(r => r.is_verified || r.user_id);
+    }
+    if (adminFilter === 'anonymous') {
+      return allReviewsAdmin.filter(r => !r.is_verified && !r.user_id);
+    }
+    return allReviewsAdmin;
+  }, [allReviewsAdmin, adminFilter]);
+
+  // Lista de associações que o paciente registrou em seus relatos
   const myAssociatedEntities = React.useMemo(() => {
-    const assocNames = Array.from(new Set(reviews.map(r => r.association_name?.toLowerCase().trim()))).filter(Boolean);
-    return associations.filter(a => 
-      assocNames.some(name => 
-        a.name.toLowerCase().includes(name) || 
-        name.includes(a.name.toLowerCase()) || 
-        name.includes(a.acronym.toLowerCase())
-      )
-    );
+    if (!reviews || reviews.length === 0) return [];
+    const names = new Set(reviews.map(r => r.association_name?.toLowerCase()));
+    return associations.filter(a => names.has(a.name.toLowerCase()) || names.has(a.acronym.toLowerCase()));
   }, [reviews, associations]);
 
   if (loading) {
-    return (
-      <div className="py-20 text-center text-gray-500 text-sm">
-        Carregando seu espaço...
-      </div>
-    );
+    return <div className="py-12 text-center text-gray-500 text-sm">Carregando seu perfil...</div>;
   }
 
+  // Se NÃO estiver logado, exibe a tela de convite para Login com Google
   if (!user) {
     return (
-      <div className="max-w-md mx-auto my-12 p-8 bg-white rounded-3xl border border-gray-200/90 shadow-xl text-center space-y-5 animate-in fade-in">
-        <div className="w-16 h-16 bg-emerald-100 text-emerald-700 rounded-full flex items-center justify-center mx-auto">
+      <div className="max-w-md mx-auto my-8 bg-white rounded-3xl border border-gray-200 p-6 sm:p-8 shadow-xl text-center space-y-6 animate-in fade-in">
+        <div className="w-16 h-16 bg-emerald-100 text-emerald-700 rounded-2xl flex items-center justify-center mx-auto shadow-inner">
           <User className="w-8 h-8" />
         </div>
+
         <div className="space-y-2">
-          <h2 className="text-2xl font-black text-gray-900">Espaço do Paciente</h2>
+          <h2 className="text-2xl font-black text-gray-900">Meu Diário CannaGuia</h2>
           <p className="text-xs text-gray-600 leading-relaxed">
-            Faça login com a sua conta Google para consultar seu histórico, salvar genéticas favoritas e receber recomendações personalizadas do Fummelier IA.
+            Faça login com sua conta do Google para salvar seus relatos terapêuticos, acompanhar seus tratamentos e acessar seus históricos.
           </p>
         </div>
+
         <button
           onClick={handleGoogleLogin}
-          className="w-full py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-2xl text-xs font-bold transition-all shadow-md flex items-center justify-center gap-2"
+          className="w-full py-3.5 px-4 bg-white border border-gray-300 hover:bg-gray-50 text-gray-800 font-bold text-xs rounded-2xl shadow-sm transition-all flex items-center justify-center gap-3"
         >
-          <LogIn className="w-4 h-4" /> Entrar com Google
+          <svg className="w-5 h-5" viewBox="0 0 24 24">
+            <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
+            <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
+            <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" />
+            <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z" />
+          </svg>
+          <span>Entrar com Conta do Google</span>
         </button>
+
+        <p className="text-[10px] text-gray-400">
+          🔒 Conexão segura em conformidade com a LGPD. Seus dados são confidenciais.
+        </p>
       </div>
     );
   }
 
+  // SE ESTIVER LOGADO -> Exibe a área do paciente
   return (
-    <div className="space-y-6 max-w-4xl mx-auto">
+    <div className="space-y-6 max-w-5xl mx-auto">
       
-      {/* Header do Perfil */}
-      <div className="bg-gradient-to-r from-emerald-800 to-teal-900 rounded-3xl p-6 sm:p-8 text-white shadow-xl flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+      {/* Banner de Boas-Vindas */}
+      <div className="bg-gradient-to-r from-emerald-900 via-emerald-800 to-teal-900 rounded-3xl p-6 sm:p-8 text-white shadow-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div className="flex items-center gap-4">
-          <div className="w-14 h-14 bg-white/10 rounded-2xl flex items-center justify-center border border-white/20 text-emerald-300 font-bold text-xl uppercase">
-            {fullName[0] || user.email?.[0] || 'P'}
+          <div className="w-14 h-14 bg-emerald-700/80 rounded-2xl flex items-center justify-center text-xl font-black border border-emerald-500/40 shadow-inner">
+            {user.user_metadata?.avatar_url ? (
+              <img src={user.user_metadata.avatar_url} alt="Avatar" className="w-full h-full rounded-2xl object-cover" />
+            ) : (
+              <span>{user.email?.[0].toUpperCase()}</span>
+            )}
           </div>
           <div>
-            <span className="text-emerald-300 text-xs font-bold uppercase tracking-wider bg-white/10 px-2.5 py-0.5 rounded-full inline-flex items-center gap-1 mb-1">
-              <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" /> Paciente Verificado
-            </span>
-            <h1 className="text-xl sm:text-2xl font-black">
-              {fullName || 'Paciente CannaGuia'}
-            </h1>
-            <p className="text-xs text-emerald-200/80">{user.email}</p>
+            <div className="flex items-center gap-2 flex-wrap">
+              <h1 className="text-xl sm:text-2xl font-black text-white">{fullName || user.email}</h1>
+              <span className="text-[10px] font-bold bg-emerald-500/30 text-emerald-200 px-2.5 py-0.5 rounded-full border border-emerald-400/40 flex items-center gap-1">
+                <ShieldCheck className="w-3 h-3 text-emerald-300" /> Paciente Verificado
+              </span>
+            </div>
+            <p className="text-xs text-emerald-200 mt-0.5">{user.email}</p>
           </div>
         </div>
 
-        {/* Estatísticas Rápidas */}
-        <div className="flex items-center gap-3">
-          <div className="bg-white/10 border border-white/20 px-4 py-2.5 rounded-2xl text-center">
-            <span className="text-base font-black block">{reviews.length}</span>
-            <span className="text-[10px] text-emerald-200">Genéticas Avaliadas</span>
-          </div>
-          <div className="bg-white/10 border border-white/20 px-4 py-2.5 rounded-2xl text-center">
-            <span className="text-base font-black block">{myAssociatedEntities.length}</span>
-            <span className="text-[10px] text-emerald-200">Associações no Histórico</span>
-          </div>
-        </div>
+        <button
+          onClick={handleLogout}
+          className="px-4 py-2 bg-emerald-800/80 hover:bg-emerald-700 text-emerald-200 hover:text-white rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 border border-emerald-600/40 shrink-0"
+        >
+          <LogOut className="w-3.5 h-3.5" /> Sair da Conta
+        </button>
       </div>
 
-      {/* Navegação de Abas do Perfil */}
-      <div className="flex items-center gap-2 border-b border-gray-200 pb-2 overflow-x-auto">
+      {/* Navegação por Sub-abas do Perfil */}
+      <div className="flex items-center gap-2 border-b border-gray-200 pb-2 overflow-x-auto scrollbar-none">
         <button
           onClick={() => setActiveTab('profile')}
-          className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 whitespace-nowrap ${
+          className={`px-4 py-2.5 rounded-xl text-xs font-extrabold transition-all whitespace-nowrap flex items-center gap-2 ${
             activeTab === 'profile'
               ? 'bg-emerald-600 text-white shadow-sm'
-              : 'bg-white border border-gray-200 text-gray-700 hover:bg-gray-50'
+              : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'
           }`}
         >
-          <User className="w-3.5 h-3.5" /> Meu Cadastro Terapêutico
+          <User className="w-4 h-4" /> Perfil Terapêutico
         </button>
 
         <button
           onClick={() => setActiveTab('reviews')}
-          className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 whitespace-nowrap ${
+          className={`px-4 py-2.5 rounded-xl text-xs font-extrabold transition-all whitespace-nowrap flex items-center gap-2 ${
             activeTab === 'reviews'
               ? 'bg-emerald-600 text-white shadow-sm'
-              : 'bg-white border border-gray-200 text-gray-700 hover:bg-gray-50'
+              : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'
           }`}
         >
-          <Sparkles className="w-3.5 h-3.5" /> Minhas Avaliações ({reviews.length})
+          <MessageSquare className="w-4 h-4" /> Minhas Avaliações ({reviews.length})
         </button>
 
         <button
           onClick={() => setActiveTab('associations')}
-          className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 whitespace-nowrap ${
+          className={`px-4 py-2.5 rounded-xl text-xs font-extrabold transition-all whitespace-nowrap flex items-center gap-2 ${
             activeTab === 'associations'
               ? 'bg-emerald-600 text-white shadow-sm'
-              : 'bg-white border border-gray-200 text-gray-700 hover:bg-gray-50'
+              : 'bg-white text-gray-700 hover:bg-gray-100 border border-gray-200'
           }`}
         >
-          <Building2 className="w-3.5 h-3.5" /> Minhas Associações ({myAssociatedEntities.length})
+          <Building2 className="w-4 h-4" /> Minhas Associações ({myAssociatedEntities.length})
         </button>
 
-        {/* ABA EXCLUSIVA DO ADMINISTRADOR DO SITE */}
+        {/* Tab Secreta de Admin (Moderação de Relatos) */}
         {isAdmin && (
           <button
             onClick={() => setActiveTab('admin')}
-            className={`px-4 py-2 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 whitespace-nowrap ${
+            className={`px-4 py-2.5 rounded-xl text-xs font-extrabold transition-all whitespace-nowrap flex items-center gap-2 border ${
               activeTab === 'admin'
-                ? 'bg-amber-600 text-white shadow-sm'
-                : 'bg-amber-50 border border-amber-200 text-amber-900 hover:bg-amber-100'
+                ? 'bg-amber-600 text-white border-amber-600 shadow-sm'
+                : 'bg-amber-50 text-amber-900 border-amber-200 hover:bg-amber-100'
             }`}
           >
-            <Crown className="w-3.5 h-3.5 text-amber-500" /> Painel Admin (Restrito)
+            <Lock className="w-4 h-4 text-amber-500" /> Painel Restrito de Gestão
           </button>
         )}
       </div>
 
-      {/* 1. CADASTRO TERAPÊUTICO DO PACIENTE */}
+      {/* 1. PERFIL TERAPÊUTICO DO PACIENTE */}
       {activeTab === 'profile' && (
-        <form onSubmit={handleSaveProfile} className="bg-white rounded-3xl border border-gray-200/90 p-6 sm:p-8 shadow-xl space-y-5 animate-in fade-in">
-          <div>
-            <h3 className="text-lg font-black text-gray-900 flex items-center gap-2">
-              <Stethoscope className="w-5 h-5 text-emerald-600" />
-              Perfil Clínico & Prescrição Medicinal
-            </h3>
-            <p className="text-xs text-gray-500 mt-0.5">
-              Esses dados ajudam o Fummelier IA a recomendar as genéticas e dosagens exatas para a sua prescrição.
-            </p>
+        <form onSubmit={handleSaveProfile} className="bg-white rounded-3xl border border-gray-200 p-6 sm:p-8 shadow-sm space-y-6">
+          <div className="space-y-1 border-b border-gray-100 pb-4">
+            <h3 className="text-lg font-black text-gray-900">Seu Perfil de Acompanhamento Terapêutico</h3>
+            <p className="text-xs text-gray-500">Mantenha seus dados clínicos atualizados para obter melhores recomendações no Fummelier IA.</p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
-            
-            {/* Nome Completo */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-1.5">
-              <label className="text-xs font-bold text-gray-700 block">Nome do Paciente:</label>
+              <label className="text-xs font-bold text-gray-700 block">Nome Completo do Paciente:</label>
               <input
                 type="text"
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
-                placeholder="Ex: Pedro Henrique Silva"
-                className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl text-xs font-medium outline-none focus:border-emerald-500"
+                placeholder="Seu nome completo"
+                className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl text-xs font-bold outline-none focus:border-emerald-500"
               />
             </div>
 
-            {/* Condição Médica Principal */}
             <div className="space-y-1.5">
-              <label className="text-xs font-bold text-gray-700 block">Condição Médica Principal:</label>
+              <label className="text-xs font-bold text-gray-700 block">Principal Condição Tratada:</label>
               <select
                 value={mainCondition}
                 onChange={(e) => setMainCondition(e.target.value)}
-                className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl text-xs font-bold text-gray-800 outline-none focus:border-emerald-500"
+                className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl text-xs font-bold outline-none focus:border-emerald-500"
               >
                 <option value="Ansiedade & Estresse">🧘 Ansiedade & Estresse</option>
-                <option value="Insônia / Distúrbios do Sono">😴 Insônia / Distúrbios do Sono</option>
-                <option value="Dor Crônica / Fibromialgia">🦴 Dor Crônica / Fibromialgia</option>
-                <option value="TDAH / Foco">🧠 TDAH / Déficit de Atenção</option>
-                <option value="Depressão / Humor">😊 Depressão / Manejo do Humor</option>
-                <option value="Autismo (TEA)">🧩 Transtorno do Espectro Autista</option>
-                <option value="Epilepsia / Convulsões">⚡ Epilepsia / Crises Convulsivas</option>
-                <option value="Outra Condição">🩺 Outra Condição Específica</option>
+                <option value="Insônia & Sono Profundo">😴 Insônia & Sono Profundo</option>
+                <option value="Dores Crônicas & Enxaqueca">🦴 Dores Crônicas & Enxaqueca</option>
+                <option value="Foco, TDAH & Concentração">🧠 Foco, TDAH & Concentração</option>
+                <option value="Relaxamento Físico">💆 Relaxamento Físico & Muscular</option>
+                <option value="Outra Condição">🩺 Outra Condição Clínica</option>
               </select>
             </div>
 
-            {/* Médico Prescritor */}
             <div className="space-y-1.5">
-              <label className="text-xs font-bold text-gray-700 block">Médico Prescritor (Opcional):</label>
+              <label className="text-xs font-bold text-gray-700 block">Médico Prescritor Assistente (Opcional):</label>
               <input
                 type="text"
                 value={prescribingDoctor}
                 onChange={(e) => setPrescribingDoctor(e.target.value)}
-                placeholder="Ex: Dr. Carlos Silva (ou deixe em branco)"
-                className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl text-xs font-medium outline-none focus:border-emerald-500"
+                placeholder="Ex: Dr. Carlos Eduardo Silva (CRM 184.920)"
+                className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl text-xs font-bold outline-none focus:border-emerald-500"
               />
             </div>
 
-            {/* Status do Tratamento */}
             <div className="space-y-1.5">
-              <label className="text-xs font-bold text-gray-700 block">Status do Tratamento:</label>
+              <label className="text-xs font-bold text-gray-700 block">Status Atual do Tratamento:</label>
               <select
                 value={treatmentStatus}
                 onChange={(e) => setTreatmentStatus(e.target.value)}
-                className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl text-xs font-bold text-gray-800 outline-none focus:border-emerald-500"
+                className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl text-xs font-bold outline-none focus:border-emerald-500"
               >
-                <option value="em_tratamento">🟢 Já estou em Tratamento Medicinal</option>
-                <option value="iniciando">🟡 Tenho receita e vou iniciar</option>
-                <option value="buscando_medico">🔵 Buscando Médico Prescritor</option>
+                <option value="iniciante">🌱 Iniciando Acompanhamento (Primeiros Meses)</option>
+                <option value="em_tratamento">🌿 Em Tratamento Ativo (Ajuste de Dosagem)</option>
+                <option value="estavel">✨ Tratamento Estabilizado com Sucesso</option>
               </select>
             </div>
-
           </div>
 
-          <div className="pt-2 flex items-center justify-between">
-            {savedSuccess ? (
-              <span className="text-xs font-bold text-emerald-600 flex items-center gap-1">
-                <Check className="w-4 h-4" /> Perfil Terapêutico atualizado com sucesso!
-              </span>
-            ) : <span />}
-
+          <div className="pt-4 border-t border-gray-100 flex items-center justify-between">
+            <span className="text-[11px] text-gray-400">Dados salvos com criptografia na nuvem.</span>
+            
             <button
               type="submit"
               disabled={savingProfile}
-              className="px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl shadow-md transition-all flex items-center gap-2"
+              className="px-6 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl shadow-md transition-all flex items-center gap-1.5"
             >
-              <Save className="w-4 h-4" />
-              {savingProfile ? 'Salvando...' : 'Salvar Perfil Terapêutico'}
+              {savedSuccess ? (
+                <>
+                  <Check className="w-4 h-4 text-emerald-200" /> Perfil Atualizado!
+                </>
+              ) : (
+                <>
+                  <Save className="w-4 h-4" /> {savingProfile ? 'Salvando...' : 'Salvar Alterações'}
+                </>
+              )}
             </button>
           </div>
         </form>
       )}
 
-      {/* 2. PAINEL ADMIN RESTRICTO (EXCLUSIVO DO PROPRIETÁRIO DO SITE) */}
-      {isAdmin && activeTab === 'admin' && (
-        <div className="bg-white rounded-3xl border border-amber-200 p-6 sm:p-8 shadow-xl space-y-6 animate-in fade-in">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-gray-100 pb-4">
+      {/* 2. PAINEL ADMIN RESTRITO (Visível apenas para admins) */}
+      {activeTab === 'admin' && isAdmin && (
+        <div className="bg-white rounded-3xl border-2 border-amber-400 p-6 sm:p-8 shadow-xl space-y-6">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 border-b border-amber-100 pb-4">
             <div>
-              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-100 text-amber-900 text-xs font-black mb-1">
-                <Crown className="w-3.5 h-3.5 text-amber-600" /> Acesso Exclusivo do Administrador
+              <div className="flex items-center gap-2">
+                <span className="px-2.5 py-0.5 text-[10px] font-black bg-amber-100 text-amber-900 rounded-md border border-amber-300 uppercase">
+                  Acesso Restrito ao Diretor
+                </span>
+                <h3 className="text-xl font-black text-gray-900">Painel de Moderação & Gestão Geral</h3>
               </div>
-              <h3 className="text-xl font-black text-gray-900">Relatório Geral de Pacientes & Avaliações</h3>
-              <p className="text-xs text-gray-500 mt-0.5">
-                Esta aba é visível apenas para você. Consulte e exporte os relatos e dados cadastrados.
+              <p className="text-xs text-gray-500 mt-1">
+                Visualização do banco de dados em tempo real dos relatos de pacientes e métricas do CannaGuia.
               </p>
             </div>
 
-            <button
-              type="button"
-              onClick={handleExportAdminCSV}
-              className="px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl shadow-md transition-all flex items-center gap-2"
-            >
-              <FileSpreadsheet className="w-4 h-4" /> Exportar Planilha CSV
-            </button>
+            {/* Filtro por Registro do Usuário */}
+            <div className="flex items-center gap-1.5 bg-gray-100 p-1 rounded-xl shrink-0">
+              <button
+                onClick={() => setAdminFilter('all')}
+                className={`px-2.5 py-1 text-xs font-bold rounded-lg transition-all ${
+                  adminFilter === 'all' ? 'bg-amber-600 text-white shadow-xs' : 'text-gray-700 hover:bg-gray-200'
+                }`}
+              >
+                Todos ({allReviewsAdmin.length})
+              </button>
+              <button
+                onClick={() => setAdminFilter('verified')}
+                className={`px-2.5 py-1 text-xs font-bold rounded-lg transition-all ${
+                  adminFilter === 'verified' ? 'bg-emerald-600 text-white shadow-xs' : 'text-gray-700 hover:bg-gray-200'
+                }`}
+              >
+                🛡️ Registrados ({allReviewsAdmin.filter(r => r.is_verified || r.user_id).length})
+              </button>
+              <button
+                onClick={() => setAdminFilter('anonymous')}
+                className={`px-2.5 py-1 text-xs font-bold rounded-lg transition-all ${
+                  adminFilter === 'anonymous' ? 'bg-gray-700 text-white shadow-xs' : 'text-gray-700 hover:bg-gray-200'
+                }`}
+              >
+                🌐 Anônimos ({allReviewsAdmin.filter(r => !r.is_verified && !r.user_id).length})
+              </button>
+            </div>
           </div>
 
           {/* Cards de Métricas Admin */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div className="p-4 bg-emerald-50 rounded-2xl border border-emerald-100 text-center">
               <Users className="w-5 h-5 text-emerald-600 mx-auto mb-1" />
-              <span className="text-2xl font-black text-emerald-950 block">{allReviewsAdmin.length}</span>
-              <span className="text-xs font-bold text-emerald-700">Relatos / Avaliações Registradas</span>
+              <span className="text-2xl font-black text-emerald-950 block">{filteredAdminReviews.length}</span>
+              <span className="text-xs font-bold text-emerald-700">
+                {adminFilter === 'verified' ? 'Relatos de Usuários Registrados' : adminFilter === 'anonymous' ? 'Relatos Anônimos' : 'Total de Relatos no Banco'}
+              </span>
             </div>
 
             <div className="p-4 bg-amber-50 rounded-2xl border border-amber-100 text-center">
               <Star className="w-5 h-5 text-amber-500 fill-amber-500 mx-auto mb-1" />
               <span className="text-2xl font-black text-amber-950 block">
-                {allReviewsAdmin.length > 0 ? (allReviewsAdmin.reduce((a, b) => a + (b.rating || 5), 0) / allReviewsAdmin.length).toFixed(1) : '5.0'}
+                {filteredAdminReviews.length > 0 ? (filteredAdminReviews.reduce((a, b) => a + (b.rating || 5), 0) / filteredAdminReviews.length).toFixed(1) : '5.0'}
               </span>
-              <span className="text-xs font-bold text-amber-800">Nota Média Geral do Catálogo</span>
+              <span className="text-xs font-bold text-amber-800">Nota Média do Filtro Selecionado</span>
             </div>
 
             <div className="p-4 bg-teal-50 rounded-2xl border border-teal-100 text-center">
@@ -442,13 +449,15 @@ export const MyProfile: React.FC = () => {
 
           {/* Listagem Geral de Avaliações Registradas */}
           <div className="space-y-3">
-            <h4 className="text-sm font-bold text-gray-800 uppercase tracking-wider">
-              Últimos Relatos Salvos no Banco de Dados:
-            </h4>
+            <div className="flex items-center justify-between">
+              <h4 className="text-sm font-bold text-gray-800 uppercase tracking-wider">
+                Exibindo {filteredAdminReviews.length} relatos ({adminFilter === 'verified' ? 'Apenas Usuários Logados com Google' : adminFilter === 'anonymous' ? 'Apenas Anônimos' : 'Todos os Relatos'}):
+              </h4>
+            </div>
 
-            {allReviewsAdmin.length === 0 ? (
+            {filteredAdminReviews.length === 0 ? (
               <div className="p-8 bg-gray-50 rounded-2xl text-center text-xs text-gray-500 border border-dashed">
-                Ainda não há registros no banco de dados. Quando os pacientes avaliarem as genéticas, eles aparecerão organizados nesta tabela.
+                Nenhum relato encontrado para o filtro selecionado ({adminFilter}).
               </div>
             ) : (
               <div className="overflow-x-auto border border-gray-200 rounded-2xl">
@@ -456,6 +465,7 @@ export const MyProfile: React.FC = () => {
                   <thead className="bg-gray-50 text-gray-700 font-bold border-b border-gray-200">
                     <tr>
                       <th className="p-3">Data</th>
+                      <th className="p-3">Tipo</th>
                       <th className="p-3">Paciente</th>
                       <th className="p-3">Genética / Produto</th>
                       <th className="p-3">Associação</th>
@@ -464,10 +474,21 @@ export const MyProfile: React.FC = () => {
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-100">
-                    {allReviewsAdmin.map((r) => (
+                    {filteredAdminReviews.map((r) => (
                       <tr key={r.id} className="hover:bg-emerald-50/40 transition-colors">
                         <td className="p-3 font-medium text-gray-500">
                           {new Date(r.created_at).toLocaleDateString('pt-BR')}
+                        </td>
+                        <td className="p-3">
+                          {r.is_verified || r.user_id ? (
+                            <span className="text-[10px] font-bold bg-emerald-100 text-emerald-900 px-2 py-0.5 rounded-full border border-emerald-200">
+                              🛡️ Registrado
+                            </span>
+                          ) : (
+                            <span className="text-[10px] font-medium bg-gray-200 text-gray-700 px-2 py-0.5 rounded-full">
+                              🌐 Anônimo
+                            </span>
+                          )}
                         </td>
                         <td className="p-3 font-bold text-gray-900">
                           {r.patient_name || 'Anônimo'}
