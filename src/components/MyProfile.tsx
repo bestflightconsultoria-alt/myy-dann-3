@@ -110,18 +110,14 @@ export const MyProfile: React.FC = () => {
     return ADMIN_EMAILS.some(adminKeyword => emailLower.includes(adminKeyword.toLowerCase()));
   }, [user]);
 
-  const GOOGLE_CLIENT_ID = '861106824284-smtsd485q85t6a16ip6lm2btvh21l3si.apps.googleusercontent.com';
-
   const handleGoogleLogin = async () => {
-    const redirectUri = `${window.location.origin}/api/auth/callback`;
-    const googleAuthUrl = `https://accounts.google.com/o/oauth2/v2/auth?` +
-      `client_id=${encodeURIComponent(GOOGLE_CLIENT_ID)}` +
-      `&redirect_uri=${encodeURIComponent(redirectUri)}` +
-      `&response_type=code` +
-      `&scope=${encodeURIComponent('openid email profile')}` +
-      `&prompt=select_account`;
-
-    window.location.href = googleAuthUrl;
+    if (!supabase) return;
+    await supabase.auth.signInWithOAuth({
+      provider: 'google',
+      options: {
+        redirectTo: window.location.origin
+      }
+    });
   };
 
   const handleSaveProfile = async (e: React.FormEvent) => {
