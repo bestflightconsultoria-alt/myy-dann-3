@@ -20,7 +20,7 @@ export function App() {
         {activeTab === 'catalogo-flores' && <Catalog currentCategory="flores" />}
         {activeTab === 'catalogo-oleos' && <Catalog currentCategory="oleos" />}
         {activeTab === 'catalogo-outros' && <Catalog currentCategory="outros" />}
-        {activeTab === 'associacoes' && <Associations />}
+        {activeTab === 'associacoes' && <Associations setActiveTab={setActiveTab} />}
         {activeTab === 'sommelier' && <AiSommelier />}
         {activeTab === 'medicos' && <Doctors />}
         {activeTab === 'blog' && <Blog />}
