@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { Search, Filter, Sparkles, Flower2, Droplets, Package } from 'lucide-react';
+import { Search, Filter, Sparkles, Flower2, Droplets, Package, X } from 'lucide-react';
 import { StrainCard } from './StrainCard';
 import { StrainModal } from './StrainModal';
 import { Strain, ProductCategory } from '../types/strain';
@@ -161,6 +161,7 @@ export const Catalog: React.FC<CatalogProps> = ({ currentCategory: initialCatego
                 onClick={() => {
                   setActiveCategory(tab.id);
                   setSelectedSubFilter('ALL');
+                  setSearch(''); // Limpa a busca ao trocar de categoria
                 }}
                 className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold transition-all whitespace-nowrap ${
                   isTabActive
@@ -180,7 +181,7 @@ export const Catalog: React.FC<CatalogProps> = ({ currentCategory: initialCatego
           })}
         </div>
 
-        {/* Campo de Busca Rápida Único */}
+        {/* Campo de Busca Rápida Único com Botão de Limpar (X) */}
         <div className="relative w-full sm:w-72">
           <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
           <input
@@ -188,8 +189,17 @@ export const Catalog: React.FC<CatalogProps> = ({ currentCategory: initialCatego
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Buscar por nome, aroma ou efeito..."
-            className="w-full pl-10 pr-4 py-2 bg-gray-50 border border-gray-200 rounded-xl text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all"
+            className="w-full pl-10 pr-9 py-2 bg-gray-50 border border-gray-200 rounded-xl text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all"
           />
+          {search && (
+            <button
+              onClick={() => setSearch('')}
+              className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-gray-400 hover:text-gray-600 hover:bg-gray-200 rounded-full transition-colors"
+              title="Limpar busca"
+            >
+              <X className="w-3.5 h-3.5" />
+            </button>
+          )}
         </div>
 
       </div>
@@ -203,7 +213,12 @@ export const Catalog: React.FC<CatalogProps> = ({ currentCategory: initialCatego
           {unifiedFilters.map((f) => (
             <button
               key={f.id}
-              onClick={() => setSelectedSubFilter(f.id)}
+              onClick={() => {
+                setSelectedSubFilter(f.id);
+                if (f.id === 'ALL') {
+                  setSearch(''); // Limpa a busca automaticamente ao clicar em "Todas as Flores"
+                }
+              }}
               className={`px-3.5 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all ${
                 selectedSubFilter === f.id
                   ? 'bg-emerald-600 text-white shadow-sm shadow-emerald-200 scale-[1.02]'
@@ -219,14 +234,31 @@ export const Catalog: React.FC<CatalogProps> = ({ currentCategory: initialCatego
       {/* Contagem Dinâmica Real */}
       <div className="flex items-center justify-between text-xs text-gray-500 px-1">
         <span>Exibindo <strong>{processedStrains.length}</strong> produtos medicinais disponíveis</span>
+        {search && (
+          <button
+            onClick={() => setSearch('')}
+            className="text-xs text-emerald-700 font-bold hover:underline flex items-center gap-1"
+          >
+            Limpar busca "{search}"
+          </button>
+        )}
       </div>
 
       {/* Grid de Itens */}
       {loading ? (
         <div className="py-12 text-center text-gray-500 text-sm">Carregando catálogo...</div>
       ) : processedStrains.length === 0 ? (
-        <div className="py-12 text-center bg-white rounded-2xl border border-dashed border-gray-300 p-8 text-gray-500 text-sm">
-          Nenhum produto encontrado para a categoria ou filtro selecionado.
+        <div className="py-12 text-center bg-white rounded-2xl border border-dashed border-gray-300 p-8 text-gray-500 text-sm space-y-2">
+          <p>Nenhum produto encontrado para a busca ou filtro selecionado.</p>
+          <button
+            onClick={() => {
+              setSearch('');
+              setSelectedSubFilter('ALL');
+            }}
+            className="px-4 py-2 bg-emerald-600 text-white text-xs font-bold rounded-xl shadow-xs hover:bg-emerald-700 transition-all"
+          >
+            Resetar Filtros e Exibir Todos
+          </button>
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
