@@ -219,16 +219,16 @@ export const AiSommelier: React.FC = () => {
         <div className="absolute top-0 right-0 translate-x-10 -translate-y-10 w-48 h-48 bg-emerald-500/10 rounded-full blur-3xl"></div>
         
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-500/20 border border-emerald-400/30 text-emerald-300 text-xs font-bold backdrop-blur-md">
-          <Flame className="w-4 h-4 text-emerald-400" />
-          <span>Fummelier IA — Curadoria Conectada aos Relatos de Pacientes</span>
+          <Sparkles className="w-4 h-4 text-emerald-400" />
+          <span>Encontre o Produto Ideal em Segundos</span>
         </div>
 
         <h1 className="text-3xl sm:text-5xl font-black tracking-tight text-white">
-          Fummelier <span className="text-emerald-400">IA</span>
+          Recomendador <span className="text-emerald-400">Terapêutico IA</span>
         </h1>
 
-        <p className="text-sm sm:text-base text-emerald-100/80 max-w-xl mx-auto leading-relaxed">
-          Nossa inteligência cruza dados de terpenos com as avaliações reais publicadas pela comunidade de pacientes no CannaGuia.
+        <p className="text-sm sm:text-base text-emerald-100/90 max-w-2xl mx-auto leading-relaxed">
+          Descubra as flores, óleos e gummies de associações brasileiras mais compatíveis com a sua rotina e tratamento através do cruzamento de dados de 90+ produtos medicinais com relatos de eficácia fornecidos pela comunidade de pacientes.
         </p>
       </div>
 
