@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { Search, Filter, ShieldCheck, Sparkles, Flower2, Droplets, Package, ArrowUpDown } from 'lucide-react';
+import { Search, Filter, Sparkles, Flower2, Droplets, Package } from 'lucide-react';
 import { StrainCard } from './StrainCard';
 import { StrainModal } from './StrainModal';
 import { Strain, ProductCategory } from '../types/strain';
@@ -23,12 +23,20 @@ export const Catalog: React.FC<CatalogProps> = ({ currentCategory: initialCatego
   const [activeCategory, setActiveCategory] = useState<ProductCategory>(initialCategory);
   const [search, setSearch] = useState('');
   const [selectedSubFilter, setSelectedSubFilter] = useState('ALL');
-  const [sortBy, setSortBy] = useState('RECOMENDADOS');
   const [selectedStrain, setSelectedStrain] = useState<Strain | null>(null);
   const [communityStats, setCommunityStats] = useState<CommunityReviewStats>({});
 
-  // Lista de subfiltros para flores
-  const flowerFilters = ['ALL', '🔥 Mais Recomendadas', '🛡️ Verificados por Pacientes', 'Híbrida', 'Indica', 'Sativa', 'THC', 'CBD', 'THC/CBD'];
+  // Lista Unificada de Filtro & Ordenação Inteligente em Pílulas
+  const unifiedFilters = [
+    { id: 'ALL', label: 'Todas as Flores' },
+    { id: 'RECOMENDADOS', label: '🔥 Mais Recomendadas' },
+    { id: 'NAME_ASC', label: '🔤 Nome (A - Z)' },
+    { id: 'THC_DESC', label: '🌿 Maior THC' },
+    { id: 'CBD_DESC', label: '💧 Maior CBD' },
+    { id: 'Híbrida', label: '🟣 Híbrida' },
+    { id: 'Indica', label: '🔵 Indica' },
+    { id: 'Sativa', label: '🟢 Sativa' }
+  ];
 
   // Busca avaliações reais para exibir estrelas e contagem nos cards
   useEffect(() => {
@@ -69,25 +77,15 @@ export const Catalog: React.FC<CatalogProps> = ({ currentCategory: initialCatego
     { id: 'outros' as ProductCategory, label: 'Gummies & Outros', icon: Package, count: strains.filter(s => s.category === 'outros').length },
   ];
 
-  const filteredStrains = useMemo(() => {
-    return strains.filter((strain) => {
-      // 1. Filtro por Categoria Principal (Flores, Óleos, Outros)
+  const processedStrains = useMemo(() => {
+    let result = strains.filter((strain) => {
+      // 1. Categoria Principal
       const matchCategory = activeCategory ? strain.category === activeCategory : true;
 
-      // 2. Filtro Secundário em Flores
+      // 2. Filtro Secundário por Tipo de Planta
       let matchSubFilter = true;
-      if (activeCategory === 'flores' && selectedSubFilter !== 'ALL') {
-        if (selectedSubFilter === '🔥 Mais Recomendadas') {
-          const stats = communityStats[strain.id];
-          matchSubFilter = !!(stats && stats.count > 0 && stats.avgRating >= 4.0);
-        } else if (selectedSubFilter === '🛡️ Verificados por Pacientes') {
-          const stats = communityStats[strain.id];
-          matchSubFilter = !!(stats && stats.hasVerifiedReview);
-        } else if (['Híbrida', 'Indica', 'Sativa'].includes(selectedSubFilter)) {
-          matchSubFilter = strain.type === selectedSubFilter;
-        } else if (['THC', 'CBD', 'THC/CBD'].includes(selectedSubFilter)) {
-          matchSubFilter = strain.dominantCannabinoid === selectedSubFilter;
-        }
+      if (['Híbrida', 'Indica', 'Sativa'].includes(selectedSubFilter)) {
+        matchSubFilter = strain.type === selectedSubFilter;
       }
 
       // 3. Busca de Texto
@@ -100,35 +98,33 @@ export const Catalog: React.FC<CatalogProps> = ({ currentCategory: initialCatego
 
       return matchCategory && matchSubFilter && matchSearch;
     });
-  }, [strains, activeCategory, selectedSubFilter, search, communityStats]);
 
-  // Ordenação Inteligente
-  const sortedStrains = useMemo(() => {
-    const list = [...filteredStrains];
-    if (sortBy === 'NAME_ASC') {
+    // Ordenação Unificada
+    const list = [...result];
+    if (selectedSubFilter === 'NAME_ASC') {
       list.sort((a, b) => a.name.localeCompare(b.name));
-    } else if (sortBy === 'THC_DESC') {
+    } else if (selectedSubFilter === 'THC_DESC') {
       list.sort((a, b) => {
         const thcA = parseFloat(a.thc?.replace(/[^0-9.]/g, '') || '0');
         const thcB = parseFloat(b.thc?.replace(/[^0-9.]/g, '') || '0');
         return thcB - thcA;
       });
-    } else if (sortBy === 'CBD_DESC') {
+    } else if (selectedSubFilter === 'CBD_DESC') {
       list.sort((a, b) => {
         const cbdA = parseFloat(a.cbd?.replace(/[^0-9.]/g, '') || '0');
         const cbdB = parseFloat(b.cbd?.replace(/[^0-9.]/g, '') || '0');
         return cbdB - cbdA;
       });
-    } else {
-      // RECOMENDADOS (Nota de avaliações da comunidade)
+    } else if (selectedSubFilter === 'RECOMENDADOS') {
       list.sort((a, b) => {
         const ratingA = communityStats[a.id]?.avgRating || 0;
         const ratingB = communityStats[b.id]?.avgRating || 0;
         return ratingB - ratingA;
       });
     }
+
     return list;
-  }, [filteredStrains, sortBy, communityStats]);
+  }, [strains, activeCategory, selectedSubFilter, search, communityStats]);
 
   return (
     <div className="space-y-6">
@@ -151,7 +147,7 @@ export const Catalog: React.FC<CatalogProps> = ({ currentCategory: initialCatego
         </div>
       </div>
 
-      {/* Navegação por Categorias + Ordenação + Busca */}
+      {/* Bar Unificada de Categoria e Busca */}
       <div className="bg-white p-3.5 sm:p-4 rounded-2xl border border-gray-200 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-3">
         
         {/* Tabs de Categoria (Flores, Óleos, Outros) */}
@@ -184,55 +180,37 @@ export const Catalog: React.FC<CatalogProps> = ({ currentCategory: initialCatego
           })}
         </div>
 
-        {/* Busca e Ordenação Rápida */}
-        <div className="flex items-center gap-2 w-full sm:w-auto">
-          {/* Ordenação */}
-          <div className="relative shrink-0">
-            <select
-              value={sortBy}
-              onChange={(e) => setSortBy(e.target.value)}
-              className="pl-3 pr-8 py-2 bg-gray-50 border border-gray-200 rounded-xl text-xs font-bold text-gray-700 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 appearance-none cursor-pointer"
-            >
-              <option value="RECOMENDADOS">🔥 Mais Recomendados</option>
-              <option value="NAME_ASC">🔤 Nome (A - Z)</option>
-              <option value="THC_DESC">🌿 Maior Teor de THC</option>
-              <option value="CBD_DESC">💧 Maior Teor de CBD</option>
-            </select>
-            <ArrowUpDown className="w-3.5 h-3.5 text-gray-400 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
-          </div>
-
-          {/* Campo de Busca Rápida */}
-          <div className="relative w-full sm:w-64">
-            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-            <input
-              type="text"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              placeholder="Buscar por nome, aroma ou efeito..."
-              className="w-full pl-10 pr-4 py-2 bg-gray-50 border border-gray-200 rounded-xl text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all"
-            />
-          </div>
+        {/* Campo de Busca Rápida Único */}
+        <div className="relative w-full sm:w-72">
+          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+          <input
+            type="text"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder="Buscar por nome, aroma ou efeito..."
+            className="w-full pl-10 pr-4 py-2 bg-gray-50 border border-gray-200 rounded-xl text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all"
+          />
         </div>
 
       </div>
 
-      {/* Subfiltros em Pílula (Exclusivos para a Categoria Flores) */}
+      {/* Barra Única de Ordenação & Filtros em Pílulas */}
       {activeCategory === 'flores' && (
-        <div className="flex items-center gap-2 overflow-x-auto pb-2 pt-1">
+        <div className="flex items-center gap-2 overflow-x-auto pb-1 pt-0.5 scrollbar-none">
           <span className="text-xs font-bold text-gray-500 flex items-center gap-1 mr-1 shrink-0">
-            <Filter className="w-3.5 h-3.5 text-emerald-600" /> Filtrar Tipo/Canabinoide:
+            <Filter className="w-3.5 h-3.5 text-emerald-600" /> Filtrar / Ordenar:
           </span>
-          {flowerFilters.map((f) => (
+          {unifiedFilters.map((f) => (
             <button
-              key={f}
-              onClick={() => setSelectedSubFilter(f)}
+              key={f.id}
+              onClick={() => setSelectedSubFilter(f.id)}
               className={`px-3.5 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all ${
-                selectedSubFilter === f
-                  ? 'bg-emerald-600 text-white shadow-sm shadow-emerald-200'
+                selectedSubFilter === f.id
+                  ? 'bg-emerald-600 text-white shadow-sm shadow-emerald-200 scale-[1.02]'
                   : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50 hover:border-gray-300'
               }`}
             >
-              {f === 'ALL' ? 'Todas as Flores' : f}
+              {f.label}
             </button>
           ))}
         </div>
@@ -240,19 +218,19 @@ export const Catalog: React.FC<CatalogProps> = ({ currentCategory: initialCatego
 
       {/* Contagem Dinâmica Real */}
       <div className="flex items-center justify-between text-xs text-gray-500 px-1">
-        <span>Exibindo <strong>{sortedStrains.length}</strong> produtos medicinais disponíveis</span>
+        <span>Exibindo <strong>{processedStrains.length}</strong> produtos medicinais disponíveis</span>
       </div>
 
       {/* Grid de Itens */}
       {loading ? (
         <div className="py-12 text-center text-gray-500 text-sm">Carregando catálogo...</div>
-      ) : sortedStrains.length === 0 ? (
+      ) : processedStrains.length === 0 ? (
         <div className="py-12 text-center bg-white rounded-2xl border border-dashed border-gray-300 p-8 text-gray-500 text-sm">
           Nenhum produto encontrado para a categoria ou filtro selecionado.
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {sortedStrains.map((strain, idx) => (
+          {processedStrains.map((strain, idx) => (
             <StrainCard
               key={`${strain.id}-${idx}`}
               strain={strain}
