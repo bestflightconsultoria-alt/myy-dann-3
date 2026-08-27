@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { Search, Filter, ShieldCheck, Sparkles, Flower2, Droplets, Package } from 'lucide-react';
+import { Search, Filter, ShieldCheck, Sparkles, Flower2, Droplets, Package, ArrowUpDown } from 'lucide-react';
 import { StrainCard } from './StrainCard';
 import { StrainModal } from './StrainModal';
 import { Strain, ProductCategory } from '../types/strain';
@@ -23,6 +23,7 @@ export const Catalog: React.FC<CatalogProps> = ({ currentCategory: initialCatego
   const [activeCategory, setActiveCategory] = useState<ProductCategory>(initialCategory);
   const [search, setSearch] = useState('');
   const [selectedSubFilter, setSelectedSubFilter] = useState('ALL');
+  const [sortBy, setSortBy] = useState('RECOMENDADOS');
   const [selectedStrain, setSelectedStrain] = useState<Strain | null>(null);
   const [communityStats, setCommunityStats] = useState<CommunityReviewStats>({});
 
@@ -69,7 +70,7 @@ export const Catalog: React.FC<CatalogProps> = ({ currentCategory: initialCatego
   ];
 
   const filteredStrains = useMemo(() => {
-    let result = strains.filter((strain) => {
+    return strains.filter((strain) => {
       // 1. Filtro por Categoria Principal (Flores, Óleos, Outros)
       const matchCategory = activeCategory ? strain.category === activeCategory : true;
 
@@ -99,69 +100,62 @@ export const Catalog: React.FC<CatalogProps> = ({ currentCategory: initialCatego
 
       return matchCategory && matchSubFilter && matchSearch;
     });
-
-    // Se filtrou por Mais Recomendadas, ordena pelas maiores notas
-    if (selectedSubFilter === '🔥 Mais Recomendadas') {
-      result.sort((a, b) => {
-        const statsA = communityStats[a.id]?.avgRating || 0;
-        const statsB = communityStats[b.id]?.avgRating || 0;
-        return statsB - statsA;
-      });
-    }
-
-    return result;
   }, [strains, activeCategory, selectedSubFilter, search, communityStats]);
 
-  const titles: Record<ProductCategory, { title: string; subtitle: string }> = {
-    flores: {
-      title: "Flores Medicinais e Inflorescências",
-      subtitle: "Perfis de terpenos, linhagens genéticas e preços comparados entre associações do Brasil."
-    },
-    oleos: {
-      title: "Óleos Terapêuticos e Extratos",
-      subtitle: "Formulações Full Spectrum, Isolados e proporções balanceadas de CBD e THC."
-    },
-    outros: {
-      title: "Gummies, Pomadas e Concentrados",
-      subtitle: "Formatos alternativos com dosagens padronizadas, conveniência e praticidade."
+  // Ordenação Inteligente
+  const sortedStrains = useMemo(() => {
+    const list = [...filteredStrains];
+    if (sortBy === 'NAME_ASC') {
+      list.sort((a, b) => a.name.localeCompare(b.name));
+    } else if (sortBy === 'THC_DESC') {
+      list.sort((a, b) => {
+        const thcA = parseFloat(a.thc?.replace(/[^0-9.]/g, '') || '0');
+        const thcB = parseFloat(b.thc?.replace(/[^0-9.]/g, '') || '0');
+        return thcB - thcA;
+      });
+    } else if (sortBy === 'CBD_DESC') {
+      list.sort((a, b) => {
+        const cbdA = parseFloat(a.cbd?.replace(/[^0-9.]/g, '') || '0');
+        const cbdB = parseFloat(b.cbd?.replace(/[^0-9.]/g, '') || '0');
+        return cbdB - cbdA;
+      });
+    } else {
+      // RECOMENDADOS (Nota de avaliações da comunidade)
+      list.sort((a, b) => {
+        const ratingA = communityStats[a.id]?.avgRating || 0;
+        const ratingB = communityStats[b.id]?.avgRating || 0;
+        return ratingB - ratingA;
+      });
     }
-  };
+    return list;
+  }, [filteredStrains, sortBy, communityStats]);
 
   return (
     <div className="space-y-6">
       
-      {/* Banner Principal CannaGuia */}
+      {/* Banner Principal do Catálogo */}
       <div className="bg-gradient-to-r from-emerald-900 via-emerald-800 to-teal-900 rounded-3xl p-6 sm:p-8 text-white shadow-xl relative overflow-hidden">
-        <div className="absolute right-0 top-0 translate-x-12 -translate-y-8 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
-        
         <div className="relative z-10 max-w-3xl space-y-3">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/20 border border-emerald-400/30 text-emerald-200 text-xs font-semibold backdrop-blur-md">
             <Sparkles className="w-3.5 h-3.5 text-emerald-300" />
-            <span>CannaGuia — Seu Guia de Cannabis Medicinal</span>
+            <span>Guia de Genéticas & Produtos Regulamentados</span>
           </div>
 
           <h1 className="text-2xl sm:text-4xl font-black tracking-tight text-white leading-tight">
-            {titles[activeCategory].title}
+            Flores Medicinais e Inflorescências
           </h1>
 
           <p className="text-sm sm:text-base text-emerald-100/90 leading-relaxed">
-            {titles[activeCategory].subtitle}
+            Perfis de terpenos, linhagens genéticas e preços comparados entre associações de cannabis no Brasil.
           </p>
-
-          <div className="pt-2 flex flex-wrap items-center gap-4 text-xs font-medium text-emerald-200/80">
-            <span className="flex items-center gap-1.5">
-              <ShieldCheck className="w-4 h-4 text-emerald-400" /> Associações Regulamentadas
-            </span>
-            <span className="flex items-center gap-1.5">
-              🌿 Dados Terapêuticos Verificados
-            </span>
-          </div>
         </div>
       </div>
 
-      {/* Seletor de Categoria Principal (Flores / Óleos / Gummies) */}
-      <div className="bg-white p-2 rounded-2xl border border-gray-200 shadow-sm flex flex-wrap items-center justify-between gap-2">
-        <div className="flex items-center gap-2 overflow-x-auto w-full sm:w-auto">
+      {/* Navegação por Categorias + Ordenação + Busca */}
+      <div className="bg-white p-3.5 sm:p-4 rounded-2xl border border-gray-200 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-3">
+        
+        {/* Tabs de Categoria (Flores, Óleos, Outros) */}
+        <div className="flex items-center gap-1.5 overflow-x-auto w-full sm:w-auto scrollbar-none">
           {categoryTabs.map((tab) => {
             const Icon = tab.icon;
             const isTabActive = activeCategory === tab.id;
@@ -172,10 +166,10 @@ export const Catalog: React.FC<CatalogProps> = ({ currentCategory: initialCatego
                   setActiveCategory(tab.id);
                   setSelectedSubFilter('ALL');
                 }}
-                className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all whitespace-nowrap ${
+                className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold transition-all whitespace-nowrap ${
                   isTabActive
-                    ? 'bg-emerald-600 text-white shadow-md shadow-emerald-600/20'
-                    : 'bg-gray-50 hover:bg-emerald-50/60 text-gray-600 hover:text-emerald-700 border border-gray-100'
+                    ? 'bg-emerald-600 text-white shadow-sm shadow-emerald-200'
+                    : 'bg-gray-50 text-gray-700 hover:bg-gray-100 border border-gray-200'
                 }`}
               >
                 <Icon className={`w-4 h-4 ${isTabActive ? 'text-white' : 'text-emerald-600'}`} />
@@ -190,17 +184,36 @@ export const Catalog: React.FC<CatalogProps> = ({ currentCategory: initialCatego
           })}
         </div>
 
-        {/* Campo de Busca Rápida */}
-        <div className="relative w-full sm:w-72 mt-2 sm:mt-0">
-          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-          <input
-            type="text"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            placeholder="Buscar por nome, aroma ou efeito..."
-            className="w-full pl-10 pr-4 py-2 bg-gray-50 border border-gray-200 rounded-xl text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all"
-          />
+        {/* Busca e Ordenação Rápida */}
+        <div className="flex items-center gap-2 w-full sm:w-auto">
+          {/* Ordenação */}
+          <div className="relative shrink-0">
+            <select
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value)}
+              className="pl-3 pr-8 py-2 bg-gray-50 border border-gray-200 rounded-xl text-xs font-bold text-gray-700 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 appearance-none cursor-pointer"
+            >
+              <option value="RECOMENDADOS">🔥 Mais Recomendados</option>
+              <option value="NAME_ASC">🔤 Nome (A - Z)</option>
+              <option value="THC_DESC">🌿 Maior Teor de THC</option>
+              <option value="CBD_DESC">💧 Maior Teor de CBD</option>
+            </select>
+            <ArrowUpDown className="w-3.5 h-3.5 text-gray-400 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+          </div>
+
+          {/* Campo de Busca Rápida */}
+          <div className="relative w-full sm:w-64">
+            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+            <input
+              type="text"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder="Buscar por nome, aroma ou efeito..."
+              className="w-full pl-10 pr-4 py-2 bg-gray-50 border border-gray-200 rounded-xl text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 transition-all"
+            />
+          </div>
         </div>
+
       </div>
 
       {/* Subfiltros em Pílula (Exclusivos para a Categoria Flores) */}
@@ -227,19 +240,19 @@ export const Catalog: React.FC<CatalogProps> = ({ currentCategory: initialCatego
 
       {/* Contagem Dinâmica Real */}
       <div className="flex items-center justify-between text-xs text-gray-500 px-1">
-        <span>Exibindo <strong>{filteredStrains.length}</strong> produtos medicinais disponíveis</span>
+        <span>Exibindo <strong>{sortedStrains.length}</strong> produtos medicinais disponíveis</span>
       </div>
 
       {/* Grid de Itens */}
       {loading ? (
         <div className="py-12 text-center text-gray-500 text-sm">Carregando catálogo...</div>
-      ) : filteredStrains.length === 0 ? (
+      ) : sortedStrains.length === 0 ? (
         <div className="py-12 text-center bg-white rounded-2xl border border-dashed border-gray-300 p-8 text-gray-500 text-sm">
           Nenhum produto encontrado para a categoria ou filtro selecionado.
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {filteredStrains.map((strain, idx) => (
+          {sortedStrains.map((strain, idx) => (
             <StrainCard
               key={`${strain.id}-${idx}`}
               strain={strain}

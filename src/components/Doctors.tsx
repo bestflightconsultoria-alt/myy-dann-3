@@ -44,7 +44,7 @@ export const MOCK_DOCTORS: Doctor[] = [
   {
     id: "dr-renato-machado-cro",
     name: "Dr. Renato Machado",
-    crm: "CRO-SP 102.840 (Cirurgião-Dentista)",
+    crm: "CRO-SP 102.840 (Cirurgião-Dentista — Dor Orofacial & DTM)",
     city: "São Paulo",
     state: "SP",
     isOnline: true,
@@ -72,9 +72,9 @@ export const Doctors: React.FC = () => {
   return (
     <div className="space-y-6">
       
-      {/* Banner Principal de Prescritores */}
-      <div className="bg-gradient-to-r from-teal-900 via-emerald-800 to-emerald-900 rounded-3xl p-6 sm:p-8 text-white shadow-xl relative overflow-hidden">
-        <div className="relative z-10 max-w-3xl space-y-3">
+      {/* Banner Principal de Prescritores + Botão de Cadastro para Profissionais */}
+      <div className="bg-gradient-to-r from-teal-900 via-emerald-800 to-emerald-900 rounded-3xl p-6 sm:p-8 text-white shadow-xl relative overflow-hidden flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+        <div className="relative z-10 max-w-2xl space-y-3">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-teal-500/20 border border-teal-400/30 text-teal-200 text-xs font-semibold backdrop-blur-md">
             <Stethoscope className="w-3.5 h-3.5 text-teal-300" />
             <span>Diretório Oficial de Prescritores Verificados</span>
@@ -96,6 +96,23 @@ export const Doctors: React.FC = () => {
               <Video className="w-4 h-4 text-teal-400" /> Atendimento Online (Telemedicina)
             </span>
           </div>
+        </div>
+
+        {/* Card / Chamada para Cadastrar Profissional */}
+        <div className="relative z-10 shrink-0 w-full md:w-auto bg-white/10 backdrop-blur-md p-5 rounded-2xl border border-white/20 text-center space-y-3">
+          <span className="text-xs font-extrabold text-teal-200 block uppercase tracking-wider">É Médico ou Dentista?</span>
+          <p className="text-xs text-teal-100 max-w-xs mx-auto">
+            Cadastre seu perfil de atendimento no diretório do CannaGuia.
+          </p>
+          <a
+            href="https://wa.me/5511999999999?text=Ola!%20Sou%20profissional%20de%20saude%20prescritor%20(CRM/CRO)%20e%20gostaria%20de%20cadastrar%20meu%20perfil%20no%20CannaGuia."
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full py-2.5 px-4 bg-emerald-500 hover:bg-emerald-400 text-emerald-950 font-black text-xs rounded-xl shadow-lg transition-all flex items-center justify-center gap-2"
+          >
+            <UserPlus className="w-4 h-4" />
+            <span>Cadastrar Meu Registro</span>
+          </a>
         </div>
       </div>
 
