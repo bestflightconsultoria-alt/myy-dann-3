@@ -518,7 +518,15 @@ export const MyProfile: React.FC = () => {
                           {r.patient_name || 'Anônimo'}
                         </td>
                         <td className="p-3 font-semibold text-teal-800">
-                          {r.prescribing_doctor || (r.user_id && r.user_id === user?.id ? (user?.user_metadata?.prescribing_doctor || prescribingDoctor) : null) || '—'}
+                          {(() => {
+                            const matchUser = (r.user_id && r.user_id === user?.id) ||
+                              (r.patient_name && fullName && (
+                                r.patient_name.toLowerCase().trim() === fullName.toLowerCase().trim() ||
+                                r.patient_name.toLowerCase().includes(fullName.toLowerCase()) ||
+                                fullName.toLowerCase().includes(r.patient_name.toLowerCase())
+                              ));
+                            return r.prescribing_doctor || (matchUser ? (prescribingDoctor || user?.user_metadata?.prescribing_doctor) : null) || '—';
+                          })()}
                         </td>
                         <td className="p-3 font-bold text-emerald-800">
                           {r.strain_name}
