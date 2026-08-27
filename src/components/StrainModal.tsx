@@ -236,7 +236,7 @@ export const StrainModal: React.FC<StrainModalProps> = ({ strain, onClose }) => 
           association_name: selectedAssoc,
           rating,
           patient_name: finalName,
-          prescribing_doctor: prescribingDoctor.trim() || null,
+          prescribing_doctor: user?.user_metadata?.prescribing_doctor || null,
           user_id: user?.id || null,
           conditions: allConditions,
           positive_effects: finalPositives,
