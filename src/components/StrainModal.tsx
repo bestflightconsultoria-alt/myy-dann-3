@@ -37,13 +37,15 @@ interface PatientReview {
 
 const COMMON_CONDITIONS = [
   'Ansiedade & Estresse',
-  'Insônia / Distúrbios do Sono',
-  'Dor Crônica / Tensão Muscular',
-  'TDAH / Déficit de Foco',
-  'Enxaqueca / Cefaleia',
-  'Fibromialgia',
-  'Depressão',
-  'Bruxismo'
+  'Relaxamento Físico',
+  'Insônia & Sono Profundo',
+  'Dores Crônicas & Enxaqueca',
+  'Foco, TDAH & Concentração',
+  'Disposição & Combate à Fadiga',
+  'Elevação de Humor & Bem-Estar',
+  'Estímulo de Apetite & Náusea',
+  'Anti-inflamatório & Pós-Treino',
+  'Clareza sem Psicoatividade (CBD)'
 ];
 
 interface StrainModalProps {
