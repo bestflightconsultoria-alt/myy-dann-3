@@ -162,6 +162,9 @@ export const MyProfile: React.FC = () => {
     if (adminFilter === 'anonymous') {
       return allReviewsAdmin.filter(r => !r.is_verified && !r.user_id);
     }
+    if (adminFilter === 'has_doctor') {
+      return allReviewsAdmin.filter(r => r.prescribing_doctor && r.prescribing_doctor.trim() !== '');
+    }
     return allReviewsAdmin;
   }, [allReviewsAdmin, adminFilter]);
 
@@ -419,6 +422,14 @@ export const MyProfile: React.FC = () => {
               >
                 🌐 Anônimos ({allReviewsAdmin.filter(r => !r.is_verified && !r.user_id).length})
               </button>
+              <button
+                onClick={() => setAdminFilter('has_doctor')}
+                className={`px-2.5 py-1 text-xs font-bold rounded-lg transition-all ${
+                  adminFilter === 'has_doctor' ? 'bg-teal-700 text-white shadow-xs' : 'text-gray-700 hover:bg-gray-200'
+                }`}
+              >
+                🩺 Com Prescritor ({allReviewsAdmin.filter(r => r.prescribing_doctor && r.prescribing_doctor.trim() !== '').length})
+              </button>
             </div>
           </div>
 
@@ -428,7 +439,7 @@ export const MyProfile: React.FC = () => {
               <Users className="w-5 h-5 text-emerald-600 mx-auto mb-1" />
               <span className="text-2xl font-black text-emerald-950 block">{filteredAdminReviews.length}</span>
               <span className="text-xs font-bold text-emerald-700">
-                {adminFilter === 'verified' ? 'Relatos de Usuários Registrados' : adminFilter === 'anonymous' ? 'Relatos Anônimos' : 'Total de Relatos no Banco'}
+                {adminFilter === 'verified' ? 'Relatos de Usuários Registrados' : adminFilter === 'anonymous' ? 'Relatos Anônimos' : adminFilter === 'has_doctor' ? 'Relatos com Médico Prescritor' : 'Total de Relatos no Banco'}
               </span>
             </div>
 
@@ -451,7 +462,7 @@ export const MyProfile: React.FC = () => {
           <div className="space-y-3">
             <div className="flex items-center justify-between">
               <h4 className="text-sm font-bold text-gray-800 uppercase tracking-wider">
-                Exibindo {filteredAdminReviews.length} relatos ({adminFilter === 'verified' ? 'Apenas Usuários Logados com Google' : adminFilter === 'anonymous' ? 'Apenas Anônimos' : 'Todos os Relatos'}):
+                Exibindo {filteredAdminReviews.length} relatos ({adminFilter === 'verified' ? 'Apenas Usuários Logados com Google' : adminFilter === 'anonymous' ? 'Apenas Anônimos' : adminFilter === 'has_doctor' ? 'Apenas Relatos com Médico Prescritor' : 'Todos os Relatos'}):
               </h4>
             </div>
 
@@ -467,6 +478,7 @@ export const MyProfile: React.FC = () => {
                       <th className="p-3">Data</th>
                       <th className="p-3">Tipo</th>
                       <th className="p-3">Paciente</th>
+                      <th className="p-3">Médico Prescritor</th>
                       <th className="p-3">Genética / Produto</th>
                       <th className="p-3">Associação</th>
                       <th className="p-3">Nota</th>
@@ -492,6 +504,9 @@ export const MyProfile: React.FC = () => {
                         </td>
                         <td className="p-3 font-bold text-gray-900">
                           {r.patient_name || 'Anônimo'}
+                        </td>
+                        <td className="p-3 font-semibold text-teal-800">
+                          {r.prescribing_doctor || '—'}
                         </td>
                         <td className="p-3 font-bold text-emerald-800">
                           {r.strain_name}

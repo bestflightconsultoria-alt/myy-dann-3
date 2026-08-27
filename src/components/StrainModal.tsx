@@ -14,7 +14,7 @@ import {
   Plus,
   Sparkles,
   Tag,
-  Share2
+  Stethoscope
 } from 'lucide-react';
 import { Strain } from '../types/strain';
 import { supabase } from '../lib/supabase';
@@ -27,6 +27,7 @@ interface PatientReview {
   associationName: string;
   rating: number;
   patientName: string;
+  prescribingDoctor?: string;
   conditions: string[];
   positiveEffects: string[];
   sideEffects: string[];
@@ -63,6 +64,7 @@ export const StrainModal: React.FC<StrainModalProps> = ({ strain, onClose }) => 
   const [rating, setRating] = useState<number>(5);
   const [selectedAssoc, setSelectedAssoc] = useState<string>('');
   const [patientName, setPatientName] = useState<string>('');
+  const [prescribingDoctor, setPrescribingDoctor] = useState<string>('');
   const [selectedConditions, setSelectedConditions] = useState<string[]>([]);
   const [customCondition, setCustomCondition] = useState<string>('');
   const [positiveEffectInput, setPositiveEffectInput] = useState<string>('');
@@ -119,6 +121,7 @@ export const StrainModal: React.FC<StrainModalProps> = ({ strain, onClose }) => 
             associationName: item.association_name,
             rating: item.rating || 5,
             patientName: item.patient_name,
+            prescribingDoctor: item.prescribing_doctor || '',
             conditions: item.conditions || [],
             positiveEffects: item.positive_effects || [],
             sideEffects: item.side_effects || [],
@@ -207,6 +210,7 @@ export const StrainModal: React.FC<StrainModalProps> = ({ strain, onClose }) => 
       associationName: selectedAssoc,
       rating,
       patientName: finalName,
+      prescribingDoctor: prescribingDoctor.trim() || undefined,
       conditions: allConditions,
       positiveEffects: finalPositives,
       sideEffects: allSides,
@@ -232,6 +236,7 @@ export const StrainModal: React.FC<StrainModalProps> = ({ strain, onClose }) => 
           association_name: selectedAssoc,
           rating,
           patient_name: finalName,
+          prescribing_doctor: prescribingDoctor.trim() || null,
           user_id: user?.id || null,
           conditions: allConditions,
           positive_effects: finalPositives,
@@ -246,6 +251,7 @@ export const StrainModal: React.FC<StrainModalProps> = ({ strain, onClose }) => 
 
     setReviews([newReview, ...reviews]);
     setComment('');
+    setPrescribingDoctor('');
     setPositiveEffectInput('');
     setCustomCondition('');
     setCustomSideEffect('');
@@ -467,6 +473,21 @@ export const StrainModal: React.FC<StrainModalProps> = ({ strain, onClose }) => 
                   </div>
                 </div>
 
+                {/* Médico ou Dentista Prescritor (Opcional) */}
+                <div className="space-y-1">
+                  <label className="text-[11px] font-bold text-emerald-900 flex items-center gap-1">
+                    <Stethoscope className="w-3.5 h-3.5 text-emerald-700" />
+                    <span>Médico ou Dentista Prescritor (Opcional):</span>
+                  </label>
+                  <input
+                    type="text"
+                    placeholder="Ex: Dr. Carlos Silva (CRM-SP)..."
+                    value={prescribingDoctor}
+                    onChange={(e) => setPrescribingDoctor(e.target.value)}
+                    className="w-full p-2.5 bg-white border border-emerald-200 rounded-xl text-xs font-medium text-gray-800 outline-none focus:border-emerald-500"
+                  />
+                </div>
+
                 {/* Relato Opcional */}
                 <div className="space-y-1">
                   <label className="text-[11px] font-bold text-emerald-900 block">Relato Clínico (Opcional):</label>
@@ -525,6 +546,14 @@ export const StrainModal: React.FC<StrainModalProps> = ({ strain, onClose }) => 
                         {rev.date} • Dispensado por: <strong className="text-gray-700">{rev.associationName}</strong>
                       </span>
                     </div>
+
+                    {/* Médico Prescritor se informado */}
+                    {rev.prescribingDoctor && (
+                      <div className="text-[11px] font-bold text-teal-800 flex items-center gap-1 bg-teal-50 px-2.5 py-1 rounded-md border border-teal-100 w-fit">
+                        <Stethoscope className="w-3 h-3 text-teal-600" />
+                        <span>Prescrito por: {rev.prescribingDoctor}</span>
+                      </div>
+                    )}
 
                     {/* Condições Tratadas */}
                     {rev.conditions && rev.conditions.length > 0 && (
