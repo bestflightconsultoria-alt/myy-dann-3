@@ -1,16 +1,15 @@
 import React, { useState, useMemo } from 'react';
-import { Search, MapPin, Building2, Star, DollarSign, ArrowUpDown, BookOpen, UserPlus, Sprout, ArrowRight } from 'lucide-react';
+import { Search, MapPin, Building2, Star, DollarSign, ArrowUpDown, BookOpen, Sprout, ArrowRight } from 'lucide-react';
 import { useAssociations, Association } from '../hooks/useAssociations';
 import { useStrains } from '../hooks/useStrains';
 import { AssociationModal } from './AssociationModal';
-import { ContactModal } from './ContactModal';
 
 interface AssociationsProps {
   setActiveTab?: (tab: string) => void;
   openBlogArticle?: (articleId: string) => void;
 }
 
-export const Associations: React.FC<AssociationsProps> = ({ setActiveTab, openBlogArticle }) => {
+export const Associations: React.FC<AssociationsProps> = ({ openBlogArticle }) => {
   const { associations, loading } = useAssociations();
   const { strains } = useStrains();
 
@@ -18,7 +17,6 @@ export const Associations: React.FC<AssociationsProps> = ({ setActiveTab, openBl
   const [selectedState, setSelectedState] = useState('ALL');
   const [sortBy, setSortBy] = useState<'rating' | 'reviews' | 'name'>('rating');
   const [selectedAssociation, setSelectedAssociation] = useState<Association | null>(null);
-  const [isContactOpen, setIsContactOpen] = useState(false);
 
   // Mapeia quantidade de produtos/strains cadastradas por associação
   const productCountMap = useMemo(() => {
@@ -71,16 +69,14 @@ export const Associations: React.FC<AssociationsProps> = ({ setActiveTab, openBl
 
   const handleOpenBlogGuide = () => {
     if (openBlogArticle) {
-      openBlogArticle('1');
-    } else if (setActiveTab) {
-      setActiveTab('blog-passo-a-passo');
+      openBlogArticle('4'); // Abre diretamente o artigo ID "4" (Como se Associar)
     }
   };
 
   return (
     <div className="space-y-6">
       
-      {/* Banner Principal + Link Direto para o Texto do Blog */}
+      {/* Banner Principal + Link Direto para o Texto "Como se Associar" no Blog */}
       <div className="bg-gradient-to-r from-emerald-900 via-emerald-800 to-teal-900 rounded-3xl p-6 sm:p-8 text-white shadow-xl relative overflow-hidden flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
         <div className="relative z-10 max-w-2xl space-y-3">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-500/20 border border-emerald-400/30 text-emerald-200 text-xs font-semibold backdrop-blur-md">
@@ -97,18 +93,18 @@ export const Associations: React.FC<AssociationsProps> = ({ setActiveTab, openBl
           </p>
         </div>
 
-        {/* Card Destaque: Link direto para o artigo do blog */}
+        {/* Card Destaque: Link direto para o artigo do blog "Como se Associar" */}
         <div className="relative z-10 shrink-0 w-full md:w-auto bg-white/10 backdrop-blur-md p-5 rounded-2xl border border-white/20 text-center space-y-2.5">
           <span className="text-xs font-extrabold text-emerald-200 block uppercase tracking-wider">Dúvidas sobre como se associar?</span>
           <p className="text-xs text-emerald-100 max-w-xs mx-auto">
-            Confira o texto explicativo com os 4 passos legais para se filiar.
+            Confira o texto explicativo com o passo a passo completo para se filiar.
           </p>
           <button
             onClick={handleOpenBlogGuide}
             className="w-full py-2.5 px-4 bg-emerald-500 hover:bg-emerald-400 text-emerald-950 font-black text-xs rounded-xl shadow-lg transition-all flex items-center justify-center gap-2"
           >
             <BookOpen className="w-4 h-4" />
-            <span>Ler Artigo Completo no Blog</span>
+            <span>Ler Artigo no Blog</span>
           </button>
         </div>
       </div>
@@ -206,13 +202,15 @@ export const Associations: React.FC<AssociationsProps> = ({ setActiveTab, openBl
                     {assoc.name}
                   </h3>
 
-                  {/* Badge de Produtos Sem Redundância de Texto */}
-                  <div className="mt-2">
-                    <span className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-900 bg-emerald-100/90 px-2.5 py-1 rounded-xl border border-emerald-200">
-                      <Sprout className="w-3.5 h-3.5 text-emerald-700" />
-                      {countProducts > 0 ? `${countProducts} produtos no catálogo` : 'Entidade Regulamentada'}
-                    </span>
-                  </div>
+                  {/* Exibe o badge de contagem de produtos APENAS quando countProducts > 0 */}
+                  {countProducts > 0 && (
+                    <div className="mt-2">
+                      <span className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-900 bg-emerald-100/90 px-2.5 py-1 rounded-xl border border-emerald-200">
+                        <Sprout className="w-3.5 h-3.5 text-emerald-700" />
+                        {countProducts} produtos no catálogo
+                      </span>
+                    </div>
+                  )}
                 </div>
 
                 <div className="pt-3 border-t border-gray-100 flex items-center justify-between text-xs text-gray-500">
@@ -231,42 +229,9 @@ export const Associations: React.FC<AssociationsProps> = ({ setActiveTab, openBl
         </div>
       )}
 
-      {/* ITEM 3: Banner de Cadastro por Formulário de Mensagem */}
-      <div className="bg-gradient-to-br from-slate-900 to-emerald-950 rounded-3xl p-6 sm:p-8 text-white flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl">
-        <div className="space-y-2 text-center md:text-left">
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 text-xs font-bold">
-            <Building2 className="w-3.5 h-3.5" />
-            <span>Para Representantes & Diretores</span>
-          </div>
-          <h2 className="text-xl sm:text-2xl font-black text-white">
-            Representa uma Associação de Pacientes?
-          </h2>
-          <p className="text-xs sm:text-sm text-emerald-100/80 max-w-xl">
-            Cadastre sua entidade gratuitamente no CannaGuia e apresente seu cardápio regulamentado para milhares de pacientes e médicos prescritores.
-          </p>
-        </div>
-
-        <button
-          onClick={() => setIsContactOpen(true)}
-          className="shrink-0 px-6 py-3 bg-emerald-500 hover:bg-emerald-400 text-emerald-950 font-black text-xs sm:text-sm rounded-2xl shadow-lg transition-all flex items-center gap-2"
-        >
-          <UserPlus className="w-4 h-4" />
-          <span>Cadastrar Minha Associação</span>
-        </button>
-      </div>
-
       <AssociationModal
         association={selectedAssociation}
         onClose={() => setSelectedAssociation(null)}
-      />
-
-      {/* Modal de Formulário de Mensagem / Cadastro */}
-      <ContactModal
-        isOpen={isContactOpen}
-        onClose={() => setIsContactOpen(false)}
-        title="Cadastrar Associação no CannaGuia"
-        subtitle="Envie os dados da sua entidade e nossa equipe retornará por e-mail."
-        defaultType="association"
       />
     </div>
   );

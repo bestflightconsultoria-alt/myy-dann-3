@@ -37,7 +37,7 @@ export function App() {
         {activeTab === 'sommelier' && <AiSommelier />}
         {activeTab === 'medicos' && <Doctors />}
         {activeTab === 'blog' && <Blog initialPostId={blogArticleId} />}
-        {activeTab === 'blog-passo-a-passo' && <Blog initialPostId="1" />}
+        {activeTab === 'blog-como-se-associar' && <Blog initialPostId="4" />}
         {activeTab === 'perfil' && <MyProfile />}
       </main>
 
@@ -54,7 +54,7 @@ export function App() {
             onClick={() => setIsContactOpen(true)}
             className="text-emerald-700 font-bold hover:underline text-[11px]"
           >
-            📩 Fale Conosco / Cadastrar Entidade
+            📩 Fale Conosco
           </button>
           <span className="text-gray-300">•</span>
           <button

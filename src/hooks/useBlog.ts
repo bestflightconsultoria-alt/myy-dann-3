@@ -3,6 +3,42 @@ import { BlogPost } from '../types/blog';
 
 export const MOCK_POSTS: BlogPost[] = [
   {
+    id: "4",
+    slug: "como-se-associar-associacao-cannabis-medicinal-brasil",
+    title: "Como se Associar a uma Associação de Cannabis Medicinal no Brasil: Guia Completo",
+    excerpt: "Entenda os requisitos legais, documentos necessários e o passo a passo para se filiar com segurança a uma associação dispensadora de cannabis medicinal.",
+    category: "Guia de Filiação",
+    readTime: "4 min de leitura",
+    date: "27 de Agosto de 2026",
+    author: "Redação CannaGuia",
+    tags: ["Associações", "Filiação", "Direitos do Paciente", "Receita Médica", "Acolhimento"],
+    content: `
+      <h3>1. O Que É uma Associação de Cannabis Medicinal no Brasil?</h3>
+      <p>As <strong>associações de pacientes</strong> são entidades civis sem fins lucrativos legalmente respaldadas que apoiam pacientes em tratamento com Cannabis Medicinal. Elas realizam o acolhimento, orientação terapêutica e dispensação de produtos derivados de cannabis (como óleos, extratos e flores in natura) exclusivamente para associados devidamente cadastrados.</p>
+
+      <h3>2. Quais Documentos São Necessários para se Associar?</h3>
+      <p>Para realizar a filiação em qualquer associação autorizada no Brasil, você precisará apresentar:</p>
+      <ul>
+        <li><strong>Documento Oficial com Foto:</strong> RG ou CNH do paciente (ou do responsável legal, caso o paciente seja menor de idade ou incapaz).</li>
+        <li><strong>Comprovante de Residência:</strong> Conta recente de água, luz ou telefone.</li>
+        <li><strong>Prescrição Médica Válida:</strong> Emitida por médico (CRM) ou cirurgião-dentista (CRO) contendo o nome do paciente, dosagem e tipo de produto.</li>
+        <li><strong>Laudo Médico ou Relatório Clínico:</strong> Detalhando a condição diagnóstica (ansiedade, dor crônica, epilepsia, insônia, etc.) e a justificativa terapêutica.</li>
+      </ul>
+
+      <h3>3. Passo a Passo do Processo de Filiação</h3>
+      <ol>
+        <li><strong>Consulta e Prescrição:</strong> Realize uma consulta com um médico ou dentista prescritor habilitado para receber sua receita e laudo.</li>
+        <li><strong>Escolha da Associação:</strong> Acesse o diretório do CannaGuia na aba <strong>Associações</strong> e selecione a entidade que possui os produtos e óleos indicados no seu tratamento.</li>
+        <li><strong>Envio da Documentação:</strong> Acesse o site oficial da associação escolhida e preencha a ficha de filiação anexando sua receita e documentos.</li>
+        <li><strong>Análise do Corpo Técnico:</strong> O departamento jurídico e farmacêutico da associação valida seus documentos em 24 a 48 horas.</li>
+        <li><strong>Acesso ao Cardápio:</strong> Com o cadastro aprovado, o associado recebe autorização de acesso ao catálogo exclusivo da entidade para solicitar a dispensação dos produtos prescritos.</li>
+      </ol>
+
+      <h3>4. Direitos e Suporte ao Associado</h3>
+      <p>Ao se filiar, o paciente passa a ter direito ao acolhimento contínuo, suporte farmacêutico para dúvidas sobre dosagem, e apoio em caso de dúvidas sobre transporte ou uso do medicamento.</p>
+    `
+  },
+  {
     id: "3",
     slug: "dentistas-podem-prescrever-cannabis-medicinal-brasil",
     title: "Dentistas Podem Prescrever Cannabis Medicinal? Entenda Quem Pode Prescrever no Brasil",
