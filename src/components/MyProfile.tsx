@@ -92,7 +92,8 @@ export const MyProfile: React.FC = () => {
               (uName && r.patient_name?.toLowerCase().includes(uName.toLowerCase())) ||
               (uEmail && r.patient_name?.toLowerCase().includes(uEmail.toLowerCase()))
             );
-            setReviews(filtered.length > 0 ? filtered : data);
+
+            setReviews(filtered);
           }
         } catch (err) {
           console.error('Erro ao carregar dados do usuário:', err);
