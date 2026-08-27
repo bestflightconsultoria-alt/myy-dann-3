@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, Mail, Lock, User, Stethoscope, Sparkles, AlertCircle, CheckCircle2, ArrowRight } from 'lucide-react';
+import { X, Mail, Lock, User, Stethoscope, Sparkles, AlertCircle, CheckCircle2, ArrowRight, KeyRound, ArrowLeft } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 
 interface AuthModalProps {
@@ -9,7 +9,7 @@ interface AuthModalProps {
 }
 
 export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess }) => {
-  const [mode, setMode] = useState<'login' | 'signup'>('login');
+  const [mode, setMode] = useState<'login' | 'signup' | 'forgot'>('login');
   
   // Form fields
   const [email, setEmail] = useState('');
@@ -41,8 +41,42 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
     }
   };
 
+  const handleResetPassword = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!supabase) return;
+
+    if (!email.trim()) {
+      setErrorMessage('Por favor, informe seu e-mail.');
+      return;
+    }
+
+    setLoading(true);
+    setErrorMessage('');
+    setSuccessMessage('');
+
+    try {
+      const { error } = await supabase.auth.resetPasswordForEmail(email.trim(), {
+        redirectTo: `${window.location.origin}/perfil`
+      });
+
+      if (error) {
+        setErrorMessage(error.message);
+      } else {
+        setSuccessMessage('📩 Link de redefinição enviado! Verifique seu e-mail e a pasta de spam.');
+      }
+    } catch (err: any) {
+      setErrorMessage(err.message || 'Erro ao solicitar redefinição de senha.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (mode === 'forgot') {
+      return handleResetPassword(e);
+    }
+
     if (!supabase) {
       setErrorMessage('Erro de conexão com o banco de dados.');
       return;
@@ -78,7 +112,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
 
         if (error) {
           if (error.message.includes('already registered')) {
-            setErrorMessage('Este e-mail já está cadastrado. Tente fazer o login.');
+            setErrorMessage('Este e-mail já está cadastrado. Tente fazer o login ou recupere a senha.');
           } else {
             setErrorMessage(error.message);
           }
@@ -86,16 +120,20 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
           return;
         }
 
-        // Salva prescritor no localStorage para garantir vinculo imediato no perfil
+        // Salva prescritor no localStorage para garantir vínculo imediato no perfil
         if (prescribingDoctor.trim()) {
           localStorage.setItem('cannaguia_user_prescribing_doctor', prescribingDoctor.trim());
         }
 
-        setSuccessMessage('Conta criada com sucesso! Você já está conectado.');
-        setTimeout(() => {
-          onClose();
-          if (onSuccess) onSuccess();
-        }, 1200);
+        if (data.user && !data.session) {
+          setSuccessMessage('✉️ Cadastro realizado! Enviamos um e-mail de verificação para ' + email + '. Por favor, abra sua caixa de entrada para confirmar sua conta.');
+        } else {
+          setSuccessMessage('✨ Conta criada com sucesso! Seja bem-vindo ao CannaGuia.');
+          setTimeout(() => {
+            onClose();
+            if (onSuccess) onSuccess();
+          }, 1500);
+        }
 
       } catch (err: any) {
         setErrorMessage(err.message || 'Erro ao criar conta.');
@@ -114,6 +152,8 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
         if (error) {
           if (error.message.includes('Invalid login credentials')) {
             setErrorMessage('E-mail ou senha incorretos. Verifique suas credenciais.');
+          } else if (error.message.includes('Email not confirmed')) {
+            setErrorMessage('Seu e-mail ainda não foi confirmado. Por favor, verifique sua caixa de entrada.');
           } else {
             setErrorMessage(error.message);
           }
@@ -154,66 +194,78 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
           </div>
 
           <h2 className="text-xl font-black text-white">
-            {mode === 'login' ? 'Acesse sua Conta CannaGuia' : 'Criar Conta Gratuita'}
+            {mode === 'login' && 'Acesse sua Conta CannaGuia'}
+            {mode === 'signup' && 'Criar Conta Gratuita'}
+            {mode === 'forgot' && 'Recuperar Sua Senha'}
           </h2>
           <p className="text-xs text-emerald-200/90 mt-1 leading-relaxed">
-            Seus dados terapêuticos e avaliações protegidos com sigilo e segurança.
+            {mode === 'forgot' 
+              ? 'Enviaremos um link para você redefinir sua senha com segurança.'
+              : 'Seus dados terapêuticos e avaliações protegidos com sigilo.'}
           </p>
 
-          {/* Abas Alternar Login / Cadastro */}
-          <div className="grid grid-cols-2 bg-slate-900/80 p-1 rounded-2xl border border-emerald-500/30 mt-4 text-xs font-bold">
-            <button
-              type="button"
-              onClick={() => {
-                setMode('login');
-                setErrorMessage('');
-              }}
-              className={`py-2 rounded-xl transition-all ${
-                mode === 'login' ? 'bg-emerald-600 text-white shadow-xs' : 'text-emerald-200/70 hover:text-white'
-              }`}
-            >
-              Entrar na Conta
-            </button>
-            <button
-              type="button"
-              onClick={() => {
-                setMode('signup');
-                setErrorMessage('');
-              }}
-              className={`py-2 rounded-xl transition-all ${
-                mode === 'signup' ? 'bg-emerald-600 text-white shadow-xs' : 'text-emerald-200/70 hover:text-white'
-              }`}
-            >
-              Criar Nova Conta
-            </button>
-          </div>
+          {/* Abas Alternar Login / Cadastro (Visível apenas fora do forgot) */}
+          {mode !== 'forgot' && (
+            <div className="grid grid-cols-2 bg-slate-900/80 p-1 rounded-2xl border border-emerald-500/30 mt-4 text-xs font-bold">
+              <button
+                type="button"
+                onClick={() => {
+                  setMode('login');
+                  setErrorMessage('');
+                  setSuccessMessage('');
+                }}
+                className={`py-2 rounded-xl transition-all ${
+                  mode === 'login' ? 'bg-emerald-600 text-white shadow-xs' : 'text-emerald-200/70 hover:text-white'
+                }`}
+              >
+                Entrar na Conta
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setMode('signup');
+                  setErrorMessage('');
+                  setSuccessMessage('');
+                }}
+                className={`py-2 rounded-xl transition-all ${
+                  mode === 'signup' ? 'bg-emerald-600 text-white shadow-xs' : 'text-emerald-200/70 hover:text-white'
+                }`}
+              >
+                Criar Nova Conta
+              </button>
+            </div>
+          )}
         </div>
 
         {/* Corpo do Formulário */}
         <div className="p-6 space-y-4 overflow-y-auto flex-1">
           
-          {/* Botão Oficial do Google */}
-          <button
-            type="button"
-            onClick={handleGoogleLogin}
-            disabled={loading}
-            className="w-full flex items-center justify-center gap-3 py-3 px-4 bg-white hover:bg-gray-50 text-gray-800 text-xs font-bold rounded-2xl border border-gray-300 shadow-xs hover:border-emerald-500 transition-all disabled:opacity-50"
-          >
-            <img 
-              src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" 
-              alt="Google" 
-              className="w-4 h-4 shrink-0" 
-            />
-            <span>Continuar com o Google</span>
-          </button>
+          {/* Botão Oficial do Google (Apenas em login e signup) */}
+          {mode !== 'forgot' && (
+            <>
+              <button
+                type="button"
+                onClick={handleGoogleLogin}
+                disabled={loading}
+                className="w-full flex items-center justify-center gap-3 py-3 px-4 bg-white hover:bg-gray-50 text-gray-800 text-xs font-bold rounded-2xl border border-gray-300 shadow-xs hover:border-emerald-500 transition-all disabled:opacity-50"
+              >
+                <img 
+                  src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" 
+                  alt="Google" 
+                  className="w-4 h-4 shrink-0" 
+                />
+                <span>Continuar com o Google</span>
+              </button>
 
-          <div className="relative flex items-center justify-center">
-            <div className="border-t border-gray-200 w-full"></div>
-            <span className="bg-white px-3 text-[11px] font-bold text-gray-400 uppercase tracking-wider shrink-0">
-              ou entre com e-mail
-            </span>
-            <div className="border-t border-gray-200 w-full"></div>
-          </div>
+              <div className="relative flex items-center justify-center">
+                <div className="border-t border-gray-200 w-full"></div>
+                <span className="bg-white px-3 text-[11px] font-bold text-gray-400 uppercase tracking-wider shrink-0">
+                  ou entre com e-mail
+                </span>
+                <div className="border-t border-gray-200 w-full"></div>
+              </div>
+            </>
+          )}
 
           {/* Mensagens de Alerta */}
           {errorMessage && (
@@ -224,8 +276,8 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
           )}
 
           {successMessage && (
-            <div className="p-3 bg-emerald-50 border border-emerald-200 rounded-2xl flex items-center gap-2 text-xs text-emerald-800 font-bold animate-in fade-in">
-              <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
+            <div className="p-3 bg-emerald-50 border border-emerald-200 rounded-2xl flex items-center gap-2 text-xs text-emerald-900 font-bold animate-in fade-in leading-relaxed">
+              <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
               <span>{successMessage}</span>
             </div>
           )}
@@ -266,21 +318,38 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
               </div>
             </div>
 
-            {/* Senha */}
-            <div>
-              <label className="block text-xs font-bold text-gray-700 mb-1">Sua Senha</label>
-              <div className="relative">
-                <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-                <input
-                  type="password"
-                  required
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder={mode === 'signup' ? 'Mínimo 6 caracteres' : '••••••••'}
-                  className="w-full pl-10 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-xs font-medium focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500"
-                />
+            {/* Senha (Apenas em login e signup) */}
+            {mode !== 'forgot' && (
+              <div>
+                <div className="flex items-center justify-between mb-1">
+                  <label className="block text-xs font-bold text-gray-700">Sua Senha</label>
+                  {mode === 'login' && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setMode('forgot');
+                        setErrorMessage('');
+                        setSuccessMessage('');
+                      }}
+                      className="text-[11px] font-bold text-emerald-700 hover:underline flex items-center gap-1"
+                    >
+                      <KeyRound className="w-3 h-3" /> Esqueci minha senha
+                    </button>
+                  )}
+                </div>
+                <div className="relative">
+                  <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                  <input
+                    type="password"
+                    required
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder={mode === 'signup' ? 'Mínimo 6 caracteres' : '••••••••'}
+                    className="w-full pl-10 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-xs font-medium focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500"
+                  />
+                </div>
               </div>
-            </div>
+            )}
 
             {/* Médico ou Dentista Prescritor (Opcional - Apenas no Cadastro) */}
             {mode === 'signup' && (
@@ -302,26 +371,50 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
               </div>
             )}
 
-            {/* Botão de Envio */}
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full mt-2 py-3 px-4 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-2xl shadow-md transition-all flex items-center justify-center gap-2 disabled:opacity-50"
-            >
-              {loading ? (
-                <span>Aguarde...</span>
-              ) : mode === 'login' ? (
-                <>
-                  <span>Entrar no CannaGuia</span>
-                  <ArrowRight className="w-4 h-4" />
-                </>
-              ) : (
-                <>
-                  <span>Criar Minha Conta Gratuita</span>
-                  <Sparkles className="w-4 h-4 text-amber-300" />
-                </>
-              )}
-            </button>
+            {/* Botões de Ação */}
+            {mode === 'forgot' ? (
+              <div className="space-y-2 pt-1">
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="w-full py-3 px-4 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-2xl shadow-md transition-all flex items-center justify-center gap-2 disabled:opacity-50"
+                >
+                  {loading ? <span>Enviando...</span> : <span>📩 Enviar Link de Recuperação</span>}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setMode('login');
+                    setErrorMessage('');
+                    setSuccessMessage('');
+                  }}
+                  className="w-full py-2.5 text-xs font-bold text-gray-600 hover:text-emerald-800 transition-colors flex items-center justify-center gap-1.5"
+                >
+                  <ArrowLeft className="w-3.5 h-3.5" /> Voltar para o Login
+                </button>
+              </div>
+            ) : (
+              <button
+                type="submit"
+                disabled={loading}
+                className="w-full mt-2 py-3 px-4 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-2xl shadow-md transition-all flex items-center justify-center gap-2 disabled:opacity-50"
+              >
+                {loading ? (
+                  <span>Aguarde...</span>
+                ) : mode === 'login' ? (
+                  <>
+                    <span>Entrar no CannaGuia</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </>
+                ) : (
+                  <>
+                    <span>Criar Minha Conta Gratuita</span>
+                    <Sparkles className="w-4 h-4 text-amber-300" />
+                  </>
+                )}
+              </button>
+            )}
+
           </form>
 
         </div>
