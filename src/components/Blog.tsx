@@ -1,11 +1,24 @@
-import React, { useState } from 'react';
-import { BookOpen, Clock, Calendar, ArrowRight, ArrowLeft, Tag, Sparkles } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { BookOpen, Clock, Calendar, ArrowRight, ArrowLeft } from 'lucide-react';
 import { useBlog } from '../hooks/useBlog';
 import { BlogPost } from '../types/blog';
 
-export const Blog: React.FC = () => {
+interface BlogProps {
+  initialPostId?: string;
+}
+
+export const Blog: React.FC<BlogProps> = ({ initialPostId }) => {
   const { posts } = useBlog();
   const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null);
+
+  useEffect(() => {
+    if (initialPostId) {
+      const match = posts.find(p => p.id === initialPostId);
+      if (match) {
+        setSelectedPost(match);
+      }
+    }
+  }, [initialPostId, posts]);
 
   if (selectedPost) {
     return (
@@ -33,7 +46,7 @@ export const Blog: React.FC = () => {
           </div>
 
           <div
-            className="prose prose-emerald max-w-none text-gray-700 leading-relaxed space-y-4 text-sm sm:text-base [&>h3]:text-lg [&>h3]:font-bold [&>h3]:text-gray-900 [&>h3]:mt-6 [&>ul]:list-disc [&>ul]:pl-5 [&>ul]:space-y-1.5"
+            className="prose prose-emerald max-w-none text-gray-700 leading-relaxed space-y-4 text-sm sm:text-base [&>h3]:text-lg [&>h3]:font-bold [&>h3]:text-gray-900 [&>h3]:mt-6 [&>ul]:list-disc [&>ul]:pl-5 [&>ul]:space-y-1.5 [&>ol]:list-decimal [&>ol]:pl-5 [&>ol]:space-y-1.5"
             dangerouslySetInnerHTML={{ __html: selectedPost.content }}
           />
 
