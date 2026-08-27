@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Building2, Flame, BookOpen, LogOut, UserCheck, LayoutGrid, Stethoscope } from 'lucide-react';
+import { Building2, Flame, BookOpen, LogOut, UserCheck, LayoutGrid, Stethoscope, HelpCircle } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { Logo } from './Logo';
 
@@ -54,6 +54,7 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
     { id: 'associacoes', label: 'Associações', icon: Building2 },
     { id: 'medicos', label: 'Prescritores', icon: Stethoscope },
     { id: 'blog', label: 'Guia Paciente', icon: BookOpen },
+    { id: 'faq', label: 'Dúvidas FAQ', icon: HelpCircle },
   ];
 
   return (

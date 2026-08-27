@@ -5,9 +5,11 @@ import { Associations } from './components/Associations';
 import { AiSommelier } from './components/AiSommelier';
 import { Doctors } from './components/Doctors';
 import { Blog } from './components/Blog';
+import { FAQ } from './components/FAQ';
 import { MyProfile } from './components/MyProfile';
 import { TermsModal } from './components/TermsModal';
 import { ContactModal } from './components/ContactModal';
+import { PwaInstallBanner } from './components/PwaInstallBanner';
 
 export function App() {
   const [activeTab, setActiveTab] = useState<string>('catalogo-flores');
@@ -38,6 +40,7 @@ export function App() {
         {activeTab === 'medicos' && <Doctors />}
         {activeTab === 'blog' && <Blog initialPostId={blogArticleId} />}
         {activeTab === 'blog-como-se-associar' && <Blog initialPostId="4" />}
+        {activeTab === 'faq' && <FAQ />}
         {activeTab === 'perfil' && <MyProfile />}
       </main>
 
@@ -80,6 +83,9 @@ export function App() {
         subtitle="Envie suas dúvidas, sugestões ou pedido de cadastro. Retornaremos via e-mail."
         defaultType="general"
       />
+
+      {/* Banner Flutuante de Instalação PWA no Celular */}
+      <PwaInstallBanner />
     </div>
   );
 }
