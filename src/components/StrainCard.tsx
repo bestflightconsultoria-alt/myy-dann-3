@@ -43,11 +43,11 @@ export const StrainCard: React.FC<StrainCardProps> = ({ strain, ratingStats, onC
   return (
     <div
       onClick={onClick}
-      className="bg-white rounded-2xl border border-gray-200/90 p-5 hover:shadow-xl hover:border-emerald-500/60 transition-all cursor-pointer flex flex-col justify-between group hover:-translate-y-0.5 duration-200"
+      className="h-full min-h-[260px] bg-white rounded-2xl border border-gray-200/90 p-5 hover:shadow-xl hover:border-emerald-500/60 transition-all cursor-pointer flex flex-col justify-between group hover:-translate-y-0.5 duration-200"
     >
       <div>
         {/* Topo com badge limpa e nota média de avaliações */}
-        <div className="flex items-center justify-between gap-2 mb-3">
+        <div className="flex items-center justify-between gap-2 mb-3 h-6">
           <span className={`px-2.5 py-0.5 text-xs font-bold rounded-md border ${badge.bg}`}>
             {badge.text}
           </span>
@@ -65,35 +65,39 @@ export const StrainCard: React.FC<StrainCardProps> = ({ strain, ratingStats, onC
           ) : null}
         </div>
 
-        {/* Nome do Produto */}
-        <h3 className="text-lg font-bold text-gray-900 group-hover:text-emerald-700 transition-colors leading-snug">
+        {/* Nome do Produto (Altura Fixa Padronizada) */}
+        <h3 className="text-lg font-bold text-gray-900 group-hover:text-emerald-700 transition-colors leading-snug line-clamp-1 min-h-[28px]">
           {strain.name}
         </h3>
 
         {/* Canabinoides ou Concentração */}
-        <div className="flex items-center gap-3 text-xs text-gray-500 mt-1.5">
+        <div className="flex items-center gap-3 text-xs text-gray-500 mt-1">
           {strain.thc && <span><strong className="text-gray-700">THC:</strong> {strain.thc}</span>}
           {strain.cbd && <span><strong className="text-gray-700">CBD:</strong> {strain.cbd}</span>}
           {strain.concentration && <span className="truncate max-w-[200px]">{strain.concentration}</span>}
         </div>
 
-        {/* Efeitos Terapêuticos Principais */}
-        {strain.effects && strain.effects.length > 0 && (
-          <div className="flex flex-wrap gap-1.5 mt-3.5">
-            {strain.effects.slice(0, 3).map((effect, idx) => (
-              <span
-                key={idx}
-                className="text-[11px] font-medium bg-gray-100/90 text-gray-700 px-2.5 py-1 rounded-md"
-              >
-                {effect}
-              </span>
-            ))}
-          </div>
-        )}
+        {/* Efeitos Terapêuticos Principais (Container com Altura Padronizada) */}
+        <div className="min-h-[38px] flex items-center">
+          {strain.effects && strain.effects.length > 0 ? (
+            <div className="flex flex-wrap gap-1.5 mt-2.5">
+              {strain.effects.slice(0, 3).map((effect, idx) => (
+                <span
+                  key={idx}
+                  className="text-[11px] font-medium bg-gray-100/90 text-gray-700 px-2.5 py-1 rounded-md"
+                >
+                  {effect}
+                </span>
+              ))}
+            </div>
+          ) : (
+            <div className="h-6"></div>
+          )}
+        </div>
       </div>
 
-      {/* Rodapé do Card Limpo e sem Poluição Visual */}
-      <div className="mt-5 pt-3 border-t border-gray-100 flex items-center justify-between gap-2">
+      {/* Rodapé do Card Padronizado */}
+      <div className="mt-4 pt-3 border-t border-gray-100 flex items-center justify-between gap-2 shrink-0">
         <div className="flex items-center gap-1 text-xs text-gray-600 font-medium">
           <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0" />
           <span className="truncate max-w-[130px] sm:max-w-[150px]">
