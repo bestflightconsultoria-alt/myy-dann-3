@@ -13,7 +13,8 @@ import {
   Star,
   Plus,
   Sparkles,
-  Tag
+  Tag,
+  Share2
 } from 'lucide-react';
 import { Strain } from '../types/strain';
 import { supabase } from '../lib/supabase';
@@ -552,9 +553,18 @@ export const StrainModal: React.FC<StrainModalProps> = ({ strain, onClose }) => 
 
         </div>
 
-        {/* Footer do Modal */}
-        <div className="p-4 bg-gray-50 border-t flex items-center justify-between shrink-0">
-          <span className="text-xs text-gray-500 font-medium">Consulte seu médico prescritor para ajustes de dosagem.</span>
+        {/* Footer do Modal com Botão de Compartilhar no WhatsApp */}
+        <div className="p-4 bg-gray-50 border-t flex items-center justify-between gap-2 shrink-0">
+          <a
+            href={`https://wa.me/?text=${encodeURIComponent(`Olá! Veja este produto no CannaGuia: *${strain.name}* (${strain.dominantCannabinoid || strain.type}) - https://www.cannaguia.com.br`)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-3.5 py-2 text-xs font-bold text-emerald-800 bg-emerald-100/90 hover:bg-emerald-600 hover:text-white rounded-xl border border-emerald-200 transition-all flex items-center gap-1.5 shadow-xs"
+          >
+            <Share2 className="w-3.5 h-3.5" />
+            <span>Compartilhar no WhatsApp</span>
+          </a>
+
           <button onClick={onClose} className="px-5 py-2 text-xs font-bold text-gray-700 bg-white border border-gray-200 hover:bg-gray-100 rounded-xl transition-all">
             Fechar
           </button>
