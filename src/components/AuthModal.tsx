@@ -126,7 +126,10 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
         }
 
         if (data.user && !data.session) {
-          setSuccessMessage('✉️ Cadastro realizado! Enviamos um e-mail de verificação para ' + email + '. Por favor, abra sua caixa de entrada para confirmar sua conta.');
+          setSuccessMessage('✉️ Conta registrada com sucesso! Enviamos um e-mail de ativação para ' + email + '. Por favor, abra sua caixa de entrada para confirmar seu e-mail antes de fazer o login.');
+          setTimeout(() => {
+            setMode('login');
+          }, 3500);
         } else {
           setSuccessMessage('✨ Conta criada com sucesso! Seja bem-vindo ao CannaGuia.');
           setTimeout(() => {
