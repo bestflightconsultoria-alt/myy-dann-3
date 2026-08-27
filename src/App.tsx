@@ -9,6 +9,7 @@ import { FAQ } from './components/FAQ';
 import { MyProfile } from './components/MyProfile';
 import { TermsModal } from './components/TermsModal';
 import { ContactModal } from './components/ContactModal';
+import { AuthModal } from './components/AuthModal';
 import { PwaInstallBanner } from './components/PwaInstallBanner';
 import { Strain } from './types/strain';
 import { Association } from './hooks/useAssociations';
@@ -18,6 +19,7 @@ export function App() {
   const [activeTab, setActiveTab] = useState<string>('catalogo-flores');
   const [isTermsOpen, setIsTermsOpen] = useState<boolean>(false);
   const [isContactOpen, setIsContactOpen] = useState<boolean>(false);
+  const [isAuthOpen, setIsAuthOpen] = useState<boolean>(false);
   
   // Roteamento de Estado por URL limpa (ex: /strains/gorilla-freak, /associacoes/damasceno, /blog/como-se-associar)
   const [selectedStrainId, setSelectedStrainId] = useState<string | undefined>(undefined);
@@ -125,7 +127,11 @@ export function App() {
 
   return (
     <div className="min-h-screen bg-gray-50 text-gray-900 flex flex-col font-sans">
-      <Header activeTab={activeTab} setActiveTab={handleNavigateTab} />
+      <Header 
+        activeTab={activeTab} 
+        setActiveTab={handleNavigateTab} 
+        onOpenAuth={() => setIsAuthOpen(true)}
+      />
 
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {activeTab === 'catalogo-flores' && (
@@ -213,6 +219,12 @@ export function App() {
         title="Fale Conosco — CannaGuia"
         subtitle="Envie suas dúvidas, sugestões ou pedido de cadastro. Retornaremos via e-mail."
         defaultType="general"
+      />
+
+      {/* Modal de Autenticação Dual (Google + Email/Senha) */}
+      <AuthModal
+        isOpen={isAuthOpen}
+        onClose={() => setIsAuthOpen(false)}
       />
 
       {/* Banner Flutuante de Instalação PWA no Celular */}

@@ -136,7 +136,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 bg-slate-950/75 backdrop-blur-md animate-in fade-in duration-200 overflow-y-auto">
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4 sm:p-6 bg-slate-950/80 backdrop-blur-md animate-in fade-in duration-200 overflow-y-auto">
       <div className="bg-white w-full max-w-md rounded-3xl border border-gray-200 shadow-2xl overflow-hidden flex flex-col my-auto max-h-[85vh] sm:max-h-[90vh]">
         
         {/* Cabeçalho do Modal */}

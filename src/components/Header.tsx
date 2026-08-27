@@ -7,11 +7,11 @@ import { AuthModal } from './AuthModal';
 interface HeaderProps {
   activeTab: string;
   setActiveTab: (tab: string) => void;
+  onOpenAuth: () => void;
 }
 
-export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
+export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab, onOpenAuth }) => {
   const [user, setUser] = useState<any>(null);
-  const [isAuthOpen, setIsAuthOpen] = useState(false);
 
   useEffect(() => {
     if (!supabase) return;
@@ -124,7 +124,7 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
             ) : (
               <button
                 type="button"
-                onClick={() => setIsAuthOpen(true)}
+                onClick={onOpenAuth}
                 className="flex items-center gap-1.5 px-3 sm:px-4 py-1.5 sm:py-2 text-xs font-bold text-emerald-950 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 rounded-xl shadow-xs transition-all"
               >
                 <User className="w-3.5 h-3.5 text-emerald-700" />
@@ -160,12 +160,6 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
         </div>
 
       </div>
-
-      {/* Modal de Autenticação Dual (Google + Email/Senha) */}
-      <AuthModal
-        isOpen={isAuthOpen}
-        onClose={() => setIsAuthOpen(false)}
-      />
     </header>
   );
 };
