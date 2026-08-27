@@ -12,7 +12,8 @@ import {
   Globe,
   Star,
   Plus,
-  Sparkles
+  Sparkles,
+  Tag
 } from 'lucide-react';
 import { Strain } from '../types/strain';
 import { supabase } from '../lib/supabase';
@@ -274,10 +275,16 @@ export const StrainModal: React.FC<StrainModalProps> = ({ strain, onClose }) => 
         {/* Header do Modal */}
         <div className="flex items-center justify-between p-5 sm:p-6 border-b bg-gray-50/90 shrink-0">
           <div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 flex-wrap">
               <span className={`px-2.5 py-0.5 text-xs font-bold rounded-full ${badge.bg}`}>
                 {badge.text}
               </span>
+              {strain.associations?.[0]?.unitPrice && (
+                <span className="text-xs font-black bg-emerald-100 text-emerald-950 px-2.5 py-0.5 rounded-full border border-emerald-200 flex items-center gap-1">
+                  <Tag className="w-3.5 h-3.5 text-emerald-700" />
+                  {strain.associations[0].unitPrice}
+                </span>
+              )}
               {avgRating && (
                 <span className="flex items-center gap-1 text-xs font-bold bg-amber-100 text-amber-900 px-2.5 py-0.5 rounded-full border border-amber-200">
                   <Star className="w-3.5 h-3.5 fill-amber-500 text-amber-500" />

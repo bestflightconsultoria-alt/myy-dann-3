@@ -1,5 +1,5 @@
 import React from 'react';
-import { ShieldCheck, ChevronRight, Star } from 'lucide-react';
+import { ShieldCheck, ChevronRight, Star, Tag } from 'lucide-react';
 import { Strain } from '../types/strain';
 
 interface StrainCardProps {
@@ -9,14 +9,10 @@ interface StrainCardProps {
 }
 
 export const StrainCard: React.FC<StrainCardProps> = ({ strain, ratingStats, onClick }) => {
-  // Define etiquetagem estrita por categoria e subtipo real
   const displayBadge = () => {
-    // 1. Categoria Óleos
     if (strain.category === 'oleos') {
       return { text: 'Óleo Terapêutico', bg: 'bg-amber-100 text-amber-900 border-amber-200' };
     }
-
-    // 2. Categoria Outros Formatos (Gummies, Pomadas, Hash)
     if (strain.category === 'outros') {
       if (strain.type === 'Pomadas' || strain.name.toLowerCase().includes('pomada')) {
         return { text: 'Pomada Medicinal', bg: 'bg-teal-100 text-teal-900 border-teal-200' };
@@ -26,8 +22,6 @@ export const StrainCard: React.FC<StrainCardProps> = ({ strain, ratingStats, onC
       }
       return { text: 'Gummies', bg: 'bg-pink-100 text-pink-900 border-pink-200' };
     }
-
-    // 3. Categoria Flores In Natura
     if (strain.dominantCannabinoid === 'THC/CBD') {
       return { text: 'THC / CBD (1:1)', bg: 'bg-purple-100 text-purple-800 border-purple-200' };
     }
@@ -39,7 +33,16 @@ export const StrainCard: React.FC<StrainCardProps> = ({ strain, ratingStats, onC
 
   const badge = displayBadge();
 
-  // Rótulo dinâmico de associações disponíveis
+  // Pega o menor preço ou preço inicial
+  const getPriceBadge = () => {
+    if (!strain.associations || strain.associations.length === 0) return null;
+    const firstWithPrice = strain.associations.find(a => a.unitPrice);
+    if (firstWithPrice) return firstWithPrice.unitPrice;
+    return strain.associations[0].priceDetail;
+  };
+
+  const mainPrice = getPriceBadge();
+
   const renderAssociationsLabel = () => {
     const count = strain.associations?.length || 0;
     if (count === 0) return 'Consulte disponibilidade';
@@ -53,7 +56,7 @@ export const StrainCard: React.FC<StrainCardProps> = ({ strain, ratingStats, onC
       className="bg-white rounded-2xl border border-gray-200/90 p-5 hover:shadow-xl hover:border-emerald-500/60 transition-all cursor-pointer flex flex-col justify-between group hover:-translate-y-0.5 duration-200"
     >
       <div>
-        {/* Topo com badge limpa e nota média de avaliações */}
+        {/* Topo com badge limpa e nota média */}
         <div className="flex items-center justify-between gap-2 mb-3">
           <span className={`px-2.5 py-0.5 text-xs font-bold rounded-md border ${badge.bg}`}>
             {badge.text}
@@ -65,9 +68,10 @@ export const StrainCard: React.FC<StrainCardProps> = ({ strain, ratingStats, onC
               <span>{ratingStats.avgRating}</span>
               <span className="text-amber-800/80 font-medium">({ratingStats.count})</span>
             </span>
-          ) : strain.associations?.length > 1 ? (
-            <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
-              {strain.associations.length} opções
+          ) : mainPrice ? (
+            <span className="text-[11px] font-black text-emerald-900 bg-emerald-100/90 px-2.5 py-0.5 rounded-md border border-emerald-200 flex items-center gap-1">
+              <Tag className="w-3 h-3 text-emerald-700" />
+              {mainPrice}
             </span>
           ) : null}
         </div>
@@ -84,7 +88,7 @@ export const StrainCard: React.FC<StrainCardProps> = ({ strain, ratingStats, onC
           {strain.concentration && <span className="truncate max-w-[200px]">{strain.concentration}</span>}
         </div>
 
-        {/* Efeitos Principais Terapêuticos */}
+        {/* Efeitos Terapêuticos */}
         {strain.effects && strain.effects.length > 0 && (
           <div className="flex flex-wrap gap-1.5 mt-3.5">
             {strain.effects.slice(0, 3).map((effect, idx) => (
@@ -99,11 +103,11 @@ export const StrainCard: React.FC<StrainCardProps> = ({ strain, ratingStats, onC
         )}
       </div>
 
-      {/* Rodapé do Card */}
-      <div className="mt-5 pt-3 border-t border-gray-100 flex items-center justify-between">
+      {/* Rodapé do Card com Valores Nítidos */}
+      <div className="mt-5 pt-3 border-t border-gray-100 flex items-center justify-between gap-2">
         <div className="flex items-center gap-1 text-xs text-gray-600 font-medium">
           <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0" />
-          <span className="truncate max-w-[130px] sm:max-w-[150px]">
+          <span className="truncate max-w-[120px] sm:max-w-[140px]">
             {renderAssociationsLabel()}
           </span>
         </div>
@@ -114,9 +118,9 @@ export const StrainCard: React.FC<StrainCardProps> = ({ strain, ratingStats, onC
             e.stopPropagation();
             onClick();
           }}
-          className="px-3.5 py-1.5 text-xs font-bold text-emerald-700 bg-emerald-50 group-hover:bg-emerald-600 group-hover:text-white rounded-xl border border-emerald-200/80 transition-all shadow-sm flex items-center gap-1"
+          className="px-3.5 py-1.5 text-xs font-bold text-emerald-800 bg-emerald-100/80 group-hover:bg-emerald-600 group-hover:text-white rounded-xl border border-emerald-200 transition-all shadow-xs flex items-center gap-1 shrink-0"
         >
-          <span>Ver Preços</span>
+          <span>Ver Detalhes & Preços</span>
           <ChevronRight className="w-3.5 h-3.5" />
         </button>
       </div>
