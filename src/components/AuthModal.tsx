@@ -24,6 +24,20 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
 
   if (!isOpen) return null;
 
+  const resetForm = () => {
+    setEmail('');
+    setPassword('');
+    setFullName('');
+    setPrescribingDoctor('');
+    setErrorMessage('');
+    setSuccessMessage('');
+  };
+
+  const switchMode = (newMode: 'login' | 'signup' | 'forgot') => {
+    setMode(newMode);
+    resetForm();
+  };
+
   const handleGoogleLogin = async () => {
     if (!supabase) return;
     setLoading(true);
@@ -212,11 +226,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
             <div className="grid grid-cols-2 bg-slate-900/80 p-1 rounded-2xl border border-emerald-500/30 mt-4 text-xs font-bold">
               <button
                 type="button"
-                onClick={() => {
-                  setMode('login');
-                  setErrorMessage('');
-                  setSuccessMessage('');
-                }}
+                onClick={() => switchMode('login')}
                 className={`py-2 rounded-xl transition-all ${
                   mode === 'login' ? 'bg-emerald-600 text-white shadow-xs' : 'text-emerald-200/70 hover:text-white'
                 }`}
@@ -225,11 +235,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
               </button>
               <button
                 type="button"
-                onClick={() => {
-                  setMode('signup');
-                  setErrorMessage('');
-                  setSuccessMessage('');
-                }}
+                onClick={() => switchMode('signup')}
                 className={`py-2 rounded-xl transition-all ${
                   mode === 'signup' ? 'bg-emerald-600 text-white shadow-xs' : 'text-emerald-200/70 hover:text-white'
                 }`}
@@ -329,11 +335,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
                   {mode === 'login' && (
                     <button
                       type="button"
-                      onClick={() => {
-                        setMode('forgot');
-                        setErrorMessage('');
-                        setSuccessMessage('');
-                      }}
+                      onClick={() => switchMode('forgot')}
                       className="text-[11px] font-bold text-emerald-700 hover:underline flex items-center gap-1"
                     >
                       <KeyRound className="w-3 h-3" /> Esqueci minha senha
@@ -386,11 +388,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
                 </button>
                 <button
                   type="button"
-                  onClick={() => {
-                    setMode('login');
-                    setErrorMessage('');
-                    setSuccessMessage('');
-                  }}
+                  onClick={() => switchMode('login')}
                   className="w-full py-2.5 text-xs font-bold text-gray-600 hover:text-emerald-800 transition-colors flex items-center justify-center gap-1.5"
                 >
                   <ArrowLeft className="w-3.5 h-3.5" /> Voltar para o Login
