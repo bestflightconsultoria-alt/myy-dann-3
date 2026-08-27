@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Building2, Flame, BookOpen, LogOut, UserCheck, LayoutGrid, Stethoscope, HelpCircle } from 'lucide-react';
+import { Building2, Flame, BookOpen, LogOut, UserCheck, LayoutGrid, Stethoscope, HelpCircle, User } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 import { Logo } from './Logo';
+import { AuthModal } from './AuthModal';
 
 interface HeaderProps {
   activeTab: string;
@@ -10,6 +11,7 @@ interface HeaderProps {
 
 export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
   const [user, setUser] = useState<any>(null);
+  const [isAuthOpen, setIsAuthOpen] = useState(false);
 
   useEffect(() => {
     if (!supabase) return;
@@ -122,15 +124,11 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
             ) : (
               <button
                 type="button"
-                onClick={handleLogin}
-                className="flex items-center gap-1.5 px-3 sm:px-4 py-1.5 sm:py-2 text-xs font-bold text-gray-800 bg-white hover:bg-gray-50 border border-gray-200 hover:border-emerald-300 rounded-xl shadow-xs transition-all"
+                onClick={() => setIsAuthOpen(true)}
+                className="flex items-center gap-1.5 px-3 sm:px-4 py-1.5 sm:py-2 text-xs font-bold text-emerald-950 bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 rounded-xl shadow-xs transition-all"
               >
-                <img 
-                  src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" 
-                  alt="Google" 
-                  className="w-3.5 h-3.5" 
-                />
-                <span>Entrar com Google</span>
+                <User className="w-3.5 h-3.5 text-emerald-700" />
+                <span>Entrar / Criar Conta</span>
               </button>
             )}
           </div>
@@ -162,6 +160,12 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
         </div>
 
       </div>
+
+      {/* Modal de Autenticação Dual (Google + Email/Senha) */}
+      <AuthModal
+        isOpen={isAuthOpen}
+        onClose={() => setIsAuthOpen(false)}
+      />
     </header>
   );
 };
