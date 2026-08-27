@@ -7,9 +7,15 @@ import { AssociationModal } from './AssociationModal';
 interface AssociationsProps {
   setActiveTab?: (tab: string) => void;
   openBlogArticle?: (articleId: string) => void;
+  initialAssocId?: string;
+  onSelectAssoc?: (assoc: Association | null) => void;
 }
 
-export const Associations: React.FC<AssociationsProps> = ({ openBlogArticle }) => {
+export const Associations: React.FC<AssociationsProps> = ({ 
+  openBlogArticle,
+  initialAssocId,
+  onSelectAssoc
+}) => {
   const { associations, loading } = useAssociations();
   const { strains } = useStrains();
 
@@ -17,6 +23,16 @@ export const Associations: React.FC<AssociationsProps> = ({ openBlogArticle }) =
   const [selectedState, setSelectedState] = useState('ALL');
   const [sortBy, setSortBy] = useState<'rating' | 'reviews' | 'name'>('rating');
   const [selectedAssociation, setSelectedAssociation] = useState<Association | null>(null);
+
+  // Abre associação inicial vinda da URL
+  useEffect(() => {
+    if (initialAssocId && associations.length > 0) {
+      const found = associations.find(a => a.id === initialAssocId || a.id.toLowerCase() === initialAssocId.toLowerCase());
+      if (found) {
+        setSelectedAssociation(found);
+      }
+    }
+  }, [initialAssocId, associations]);
 
   // Mapeia quantidade de produtos/strains cadastradas por associação
   const productCountMap = useMemo(() => {
@@ -170,7 +186,10 @@ export const Associations: React.FC<AssociationsProps> = ({ openBlogArticle }) =
             return (
               <div
                 key={assoc.id}
-                onClick={() => setSelectedAssociation(assoc)}
+                onClick={() => {
+                  setSelectedAssociation(assoc);
+                  if (onSelectAssoc) onSelectAssoc(assoc);
+                }}
                 className="bg-white rounded-3xl border border-gray-200/90 p-5 hover:shadow-lg hover:border-emerald-500/60 transition-all cursor-pointer flex flex-col justify-between group space-y-4"
               >
                 <div>
@@ -231,7 +250,10 @@ export const Associations: React.FC<AssociationsProps> = ({ openBlogArticle }) =
 
       <AssociationModal
         association={selectedAssociation}
-        onClose={() => setSelectedAssociation(null)}
+        onClose={() => {
+          setSelectedAssociation(null);
+          if (onSelectAssoc) onSelectAssoc(null);
+        }}
       />
     </div>
   );

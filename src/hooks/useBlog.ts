@@ -3,6 +3,93 @@ import { BlogPost } from '../types/blog';
 
 export const MOCK_POSTS: BlogPost[] = [
   {
+    id: "5",
+    slug: "qual-a-melhor-flor-de-cannabis-para-ansiedade-brasil",
+    title: "Qual a Melhor Flor de Cannabis para Ansiedade no Brasil? Guia Comparativo",
+    excerpt: "Descubra quais genéticas de cannabis in natura apresentam o melhor perfil de terpenos (como linalol e mirceno) para controle de crises de ansiedade, estresse e pânico.",
+    category: "Guia Terapêutico",
+    readTime: "6 min de leitura",
+    date: "27 de Agosto de 2026",
+    author: "Redação CannaGuia",
+    tags: ["Ansiedade", "Flores Terapêuticas", "Terpenos Ansiolíticos", "Linalol", "Mirceno"],
+    content: `
+      <h3>1. Como a Cannabis Atua na Ansiedade e no Estresse?</h3>
+      <p>A ansiedade é uma das principais razões pelas quais pacientes buscam tratamento com Cannabis Medicinal no Brasil. Os fitocanabinoides (como o CBD e o THC em proporções adequadas) interagem com os receptores <strong>CB1 e 5-HT1A (serotoninérgicos)</strong> do sistema endocanabinoide, promovendo regulação emocional e descompressão do sistema nervoso central.</p>
+
+      <h3>2. O Papel Crucial dos Terpenos Ansiolíticos</h3>
+      <p>Mais do que a porcentagem isolada de THC ou CBD, o efeito modulador na ansiedade é guiado pelos <strong>terpenos aromáticos</strong> presentes na flor:</p>
+      <ul>
+        <li><strong>Linalol (Aroma Floral/Lavanda):** Conhecido por suas propriedades sedativas, ansiolíticas e moduladoras de estresse.</li>
+        <li><strong>Mirceno (Aroma Terroso/Herbal):** Potencializa a permeabilidade da barreira hematoencefálica, proporcionando relaxamento físico e mental profundo.</li>
+        <li><strong>Limoneno (Aroma Cítrico):** Estimula a elevação de humor e combate sentimentos de angústia sem provocar sedação excessiva.</li>
+        <li><strong>Beta-Cariofileno (Aroma Picante/Amadeirado):** Atua diretamente no receptor CB2 com forte ação anti-inflamatória e anxiolítica.</li>
+      </ul>
+
+      <h3>3. Genéticas Mais Recomendadas pela Comunidade no CannaGuia</h3>
+      <ol>
+        <li><strong>Gorilla Freak / Gorilla Kush:</strong> Predomínio Indica rico em mirceno e cariofileno. Excelente para descompressão noturna da mente agitada.</li>
+        <li><strong>24K Gold / Tangie:</strong> Híbridas ricas em limoneno. Ideais para desacelerar pensamentos intrusivos ao longo do dia sem comprometer a clareza.</li>
+        <li><strong>Mimosa:</strong> Perfil terpênico vibrante para elevação de humor e alívio do aperto no peito causado pela ansiedade social.</li>
+      </ol>
+
+      <h3>4. Qual a Forma Correta de Consumo para Crises de Ansiedade?</h3>
+      <p>Para o manejo de crises agudas de ansiedade, a **vaporização de ervas secas** (sem combustão) é o método mais indicado por médicos, pois o início dos efeitos ocorre em apenas 1 a 3 minutos, permitindo ao paciente controlar o momento exato do alívio.</p>
+    `
+  },
+  {
+    id: "6",
+    slug: "diferenca-entre-thc-cbd-cbn-cbg-na-pratica",
+    title: "Diferença entre THC, CBD, CBN e CBG na Prática Terapêutica",
+    excerpt: "Conheça as características dos principais fitocanabinoides da planta e entenda qual a função de cada um no alívio de dor, sono, ansiedade e inflamações.",
+    category: "Farmacologia Medicinal",
+    readTime: "5 min de leitura",
+    date: "27 de Agosto de 2026",
+    author: "Redação CannaGuia",
+    tags: ["CBD", "THC", "CBN", "CBG", "Fitocanabinoides", "Ciência"],
+    content: `
+      <h3>1. Entendendo os Canabinoides da Planta de Cannabis</h3>
+      <p>A planta de cannabis produz mais de 100 compostos ativos conhecidos como fitocanabinoides. Embora o THC e o CBD sejam os mais famosos, canabinoides secundários como o CBN e o CBG vêm revolucionando os tratamentos medicinais no Brasil.</p>
+
+      <h3>2. CBD (Canabidiol) — O Modulador sem Euforia</h3>
+      <p>O <strong>CBD</strong> é um composto não intoxicante amplamente prescrito para ansiedade, autismo, epilepsia refratária, dores inflamatórias e proteção neuronal. Ele atua como um modulador alostérico negativo do receptor CB1, amenizando eventuais efeitos psicoativos do THC.</p>
+
+      <h3>3. THC (Tetrahidrocanabinol) — Analgesia e Estímulo de Apetite</h3>
+      <p>O <strong>THC</strong> é o principal responsável pelos efeitos analgésicos potentes, relaxamento muscular profundo, estímulo de apetite e controle de náuseas em pacientes neurológicos ou em quimioterapia. Quando administrado em doses terapêuticas corretas, é um dos recursos analgésicos mais eficazes da medicina fitoterápica.</p>
+
+      <h3>4. CBN (Canabinol) — O Canabinoide do Sono Profundo</h3>
+      <p>O <strong>CBN</strong> é formado pela degradação natural e oxidação do THC. Possui propriedades sedativas acentuadas, sendo o principal aliado nos óleos medicinais focados em <strong>insônia severa e qualidade do sono repousante</strong>.</p>
+
+      <h3>5. CBG (Canabigerol) — A "Célula-Tronco" da Cannabis</h3>
+      <p>O <strong>CBG</strong> é o precursor químico do qual derivam o THC e o CBD. Destaca-se por suas potentes propriedades bactericidas, neuroprotetoras e por combater o glaucoma e inflamações gastrointestinais (como Síndrome do Intestino Irritável).</p>
+    `
+  },
+  {
+    id: "7",
+    slug: "guia-vaporizadores-ervas-secas-uso-medicinal-brasil",
+    title: "Guia de Vaporizadores de Ervas Secas para Uso Medicinal no Brasil",
+    excerpt: "Aprenda a escolher o vaporizador de flor medicinal ideal, entenda as temperaturas de controle de terpenos e por que médicos contraindicam a combustão (fumaça).",
+    category: "Dispositivos & Uso",
+    readTime: "5 min de leitura",
+    date: "27 de Agosto de 2026",
+    author: "Equipe CannaGuia",
+    tags: ["Vaporizadores", "Redução de Danos", "Temperaturas", "Terpenos", "Uso Medicinal"],
+    content: `
+      <h3>1. Por Que Médicos Contraindicam Fumar e Recomendam Vaporizar?</h3>
+      <p>Ao queimar uma flor (combustão), a temperatura ultrapassa 800°C, destruindo até 50% dos terpenos e canabinoides medicinais e gerando alcatrão e monóxido de carbono nocivos ao pulmão.</p>
+      <p>O <strong>vaporizador de ervas secas</strong> apenas aquece a flor até a temperatura de ebulição dos óleos essenciais (entre 160°C e 210°C), entregando um vapor limpo, saboroso e com preservação de 100% das propriedades terapêuticas.</p>
+
+      <h3>2. Tabela de Temperaturas para Extração de Terpenos</h3>
+      <ul>
+        <li><strong>160°C - 175°C (Baixa Temperatura):** Extrai Pineno e Beta-Cariofileno. Sabor muito intenso, clareza mental e zero sonolência (ideal para dia).</li>
+        <li><strong>175°C - 190°C (Média Temperatura):** Extrai Limoneno e Mirceno. Equilíbrio perfeito entre relaxamento corporal e alívio de estresse.</li>
+        <li><strong>190°C - 210°C (Alta Temperatura):** Extrai Linalol e canabinoides de maior massa. Sedação muscular profunda, indução ao sono e alívio de dores crônicas.</li>
+      </ul>
+
+      <h3>3. Como Escolher o Seu Dispositivo no Brasil</h3>
+      <p>Opte por vaporizadores com câmara de aquecimento em cerâmica ou aço inoxidável, com ajuste digital de temperatura grau a grau para garantir precisão no seu tratamento.</p>
+    `
+  },
+  {
     id: "4",
     slug: "como-se-associar-associacao-cannabis-medicinal-brasil",
     title: "Como se Associar a uma Associação de Cannabis Medicinal no Brasil: Guia Completo",
@@ -119,26 +206,39 @@ export const MOCK_POSTS: BlogPost[] = [
       <h3>Via Inalatória (Flores In Natura Vaporizadas)</h3>
       <p>A inalação através de <strong>vaporizadores de ervas secas</strong> (sem combustão) é amplamente utilizada para alívio rápido de crises agudas:</p>
       <ul>
-        <li><strong>Início de ação:</strong> Quase imediato (2 a 5 minutos).</li>
-        <li><strong>Duração do efeito:</strong> Curta a moderada (2 a 4 horas).</li>
-        <li><strong>Indicações comuns:</strong> Crises agudas de ansiedade, picos de dor, insônia inicial e espasmos.</li>
+        <li><strong>Início da Ação:</strong> 1 a 3 minutos.</li>
+        <li><strong>Duração do Efeito:</strong> 1 a 3 horas.</li>
+        <li><strong>Indicações Clínicas:</strong> Crises repentinas de ansiedade, pânico, enxaqueca aguda ou episódios de dor de alta intensidade.</li>
       </ul>
 
-      <h3>Via Oral (Óleos e Tinturas Sublinguais)</h3>
-      <p>Os óleos concentrados (Full Spectrum, Broad Spectrum ou Isolados) são a base para tratamentos contínuos e estabilização:</p>
+      <h3>Via Oral (Óleos e Extratos Full Spectrum)</h3>
+      <p>A ingestão sublingual de óleos medicinais proporciona uma absorção constante e prolongada:</p>
       <ul>
-        <li><strong>Início de ação:</strong> Gradual (30 a 90 minutos).</li>
-        <li><strong>Duração do efeito:</strong> Prolongada (6 a 8 horas).</li>
-        <li><strong>Indicações comuns:</strong> Manutenção da ansiedade basal, dores inflamatórias crônicas, manutenção do sono e neuroproteção.</li>
+        <li><strong>Início da Ação:</strong> 30 a 90 minutos.</li>
+        <li><strong>Duração do Efeito:</strong> 6 a 8 horas.</li>
+        <li><strong>Indicações Clínicas:</strong> Manutenção de quadros de insônia, dores crônicas persistentes, espasticidade e controle de rigidez.</li>
       </ul>
 
-      <h3>Tratamento Combinado</h3>
-      <p>Muitos médicos prescrevem uma abordagem integrada: o óleo sublingual diário para manter os níveis séricos e a vaporização de flores sob demanda para momentos de crise.</p>
+      <h3>Associação de Terapias (Uso Combinado)</h3>
+      <p>Muitos médicos prescrevem o **uso combinado**: o óleo como tratamento contínuo de fundo ao longo do dia, e a vaporização da flor apenas como resgate para crises agudas de dor ou estresse.</p>
     `
   }
 ];
 
-export function useBlog() {
+export const useBlog = () => {
   const [posts] = useState<BlogPost[]>(MOCK_POSTS);
-  return { posts };
-}
+
+  const getPostBySlug = (slug: string) => {
+    return posts.find((post) => post.slug === slug);
+  };
+
+  const getPostsByCategory = (category: string) => {
+    return posts.filter((post) => post.category === category);
+  };
+
+  return {
+    posts,
+    getPostBySlug,
+    getPostsByCategory,
+  };
+};

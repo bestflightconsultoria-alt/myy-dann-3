@@ -8,6 +8,8 @@ import { supabase } from '../lib/supabase';
 
 interface CatalogProps {
   currentCategory?: ProductCategory;
+  initialStrainId?: string;
+  onSelectStrain?: (strain: Strain | null) => void;
 }
 
 interface CommunityReviewStats {
@@ -18,13 +20,27 @@ interface CommunityReviewStats {
   };
 }
 
-export const Catalog: React.FC<CatalogProps> = ({ currentCategory: initialCategory = 'flores' }) => {
+export const Catalog: React.FC<CatalogProps> = ({ 
+  currentCategory: initialCategory = 'flores',
+  initialStrainId,
+  onSelectStrain
+}) => {
   const { strains, loading } = useStrains();
   const [activeCategory, setActiveCategory] = useState<ProductCategory>(initialCategory);
   const [search, setSearch] = useState('');
   const [selectedSubFilter, setSelectedSubFilter] = useState('ALL');
   const [selectedStrain, setSelectedStrain] = useState<Strain | null>(null);
   const [communityStats, setCommunityStats] = useState<CommunityReviewStats>({});
+
+  // Abre strain inicial vinda da URL se presente
+  useEffect(() => {
+    if (initialStrainId && strains.length > 0) {
+      const found = strains.find(s => s.id === initialStrainId || s.id.toLowerCase() === initialStrainId.toLowerCase());
+      if (found) {
+        setSelectedStrain(found);
+      }
+    }
+  }, [initialStrainId, strains]);
 
   // Lista Unificada de Filtro & Ordenação Inteligente em Pílulas
   const unifiedFilters = [
@@ -267,7 +283,10 @@ export const Catalog: React.FC<CatalogProps> = ({ currentCategory: initialCatego
               key={`${strain.id}-${idx}`}
               strain={strain}
               ratingStats={communityStats[strain.id]}
-              onClick={() => setSelectedStrain(strain)}
+              onClick={() => {
+                setSelectedStrain(strain);
+                if (onSelectStrain) onSelectStrain(strain);
+              }}
             />
           ))}
         </div>
@@ -276,7 +295,10 @@ export const Catalog: React.FC<CatalogProps> = ({ currentCategory: initialCatego
       {/* Modal de Detalhes */}
       <StrainModal
         strain={selectedStrain}
-        onClose={() => setSelectedStrain(null)}
+        onClose={() => {
+          setSelectedStrain(null);
+          if (onSelectStrain) onSelectStrain(null);
+        }}
       />
     </div>
   );

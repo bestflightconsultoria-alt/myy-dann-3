@@ -5,26 +5,31 @@ import { BlogPost } from '../types/blog';
 
 interface BlogProps {
   initialPostId?: string;
+  initialPostSlug?: string;
+  onSelectPost?: (post: BlogPost | null) => void;
 }
 
-export const Blog: React.FC<BlogProps> = ({ initialPostId }) => {
+export const Blog: React.FC<BlogProps> = ({ initialPostId, initialPostSlug, onSelectPost }) => {
   const { posts } = useBlog();
   const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null);
 
   useEffect(() => {
-    if (initialPostId) {
-      const match = posts.find(p => p.id === initialPostId);
+    if (initialPostId || initialPostSlug) {
+      const match = posts.find(p => p.id === initialPostId || p.slug === initialPostSlug);
       if (match) {
         setSelectedPost(match);
       }
     }
-  }, [initialPostId, posts]);
+  }, [initialPostId, initialPostSlug, posts]);
 
   if (selectedPost) {
     return (
       <div className="max-w-3xl mx-auto space-y-6 animate-in fade-in duration-200">
         <button
-          onClick={() => setSelectedPost(null)}
+          onClick={() => {
+            setSelectedPost(null);
+            if (onSelectPost) onSelectPost(null);
+          }}
           className="flex items-center gap-1.5 text-xs font-bold text-emerald-700 bg-emerald-50 hover:bg-emerald-100 px-3.5 py-2 rounded-xl transition-all"
         >
           <ArrowLeft className="w-4 h-4" /> Voltar para os Guias
@@ -78,7 +83,10 @@ export const Blog: React.FC<BlogProps> = ({ initialPostId }) => {
         {posts.map((post) => (
           <div
             key={post.id}
-            onClick={() => setSelectedPost(post)}
+            onClick={() => {
+              setSelectedPost(post);
+              if (onSelectPost) onSelectPost(post);
+            }}
             className="bg-white rounded-2xl border border-gray-200/90 p-6 hover:shadow-xl hover:border-emerald-500/60 transition-all cursor-pointer flex flex-col justify-between group"
           >
             <div>
