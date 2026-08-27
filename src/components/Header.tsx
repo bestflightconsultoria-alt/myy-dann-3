@@ -32,7 +32,7 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab }) => {
     await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        redirectTo: window.location.origin
+        redirectTo: `${window.location.origin}/api/auth/callback`
       }
     });
   };
