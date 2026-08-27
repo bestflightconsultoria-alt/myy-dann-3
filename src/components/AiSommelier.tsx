@@ -16,8 +16,8 @@ interface CommunityReviewStats {
 export const AiSommelier: React.FC = () => {
   const { strains } = useStrains();
   
-  // Objetivos Múltiplos
-  const [selectedObjectives, setSelectedObjectives] = useState<string[]>(['ansiedade', 'relaxamento']);
+  // Objetivos Múltiplos (Inicia com 0 selecionados)
+  const [selectedObjectives, setSelectedObjectives] = useState<string[]>([]);
   const [timeOfDay, setTimeOfDay] = useState<string>('dia');
   const [experienceLevel, setExperienceLevel] = useState<string>('todos');
   const [preferredFormat, setPreferredFormat] = useState<string>('todos');
@@ -77,9 +77,7 @@ export const AiSommelier: React.FC = () => {
 
   const toggleObjective = (id: string) => {
     if (selectedObjectives.includes(id)) {
-      if (selectedObjectives.length > 1) {
-        setSelectedObjectives(selectedObjectives.filter(item => item !== id));
-      }
+      setSelectedObjectives(selectedObjectives.filter(item => item !== id));
     } else {
       setSelectedObjectives([...selectedObjectives, id]);
     }
@@ -90,6 +88,8 @@ export const AiSommelier: React.FC = () => {
   };
 
   const handleRecommend = () => {
+    if (selectedObjectives.length === 0) return;
+
     const scoredStrains = strains.map((s) => {
       let score = 50;
       const reasons: string[] = [];
@@ -118,135 +118,101 @@ export const AiSommelier: React.FC = () => {
       }
 
       // 2. Pontuação por Objetivos Selecionados
-      selectedObjectives.forEach((obj) => {
-        if (obj === 'ansiedade') {
+      selectedObjectives.forEach((objId) => {
+        if (objId === 'ansiedade') {
+          if (effectsLower.includes('ansiedade') || profileLower.includes('ansiol') || terpenesLower.includes('mirceno') || terpenesLower.includes('linalol')) {
+            score += 15;
+            reasons.push('Excelente ação ansiolítica e modulação de estresse.');
+          }
+        }
+        if (objId === 'relaxamento') {
+          if (s.type === 'Indica' || effectsLower.includes('relax') || terpenesLower.includes('mirceno')) {
+            score += 15;
+            reasons.push('Perfil rico em terpenos sedativos e soltura muscular.');
+          }
+        }
+        if (objId === 'sono') {
+          if (s.type === 'Indica' || profileLower.includes('sono') || profileLower.includes('insônia') || nameLower.includes('night') || nameLower.includes('kush')) {
+            score += 20;
+            reasons.push('Indicada para indução ao sono profundo e combate à insônia.');
+          }
+        }
+        if (objId === 'dor') {
+          if (effectsLower.includes('dor') || profileLower.includes('analgés') || profileLower.includes('inflam') || terpenesLower.includes('cariofileno')) {
+            score += 18;
+            reasons.push('Potencial analgésico e alívio de tensões profundas.');
+          }
+        }
+        if (objId === 'foco') {
+          if (s.type === 'Sativa' || profileLower.includes('foco') || profileLower.includes('clareza') || terpenesLower.includes('pineno')) {
+            score += 18;
+            reasons.push('Promove clareza mental, atenção e estado de presença.');
+          }
+        }
+        if (objId === 'disposicao') {
+          if (s.type === 'Sativa' || nameLower.includes('tangie') || nameLower.includes('lemon') || profileLower.includes('energia')) {
+            score += 15;
+            reasons.push('Estimulante diurno sem provocar sonolência.');
+          }
+        }
+        if (objId === 'humor') {
+          if (effectsLower.includes('humor') || profileLower.includes('bem-estar') || terpenesLower.includes('limoneno')) {
+            score += 12;
+            reasons.push('Elevação do humor e sensação de bem-estar.');
+          }
+        }
+        if (objId === 'cbd_puro') {
           if (s.dominantCannabinoid === 'CBD' || s.dominantCannabinoid === 'THC/CBD') {
-            score += 20;
-            reasons.push("Modulação da ansiedade via CBD sem eufóricos excessivos.");
-          }
-          if (effectsLower.includes('ansiedade') || effectsLower.includes('calma') || terpenesLower.includes('linalol')) {
-            score += 15;
-          }
-        }
-
-        if (obj === 'relaxamento') {
-          if (s.type === 'Indica' || s.type === 'Híbrida' || effectsLower.includes('relaxamento') || terpenesLower.includes('mirceno')) {
-            score += 20;
-            reasons.push("Promove relaxamento corporativo muscular e alívio de nós de tensão.");
-          }
-        }
-
-        if (obj === 'sono') {
-          if (s.type === 'Indica' || s.category === 'oleos' || nameLower.includes('sono') || nameLower.includes('cbn')) {
             score += 25;
-            reasons.push("Indução de sono reparador e combate à insônia noturna.");
-          }
-          if (effectsLower.includes('sono') || effectsLower.includes('sedação')) {
-            score += 15;
-          }
-        }
-
-        if (obj === 'dor') {
-          if (s.dominantCannabinoid === 'THC/CBD' || s.category === 'outros' || nameLower.includes('pomada') || nameLower.includes('hash')) {
-            score += 25;
-            reasons.push("Propriedades analgésicas para dor crônica e enxaquecas.");
-          }
-          if (effectsLower.includes('dor') || effectsLower.includes('muscular') || terpenesLower.includes('cariofileno')) {
-            score += 15;
-          }
-        }
-
-        if (obj === 'foco') {
-          if (s.type === 'Sativa') {
-            score += 25;
-            reasons.push("Estímulo cognitivo Sativa para foco e clareza mental.");
-          }
-          if (effectsLower.includes('foco') || effectsLower.includes('criatividade') || terpenesLower.includes('pineno')) {
-            score += 15;
-          }
-        }
-
-        if (obj === 'disposicao') {
-          if (s.type === 'Sativa' || terpenesLower.includes('limoneno') || effectsLower.includes('disposição')) {
-            score += 20;
-            reasons.push("Energia vital e combate à fadiga diurna.");
-          }
-        }
-
-        if (obj === 'humor') {
-          if (s.type === 'Sativa' || s.type === 'Híbrida' || effectsLower.includes('humor')) {
-            score += 20;
-            reasons.push("Sensação de bem-estar e elevação leve de humor.");
-          }
-        }
-
-        if (obj === 'apetite') {
-          if (effectsLower.includes('apetite') || profileLower.includes('fome')) {
-            score += 25;
-            reasons.push("Estímulo de apetite e conforto digestivo.");
-          }
-        }
-
-        if (obj === 'pos_treino') {
-          if (effectsLower.includes('anti-inflamatório') || terpenesLower.includes('cariofileno') || nameLower.includes('pomada')) {
-            score += 25;
-            reasons.push("Ação anti-inflamatória profunda para recuperação pós-exercício.");
-          }
-        }
-
-        if (obj === 'cbd_puro') {
-          if (s.dominantCannabinoid === 'CBD') {
-            score += 30;
-            reasons.push("Perfil limpo em CBD puro sem psicoatividade.");
+            reasons.push('Predomínio de CBD para ação terapêutica sem psicoatividade intensa.');
           }
         }
       });
 
-      // 3. Impacto REAL do Momento do Uso (Dia vs Noite)
+      // 3. Momento de Uso (Horário)
       if (timeOfDay === 'dia') {
-        if (s.type === 'Indica' && s.dominantCannabinoid === 'THC') {
-          score -= 35;
+        if (s.type === 'Indica') {
+          score -= 20;
+          reasons.push('Atenção: Uso noturno recomendado por ser sedativa.');
         } else if (s.type === 'Sativa' || s.dominantCannabinoid === 'CBD') {
-          score += 20;
-          reasons.push("Compatível com uso diurno sem gerar sonolência.");
+          score += 10;
+          reasons.push('Ideal para uso diurno.');
         }
       } else if (timeOfDay === 'noite') {
         if (s.type === 'Sativa') {
-          score -= 25;
-        } else if (s.type === 'Indica' || s.category === 'oleos' || nameLower.includes('cbn')) {
-          score += 20;
-          reasons.push("Auxilia na desaceleração noturna antes de deitar.");
+          score -= 15;
+        } else if (s.type === 'Indica') {
+          score += 15;
+          reasons.push('Perfeita para consumo no final do dia.');
         }
       }
 
-      // 4. Perfil de Experiência
-      if (experienceLevel === 'iniciante') {
-        if (s.dominantCannabinoid === 'CBD' || s.dominantCannabinoid === 'THC/CBD') {
-          score += 15;
-          reasons.push("Recomendado para iniciantes devido ao perfil suave.");
-        }
-      } else if (experienceLevel === 'experiente') {
-        if (s.dominantCannabinoid === 'THC' || s.type === 'Concentrados') {
-          score += 15;
-        }
-      }
+      // Normaliza Score entre 65% e 99%
+      const finalScore = Math.min(99, Math.max(65, score));
+      
+      const uniqueReasons = Array.from(new Set(reasons)).slice(0, 2);
+      const mainReason = uniqueReasons.length > 0
+        ? uniqueReasons.join(' ')
+        : 'Perfil terpenoide compatível com os objetivos selecionados.';
 
-      const finalScore = Math.min(99, Math.max(55, score));
-      const reasonText = reasons.length > 0 ? Array.from(new Set(reasons)).slice(0, 2).join(' ') : "Perfil terpênico harmonizado com os seus objetivos.";
-
-      return { strain: s, score: finalScore, reason: reasonText, reviewStats: stats };
+      return {
+        strain: s,
+        score: finalScore,
+        reason: mainReason,
+        reviewStats: stats
+      };
     });
 
     // Ordena do maior score para o menor
     scoredStrains.sort((a, b) => b.score - a.score);
 
-    // Exibe até 8 melhores resultados
+    // Seleciona as 8 melhores recomendações
     setRecommendations(scoredStrains.slice(0, 8));
     setHasSearched(true);
   };
 
   return (
-    <div className="max-w-4xl mx-auto space-y-8">
+    <div className="space-y-8 max-w-5xl mx-auto">
       
       {/* Header do Fummelier IA */}
       <div className="bg-gradient-to-br from-slate-900 via-emerald-950 to-teal-900 rounded-3xl p-6 sm:p-10 text-white text-center space-y-3 shadow-2xl relative overflow-hidden">
@@ -318,24 +284,25 @@ export const AiSommelier: React.FC = () => {
             {availableObjectives.map((obj) => {
               const isSelected = selectedObjectives.includes(obj.id);
               return (
-                <button
+                <div
                   key={obj.id}
-                  type="button"
                   onClick={() => toggleObjective(obj.id)}
-                  className={`p-3.5 rounded-2xl text-xs text-left font-bold transition-all flex items-start justify-between border ${
+                  className={`p-3.5 rounded-2xl border transition-all cursor-pointer flex items-start gap-3 ${
                     isSelected
-                      ? 'bg-emerald-600 text-white border-emerald-600 shadow-md shadow-emerald-600/20'
-                      : 'bg-gray-50 text-gray-700 border-gray-200 hover:bg-emerald-50/70 hover:border-emerald-300'
+                      ? 'bg-emerald-50 border-emerald-500 ring-2 ring-emerald-500/20 shadow-sm'
+                      : 'bg-gray-50 border-gray-200/80 hover:bg-gray-100 hover:border-gray-300'
                   }`}
                 >
-                  <div className="space-y-0.5">
-                    <div className="font-extrabold text-xs">{obj.label}</div>
-                    <div className={`text-[10px] font-normal ${isSelected ? 'text-emerald-100' : 'text-gray-500'}`}>
-                      {obj.desc}
-                    </div>
+                  <div className={`w-5 h-5 rounded-lg border flex items-center justify-center shrink-0 mt-0.5 transition-colors ${
+                    isSelected ? 'bg-emerald-600 border-emerald-600 text-white' : 'border-gray-300 bg-white'
+                  }`}>
+                    {isSelected && <Check className="w-3.5 h-3.5" />}
                   </div>
-                  {isSelected && <Check className="w-4 h-4 text-white shrink-0 mt-0.5 ml-1" />}
-                </button>
+                  <div>
+                    <span className="text-xs font-extrabold text-gray-900 block">{obj.label}</span>
+                    <span className="text-[10px] text-gray-500 leading-tight block mt-0.5">{obj.desc}</span>
+                  </div>
+                </div>
               );
             })}
           </div>
@@ -360,19 +327,19 @@ export const AiSommelier: React.FC = () => {
             </select>
           </div>
 
-          {/* Perfil / Experiência */}
+          {/* Perfil Terapêutico / Tolerância */}
           <div className="space-y-2">
             <label className="text-xs font-bold text-gray-700 uppercase tracking-wider block">
-              3. Perfil / Tolerância
+              3. Perfil Canabinoide
             </label>
             <select
               value={experienceLevel}
               onChange={(e) => setExperienceLevel(e.target.value)}
               className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl text-xs font-bold text-gray-800 focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none"
             >
-              <option value="todos">🌱 Todos os Perfis</option>
-              <option value="iniciante">🟢 Iniciante (Leve / CBD)</option>
-              <option value="experiente">🔥 Experiente (Mais Potente)</option>
+              <option value="todos">🌱 Espectro Terapêutico Amplo</option>
+              <option value="iniciante">🟢 Formulação Suave / CBD Predominante</option>
+              <option value="experiente">🔥 Concentração Elevada</option>
             </select>
           </div>
 
@@ -386,7 +353,7 @@ export const AiSommelier: React.FC = () => {
               onChange={(e) => setPreferredFormat(e.target.value)}
               className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl text-xs font-bold text-gray-800 focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none"
             >
-              <option value="todos">✨ Todos os Formatos</option>
+              <option value="todos">✨ Todos os Formatos Medicinais</option>
               <option value="flores">🌸 Flores in Natura</option>
               <option value="oleos">💧 Óleos Medicinais</option>
               <option value="outros">🍬 Gummies & Outros</option>
@@ -398,10 +365,19 @@ export const AiSommelier: React.FC = () => {
         {/* Botão de Ação */}
         <button
           onClick={handleRecommend}
-          className="w-full py-4 bg-emerald-600 hover:bg-emerald-700 text-white font-black text-sm rounded-2xl shadow-lg shadow-emerald-600/20 transition-all flex items-center justify-center gap-2 transform active:scale-[0.99]"
+          disabled={selectedObjectives.length === 0}
+          className={`w-full py-4 font-black text-sm rounded-2xl shadow-lg transition-all flex items-center justify-center gap-2 transform active:scale-[0.99] ${
+            selectedObjectives.length === 0
+              ? 'bg-gray-200 text-gray-500 cursor-not-allowed shadow-none'
+              : 'bg-emerald-600 hover:bg-emerald-700 text-white shadow-emerald-600/20'
+          }`}
         >
           <Sparkles className="w-5 h-5 text-amber-300" />
-          <span>Consultar Recomendações do Fummelier IA</span>
+          <span>
+            {selectedObjectives.length === 0
+              ? 'Selecione ao menos 1 objetivo terapêutico para consultar a IA'
+              : 'Consultar Recomendações do Fummelier IA'}
+          </span>
         </button>
       </div>
 
@@ -418,69 +394,59 @@ export const AiSommelier: React.FC = () => {
                 Calculado com base em {selectedObjectives.length} {selectedObjectives.length === 1 ? 'objetivo' : 'objetivos simultâneos'}, momento do uso e relatos reais de pacientes.
               </p>
             </div>
-            <span className="text-xs font-bold bg-emerald-100 text-emerald-800 px-3 py-1 rounded-full">
-              {recommendations.length} resultados
-            </span>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-            {recommendations.map(({ strain, score, reason, reviewStats }) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {recommendations.map((item, index) => (
               <div
-                key={strain.id}
-                onClick={() => setSelectedStrain(strain)}
-                className="bg-white rounded-2xl border border-gray-200 p-5 hover:shadow-xl hover:border-emerald-500/60 transition-all cursor-pointer flex flex-col justify-between group relative overflow-hidden"
+                key={item.strain.id}
+                onClick={() => setSelectedStrain(item.strain)}
+                className="bg-white rounded-3xl border border-gray-200/90 p-6 shadow-sm hover:shadow-xl hover:border-emerald-500/60 transition-all cursor-pointer flex flex-col justify-between space-y-4 relative overflow-hidden group"
               >
-                {/* Porcentagem de Compatibilidade */}
-                <div className="absolute top-0 right-0 bg-gradient-to-l from-emerald-600 to-teal-600 text-white text-[11px] font-black px-3 py-1 rounded-bl-xl shadow-sm flex items-center gap-1">
-                  <ThumbsUp className="w-3 h-3 text-amber-300" />
-                  <span>{score}% Compatível</span>
-                </div>
-
-                <div>
-                  <div className="flex items-center gap-2 mb-3">
-                    <span className="px-2.5 py-0.5 text-xs font-bold rounded-md bg-emerald-50 text-emerald-800 border border-emerald-100">
-                      {strain.dominantCannabinoid || strain.type}
+                {/* Ranking Tag */}
+                <div className="flex items-center justify-between gap-2">
+                  <div className="flex items-center gap-2">
+                    <span className="w-7 h-7 bg-emerald-600 text-white rounded-xl text-xs font-black flex items-center justify-center shadow-md">
+                      #{index + 1}
                     </span>
-                    {reviewStats && reviewStats.count > 0 && (
-                      <span className="flex items-center gap-1 text-[10px] font-bold bg-amber-100 text-amber-900 px-2 py-0.5 rounded-full border border-amber-200">
-                        <Star className="w-2.5 h-2.5 fill-amber-500 text-amber-500" />
-                        {reviewStats.avgRating} ({reviewStats.count} {reviewStats.count === 1 ? 'relato' : 'relatos'})
-                      </span>
-                    )}
+                    <span className="text-xs font-bold text-gray-500">
+                      Compatibilidade Terapêutica
+                    </span>
                   </div>
 
-                  <h4 className="font-extrabold text-gray-900 text-lg group-hover:text-emerald-700 transition-colors">
-                    {strain.name}
+                  <span className="text-sm font-black text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200">
+                    {item.score}% Compatível
+                  </span>
+                </div>
+
+                <div className="space-y-2">
+                  <h4 className="text-xl font-black text-gray-900 group-hover:text-emerald-700 transition-colors">
+                    {item.strain.name}
                   </h4>
 
-                  {/* Razão da Recomendação pelo Fummelier */}
-                  <div className="mt-3 bg-emerald-50/70 border border-emerald-200/60 p-2.5 rounded-xl text-xs text-emerald-950 font-medium space-y-1">
-                    <span className="font-extrabold text-emerald-800 flex items-center gap-1">
-                      💡 Por que o Fummelier IA recomenda:
-                    </span>
-                    <p className="text-[11px] leading-relaxed text-emerald-900">
-                      {reason}
-                    </p>
-                  </div>
-
-                  {/* Citação de Avaliação da Comunidade */}
-                  {reviewStats?.topComment && (
-                    <div className="mt-2 bg-amber-50/60 border border-amber-200/60 p-2 rounded-xl text-[11px] text-amber-950 italic flex items-start gap-1.5">
-                      <MessageSquare className="w-3.5 h-3.5 text-amber-600 shrink-0 mt-0.5" />
-                      <span>"{reviewStats.topComment}"</span>
-                    </div>
-                  )}
+                  <p className="text-xs text-gray-600 italic bg-gray-50 p-3 rounded-2xl border border-gray-100">
+                    "{item.reason}"
+                  </p>
                 </div>
 
-                <div className="mt-5 pt-3 border-t border-gray-100 flex items-center justify-between text-xs">
-                  <span className="text-gray-600 font-medium flex items-center gap-1">
-                    <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0" />
-                    <span className="truncate max-w-[140px]">
-                      {strain.associations?.[0]?.associationName || 'Sob Consulta'}
+                {/* Relato da Comunidade se existir */}
+                {item.reviewStats && item.reviewStats.topComment && (
+                  <div className="bg-amber-50/80 p-3 rounded-2xl border border-amber-200/80 text-xs space-y-1">
+                    <span className="text-[10px] font-extrabold text-amber-900 flex items-center gap-1">
+                      <Star className="w-3 h-3 fill-amber-500 text-amber-500" /> Relato da Comunidade ({item.reviewStats.avgRating}★):
                     </span>
+                    <p className="text-[11px] text-amber-950 italic">
+                      "{item.reviewStats.topComment}"
+                    </p>
+                  </div>
+                )}
+
+                <div className="pt-3 border-t border-gray-100 flex items-center justify-between text-xs">
+                  <span className="font-semibold text-gray-500">
+                    {item.strain.associations?.[0]?.associationName || 'Várias associações'}
                   </span>
-                  <span className="font-bold text-emerald-700 bg-emerald-50 px-3 py-1.5 rounded-xl border border-emerald-200 flex items-center gap-1 group-hover:bg-emerald-600 group-hover:text-white transition-all">
-                    Ver Detalhes <ArrowRight className="w-3.5 h-3.5" />
+                  <span className="font-bold text-emerald-600 group-hover:underline flex items-center gap-1">
+                    Ver detalhes completos <ArrowRight className="w-3.5 h-3.5" />
                   </span>
                 </div>
               </div>
@@ -489,11 +455,12 @@ export const AiSommelier: React.FC = () => {
         </div>
       )}
 
-      {/* Modal de Detalhes da Strain Selecionada */}
+      {/* Modal de Detalhes da Strain */}
       <StrainModal
         strain={selectedStrain}
         onClose={() => setSelectedStrain(null)}
       />
+
     </div>
   );
 };

@@ -59,30 +59,22 @@ interface StrainModalProps {
 }
 
 export const StrainModal: React.FC<StrainModalProps> = ({ strain, onClose }) => {
+  const [user, setUser] = useState<any>(null);
   const [reviews, setReviews] = useState<PatientReview[]>([]);
   const [showReviewForm, setShowReviewForm] = useState<boolean>(false);
-  const [user, setUser] = useState<any>(null);
   const [submitting, setSubmitting] = useState<boolean>(false);
 
-  // Form States
-  const [patientName, setPatientName] = useState('');
-  const [selectedAssoc, setSelectedAssoc] = useState<string>('');
+  // Form State
   const [rating, setRating] = useState<number>(5);
+  const [selectedAssoc, setSelectedAssoc] = useState<string>('');
+  const [patientName, setPatientName] = useState<string>('');
   const [selectedConditions, setSelectedConditions] = useState<string[]>([]);
-  const [customCondition, setCustomCondition] = useState('');
-  const [positiveEffectInput, setPositiveEffectInput] = useState('');
+  const [customCondition, setCustomCondition] = useState<string>('');
+  const [positiveEffectInput, setPositiveEffectInput] = useState<string>('');
   const [selectedSideEffects, setSelectedSideEffects] = useState<string[]>(['Nenhum efeito adverso']);
-  const [customSideEffect, setCustomSideEffect] = useState('');
-  const [comment, setComment] = useState('');
+  const [customSideEffect, setCustomSideEffect] = useState<string>('');
+  const [comment, setComment] = useState<string>('');
 
-  useEffect(() => {
-    if (!supabase) return;
-    supabase.auth.getUser().then(({ data: { user } }) => {
-      setUser(user);
-    });
-  }, []);
-
-  // Busca avaliações reais no Supabase
   useEffect(() => {
     if (!strain) return;
 
@@ -92,11 +84,30 @@ export const StrainModal: React.FC<StrainModalProps> = ({ strain, onClose }) => 
       setSelectedAssoc('Associação Dispensadora');
     }
 
+    if (supabase) {
+      supabase.auth.getUser().then(({ data: { user } }) => {
+        setUser(user);
+        if (user?.user_metadata?.full_name) {
+          setPatientName(user.user_metadata.full_name);
+        }
+      });
+    }
+
     async function loadReviews() {
+      let local: PatientReview[] = [];
+      try {
+        const saved = localStorage.getItem('cannaguia_local_reviews');
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          local = parsed.filter((r: PatientReview) => r.strainId === strain.id);
+        }
+      } catch (e) {}
+
       if (!supabase) {
-        setReviews([]);
+        setReviews(local);
         return;
       }
+
       try {
         const { data, error } = await supabase
           .from('reviews')
@@ -120,12 +131,15 @@ export const StrainModal: React.FC<StrainModalProps> = ({ strain, onClose }) => 
             isVerified: item.is_verified,
             date: new Date(item.created_at).toLocaleDateString('pt-BR')
           }));
-          setReviews(formatted);
+
+          const ids = new Set(formatted.map(f => f.id));
+          const extraLocal = local.filter(l => !ids.has(l.id));
+          setReviews([...extraLocal, ...formatted]);
         } else {
-          setReviews([]);
+          setReviews(local);
         }
       } catch {
-        setReviews([]);
+        setReviews(local);
       }
     }
     loadReviews();
@@ -138,7 +152,7 @@ export const StrainModal: React.FC<StrainModalProps> = ({ strain, onClose }) => 
     if (strain.dominantCannabinoid === 'THC/CBD') return { text: 'THC / CBD', bg: 'bg-purple-100 text-purple-800' };
     if (strain.dominantCannabinoid === 'CBD') return { text: 'CBD', bg: 'bg-blue-100 text-blue-800' };
     if (strain.category === 'oleos') return { text: 'Óleo', bg: 'bg-amber-100 text-amber-800' };
-    if (strain.category === 'outros') return { text: 'Gummies', bg: 'bg-pink-100 text-pink-800' };
+    if (strain.category === 'outros') return { text: 'Gummies / Outros', bg: 'bg-pink-100 text-pink-800' };
     return { text: strain.type, bg: 'bg-emerald-100 text-emerald-800' };
   };
 
@@ -166,7 +180,7 @@ export const StrainModal: React.FC<StrainModalProps> = ({ strain, onClose }) => 
     }
   };
 
-  // SUBMETER AVALIAÇÃO (Relato não é mais obrigatório!)
+  // SUBMETER AVALIAÇÃO (Com fallback de salvamento local no navegador!)
   const handleSubmitReview = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -211,6 +225,14 @@ export const StrainModal: React.FC<StrainModalProps> = ({ strain, onClose }) => 
       date: 'Hoje'
     };
 
+    // Salva no localStorage para garantia de sessão local
+    try {
+      const saved = localStorage.getItem('cannaguia_local_reviews');
+      const list = saved ? JSON.parse(saved) : [];
+      localStorage.setItem('cannaguia_local_reviews', JSON.stringify([newReview, ...list]));
+    } catch (e) {}
+
+    // Salva no Supabase se conectado
     if (supabase) {
       try {
         await supabase.from('reviews').insert({
@@ -227,7 +249,7 @@ export const StrainModal: React.FC<StrainModalProps> = ({ strain, onClose }) => 
           is_verified: isVerified
         });
       } catch (err) {
-        console.error('Erro ao salvar:', err);
+        console.error('Erro ao salvar no Supabase:', err);
       }
     }
 
@@ -246,232 +268,209 @@ export const StrainModal: React.FC<StrainModalProps> = ({ strain, onClose }) => 
     : null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm overflow-y-auto">
-      <div className="relative w-full max-w-2xl bg-white rounded-3xl shadow-2xl overflow-hidden my-8 animate-in fade-in zoom-in duration-200">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/70 backdrop-blur-sm overflow-y-auto">
+      <div className="relative w-full max-w-2xl bg-white rounded-3xl border-2 border-emerald-500/40 shadow-2xl overflow-hidden my-auto max-h-[90vh] flex flex-col animate-in fade-in zoom-in duration-200">
         
         {/* Header do Modal */}
-        <div className="flex items-center justify-between p-6 border-b bg-gray-50/80">
+        <div className="flex items-center justify-between p-5 sm:p-6 border-b bg-gray-50/90 shrink-0">
           <div>
             <div className="flex items-center gap-2">
               <span className={`px-2.5 py-0.5 text-xs font-bold rounded-full ${badge.bg}`}>
                 {badge.text}
               </span>
               {avgRating && (
-                <span className="flex items-center gap-1 text-xs font-bold bg-amber-100 text-amber-900 px-2 py-0.5 rounded-full">
-                  <Star className="w-3 h-3 fill-amber-500 text-amber-500" />
+                <span className="flex items-center gap-1 text-xs font-bold bg-amber-100 text-amber-900 px-2.5 py-0.5 rounded-full border border-amber-200">
+                  <Star className="w-3.5 h-3.5 fill-amber-500 text-amber-500" />
                   {avgRating} ({reviews.length} avaliações)
                 </span>
               )}
             </div>
-            <h2 className="text-2xl font-black text-gray-900 mt-1.5">{strain.name}</h2>
+            <h2 className="text-xl sm:text-2xl font-black text-gray-900 mt-1.5">{strain.name}</h2>
           </div>
-          <button onClick={onClose} className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-full">
+          <button onClick={onClose} className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-full transition-colors">
             <X className="w-6 h-6" />
           </button>
         </div>
 
         {/* Conteúdo com Scroll */}
-        <div className="p-6 space-y-6 max-h-[75vh] overflow-y-auto">
+        <div className="p-5 sm:p-6 space-y-6 overflow-y-auto flex-1">
           
-          {/* Métricas */}
+          {/* Métricas do Produto */}
           <div className="grid grid-cols-2 gap-3">
             <div className="p-3.5 bg-emerald-50/70 rounded-2xl border border-emerald-100 text-center">
               <span className="text-xs font-medium text-emerald-700 block">THC</span>
               <span className="text-base font-bold text-emerald-950">{strain.thc || 'Presente'}</span>
             </div>
-            <div className="p-3.5 bg-blue-50/70 rounded-2xl border border-blue-100 text-center">
-              <span className="text-xs font-medium text-blue-700 block">CBD</span>
-              <span className="text-base font-bold text-blue-950">{strain.cbd || 'Presente'}</span>
+            <div className="p-3.5 bg-teal-50/70 rounded-2xl border border-teal-100 text-center">
+              <span className="text-xs font-medium text-teal-700 block">CBD</span>
+              <span className="text-base font-bold text-teal-950">{strain.cbd || 'Presente'}</span>
             </div>
           </div>
 
-          {/* Banner de Conexão com o Fummelier IA */}
-          <div className="bg-gradient-to-r from-emerald-900 to-teal-900 p-3.5 rounded-2xl text-white flex items-center justify-between text-xs">
-            <span className="flex items-center gap-2 font-medium">
-              <Sparkles className="w-4 h-4 text-amber-300 shrink-0" />
-              As avaliações publicadas alimentam diretamente o Fummelier IA em tempo real.
-            </span>
-          </div>
+          {/* Perfis Terapêuticos */}
+          {strain.effects && strain.effects.length > 0 && (
+            <div className="space-y-2 p-4 bg-gray-50/60 rounded-2xl border border-gray-100">
+              <h3 className="text-xs font-bold text-gray-700 uppercase tracking-wider">Efeitos Terapêuticos Relatados</h3>
+              <div className="flex flex-wrap gap-1.5">
+                {strain.effects.map((eff, i) => (
+                  <span key={i} className="text-xs font-semibold bg-white border border-gray-200 text-gray-800 px-3 py-1 rounded-xl shadow-xs">
+                    {eff}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
 
-          {/* Onde Encontrar e Preços */}
-          <div className="border border-emerald-200 bg-emerald-50/30 rounded-2xl p-5 shadow-sm">
-            <h4 className="text-base font-bold text-gray-900 flex items-center gap-2 mb-3">
-              <DollarSign className="w-5 h-5 text-emerald-600" />
-              Preços e Associações Disponíveis
-            </h4>
-            
-            {strain.associations && strain.associations.length > 0 ? (
-              <div className="space-y-3">
-                {strain.associations.map((assoc) => (
-                  <div
-                    key={assoc.associationId}
-                    className="p-4 bg-white rounded-xl border border-gray-200/90 shadow-sm flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3"
-                  >
-                    <div className="flex items-center gap-2">
-                      <Building className="w-4 h-4 text-emerald-600" />
-                      <span className="font-bold text-gray-900 text-sm">{assoc.associationName}</span>
-                      {assoc.cultivationType && (
-                        <span className="text-[10px] px-2 py-0.5 font-semibold rounded bg-gray-100 text-gray-700 border">
-                          {assoc.cultivationType}
-                        </span>
-                      )}
+          {/* Terpenos e Aroma */}
+          {(strain.terpenes?.length > 0 || strain.aromaFlavor) && (
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {strain.terpenes && strain.terpenes.length > 0 && (
+                <div className="p-4 bg-purple-50/50 rounded-2xl border border-purple-100 space-y-1">
+                  <span className="text-[11px] font-bold text-purple-900 uppercase block">Terpenos Predominantes</span>
+                  <p className="text-xs font-medium text-purple-950">{strain.terpenes.join(', ')}</p>
+                </div>
+              )}
+              {strain.aromaFlavor && (
+                <div className="p-4 bg-amber-50/50 rounded-2xl border border-amber-100 space-y-1">
+                  <span className="text-[11px] font-bold text-amber-900 uppercase block">Perfil Aromático / Sabor</span>
+                  <p className="text-xs font-medium text-amber-950">{strain.aromaFlavor}</p>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* Associações e Valores */}
+          {strain.associations && strain.associations.length > 0 && (
+            <div className="space-y-3 p-4 bg-emerald-50/40 rounded-2xl border border-emerald-100">
+              <h3 className="text-xs font-bold text-emerald-950 uppercase tracking-wider flex items-center gap-1.5">
+                <Building className="w-4 h-4 text-emerald-700" />
+                Associações Dispensadoras ({strain.associations.length})
+              </h3>
+              <div className="space-y-2">
+                {strain.associations.map((assoc, idx) => (
+                  <div key={idx} className="p-3 bg-white rounded-xl border border-gray-200 flex items-center justify-between gap-2 shadow-xs">
+                    <div>
+                      <span className="text-xs font-extrabold text-gray-900 block">{assoc.associationName}</span>
+                      <span className="text-[11px] font-semibold text-emerald-700">{assoc.priceDetail}</span>
                     </div>
-                    <div className="bg-emerald-50 px-3.5 py-1.5 rounded-xl border border-emerald-200/80">
-                      <span className="text-sm font-extrabold text-emerald-950">{assoc.priceDisplay}</span>
-                    </div>
+                    {assoc.unitPrice && (
+                      <span className="text-xs font-black bg-emerald-100 text-emerald-900 px-2.5 py-1 rounded-lg">
+                        {assoc.unitPrice}
+                      </span>
+                    )}
                   </div>
                 ))}
               </div>
-            ) : (
-              <div className="p-4 rounded-xl bg-white border text-center text-sm text-gray-500">
-                Consulte a disponibilidade diretamente com as associações.
-              </div>
-            )}
-          </div>
+            </div>
+          )}
 
-          {/* SESSÃO DE AVALIAÇÕES */}
-          <div className="pt-4 border-t border-gray-200">
-            <div className="flex items-center justify-between mb-4">
+          {/* SEÇÃO DE AVALIAÇÕES DOS PACIENTES */}
+          <div className="space-y-4 pt-4 border-t border-gray-200">
+            <div className="flex items-center justify-between">
               <div>
-                <h4 className="text-base font-extrabold text-gray-900 flex items-center gap-2">
-                  <UserCheck className="w-5 h-5 text-emerald-600" />
+                <h3 className="text-base font-extrabold text-gray-900 flex items-center gap-2">
+                  <Sparkles className="w-5 h-5 text-amber-500" />
                   Avaliações dos Pacientes ({reviews.length})
-                </h4>
-                <p className="text-xs text-gray-500">Relatos e desfechos clínicos reportados por pacientes</p>
+                </h3>
+                <p className="text-xs text-gray-500 mt-0.5">
+                  Relatos reais de eficácia medicinal fornecidos por pacientes da comunidade.
+                </p>
               </div>
 
-              <button
-                type="button"
-                onClick={() => setShowReviewForm(!showReviewForm)}
-                className="px-3.5 py-1.5 text-xs font-bold text-emerald-800 bg-emerald-100 hover:bg-emerald-200 rounded-xl transition-all flex items-center gap-1"
-              >
-                <MessageSquarePlus className="w-3.5 h-3.5" />
-                {showReviewForm ? 'Fechar' : '+ Avaliar em 1 Clique'}
-              </button>
+              {!showReviewForm && (
+                <button
+                  type="button"
+                  onClick={() => setShowReviewForm(true)}
+                  className="px-3.5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl shadow-sm transition-all flex items-center gap-1.5"
+                >
+                  <Plus className="w-4 h-4" /> Avaliar em 1 Clique
+                </button>
+              )}
             </div>
 
-            {/* FORMULÁRIO RÁPIDO DE AVALIAÇÃO */}
+            {/* FORMULÁRIO DE AVALIAÇÃO RÁPIDA */}
             {showReviewForm && (
-              <form onSubmit={handleSubmitReview} className="bg-gray-50 border border-emerald-200 p-4 sm:p-5 rounded-2xl mb-6 space-y-4 animate-in fade-in">
-                
-                {/* Identificação */}
-                {user ? (
-                  <div className="text-xs text-emerald-800 font-medium flex items-center gap-1.5 bg-emerald-50 p-2.5 rounded-xl border border-emerald-200">
-                    <ShieldCheck className="w-4 h-4 text-emerald-600" />
-                    Avaliando como <strong>{user.user_metadata?.full_name || user.email}</strong> (Relato Verificado)
-                  </div>
-                ) : (
-                  <div>
-                    <label className="text-[11px] font-bold text-gray-700 block mb-1">Seu Nome ou Iniciais (Opcional)</label>
-                    <input
-                      type="text"
-                      placeholder="Ex: Pedro M. (ou deixe em branco para anônimo)"
-                      value={patientName}
-                      onChange={(e) => setPatientName(e.target.value)}
-                      className="w-full p-2.5 bg-white border border-gray-200 rounded-xl text-xs outline-none focus:border-emerald-500"
-                    />
-                  </div>
-                )}
+              <form onSubmit={handleSubmitReview} className="bg-emerald-50/70 border border-emerald-200 p-5 rounded-2xl space-y-4 animate-in fade-in">
+                <div className="flex items-center justify-between border-b border-emerald-200/80 pb-3">
+                  <span className="text-xs font-black text-emerald-950">Registrar Relato Clínico Rápido</span>
+                  <button 
+                    type="button" 
+                    onClick={() => setShowReviewForm(false)}
+                    className="text-xs font-bold text-gray-500 hover:text-gray-700"
+                  >
+                    Cancelar
+                  </button>
+                </div>
 
-                {/* Nota e Associação */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  <div>
-                    <label className="text-[11px] font-bold text-gray-700 block mb-1">Sua Avaliação (Estrelas):</label>
-                    <div className="flex items-center gap-1.5 h-[38px]">
-                      {[1, 2, 3, 4, 5].map((star) => (
-                        <button
-                          key={star}
-                          type="button"
-                          onClick={() => setRating(star)}
-                          className="p-1 text-amber-400 hover:scale-110 transition-transform"
-                        >
-                          <Star
-                            className={`w-6 h-6 ${
-                              star <= rating ? 'fill-amber-400 text-amber-400' : 'text-gray-300'
-                            }`}
-                          />
-                        </button>
-                      ))}
-                      <span className="text-xs font-bold text-gray-700 ml-1">({rating}/5)</span>
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="text-[11px] font-bold text-gray-700 block mb-1">Associação Dispensadora:</label>
+                {/* Seleção da Associação */}
+                {strain.associations && strain.associations.length > 0 && (
+                  <div className="space-y-1">
+                    <label className="text-[11px] font-bold text-emerald-900 block">Associação Dispensadora:</label>
                     <select
                       value={selectedAssoc}
                       onChange={(e) => setSelectedAssoc(e.target.value)}
-                      className="w-full p-2.5 bg-white border border-gray-200 rounded-xl text-xs font-bold text-gray-800 outline-none focus:border-emerald-500"
+                      className="w-full p-2.5 bg-white border border-emerald-200 rounded-xl text-xs font-bold text-gray-800 outline-none"
                     >
-                      {strain.associations && strain.associations.length > 0 ? (
-                        strain.associations.map((a) => (
-                          <option key={a.associationId} value={a.associationName}>
-                            {a.associationName}
-                          </option>
-                        ))
-                      ) : (
-                        <>
-                          <option value="Liva">Liva</option>
-                          <option value="CannabCura">CannabCura</option>
-                          <option value="Instituto Damasceno">Instituto Damasceno</option>
-                          <option value="Outra Associação">Outra Associação</option>
-                        </>
-                      )}
+                      {strain.associations.map((a, idx) => (
+                        <option key={idx} value={a.associationName}>
+                          {a.associationName}
+                        </option>
+                      ))}
                     </select>
+                  </div>
+                )}
+
+                {/* Rating 1 a 5 Estrelas */}
+                <div className="space-y-1">
+                  <label className="text-[11px] font-bold text-emerald-900 block">Sua Nota Geral (Eficácia):</label>
+                  <div className="flex items-center gap-2 bg-white p-2.5 rounded-xl border border-emerald-200 w-fit">
+                    {[1, 2, 3, 4, 5].map((star) => (
+                      <button
+                        key={star}
+                        type="button"
+                        onClick={() => setRating(star)}
+                        className="p-1 hover:scale-110 transition-transform"
+                      >
+                        <Star className={`w-6 h-6 ${star <= rating ? 'fill-amber-400 text-amber-400' : 'text-gray-300'}`} />
+                      </button>
+                    ))}
+                    <span className="text-xs font-black text-amber-900 ml-1">{rating}/5</span>
                   </div>
                 </div>
 
-                {/* Condições Tratadas */}
-                <div>
-                  <label className="text-[11px] font-bold text-gray-700 block mb-1.5">
-                    Condição(ões) Tratada(s):
-                  </label>
+                {/* Condição Médica Tratada */}
+                <div className="space-y-1.5">
+                  <label className="text-[11px] font-bold text-emerald-900 block">Qual sintoma/condição você tratou com este produto?</label>
                   <div className="flex flex-wrap gap-1.5">
                     {COMMON_CONDITIONS.map((cond) => {
-                      const isSelected = selectedConditions.includes(cond);
+                      const isSel = selectedConditions.includes(cond);
                       return (
                         <button
                           key={cond}
                           type="button"
                           onClick={() => toggleCondition(cond)}
-                          className={`text-[11px] px-2.5 py-1 rounded-lg font-medium transition-all ${
-                            isSelected
-                              ? 'bg-emerald-600 text-white shadow-sm'
-                              : 'bg-white text-gray-700 border border-gray-200 hover:bg-gray-100'
+                          className={`text-xs font-semibold px-2.5 py-1 rounded-lg border transition-all ${
+                            isSel 
+                              ? 'bg-emerald-700 text-white border-emerald-700 shadow-xs' 
+                              : 'bg-white text-gray-700 border-gray-200 hover:bg-gray-50'
                           }`}
                         >
-                          {isSelected ? '✓ ' : '+ '}{cond}
+                          {cond}
                         </button>
                       );
                     })}
                   </div>
                 </div>
 
-                {/* Benefícios Sentidos */}
-                <div>
-                  <label className="text-[11px] font-bold text-emerald-800 block mb-1">
-                    Benefícios Rápido (ex: alívio rápido, relaxamento muscular):
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="Ex: Alívio em 15 minutos, bom para dormir"
-                    value={positiveEffectInput}
-                    onChange={(e) => setPositiveEffectInput(e.target.value)}
-                    className="w-full p-2.5 bg-white border border-gray-200 rounded-xl text-xs outline-none focus:border-emerald-500"
-                  />
-                </div>
-
-                {/* Comentário Opcional */}
-                <div>
-                  <label className="text-[11px] font-bold text-gray-700 block mb-1">
-                    Comentário ou Relato (Opcional):
-                  </label>
+                {/* Relato Opcional */}
+                <div className="space-y-1">
+                  <label className="text-[11px] font-bold text-emerald-900 block">Relato Clínico (Opcional):</label>
                   <textarea
                     rows={2}
-                    placeholder="Comentários adicionais (opcional)..."
+                    placeholder="Comentários adicionais sobre sabor, alívio ou dosagem (opcional)..."
                     value={comment}
                     onChange={(e) => setComment(e.target.value)}
-                    className="w-full p-2.5 bg-white border border-gray-200 rounded-xl text-xs outline-none focus:border-emerald-500"
+                    className="w-full p-2.5 bg-white border border-emerald-200 rounded-xl text-xs outline-none focus:border-emerald-500"
                   />
                 </div>
 
@@ -522,45 +521,29 @@ export const StrainModal: React.FC<StrainModalProps> = ({ strain, onClose }) => 
                       </span>
                     </div>
 
-                    {/* Tags de Condições */}
+                    {/* Condições Tratadas */}
                     {rev.conditions && rev.conditions.length > 0 && (
                       <div className="flex flex-wrap gap-1">
                         {rev.conditions.map((c, i) => (
-                          <span key={i} className="text-[10px] font-semibold bg-gray-200/70 text-gray-800 px-2 py-0.5 rounded-md">
+                          <span key={i} className="text-[10px] font-semibold bg-emerald-50 text-emerald-800 px-2 py-0.5 rounded-md border border-emerald-100">
                             🩺 {c}
                           </span>
                         ))}
                       </div>
                     )}
 
-                    {/* Tags de Benefícios */}
-                    <div className="flex flex-wrap gap-1.5 pt-0.5">
-                      {rev.positiveEffects.map((pos, idx) => (
-                        <span key={idx} className="text-[10px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200 px-2 py-0.5 rounded-md flex items-center gap-1">
-                          <CheckCircle2 className="w-2.5 h-2.5 text-emerald-600" /> {pos}
-                        </span>
-                      ))}
-                    </div>
-
                     {rev.comment && (
-                      <p className="text-xs text-gray-700 leading-relaxed pt-1">
+                      <p className="text-xs text-gray-700 italic bg-white p-2.5 rounded-xl border border-gray-100">
                         "{rev.comment}"
                       </p>
                     )}
+
                   </div>
                 ))}
               </div>
             ) : (
-              <div className="p-6 rounded-2xl bg-gray-50 border border-dashed border-gray-200 text-center space-y-2">
-                <p className="text-xs text-gray-500 font-medium">
-                  Ainda não há avaliações registradas para esta genética.
-                </p>
-                <button
-                  onClick={() => setShowReviewForm(true)}
-                  className="text-xs font-bold text-emerald-700 hover:underline inline-flex items-center gap-1"
-                >
-                  <Plus className="w-3.5 h-3.5" /> Seja o primeiro a avaliar em 1 clique!
-                </button>
+              <div className="p-6 bg-gray-50 rounded-2xl border border-dashed text-center text-xs text-gray-500">
+                Esta genética/produto ainda não possui avaliações da comunidade. Seja o primeiro a registrar o seu relato!
               </div>
             )}
 
@@ -568,9 +551,10 @@ export const StrainModal: React.FC<StrainModalProps> = ({ strain, onClose }) => 
 
         </div>
 
-        {/* Footer */}
-        <div className="p-4 border-t bg-gray-50 flex justify-end">
-          <button onClick={onClose} className="px-5 py-2 text-xs font-bold text-gray-700 bg-white border border-gray-300 rounded-xl hover:bg-gray-100">
+        {/* Footer do Modal */}
+        <div className="p-4 bg-gray-50 border-t flex items-center justify-between shrink-0">
+          <span className="text-xs text-gray-500 font-medium">Consulte seu médico prescritor para ajustes de dosagem.</span>
+          <button onClick={onClose} className="px-5 py-2 text-xs font-bold text-gray-700 bg-white border border-gray-200 hover:bg-gray-100 rounded-xl transition-all">
             Fechar
           </button>
         </div>

@@ -22,7 +22,7 @@ const INITIAL_STRAINS: Strain[] = [
             "pricePerGram": 60.0,
             "priceDisplay": "R$ 60,00 (1g) | R$ 400,00 (10g)",
             "inStock": true,
-            "cultivationType": "Certificado"
+            "cultivationType": "Padronizado"
       }
 ]
   },
@@ -46,7 +46,7 @@ const INITIAL_STRAINS: Strain[] = [
             "pricePerGram": 60.0,
             "priceDisplay": "R$ 60,00 (1g) | R$ 400,00 (10g) (Esgotado)",
             "inStock": false,
-            "cultivationType": "Certificado"
+            "cultivationType": "Padronizado"
       },
       {
             "associationId": "abrapango",
@@ -54,7 +54,7 @@ const INITIAL_STRAINS: Strain[] = [
             "pricePerGram": 500.0,
             "priceDisplay": "R$ 500,00 (10g)",
             "inStock": true,
-            "cultivationType": "Certificado"
+            "cultivationType": "Padronizado"
       },
       {
             "associationId": "alca",
@@ -62,7 +62,7 @@ const INITIAL_STRAINS: Strain[] = [
             "pricePerGram": 49.5,
             "priceDisplay": "R$ 49,50/g",
             "inStock": true,
-            "cultivationType": "Certificado"
+            "cultivationType": "Padronizado"
       }
 ]
   },
@@ -86,7 +86,7 @@ const INITIAL_STRAINS: Strain[] = [
             "pricePerGram": 60.0,
             "priceDisplay": "R$ 60,00 (1g) | R$ 400,00 (10g) (Esgotado)",
             "inStock": false,
-            "cultivationType": "Certificado"
+            "cultivationType": "Padronizado"
       }
 ]
   },
@@ -110,7 +110,7 @@ const INITIAL_STRAINS: Strain[] = [
             "pricePerGram": 60.0,
             "priceDisplay": "R$ 60,00 (1g) | R$ 400,00 (10g)",
             "inStock": true,
-            "cultivationType": "Certificado"
+            "cultivationType": "Padronizado"
       }
 ]
   },
@@ -134,7 +134,7 @@ const INITIAL_STRAINS: Strain[] = [
             "pricePerGram": 60.0,
             "priceDisplay": "R$ 60,00 (1g) | R$ 400,00 (10g)",
             "inStock": true,
-            "cultivationType": "Certificado"
+            "cultivationType": "Padronizado"
       }
 ]
   },
@@ -158,7 +158,7 @@ const INITIAL_STRAINS: Strain[] = [
             "pricePerGram": 60.0,
             "priceDisplay": "R$ 60,00 (1g) | R$ 400,00 (10g)",
             "inStock": true,
-            "cultivationType": "Certificado"
+            "cultivationType": "Padronizado"
       }
 ]
   },
@@ -182,7 +182,7 @@ const INITIAL_STRAINS: Strain[] = [
             "pricePerGram": 60.0,
             "priceDisplay": "R$ 60,00 (1g) | R$ 400,00 (10g)",
             "inStock": true,
-            "cultivationType": "Certificado"
+            "cultivationType": "Padronizado"
       },
       {
             "associationId": "liva",
@@ -190,7 +190,7 @@ const INITIAL_STRAINS: Strain[] = [
             "pricePerGram": 55.0,
             "priceDisplay": "R$ 55,00/g",
             "inStock": true,
-            "cultivationType": "Certificado"
+            "cultivationType": "Padronizado"
       },
       {
             "associationId": "alca",
@@ -198,7 +198,7 @@ const INITIAL_STRAINS: Strain[] = [
             "pricePerGram": 35.0,
             "priceDisplay": "R$ 35,00/g",
             "inStock": true,
-            "cultivationType": "Certificado"
+            "cultivationType": "Padronizado"
       }
 ]
   },
@@ -222,7 +222,7 @@ const INITIAL_STRAINS: Strain[] = [
             "pricePerGram": 60.0,
             "priceDisplay": "R$ 60,00 (1g) | R$ 400,00 (10g)",
             "inStock": true,
-            "cultivationType": "Certificado"
+            "cultivationType": "Padronizado"
       }
 ]
   },
@@ -246,7 +246,7 @@ const INITIAL_STRAINS: Strain[] = [
             "pricePerGram": 60.0,
             "priceDisplay": "R$ 60,00 (1g) | R$ 400,00 (10g)",
             "inStock": true,
-            "cultivationType": "Certificado"
+            "cultivationType": "Padronizado"
       }
 ]
   },
@@ -270,7 +270,7 @@ const INITIAL_STRAINS: Strain[] = [
             "pricePerGram": 60.0,
             "priceDisplay": "R$ 60,00 (1g) | R$ 400,00 (10g) (Esgotado)",
             "inStock": false,
-            "cultivationType": "Certificado"
+            "cultivationType": "Padronizado"
       }
 ]
   },
@@ -294,7 +294,7 @@ const INITIAL_STRAINS: Strain[] = [
             "pricePerGram": 55.0,
             "priceDisplay": "R$ 55,00/g",
             "inStock": true,
-            "cultivationType": "Certificado"
+            "cultivationType": "Padronizado"
       },
       {
             "associationId": "cannabcura",
@@ -302,7 +302,7 @@ const INITIAL_STRAINS: Strain[] = [
             "pricePerGram": 50.0,
             "priceDisplay": "R$ 50,00/g",
             "inStock": true,
-            "cultivationType": "Certificado"
+            "cultivationType": "Padronizado"
       },
       {
             "associationId": "abrapango",
@@ -310,7 +310,7 @@ const INITIAL_STRAINS: Strain[] = [
             "pricePerGram": 500.0,
             "priceDisplay": "R$ 500,00 (10g)",
             "inStock": true,
-            "cultivationType": "Certificado"
+            "cultivationType": "Padronizado"
       }
 ]
   },
@@ -334,7 +334,7 @@ const INITIAL_STRAINS: Strain[] = [
             "pricePerGram": 55.0,
             "priceDisplay": "R$ 55,00/g",
             "inStock": true,
-            "cultivationType": "Certificado"
+            "cultivationType": "Padronizado"
       }
 ]
   },
@@ -358,7 +358,7 @@ const INITIAL_STRAINS: Strain[] = [
             "pricePerGram": 290.0,
             "priceDisplay": "R$ 290,00",
             "inStock": true,
-            "cultivationType": "Certificado"
+            "cultivationType": "Padronizado"
       },
       {
             "associationId": "cannabcura",
@@ -366,7 +366,7 @@ const INITIAL_STRAINS: Strain[] = [
             "pricePerGram": 270.0,
             "priceDisplay": "R$ 270,00",
             "inStock": true,
-            "cultivationType": "Certificado"
+            "cultivationType": "Padronizado"
       }
 ]
   },
@@ -390,7 +390,7 @@ const INITIAL_STRAINS: Strain[] = [
             "pricePerGram": 320.0,
             "priceDisplay": "R$ 320,00",
             "inStock": true,
-            "cultivationType": "Certificado"
+            "cultivationType": "Padronizado"
       }
 ]
   },
@@ -414,7 +414,7 @@ const INITIAL_STRAINS: Strain[] = [
             "pricePerGram": 190.0,
             "priceDisplay": "R$ 190,00 (30 gomas)",
             "inStock": true,
-            "cultivationType": "Certificado"
+            "cultivationType": "Padronizado"
       }
 ]
   },
@@ -438,7 +438,7 @@ const INITIAL_STRAINS: Strain[] = [
             "pricePerGram": 500.0,
             "priceDisplay": "R$ 500,00 (10g)",
             "inStock": true,
-            "cultivationType": "Certificado"
+            "cultivationType": "Padronizado"
       }
 ]
   },
@@ -462,7 +462,7 @@ const INITIAL_STRAINS: Strain[] = [
             "pricePerGram": 500.0,
             "priceDisplay": "R$ 500,00 (10g)",
             "inStock": true,
-            "cultivationType": "Certificado"
+            "cultivationType": "Padronizado"
       }
 ]
   },
@@ -486,7 +486,7 @@ const INITIAL_STRAINS: Strain[] = [
             "pricePerGram": 500.0,
             "priceDisplay": "R$ 500,00 (10g)",
             "inStock": true,
-            "cultivationType": "Certificado"
+            "cultivationType": "Padronizado"
       }
 ]
   },
@@ -510,7 +510,7 @@ const INITIAL_STRAINS: Strain[] = [
             "pricePerGram": 500.0,
             "priceDisplay": "R$ 500,00 (10g)",
             "inStock": true,
-            "cultivationType": "Certificado"
+            "cultivationType": "Padronizado"
       }
 ]
   },
@@ -534,7 +534,7 @@ const INITIAL_STRAINS: Strain[] = [
             "pricePerGram": 500.0,
             "priceDisplay": "R$ 500,00 (10g) (Esgotado)",
             "inStock": false,
-            "cultivationType": "Certificado"
+            "cultivationType": "Padronizado"
       }
 ]
   },
@@ -558,7 +558,7 @@ const INITIAL_STRAINS: Strain[] = [
             "pricePerGram": 500.0,
             "priceDisplay": "R$ 500,00 (10g) (Esgotado)",
             "inStock": false,
-            "cultivationType": "Certificado"
+            "cultivationType": "Padronizado"
       }
 ]
   },
@@ -582,7 +582,7 @@ const INITIAL_STRAINS: Strain[] = [
             "pricePerGram": 500.0,
             "priceDisplay": "R$ 500,00 (10g) (Esgotado)",
             "inStock": false,
-            "cultivationType": "Certificado"
+            "cultivationType": "Padronizado"
       }
 ]
   },
@@ -606,7 +606,7 @@ const INITIAL_STRAINS: Strain[] = [
             "pricePerGram": 500.0,
             "priceDisplay": "R$ 500,00 (10g) (Esgotado)",
             "inStock": false,
-            "cultivationType": "Certificado"
+            "cultivationType": "Padronizado"
       }
 ]
   },
@@ -630,7 +630,7 @@ const INITIAL_STRAINS: Strain[] = [
             "pricePerGram": 500.0,
             "priceDisplay": "R$ 500,00 (10g) (Esgotado)",
             "inStock": false,
-            "cultivationType": "Certificado"
+            "cultivationType": "Padronizado"
       }
 ]
   },
@@ -654,7 +654,7 @@ const INITIAL_STRAINS: Strain[] = [
             "pricePerGram": 500.0,
             "priceDisplay": "R$ 500,00 (10g) (Esgotado)",
             "inStock": false,
-            "cultivationType": "Certificado"
+            "cultivationType": "Padronizado"
       },
       {
             "associationId": "adaptacann",
@@ -686,7 +686,7 @@ const INITIAL_STRAINS: Strain[] = [
             "pricePerGram": 500.0,
             "priceDisplay": "R$ 500,00 (10g) (Esgotado)",
             "inStock": false,
-            "cultivationType": "Certificado"
+            "cultivationType": "Padronizado"
       }
 ]
   },
@@ -710,7 +710,7 @@ const INITIAL_STRAINS: Strain[] = [
             "pricePerGram": 500.0,
             "priceDisplay": "R$ 500,00 (10g) (Esgotado)",
             "inStock": false,
-            "cultivationType": "Certificado"
+            "cultivationType": "Padronizado"
       }
 ]
   },
@@ -734,7 +734,7 @@ const INITIAL_STRAINS: Strain[] = [
             "pricePerGram": 500.0,
             "priceDisplay": "R$ 500,00 (10g) (Esgotado)",
             "inStock": false,
-            "cultivationType": "Certificado"
+            "cultivationType": "Padronizado"
       }
 ]
   },
@@ -758,7 +758,7 @@ const INITIAL_STRAINS: Strain[] = [
             "pricePerGram": 500.0,
             "priceDisplay": "R$ 500,00 (10g) (Esgotado)",
             "inStock": false,
-            "cultivationType": "Certificado"
+            "cultivationType": "Padronizado"
       }
 ]
   },
@@ -782,7 +782,7 @@ const INITIAL_STRAINS: Strain[] = [
             "pricePerGram": 450.0,
             "priceDisplay": "R$ 450,00 (30ml)",
             "inStock": true,
-            "cultivationType": "Certificado"
+            "cultivationType": "Padronizado"
       }
 ]
   },
@@ -806,7 +806,7 @@ const INITIAL_STRAINS: Strain[] = [
             "pricePerGram": 60.0,
             "priceDisplay": "R$ 60,00 (1g) | R$ 600,00 (10g)",
             "inStock": true,
-            "cultivationType": "Certificado"
+            "cultivationType": "Padronizado"
       }
 ]
   },
@@ -830,7 +830,7 @@ const INITIAL_STRAINS: Strain[] = [
             "pricePerGram": 200.0,
             "priceDisplay": "R$ 200,00",
             "inStock": true,
-            "cultivationType": "Certificado"
+            "cultivationType": "Padronizado"
       }
 ]
   },
@@ -854,7 +854,7 @@ const INITIAL_STRAINS: Strain[] = [
             "pricePerGram": 380.0,
             "priceDisplay": "R$ 380,00",
             "inStock": true,
-            "cultivationType": "Certificado"
+            "cultivationType": "Padronizado"
       }
 ]
   },
@@ -878,7 +878,7 @@ const INITIAL_STRAINS: Strain[] = [
             "pricePerGram": 130.0,
             "priceDisplay": "R$ 130,00",
             "inStock": true,
-            "cultivationType": "Certificado"
+            "cultivationType": "Padronizado"
       }
 ]
   },
@@ -902,7 +902,7 @@ const INITIAL_STRAINS: Strain[] = [
             "pricePerGram": 350.0,
             "priceDisplay": "R$ 350,00",
             "inStock": true,
-            "cultivationType": "Certificado"
+            "cultivationType": "Padronizado"
       }
 ]
   },
@@ -926,7 +926,7 @@ const INITIAL_STRAINS: Strain[] = [
             "pricePerGram": 600.0,
             "priceDisplay": "R$ 600,00",
             "inStock": true,
-            "cultivationType": "Certificado"
+            "cultivationType": "Padronizado"
       }
 ]
   },
@@ -950,7 +950,7 @@ const INITIAL_STRAINS: Strain[] = [
             "pricePerGram": 250.0,
             "priceDisplay": "R$ 250,00",
             "inStock": true,
-            "cultivationType": "Certificado"
+            "cultivationType": "Padronizado"
       }
 ]
   },
@@ -974,7 +974,7 @@ const INITIAL_STRAINS: Strain[] = [
             "pricePerGram": 70.0,
             "priceDisplay": "R$ 70,00 (1g) | R$ 700,00 (10g)",
             "inStock": true,
-            "cultivationType": "Certificado"
+            "cultivationType": "Padronizado"
       },
       {
             "associationId": "alca",
@@ -982,7 +982,7 @@ const INITIAL_STRAINS: Strain[] = [
             "pricePerGram": 35.0,
             "priceDisplay": "R$ 35,00/g",
             "inStock": true,
-            "cultivationType": "Certificado"
+            "cultivationType": "Padronizado"
       }
 ]
   },
@@ -1006,7 +1006,7 @@ const INITIAL_STRAINS: Strain[] = [
             "pricePerGram": 60.0,
             "priceDisplay": "R$ 60,00 (1g) | R$ 600,00 (10g) (Esgotado)",
             "inStock": false,
-            "cultivationType": "Certificado"
+            "cultivationType": "Padronizado"
       },
       {
             "associationId": "alca",
@@ -1014,7 +1014,7 @@ const INITIAL_STRAINS: Strain[] = [
             "pricePerGram": 45.0,
             "priceDisplay": "R$ 45,00/g",
             "inStock": true,
-            "cultivationType": "Certificado"
+            "cultivationType": "Padronizado"
       }
 ]
   },
@@ -1038,7 +1038,7 @@ const INITIAL_STRAINS: Strain[] = [
             "pricePerGram": 100.0,
             "priceDisplay": "R$ 100,00 (1g) | R$ 1000,00 (10g) (Esgotado)",
             "inStock": false,
-            "cultivationType": "Certificado"
+            "cultivationType": "Padronizado"
       }
 ]
   },
@@ -1062,7 +1062,7 @@ const INITIAL_STRAINS: Strain[] = [
             "pricePerGram": 70.0,
             "priceDisplay": "R$ 70,00 (1g) | R$ 700,00 (10g) (Esgotado)",
             "inStock": false,
-            "cultivationType": "Certificado"
+            "cultivationType": "Padronizado"
       }
 ]
   },
@@ -1086,7 +1086,7 @@ const INITIAL_STRAINS: Strain[] = [
             "pricePerGram": 350.0,
             "priceDisplay": "R$ 350,00 (Esgotado)",
             "inStock": false,
-            "cultivationType": "Certificado"
+            "cultivationType": "Padronizado"
       }
 ]
   },
@@ -1110,7 +1110,7 @@ const INITIAL_STRAINS: Strain[] = [
             "pricePerGram": 600.0,
             "priceDisplay": "R$ 600,00 (Esgotado)",
             "inStock": false,
-            "cultivationType": "Certificado"
+            "cultivationType": "Padronizado"
       }
 ]
   },
@@ -1134,7 +1134,7 @@ const INITIAL_STRAINS: Strain[] = [
             "pricePerGram": 250.0,
             "priceDisplay": "R$ 250,00 (Esgotado)",
             "inStock": false,
-            "cultivationType": "Certificado"
+            "cultivationType": "Padronizado"
       }
 ]
   },
@@ -1158,7 +1158,7 @@ const INITIAL_STRAINS: Strain[] = [
             "pricePerGram": 200.0,
             "priceDisplay": "R$ 200,00",
             "inStock": true,
-            "cultivationType": "Certificado"
+            "cultivationType": "Padronizado"
       }
 ]
   },
@@ -1182,7 +1182,7 @@ const INITIAL_STRAINS: Strain[] = [
             "pricePerGram": 380.0,
             "priceDisplay": "R$ 380,00",
             "inStock": true,
-            "cultivationType": "Certificado"
+            "cultivationType": "Padronizado"
       }
 ]
   },
@@ -1206,7 +1206,7 @@ const INITIAL_STRAINS: Strain[] = [
             "pricePerGram": 130.0,
             "priceDisplay": "R$ 130,00 (Esgotado)",
             "inStock": false,
-            "cultivationType": "Certificado"
+            "cultivationType": "Padronizado"
       }
 ]
   },
@@ -1230,7 +1230,7 @@ const INITIAL_STRAINS: Strain[] = [
             "pricePerGram": 350.0,
             "priceDisplay": "R$ 350,00 (Esgotado)",
             "inStock": false,
-            "cultivationType": "Certificado"
+            "cultivationType": "Padronizado"
       }
 ]
   },
@@ -1254,7 +1254,7 @@ const INITIAL_STRAINS: Strain[] = [
             "pricePerGram": 600.0,
             "priceDisplay": "R$ 600,00",
             "inStock": true,
-            "cultivationType": "Certificado"
+            "cultivationType": "Padronizado"
       }
 ]
   },
@@ -1278,7 +1278,7 @@ const INITIAL_STRAINS: Strain[] = [
             "pricePerGram": 250.0,
             "priceDisplay": "R$ 250,00",
             "inStock": true,
-            "cultivationType": "Certificado"
+            "cultivationType": "Padronizado"
       }
 ]
   },
@@ -1302,7 +1302,7 @@ const INITIAL_STRAINS: Strain[] = [
             "pricePerGram": 70.0,
             "priceDisplay": "R$ 70,00 (1g) | R$ 700,00 (10g) (Esgotado)",
             "inStock": false,
-            "cultivationType": "Certificado"
+            "cultivationType": "Padronizado"
       }
 ]
   },
@@ -1326,7 +1326,7 @@ const INITIAL_STRAINS: Strain[] = [
             "pricePerGram": 100.0,
             "priceDisplay": "R$ 100,00 (1g) | R$ 1000,00 (10g) (Esgotado)",
             "inStock": false,
-            "cultivationType": "Certificado"
+            "cultivationType": "Padronizado"
       }
 ]
   },
@@ -1350,7 +1350,7 @@ const INITIAL_STRAINS: Strain[] = [
             "pricePerGram": 357.9,
             "priceDisplay": "R$ 357,90",
             "inStock": true,
-            "cultivationType": "Certificado"
+            "cultivationType": "Padronizado"
       }
 ]
   },
@@ -1374,7 +1374,7 @@ const INITIAL_STRAINS: Strain[] = [
             "pricePerGram": 215.9,
             "priceDisplay": "R$ 215,90 (Esgotado)",
             "inStock": false,
-            "cultivationType": "Certificado"
+            "cultivationType": "Padronizado"
       }
 ]
   },
@@ -1398,7 +1398,7 @@ const INITIAL_STRAINS: Strain[] = [
             "pricePerGram": 200.0,
             "priceDisplay": "R$ 200,00 (Esgotado)",
             "inStock": false,
-            "cultivationType": "Certificado"
+            "cultivationType": "Padronizado"
       }
 ]
   },
@@ -1422,7 +1422,7 @@ const INITIAL_STRAINS: Strain[] = [
             "pricePerGram": 380.0,
             "priceDisplay": "R$ 380,00 (Esgotado)",
             "inStock": false,
-            "cultivationType": "Certificado"
+            "cultivationType": "Padronizado"
       }
 ]
   },
@@ -1446,7 +1446,7 @@ const INITIAL_STRAINS: Strain[] = [
             "pricePerGram": 130.0,
             "priceDisplay": "R$ 130,00",
             "inStock": true,
-            "cultivationType": "Certificado"
+            "cultivationType": "Padronizado"
       }
 ]
   },
@@ -1470,7 +1470,7 @@ const INITIAL_STRAINS: Strain[] = [
             "pricePerGram": 357.9,
             "priceDisplay": "R$ 357,90 (Esgotado)",
             "inStock": false,
-            "cultivationType": "Certificado"
+            "cultivationType": "Padronizado"
       }
 ]
   },
@@ -1494,7 +1494,7 @@ const INITIAL_STRAINS: Strain[] = [
             "pricePerGram": 215.9,
             "priceDisplay": "R$ 215,90 (Esgotado)",
             "inStock": false,
-            "cultivationType": "Certificado"
+            "cultivationType": "Padronizado"
       }
 ]
   },
@@ -1518,7 +1518,7 @@ const INITIAL_STRAINS: Strain[] = [
             "pricePerGram": 100.0,
             "priceDisplay": "R$ 100,00",
             "inStock": true,
-            "cultivationType": "Certificado"
+            "cultivationType": "Padronizado"
       }
 ]
   },
@@ -1542,7 +1542,7 @@ const INITIAL_STRAINS: Strain[] = [
             "pricePerGram": 55.0,
             "priceDisplay": "R$ 55,00/g",
             "inStock": true,
-            "cultivationType": "Certificado"
+            "cultivationType": "Padronizado"
       },
       {
             "associationId": "adaptacann",
@@ -1574,7 +1574,7 @@ const INITIAL_STRAINS: Strain[] = [
             "pricePerGram": 35.0,
             "priceDisplay": "R$ 35,00/g",
             "inStock": true,
-            "cultivationType": "Certificado"
+            "cultivationType": "Padronizado"
       }
 ]
   },
@@ -1598,7 +1598,7 @@ const INITIAL_STRAINS: Strain[] = [
             "pricePerGram": 55.0,
             "priceDisplay": "R$ 55,00/g",
             "inStock": true,
-            "cultivationType": "Certificado"
+            "cultivationType": "Padronizado"
       }
 ]
   },
@@ -1622,7 +1622,7 @@ const INITIAL_STRAINS: Strain[] = [
             "pricePerGram": 45.0,
             "priceDisplay": "R$ 45,00/g",
             "inStock": true,
-            "cultivationType": "Certificado"
+            "cultivationType": "Padronizado"
       }
 ]
   },
@@ -1646,7 +1646,7 @@ const INITIAL_STRAINS: Strain[] = [
             "pricePerGram": 30.0,
             "priceDisplay": "R$ 30,00/g",
             "inStock": true,
-            "cultivationType": "Certificado"
+            "cultivationType": "Padronizado"
       }
 ]
   },
@@ -1670,7 +1670,7 @@ const INITIAL_STRAINS: Strain[] = [
             "pricePerGram": 35.0,
             "priceDisplay": "R$ 35,00/g",
             "inStock": true,
-            "cultivationType": "Certificado"
+            "cultivationType": "Padronizado"
       }
 ]
   },
@@ -1694,7 +1694,7 @@ const INITIAL_STRAINS: Strain[] = [
             "pricePerGram": 35.0,
             "priceDisplay": "R$ 35,00/g",
             "inStock": true,
-            "cultivationType": "Certificado"
+            "cultivationType": "Padronizado"
       }
 ]
   },
@@ -1718,7 +1718,7 @@ const INITIAL_STRAINS: Strain[] = [
             "pricePerGram": 36.0,
             "priceDisplay": "R$ 36,00/g",
             "inStock": true,
-            "cultivationType": "Certificado"
+            "cultivationType": "Padronizado"
       }
 ]
   },
@@ -1742,7 +1742,7 @@ const INITIAL_STRAINS: Strain[] = [
             "pricePerGram": 35.0,
             "priceDisplay": "R$ 35,00/g",
             "inStock": true,
-            "cultivationType": "Certificado"
+            "cultivationType": "Padronizado"
       }
 ]
   },
@@ -1766,7 +1766,7 @@ const INITIAL_STRAINS: Strain[] = [
             "pricePerGram": 40.5,
             "priceDisplay": "R$ 40,50/g",
             "inStock": true,
-            "cultivationType": "Certificado"
+            "cultivationType": "Padronizado"
       }
 ]
   },
@@ -1790,7 +1790,7 @@ const INITIAL_STRAINS: Strain[] = [
             "pricePerGram": 36.0,
             "priceDisplay": "R$ 36,00/g",
             "inStock": true,
-            "cultivationType": "Certificado"
+            "cultivationType": "Padronizado"
       }
 ]
   },
@@ -1814,7 +1814,7 @@ const INITIAL_STRAINS: Strain[] = [
             "pricePerGram": 45.0,
             "priceDisplay": "R$ 45,00/g",
             "inStock": true,
-            "cultivationType": "Certificado"
+            "cultivationType": "Padronizado"
       }
 ]
   },
@@ -1838,7 +1838,7 @@ const INITIAL_STRAINS: Strain[] = [
             "pricePerGram": 40.0,
             "priceDisplay": "R$ 40,00/g",
             "inStock": true,
-            "cultivationType": "Certificado"
+            "cultivationType": "Padronizado"
       }
 ]
   },
@@ -2102,7 +2102,7 @@ const INITIAL_STRAINS: Strain[] = [
             "pricePerGram": 280.0,
             "priceDisplay": "R$ 280,00 (30ml)",
             "inStock": true,
-            "cultivationType": "Certificado"
+            "cultivationType": "Padronizado"
       }
 ]
   },
@@ -2126,7 +2126,7 @@ const INITIAL_STRAINS: Strain[] = [
             "pricePerGram": 450.0,
             "priceDisplay": "R$ 450,00 (30ml)",
             "inStock": true,
-            "cultivationType": "Certificado"
+            "cultivationType": "Padronizado"
       }
 ]
   },
@@ -2150,7 +2150,7 @@ const INITIAL_STRAINS: Strain[] = [
             "pricePerGram": 750.0,
             "priceDisplay": "R$ 750,00 (30ml)",
             "inStock": true,
-            "cultivationType": "Certificado"
+            "cultivationType": "Padronizado"
       }
 ]
   },
@@ -2174,7 +2174,7 @@ const INITIAL_STRAINS: Strain[] = [
             "pricePerGram": 1150.0,
             "priceDisplay": "R$ 1.150,00 (30ml)",
             "inStock": true,
-            "cultivationType": "Certificado"
+            "cultivationType": "Padronizado"
       }
 ]
   },
@@ -2198,7 +2198,7 @@ const INITIAL_STRAINS: Strain[] = [
             "pricePerGram": 350.0,
             "priceDisplay": "R$ 350,00 (30 un)",
             "inStock": true,
-            "cultivationType": "Certificado"
+            "cultivationType": "Padronizado"
       }
 ]
   },
@@ -2222,7 +2222,7 @@ const INITIAL_STRAINS: Strain[] = [
             "pricePerGram": 125.0,
             "priceDisplay": "R$ 125,00 (1g)",
             "inStock": true,
-            "cultivationType": "Certificado"
+            "cultivationType": "Padronizado"
       }
 ]
   },
@@ -2246,7 +2246,7 @@ const INITIAL_STRAINS: Strain[] = [
             "pricePerGram": 300.0,
             "priceDisplay": "R$ 300,00 (10g)",
             "inStock": true,
-            "cultivationType": "Certificado"
+            "cultivationType": "Padronizado"
       },
       {
             "associationId": "alca",
@@ -2254,7 +2254,7 @@ const INITIAL_STRAINS: Strain[] = [
             "pricePerGram": 25.0,
             "priceDisplay": "R$ 25,00/g",
             "inStock": true,
-            "cultivationType": "Certificado"
+            "cultivationType": "Padronizado"
       }
 ]
   }
