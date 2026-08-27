@@ -5,11 +5,18 @@ import { Strain } from '../types/strain';
 import { StrainModal } from './StrainModal';
 import { supabase } from '../lib/supabase';
 
+interface ConditionStats {
+  sum: number;
+  count: number;
+  avg: number;
+}
+
 interface CommunityReviewStats {
   [strainId: string]: {
     avgRating: number;
     count: number;
     topComment?: string;
+    conditionRatings: { [condName: string]: ConditionStats };
   };
 }
 
@@ -26,37 +33,78 @@ export const AiSommelier: React.FC = () => {
   const [hasSearched, setHasSearched] = useState<boolean>(false);
   const [selectedStrain, setSelectedStrain] = useState<Strain | null>(null);
 
-  // Busca avaliações da comunidade no Supabase para alimentar a IA
+  // Mapeamento dos IDs dos objetivos para as condições tratadas nas avaliações
+  const OBJECTIVE_CONDITION_MAP: { [key: string]: string } = {
+    'ansiedade': 'Ansiedade & Estresse',
+    'relaxamento': 'Relaxamento Físico',
+    'sono': 'Insônia & Sono Profundo',
+    'dor': 'Dores Crônicas & Enxaqueca',
+    'foco': 'Foco, TDAH & Concentração',
+    'disposicao': 'Disposição & Combate à Fadiga',
+    'humor': 'Elevação de Humor & Bem-Estar',
+    'apetite': 'Estímulo de Apetite & Náusea',
+    'pos_treino': 'Anti-inflamatório & Pós-Treino',
+    'cbd_puro': 'Clareza sem Psicoatividade (CBD)'
+  };
+
+  // Busca avaliações da comunidade no Supabase e localStorage para alimentar a IA
   useEffect(() => {
     async function loadCommunityReviews() {
-      if (!supabase) return;
+      let localReviews: any[] = [];
       try {
-        const { data, error } = await supabase.from('reviews').select('*');
-        if (!error && data) {
-          const statsMap: CommunityReviewStats = {};
-          
-          data.forEach((rev: any) => {
-            const sId = rev.strain_id;
-            if (!statsMap[sId]) {
-              statsMap[sId] = { avgRating: 0, count: 0, topComment: '' };
-            }
-            statsMap[sId].count += 1;
-            statsMap[sId].avgRating += rev.rating || 5;
-            if (rev.comment && (!statsMap[sId].topComment || rev.rating >= 4)) {
-              statsMap[sId].topComment = rev.comment;
-            }
-          });
+        const saved = localStorage.getItem('cannaguia_local_reviews');
+        if (saved) localReviews = JSON.parse(saved);
+      } catch (e) {}
 
-          // Calcula médias
-          Object.keys(statsMap).forEach(sId => {
-            statsMap[sId].avgRating = Number((statsMap[sId].avgRating / statsMap[sId].count).toFixed(1));
-          });
-
-          setCommunityStats(statsMap);
-        }
-      } catch (e) {
-        console.error('Erro ao carregar avaliações para a IA:', e);
+      let dbReviews: any[] = [];
+      if (supabase) {
+        try {
+          const { data, error } = await supabase.from('reviews').select('*');
+          if (!error && data) dbReviews = data;
+        } catch (e) {}
       }
+
+      const allData = [...localReviews, ...dbReviews];
+      const statsMap: CommunityReviewStats = {};
+
+      allData.forEach((rev: any) => {
+        const sId = rev.strain_id;
+        if (!sId) return;
+
+        if (!statsMap[sId]) {
+          statsMap[sId] = { avgRating: 0, count: 0, topComment: '', conditionRatings: {} };
+        }
+
+        const ratingVal = Number(rev.rating) || 5;
+        statsMap[sId].count += 1;
+        statsMap[sId].avgRating += ratingVal;
+
+        if (rev.comment && (!statsMap[sId].topComment || ratingVal >= 4)) {
+          statsMap[sId].topComment = rev.comment;
+        }
+
+        // Mapeia notas por condição específica
+        if (rev.conditions && Array.isArray(rev.conditions)) {
+          rev.conditions.forEach((cName: string) => {
+            if (!statsMap[sId].conditionRatings[cName]) {
+              statsMap[sId].conditionRatings[cName] = { sum: 0, count: 0, avg: 0 };
+            }
+            statsMap[sId].conditionRatings[cName].sum += ratingVal;
+            statsMap[sId].conditionRatings[cName].count += 1;
+          });
+        }
+      });
+
+      // Calcula médias gerais e por condição
+      Object.keys(statsMap).forEach(sId => {
+        statsMap[sId].avgRating = Number((statsMap[sId].avgRating / statsMap[sId].count).toFixed(1));
+        Object.keys(statsMap[sId].conditionRatings).forEach(cName => {
+          const cStats = statsMap[sId].conditionRatings[cName];
+          cStats.avg = Number((cStats.sum / cStats.count).toFixed(1));
+        });
+      });
+
+      setCommunityStats(statsMap);
     }
     loadCommunityReviews();
   }, []);
@@ -97,13 +145,16 @@ export const AiSommelier: React.FC = () => {
       const profileLower = (s.aromaFlavor || s.description || '').toLowerCase();
       const effectsLower = (s.effects || []).map(e => e.toLowerCase()).join(' ');
       const terpenesLower = (s.terpenes || []).map(t => t.toLowerCase()).join(' ');
-
-      // 0. Bônus por Avaliações Positivas de Pacientes Reais!
       const stats = communityStats[s.id];
+
+      // 0. Bônus ou Penalização por Média Geral de Avaliações
       if (stats && stats.count > 0) {
         if (stats.avgRating >= 4.5) {
           score += 15;
-          reasons.push(`Aprovada por pacientes com média de ${stats.avgRating}★ na comunidade.`);
+          reasons.push(`Aprovada com alta nota média (${stats.avgRating}★) pela comunidade.`);
+        } else if (stats.avgRating <= 2.5) {
+          score -= 25;
+          reasons.push(`Baixa avaliação média geral (${stats.avgRating}★) entre os pacientes.`);
         }
       }
 
@@ -116,8 +167,25 @@ export const AiSommelier: React.FC = () => {
         }
       }
 
-      // 2. Pontuação por Objetivos Selecionados
+      // 2. Pontuação e Ponderação por Estrelas Específicas da Condição
       selectedObjectives.forEach((objId) => {
+        const condLabel = OBJECTIVE_CONDITION_MAP[objId];
+        
+        // Ponderação baseada em relatos específicos para ESTA condição!
+        if (stats && stats.conditionRatings && stats.conditionRatings[condLabel]) {
+          const cAvg = stats.conditionRatings[condLabel].avg;
+          const cCount = stats.conditionRatings[condLabel].count;
+
+          if (cAvg >= 4.0) {
+            score += 25; // BÔNUS ALTO PARA 4/5 OU 5/5 ESTRELAS!
+            reasons.push(`Altíssima satisfação (${cAvg}★) de ${cCount} ${cCount === 1 ? 'paciente' : 'pacientes'} para ${condLabel}.`);
+          } else if (cAvg <= 2.5) {
+            score -= 35; // PENALIZAÇÃO SEVERA PARA 1/5 OU 2/5 ESTRELAS!
+            reasons.push(`Atenção: Baixa eficácia relatada (${cAvg}★) por pacientes para ${condLabel}.`);
+          }
+        }
+
+        // Regras Químicas & Terpênicas
         if (objId === 'ansiedade') {
           if (effectsLower.includes('ansiedade') || profileLower.includes('ansiol') || terpenesLower.includes('mirceno') || terpenesLower.includes('linalol')) {
             score += 15;
