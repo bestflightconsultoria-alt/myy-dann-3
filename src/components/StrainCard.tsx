@@ -33,12 +33,14 @@ export const StrainCard: React.FC<StrainCardProps> = ({ strain, ratingStats, onC
 
   const badge = displayBadge();
 
-  // Pega o menor preço ou preço inicial
+  // Pega o valor oficial da associação
   const getPriceBadge = () => {
     if (!strain.associations || strain.associations.length === 0) return null;
-    const firstWithPrice = strain.associations.find(a => a.unitPrice);
-    if (firstWithPrice) return firstWithPrice.unitPrice;
-    return strain.associations[0].priceDetail;
+    const firstWithPrice = strain.associations.find((a: any) => a.priceDisplay || a.priceDetail || a.unitPrice || a.pricePerGram);
+    if (firstWithPrice) {
+      return (firstWithPrice as any).priceDisplay || (firstWithPrice as any).priceDetail || (firstWithPrice as any).unitPrice || `R$ ${(firstWithPrice as any).pricePerGram}/g`;
+    }
+    return null;
   };
 
   const mainPrice = getPriceBadge();
@@ -69,9 +71,9 @@ export const StrainCard: React.FC<StrainCardProps> = ({ strain, ratingStats, onC
               <span className="text-amber-800/80 font-medium">({ratingStats.count})</span>
             </span>
           ) : mainPrice ? (
-            <span className="text-[11px] font-black text-emerald-900 bg-emerald-100/90 px-2.5 py-0.5 rounded-md border border-emerald-200 flex items-center gap-1">
-              <Tag className="w-3 h-3 text-emerald-700" />
-              {mainPrice}
+            <span className="text-[11px] font-black text-emerald-950 bg-emerald-100 px-2.5 py-0.5 rounded-md border border-emerald-200 flex items-center gap-1 truncate max-w-[160px]">
+              <Tag className="w-3 h-3 text-emerald-700 shrink-0" />
+              <span className="truncate">{mainPrice}</span>
             </span>
           ) : null}
         </div>
@@ -103,7 +105,7 @@ export const StrainCard: React.FC<StrainCardProps> = ({ strain, ratingStats, onC
         )}
       </div>
 
-      {/* Rodapé do Card com Valores Nítidos */}
+      {/* Rodapé do Card com Preços em Destaque */}
       <div className="mt-5 pt-3 border-t border-gray-100 flex items-center justify-between gap-2">
         <div className="flex items-center gap-1 text-xs text-gray-600 font-medium">
           <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0" />
@@ -118,7 +120,7 @@ export const StrainCard: React.FC<StrainCardProps> = ({ strain, ratingStats, onC
             e.stopPropagation();
             onClick();
           }}
-          className="px-3.5 py-1.5 text-xs font-bold text-emerald-800 bg-emerald-100/80 group-hover:bg-emerald-600 group-hover:text-white rounded-xl border border-emerald-200 transition-all shadow-xs flex items-center gap-1 shrink-0"
+          className="px-3 py-1.5 text-xs font-bold text-emerald-800 bg-emerald-100/80 group-hover:bg-emerald-600 group-hover:text-white rounded-xl border border-emerald-200 transition-all shadow-xs flex items-center gap-1 shrink-0"
         >
           <span>Ver Detalhes & Preços</span>
           <ChevronRight className="w-3.5 h-3.5" />

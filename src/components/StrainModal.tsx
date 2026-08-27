@@ -45,15 +45,6 @@ const COMMON_CONDITIONS = [
   'Bruxismo'
 ];
 
-const COMMON_SIDE_EFFECTS = [
-  'Nenhum efeito adverso',
-  'Boca seca',
-  'Olhos secos / vermelhidão',
-  'Sonolência diurna',
-  'Aumento de apetite',
-  'Leve tontura transitória'
-];
-
 interface StrainModalProps {
   strain: Strain | null;
   onClose: () => void;
@@ -159,6 +150,15 @@ export const StrainModal: React.FC<StrainModalProps> = ({ strain, onClose }) => 
 
   const badge = displayBadge();
 
+  // Pega o valor oficial da primeira associação
+  const getHeaderPrice = () => {
+    if (!strain.associations || strain.associations.length === 0) return null;
+    const assoc: any = strain.associations[0];
+    return assoc.priceDisplay || assoc.priceDetail || assoc.unitPrice || (assoc.pricePerGram ? `R$ ${assoc.pricePerGram}/g` : null);
+  };
+
+  const headerPrice = getHeaderPrice();
+
   const toggleCondition = (cond: string) => {
     if (selectedConditions.includes(cond)) {
       setSelectedConditions(selectedConditions.filter(c => c !== cond));
@@ -167,21 +167,7 @@ export const StrainModal: React.FC<StrainModalProps> = ({ strain, onClose }) => 
     }
   };
 
-  const toggleSideEffect = (effect: string) => {
-    if (effect === 'Nenhum efeito adverso') {
-      setSelectedSideEffects(['Nenhum efeito adverso']);
-      return;
-    }
-    const withoutNone = selectedSideEffects.filter(e => e !== 'Nenhum efeito adverso');
-    if (withoutNone.includes(effect)) {
-      const remaining = withoutNone.filter(e => e !== effect);
-      setSelectedSideEffects(remaining.length === 0 ? ['Nenhum efeito adverso'] : remaining);
-    } else {
-      setSelectedSideEffects([...withoutNone, effect]);
-    }
-  };
-
-  // SUBMETER AVALIAÇÃO (Com fallback de salvamento local no navegador!)
+  // SUBMETER AVALIAÇÃO (Com salvamento local garantido!)
   const handleSubmitReview = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -279,12 +265,14 @@ export const StrainModal: React.FC<StrainModalProps> = ({ strain, onClose }) => 
               <span className={`px-2.5 py-0.5 text-xs font-bold rounded-full ${badge.bg}`}>
                 {badge.text}
               </span>
-              {strain.associations?.[0]?.unitPrice && (
+
+              {headerPrice && (
                 <span className="text-xs font-black bg-emerald-100 text-emerald-950 px-2.5 py-0.5 rounded-full border border-emerald-200 flex items-center gap-1">
                   <Tag className="w-3.5 h-3.5 text-emerald-700" />
-                  {strain.associations[0].unitPrice}
+                  {headerPrice}
                 </span>
               )}
+
               {avgRating && (
                 <span className="flex items-center gap-1 text-xs font-bold bg-amber-100 text-amber-900 px-2.5 py-0.5 rounded-full border border-amber-200">
                   <Star className="w-3.5 h-3.5 fill-amber-500 text-amber-500" />
@@ -346,27 +334,33 @@ export const StrainModal: React.FC<StrainModalProps> = ({ strain, onClose }) => 
             </div>
           )}
 
-          {/* Associações e Valores */}
+          {/* ASSOCIAÇÕES DISPENSADORAS COM VALORES NÍTIDOS */}
           {strain.associations && strain.associations.length > 0 && (
-            <div className="space-y-3 p-4 bg-emerald-50/40 rounded-2xl border border-emerald-100">
-              <h3 className="text-xs font-bold text-emerald-950 uppercase tracking-wider flex items-center gap-1.5">
+            <div className="space-y-3 p-4 bg-emerald-50/50 rounded-2xl border border-emerald-200">
+              <h3 className="text-xs font-black text-emerald-950 uppercase tracking-wider flex items-center gap-1.5">
                 <Building className="w-4 h-4 text-emerald-700" />
                 Associações Dispensadoras ({strain.associations.length})
               </h3>
-              <div className="space-y-2">
-                {strain.associations.map((assoc, idx) => (
-                  <div key={idx} className="p-3 bg-white rounded-xl border border-gray-200 flex items-center justify-between gap-2 shadow-xs">
-                    <div>
-                      <span className="text-xs font-extrabold text-gray-900 block">{assoc.associationName}</span>
-                      <span className="text-[11px] font-semibold text-emerald-700">{assoc.priceDetail}</span>
-                    </div>
-                    {assoc.unitPrice && (
-                      <span className="text-xs font-black bg-emerald-100 text-emerald-900 px-2.5 py-1 rounded-lg">
-                        {assoc.unitPrice}
+              <div className="space-y-2.5">
+                {strain.associations.map((assoc: any, idx: number) => {
+                  const displayPrice = assoc.priceDisplay || assoc.priceDetail || assoc.unitPrice || (assoc.pricePerGram ? `R$ ${assoc.pricePerGram}/g` : 'Consulte Valor');
+                  return (
+                    <div key={idx} className="p-3.5 bg-white rounded-xl border border-gray-200 flex items-center justify-between gap-3 shadow-xs">
+                      <div>
+                        <span className="text-xs font-black text-gray-900 block">{assoc.associationName}</span>
+                        {assoc.inStock === false && (
+                          <span className="text-[10px] font-bold text-red-600 bg-red-50 px-2 py-0.5 rounded-md inline-block mt-0.5">
+                            Indisponível no momento
+                          </span>
+                        )}
+                      </div>
+                      
+                      <span className="text-xs font-black bg-emerald-100 text-emerald-950 px-3 py-1.5 rounded-xl border border-emerald-200 shrink-0">
+                        💰 {displayPrice}
                       </span>
-                    )}
-                  </div>
-                ))}
+                    </div>
+                  );
+                })}
               </div>
             </div>
           )}
