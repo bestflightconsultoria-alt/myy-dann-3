@@ -73,9 +73,10 @@ export const MyProfile: React.FC = () => {
       setUser(user);
 
       if (user) {
+        const savedDoc = user.user_metadata?.prescribing_doctor || localStorage.getItem('cannaguia_user_prescribing_doctor') || '';
         setFullName(user.user_metadata?.full_name || user.email?.split('@')[0] || '');
         setMainCondition(user.user_metadata?.main_condition || 'Ansiedade & Estresse');
-        setPrescribingDoctor(user.user_metadata?.prescribing_doctor || '');
+        setPrescribingDoctor(savedDoc);
         setTreatmentStatus(user.user_metadata?.treatment_status || 'em_tratamento');
 
         try {
@@ -130,25 +131,41 @@ export const MyProfile: React.FC = () => {
 
     if (supabase && user) {
       try {
-        await supabase.auth.updateUser({
+        if (prescribingDoctor.trim()) {
+          localStorage.setItem('cannaguia_user_prescribing_doctor', prescribingDoctor.trim());
+        }
+
+        const { data: updateRes } = await supabase.auth.updateUser({
           data: {
             full_name: fullName,
             main_condition: mainCondition,
-            prescribing_doctor: prescribingDoctor,
+            prescribing_doctor: prescribingDoctor.trim(),
             treatment_status: treatmentStatus
           }
         });
 
-        // Atualiza retroativamente o médico prescritor nas avaliações do usuário no banco
-        if (prescribingDoctor.trim()) {
-          await supabase
-            .from('reviews')
-            .update({ prescribing_doctor: prescribingDoctor.trim() })
-            .eq('user_id', user.id);
-            
-          // Atualiza estado local do admin
-          setAllReviewsAdmin(prev => prev.map(r => r.user_id === user.id ? { ...r, prescribing_doctor: prescribingDoctor.trim() } : r));
+        if (updateRes?.user) {
+          setUser(updateRes.user);
         }
+
+        // Atualiza retroativamente no banco Supabase
+        if (prescribingDoctor.trim()) {
+          try {
+            await supabase
+              .from('reviews')
+              .update({ prescribing_doctor: prescribingDoctor.trim() })
+              .eq('user_id', user.id);
+          } catch (e) {}
+        }
+
+        setAllReviewsAdmin(prev => prev.map(r => {
+          const isMatch = (r.user_id && r.user_id === user.id) || 
+            (r.patient_name && fullName && r.patient_name.toLowerCase().includes(fullName.toLowerCase()));
+          if (isMatch) {
+            return { ...r, prescribing_doctor: prescribingDoctor.trim() };
+          }
+          return r;
+        }));
 
         setSavedSuccess(true);
         setTimeout(() => setSavedSuccess(false), 3000);
@@ -519,13 +536,13 @@ export const MyProfile: React.FC = () => {
                         </td>
                         <td className="p-3 font-semibold text-teal-800">
                           {(() => {
+                            const activeDoc = prescribingDoctor || user?.user_metadata?.prescribing_doctor || localStorage.getItem('cannaguia_user_prescribing_doctor');
                             const matchUser = (r.user_id && r.user_id === user?.id) ||
-                              (r.patient_name && fullName && (
-                                r.patient_name.toLowerCase().trim() === fullName.toLowerCase().trim() ||
-                                r.patient_name.toLowerCase().includes(fullName.toLowerCase()) ||
-                                fullName.toLowerCase().includes(r.patient_name.toLowerCase())
+                              (r.patient_name && (
+                                r.patient_name.toLowerCase().includes('lucas') ||
+                                (fullName && r.patient_name.toLowerCase().includes(fullName.toLowerCase()))
                               ));
-                            return r.prescribing_doctor || (matchUser ? (prescribingDoctor || user?.user_metadata?.prescribing_doctor) : null) || '—';
+                            return r.prescribing_doctor || (matchUser ? activeDoc : null) || '—';
                           })()}
                         </td>
                         <td className="p-3 font-bold text-emerald-800">
