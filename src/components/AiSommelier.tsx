@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Sparkles, ArrowRight, ShieldCheck, Flame, Award, ThumbsUp, Check, SlidersHorizontal, MessageSquare, Star } from 'lucide-react';
+import { Sparkles, ArrowRight, ShieldCheck, Flame, Award, ThumbsUp, Check, SlidersHorizontal, MessageSquare, Star, RotateCcw } from 'lucide-react';
 import { useStrains } from '../hooks/useStrains';
 import { Strain } from '../types/strain';
 import { StrainModal } from './StrainModal';
@@ -19,7 +19,6 @@ export const AiSommelier: React.FC = () => {
   // Objetivos Múltiplos (Inicia com 0 selecionados)
   const [selectedObjectives, setSelectedObjectives] = useState<string[]>([]);
   const [timeOfDay, setTimeOfDay] = useState<string>('dia');
-  const [experienceLevel, setExperienceLevel] = useState<string>('todos');
   const [preferredFormat, setPreferredFormat] = useState<string>('todos');
   const [communityStats, setCommunityStats] = useState<CommunityReviewStats>({});
   
@@ -209,12 +208,20 @@ export const AiSommelier: React.FC = () => {
     // Seleciona as 8 melhores recomendações
     setRecommendations(scoredStrains.slice(0, 8));
     setHasSearched(true);
+
+    // Rola a tela suavemente para o resultado
+    setTimeout(() => {
+      const resultsElem = document.getElementById('ai-results-section');
+      if (resultsElem) {
+        resultsElem.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 100);
   };
 
   return (
     <div className="space-y-8 max-w-5xl mx-auto">
       
-      {/* Header do Fummelier IA */}
+      {/* Header do Recomendador Terapêutico IA */}
       <div className="bg-gradient-to-br from-slate-900 via-emerald-950 to-teal-900 rounded-3xl p-6 sm:p-10 text-white text-center space-y-3 shadow-2xl relative overflow-hidden">
         <div className="absolute top-0 right-0 translate-x-10 -translate-y-10 w-48 h-48 bg-emerald-500/10 rounded-full blur-3xl"></div>
         
@@ -308,8 +315,8 @@ export const AiSommelier: React.FC = () => {
           </div>
         </div>
 
-        {/* 2. Filtros Adicionais (Momento, Tolerância, Formato) */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4 border-t border-gray-100">
+        {/* 2. Filtros Adicionais Limpos (Momento e Formato) */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-gray-100">
           
           {/* Momento do Uso */}
           <div className="space-y-2">
@@ -327,26 +334,10 @@ export const AiSommelier: React.FC = () => {
             </select>
           </div>
 
-          {/* Perfil Terapêutico / Tolerância */}
-          <div className="space-y-2">
-            <label className="text-xs font-bold text-gray-700 uppercase tracking-wider block">
-              3. Perfil Canabinoide
-            </label>
-            <select
-              value={experienceLevel}
-              onChange={(e) => setExperienceLevel(e.target.value)}
-              className="w-full p-3 bg-gray-50 border border-gray-200 rounded-xl text-xs font-bold text-gray-800 focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500 outline-none"
-            >
-              <option value="todos">🌱 Espectro Terapêutico Amplo</option>
-              <option value="iniciante">🟢 Formulação Suave / CBD Predominante</option>
-              <option value="experiente">🔥 Concentração Elevada</option>
-            </select>
-          </div>
-
           {/* Formato Preferido */}
           <div className="space-y-2">
             <label className="text-xs font-bold text-gray-700 uppercase tracking-wider block">
-              4. Formato Preferido
+              3. Formato Preferido
             </label>
             <select
               value={preferredFormat}
@@ -376,22 +367,22 @@ export const AiSommelier: React.FC = () => {
           <span>
             {selectedObjectives.length === 0
               ? 'Selecione ao menos 1 objetivo terapêutico para consultar a IA'
-              : 'Consultar Recomendações do Fummelier IA'}
+              : 'Consultar Recomendações do Recomendador IA'}
           </span>
         </button>
       </div>
 
       {/* Resultados da Recomendação */}
       {hasSearched && (
-        <div className="space-y-6">
+        <div id="ai-results-section" className="space-y-6 pt-4">
           <div className="flex items-center justify-between border-b border-gray-200 pb-4">
             <div>
               <h3 className="text-xl font-black text-gray-900 flex items-center gap-2">
                 <Award className="w-6 h-6 text-emerald-600" />
-                Recomendações Personalizadas pelo Fummelier IA:
+                Recomendações Personalizadas pela IA:
               </h3>
               <p className="text-xs text-gray-500 mt-0.5">
-                Calculado com base em {selectedObjectives.length} {selectedObjectives.length === 1 ? 'objetivo' : 'objetivos simultâneos'}, momento do uso e relatos reais de pacientes.
+                Calculado com base em {selectedObjectives.length} {selectedObjectives.length === 1 ? 'objetivo' : 'objetivos simultâneos'}, momento do uso e relatos reais da comunidade.
               </p>
             </div>
           </div>
@@ -429,15 +420,18 @@ export const AiSommelier: React.FC = () => {
                   </p>
                 </div>
 
-                {/* Relato da Comunidade se existir */}
-                {item.reviewStats && item.reviewStats.topComment && (
+                {/* Validação de Relato dos Pacientes */}
+                {item.reviewStats && item.reviewStats.count > 0 && (
                   <div className="bg-amber-50/80 p-3 rounded-2xl border border-amber-200/80 text-xs space-y-1">
                     <span className="text-[10px] font-extrabold text-amber-900 flex items-center gap-1">
-                      <Star className="w-3 h-3 fill-amber-500 text-amber-500" /> Relato da Comunidade ({item.reviewStats.avgRating}★):
+                      <Star className="w-3 h-3 fill-amber-500 text-amber-500" /> 
+                      Aprovado por {item.reviewStats.count} {item.reviewStats.count === 1 ? 'paciente' : 'pacientes'} da comunidade ({item.reviewStats.avgRating}★)
                     </span>
-                    <p className="text-[11px] text-amber-950 italic">
-                      "{item.reviewStats.topComment}"
-                    </p>
+                    {item.reviewStats.topComment && (
+                      <p className="text-[11px] text-amber-950 italic">
+                        "{item.reviewStats.topComment}"
+                      </p>
+                    )}
                   </div>
                 )}
 
@@ -452,6 +446,23 @@ export const AiSommelier: React.FC = () => {
               </div>
             ))}
           </div>
+
+          {/* Botão de Refazer Consulta no Rodapé dos Resultados */}
+          <div className="pt-6 text-center">
+            <button
+              type="button"
+              onClick={() => {
+                setSelectedObjectives([]);
+                setHasSearched(false);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+              className="px-6 py-3 bg-emerald-50 hover:bg-emerald-100 text-emerald-900 border border-emerald-200 font-bold text-xs rounded-2xl shadow-xs transition-all inline-flex items-center gap-2"
+            >
+              <RotateCcw className="w-4 h-4 text-emerald-700" />
+              <span>Refazer Consulta com Outros Objetivos Terapêuticos</span>
+            </button>
+          </div>
+
         </div>
       )}
 
