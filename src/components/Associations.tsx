@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { Search, MapPin, Building2, Star, DollarSign, ArrowUpDown, BookOpen, Sprout, ArrowRight } from 'lucide-react';
 import { useAssociations, Association } from '../hooks/useAssociations';
 import { useStrains } from '../hooks/useStrains';

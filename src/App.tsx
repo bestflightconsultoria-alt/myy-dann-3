@@ -26,36 +26,36 @@ export function App() {
 
   // Leitura inicial da URL ao carregar a página
   useEffect(() => {
-    const path = window.location.pathname.toLowerCase();
+    const rawPath = window.location.pathname.toLowerCase().replace(/\/$/, '') || '/';
     const hash = window.location.hash.toLowerCase();
 
-    if (path.startsWith('/strains/') || hash.startsWith('#strain=')) {
-      const id = path.replace('/strains/', '') || hash.replace('#strain=', '');
+    if (rawPath.startsWith('/strains/') || hash.startsWith('#strain=')) {
+      const id = rawPath.replace('/strains/', '') || hash.replace('#strain=', '');
       setActiveTab('catalogo-flores');
       setSelectedStrainId(id);
-    } else if (path.startsWith('/associacoes/') || hash.startsWith('#associacao=')) {
-      const id = path.replace('/associacoes/', '') || hash.replace('#associacao=', '');
+    } else if ((rawPath.startsWith('/associacoes/') && rawPath !== '/associacoes') || hash.startsWith('#associacao=')) {
+      const id = rawPath.replace('/associacoes/', '') || hash.replace('#associacao=', '');
       setActiveTab('associacoes');
       setSelectedAssocId(id);
-    } else if (path.startsWith('/blog/') || hash.startsWith('#article=')) {
-      const slug = path.replace('/blog/', '') || hash.replace('#article=', '');
+    } else if ((rawPath.startsWith('/blog/') && rawPath !== '/blog') || hash.startsWith('#article=')) {
+      const slug = rawPath.replace('/blog/', '') || hash.replace('#article=', '');
       setActiveTab('blog');
       setSelectedArticleSlug(slug);
-    } else if (path === '/associacoes') {
+    } else if (rawPath === '/associacoes') {
       setActiveTab('associacoes');
-    } else if (path === '/sommelier' || path === '/fummelier-ia' || path === '/ia') {
+    } else if (rawPath === '/sommelier' || rawPath === '/fummelier-ia' || rawPath === '/ia') {
       setActiveTab('sommelier');
-    } else if (path === '/medicos' || path === '/prescritores') {
+    } else if (rawPath === '/medicos' || rawPath === '/prescritores') {
       setActiveTab('medicos');
-    } else if (path === '/blog') {
+    } else if (rawPath === '/blog') {
       setActiveTab('blog');
-    } else if (path === '/faq') {
+    } else if (rawPath === '/faq') {
       setActiveTab('faq');
-    } else if (path === '/perfil') {
+    } else if (rawPath === '/perfil') {
       setActiveTab('perfil');
-    } else if (path === '/catalogo/oleos') {
+    } else if (rawPath === '/catalogo/oleos') {
       setActiveTab('catalogo-oleos');
-    } else if (path === '/catalogo/outros') {
+    } else if (rawPath === '/catalogo/outros') {
       setActiveTab('catalogo-outros');
     } else {
       setActiveTab('catalogo-flores');
