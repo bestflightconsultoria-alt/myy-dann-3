@@ -473,21 +473,6 @@ export const StrainModal: React.FC<StrainModalProps> = ({ strain, onClose }) => 
                   </div>
                 </div>
 
-                {/* Médico ou Dentista Prescritor (Opcional) */}
-                <div className="space-y-1">
-                  <label className="text-[11px] font-bold text-emerald-900 flex items-center gap-1">
-                    <Stethoscope className="w-3.5 h-3.5 text-emerald-700" />
-                    <span>Médico ou Dentista Prescritor (Opcional):</span>
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="Ex: Dr. Carlos Silva (CRM-SP)..."
-                    value={prescribingDoctor}
-                    onChange={(e) => setPrescribingDoctor(e.target.value)}
-                    className="w-full p-2.5 bg-white border border-emerald-200 rounded-xl text-xs font-medium text-gray-800 outline-none focus:border-emerald-500"
-                  />
-                </div>
-
                 {/* Relato Opcional */}
                 <div className="space-y-1">
                   <label className="text-[11px] font-bold text-emerald-900 block">Relato Clínico (Opcional):</label>
