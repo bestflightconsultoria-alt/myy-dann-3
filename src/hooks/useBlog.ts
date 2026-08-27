@@ -30,7 +30,7 @@ export const MOCK_POSTS: BlogPost[] = [
         <li><strong>Consulta e Prescrição:</strong> Realize uma consulta com um médico ou dentista prescritor habilitado para receber sua receita e laudo.</li>
         <li><strong>Escolha da Associação:</strong> Acesse o diretório do CannaGuia na aba <strong>Associações</strong> e selecione a entidade que possui os produtos e óleos indicados no seu tratamento.</li>
         <li><strong>Envio da Documentação:</strong> Acesse o site oficial da associação escolhida e preencha a ficha de filiação anexando sua receita e documentos.</li>
-        <li><strong>Análise do Corpo Técnico:</strong> O departamento jurídico e farmacêutico da associação valida seus documentos em 24 a 48 horas.</li>
+        <li><strong>Análise do Corpo Técnico:</strong> O departamento jurídico e farmacêutico da entidade valida seus documentos de acordo com o prazo e procedimentos de cada associação.</li>
         <li><strong>Acesso ao Cardápio:</strong> Com o cadastro aprovado, o associado recebe autorização de acesso ao catálogo exclusivo da entidade para solicitar a dispensação dos produtos prescritos.</li>
       </ol>
 
