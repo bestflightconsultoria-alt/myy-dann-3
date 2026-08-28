@@ -28,40 +28,49 @@ export function App() {
 
   // Leitura inicial da URL ao carregar a página
   useEffect(() => {
-    const rawPath = window.location.pathname.toLowerCase().replace(/\/$/, '') || '/';
-    const hash = window.location.hash.toLowerCase();
+    const handleLocationChange = () => {
+      const rawPath = window.location.pathname.toLowerCase().replace(/\/$/, '') || '/';
+      const hash = window.location.hash.toLowerCase();
 
-    if (rawPath.startsWith('/strains/') || hash.startsWith('#strain=')) {
-      const id = rawPath.replace('/strains/', '') || hash.replace('#strain=', '');
-      setActiveTab('catalogo-flores');
-      setSelectedStrainId(id);
-    } else if ((rawPath.startsWith('/associacoes/') && rawPath !== '/associacoes') || hash.startsWith('#associacao=')) {
-      const id = rawPath.replace('/associacoes/', '') || hash.replace('#associacao=', '');
-      setActiveTab('associacoes');
-      setSelectedAssocId(id);
-    } else if ((rawPath.startsWith('/blog/') && rawPath !== '/blog') || hash.startsWith('#article=')) {
-      const slug = rawPath.replace('/blog/', '') || hash.replace('#article=', '');
-      setActiveTab('blog');
-      setSelectedArticleSlug(slug);
-    } else if (rawPath === '/associacoes') {
-      setActiveTab('associacoes');
-    } else if (rawPath === '/sommelier' || rawPath === '/fummelier-ia' || rawPath === '/ia') {
-      setActiveTab('sommelier');
-    } else if (rawPath === '/medicos' || rawPath === '/prescritores') {
-      setActiveTab('medicos');
-    } else if (rawPath === '/blog') {
-      setActiveTab('blog');
-    } else if (rawPath === '/faq') {
-      setActiveTab('faq');
-    } else if (rawPath === '/perfil') {
-      setActiveTab('perfil');
-    } else if (rawPath === '/catalogo/oleos') {
-      setActiveTab('catalogo-oleos');
-    } else if (rawPath === '/catalogo/outros') {
-      setActiveTab('catalogo-outros');
-    } else {
-      setActiveTab('catalogo-flores');
-    }
+      if (rawPath.startsWith('/strains/') || hash.startsWith('#strain=')) {
+        const id = rawPath.replace('/strains/', '') || hash.replace('#strain=', '');
+        setActiveTab('catalogo-flores');
+        setSelectedStrainId(id);
+      } else if ((rawPath.startsWith('/associacoes/') && rawPath !== '/associacoes') || hash.startsWith('#associacao=')) {
+        const id = rawPath.replace('/associacoes/', '') || hash.replace('#associacao=', '');
+        setActiveTab('associacoes');
+        setSelectedAssocId(id);
+      } else if ((rawPath.startsWith('/blog/') && rawPath !== '/blog') || hash.startsWith('#article=')) {
+        const slug = rawPath.replace('/blog/', '') || hash.replace('#article=', '');
+        setActiveTab('blog');
+        setSelectedArticleSlug(slug);
+      } else if (rawPath === '/associacoes') {
+        setActiveTab('associacoes');
+        setSelectedAssocId(undefined);
+      } else if (rawPath === '/sommelier' || rawPath === '/fummelier-ia' || rawPath === '/ia') {
+        setActiveTab('sommelier');
+      } else if (rawPath === '/medicos' || rawPath === '/prescritores') {
+        setActiveTab('medicos');
+      } else if (rawPath === '/blog') {
+        setActiveTab('blog');
+        setSelectedArticleSlug(undefined);
+      } else if (rawPath === '/faq') {
+        setActiveTab('faq');
+      } else if (rawPath === '/perfil') {
+        setActiveTab('perfil');
+      } else if (rawPath === '/catalogo/oleos') {
+        setActiveTab('catalogo-oleos');
+      } else if (rawPath === '/catalogo/outros') {
+        setActiveTab('catalogo-outros');
+      } else {
+        setActiveTab('catalogo-flores');
+        setSelectedStrainId(undefined);
+      }
+    };
+
+    handleLocationChange();
+    window.addEventListener('popstate', handleLocationChange);
+    return () => window.removeEventListener('popstate', handleLocationChange);
   }, []);
 
   // Manipulador de troca de aba principal no menu
