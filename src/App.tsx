@@ -194,15 +194,8 @@ export function App() {
             href="mailto:contato@cannaguia.com.br"
             className="text-emerald-900 font-bold hover:underline flex items-center gap-1.5 bg-emerald-50 hover:bg-emerald-100 px-3 py-1.5 rounded-xl border border-emerald-200 shadow-xs transition-all"
           >
-            📩 E-mail Oficial: contato@cannaguia.com.br
+            📩 Contato: contato@cannaguia.com.br
           </a>
-          <span className="text-gray-300">•</span>
-          <button
-            onClick={() => setIsContactOpen(true)}
-            className="text-emerald-700 font-bold hover:underline"
-          >
-            💬 Fale Conosco
-          </button>
           <span className="text-gray-300">•</span>
           <button
             onClick={() => setIsTermsOpen(true)}
