@@ -55,15 +55,15 @@ export const Catalog: React.FC<CatalogProps> = ({
   ];
 
 const MOCK_COMMUNITY_STATS: CommunityReviewStats = {
-  'strain-gorila-freak': { avgRating: 5.0, count: 3, hasVerifiedReview: true },
-  'strain-24k-gold': { avgRating: 5.0, count: 3, hasVerifiedReview: true },
-  'strain-gelato-33': { avgRating: 5.0, count: 2, hasVerifiedReview: true },
-  'strain-gorila-kush': { avgRating: 5.0, count: 3, hasVerifiedReview: true },
-  'strain-super-lemon-haze': { avgRating: 5.0, count: 2, hasVerifiedReview: true },
-  'strain-zkittlez': { avgRating: 5.0, count: 2, hasVerifiedReview: true },
-  'strain-sour-diesel': { avgRating: 5.0, count: 2, hasVerifiedReview: true },
-  'strain-northern-lights': { avgRating: 5.0, count: 2, hasVerifiedReview: true },
-  'oleo-cbd-full-3000': { avgRating: 5.0, count: 2, hasVerifiedReview: true },
+  'strain-gorila-freak': { avgRating: 4.9, count: 3, hasVerifiedReview: true },
+  'strain-24k-gold': { avgRating: 4.8, count: 3, hasVerifiedReview: true },
+  'strain-gelato-33': { avgRating: 4.7, count: 2, hasVerifiedReview: true },
+  'strain-gorila-kush': { avgRating: 4.8, count: 2, hasVerifiedReview: true },
+  'strain-super-lemon-haze': { avgRating: 4.9, count: 2, hasVerifiedReview: true },
+  'strain-zkittlez': { avgRating: 4.6, count: 2, hasVerifiedReview: true },
+  'strain-sour-diesel': { avgRating: 4.8, count: 2, hasVerifiedReview: true },
+  'strain-northern-lights': { avgRating: 4.7, count: 2, hasVerifiedReview: true },
+  'oleo-cbd-full-3000': { avgRating: 4.9, count: 2, hasVerifiedReview: true },
 };
 
   // Busca avaliações reais para exibir estrelas e contagem nos cards
