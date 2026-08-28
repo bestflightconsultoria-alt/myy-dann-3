@@ -39,17 +39,14 @@ export const Blog: React.FC<BlogProps> = ({ initialPostId, initialPostSlug, onSe
           onClick={handleBackToList}
           className="flex items-center gap-1.5 text-xs font-bold text-emerald-700 bg-emerald-50 hover:bg-emerald-100 px-3.5 py-2 rounded-xl transition-all"
         >
-          <ArrowLeft className="w-4 h-4" /> ← Voltar para Todos os Guias do Paciente
+          <ArrowLeft className="w-4 h-4" /> Voltar para os Guias
         </button>
 
         <article className="bg-white rounded-3xl border border-gray-200 p-6 sm:p-10 shadow-sm space-y-6">
           <div className="space-y-3">
-            <button
-              onClick={handleBackToList}
-              className="px-3 py-1 text-xs font-bold rounded-full bg-emerald-100 text-emerald-800 hover:bg-emerald-200 transition-all cursor-pointer inline-flex items-center gap-1"
-            >
-              🏷️ {selectedPost.category} (Ver todos)
-            </button>
+            <span className="px-3 py-1 text-xs font-bold rounded-full bg-emerald-100 text-emerald-800">
+              {selectedPost.category}
+            </span>
             <h1 className="text-2xl sm:text-4xl font-extrabold text-gray-900 leading-tight">
               {selectedPost.title}
             </h1>
