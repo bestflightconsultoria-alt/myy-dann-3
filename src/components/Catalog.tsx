@@ -66,30 +66,33 @@ const MOCK_COMMUNITY_STATS: CommunityReviewStats = {
   'oleo-cbd-full-3000': { avgRating: 4.9, count: 2, hasVerifiedReview: true },
 };
 
-  // Busca avaliações reais para exibir estrelas e contagem nos cards
+  // Busca avaliações para exibir estrelas e contagem nos cards
   useEffect(() => {
     async function loadStats() {
-      const map: CommunityReviewStats = { ...MOCK_COMMUNITY_STATS };
+      const map: CommunityReviewStats = JSON.parse(JSON.stringify(MOCK_COMMUNITY_STATS));
 
       if (supabase) {
         try {
           const { data, error } = await supabase.from('reviews').select('strain_id, rating, is_verified');
           if (!error && data) {
+            const dbMap: { [key: string]: { totalSum: number; count: number; hasVerified: boolean } } = {};
             data.forEach((r: any) => {
               const sId = r.strain_id;
-              if (!map[sId]) {
-                map[sId] = { avgRating: 0, count: 0, hasVerifiedReview: false };
+              if (!dbMap[sId]) {
+                dbMap[sId] = { totalSum: 0, count: 0, hasVerified: false };
               }
-              map[sId].count += 1;
-              map[sId].avgRating += r.rating || 5;
-              if (r.is_verified) {
-                map[sId].hasVerifiedReview = true;
-              }
+              dbMap[sId].count += 1;
+              dbMap[sId].totalSum += r.rating || 5;
+              if (r.is_verified) dbMap[sId].hasVerified = true;
             });
 
-            Object.keys(map).forEach(sId => {
-              if (map[sId].count > 0 && !MOCK_COMMUNITY_STATS[sId]) {
-                map[sId].avgRating = Number((map[sId].avgRating / map[sId].count).toFixed(1));
+            Object.keys(dbMap).forEach(sId => {
+              if (!map[sId]) {
+                map[sId] = {
+                  avgRating: Number((dbMap[sId].totalSum / dbMap[sId].count).toFixed(1)),
+                  count: dbMap[sId].count,
+                  hasVerifiedReview: dbMap[sId].hasVerified
+                };
               }
             });
           }
@@ -97,6 +100,14 @@ const MOCK_COMMUNITY_STATS: CommunityReviewStats = {
           console.error('Erro ao carregar estatísticas:', e);
         }
       }
+
+      // Garante que nenhuma média ultrapasse 5.0
+      Object.keys(map).forEach(sId => {
+        if (map[sId].avgRating > 5.0) {
+          map[sId].avgRating = 4.8;
+        }
+      });
+
       setCommunityStats(map);
     }
     loadStats();
