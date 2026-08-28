@@ -14,7 +14,7 @@ export const ContactModal: React.FC<ContactModalProps> = ({
   isOpen,
   onClose,
   title = "Cadastrar Entidade / Contato Direto",
-  subtitle = "Deixe seus dados de contato e nossa equipe entrará em contato com você.",
+  subtitle = "Preencha o formulário abaixo ou escreva diretamente para contato@cannaguia.com.br",
   defaultType = 'general'
 }) => {
   const [name, setName] = useState('');

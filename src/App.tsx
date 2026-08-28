@@ -189,19 +189,26 @@ export function App() {
         <p className="max-w-2xl mx-auto text-[11px] text-gray-400 px-4 leading-relaxed">
           ⚖️ <strong>Aviso Legal:</strong> O CannaGuia é uma plataforma informativa e educativa. Não comercializamos, não intermediamos vendas e não fabricamos medicamentos. O uso de produtos à base de Cannabis Medicinal exige obrigatoriamente prescrição médica válida.
         </p>
-        <div className="pt-2 flex items-center justify-center gap-4 flex-wrap">
+        <div className="pt-2 flex items-center justify-center gap-3 sm:gap-4 flex-wrap text-[11px]">
+          <a
+            href="mailto:contato@cannaguia.com.br"
+            className="text-emerald-900 font-bold hover:underline flex items-center gap-1.5 bg-emerald-50 hover:bg-emerald-100 px-3 py-1.5 rounded-xl border border-emerald-200 shadow-xs transition-all"
+          >
+            📩 E-mail Oficial: contato@cannaguia.com.br
+          </a>
+          <span className="text-gray-300">•</span>
           <button
             onClick={() => setIsContactOpen(true)}
-            className="text-emerald-700 font-bold hover:underline text-[11px]"
+            className="text-emerald-700 font-bold hover:underline"
           >
-            📩 Fale Conosco
+            💬 Fale Conosco
           </button>
           <span className="text-gray-300">•</span>
           <button
             onClick={() => setIsTermsOpen(true)}
-            className="text-emerald-700 font-bold hover:underline text-[11px]"
+            className="text-emerald-700 font-bold hover:underline"
           >
-            Termos de Uso & Política de Privacidade (LGPD)
+            Termos de Uso & LGPD
           </button>
         </div>
       </footer>
