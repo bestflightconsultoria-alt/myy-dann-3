@@ -51,10 +51,10 @@ export const MOCK_POSTS: BlogPost[] = [
       <h3>2. O Papel Crucial dos Terpenos Ansiolíticos</h3>
       <p>Mais do que a porcentagem isolada de THC ou CBD, o efeito modulador na ansiedade é guiado pelos <strong>terpenos aromáticos</strong> presentes na flor:</p>
       <ul>
-        <li><strong>Linalol (Aroma Floral/Lavanda):** Conhecido por suas propriedades sedativas, ansiolíticas e moduladoras de estresse.</li>
-        <li><strong>Mirceno (Aroma Terroso/Herbal):** Potencializa a permeabilidade da barreira hematoencefálica, proporcionando relaxamento físico e mental profundo.</li>
-        <li><strong>Limoneno (Aroma Cítrico):** Estimula a elevação de humor e combate sentimentos de angústia sem provocar sedação excessiva.</li>
-        <li><strong>Beta-Cariofileno (Aroma Picante/Amadeirado):** Atua diretamente no receptor CB2 com forte ação anti-inflamatória e anxiolítica.</li>
+        <li><strong>Linalol (Aroma Floral/Lavanda):</strong> Conhecido por suas propriedades sedativas, ansiolíticas e moduladoras de estresse.</li>
+        <li><strong>Mirceno (Aroma Terroso/Herbal):</strong> Potencializa a permeabilidade da barreira hematoencefálica, proporcionando relaxamento físico e mental profundo.</li>
+        <li><strong>Limoneno (Aroma Cítrico):</strong> Estimula a elevação de humor e combate sentimentos de angústia sem provocar sedação excessiva.</li>
+        <li><strong>Beta-Cariofileno (Aroma Picante/Amadeirado):</strong> Atua diretamente no receptor CB2 com forte ação anti-inflamatória e anxiolítica.</li>
       </ul>
 
       <h3>3. Genéticas Mais Recomendadas pela Comunidade no CannaGuia</h3>
@@ -65,7 +65,7 @@ export const MOCK_POSTS: BlogPost[] = [
       </ol>
 
       <h3>4. Qual a Forma Correta de Consumo para Crises de Ansiedade?</h3>
-      <p>Para o manejo de crises agudas de ansiedade, a **vaporização de ervas secas** (sem combustão) é o método mais indicado por médicos, pois o início dos efeitos ocorre em apenas 1 a 3 minutos, permitindo ao paciente controlar o momento exato do alívio.</p>
+      <p>Para o manejo de crises agudas de ansiedade, a <strong>vaporização de ervas secas</strong> (sem combustão) é o método mais indicado por médicos, pois o início dos efeitos ocorre em apenas 1 a 3 minutos, permitindo ao paciente controlar o momento exato do alívio.</p>
     `
   },
   {
@@ -114,12 +114,12 @@ export const MOCK_POSTS: BlogPost[] = [
       </ul>
       <p>Por essa razão, os médicos prescritores recomendam exclusivamente o uso de <strong>vaporizadores de ervas secas</strong>. O dispositivo apenas aquece a flor até a temperatura exata de ebulição dos canabinoides (entre 160°C e 210°C), entregando um vapor 100% puro, saboroso e com máxima eficácia terapêutica em apenas 2 minutos.</p>
 
-      <div style="background: #ecfdf5; border: 2px solid #10b981; padding: 20px; border-radius: 16px; margin: 24px 0; text-align: center;">
-        <h4 style="color: #064e3b; font-size: 18px; margin-bottom: 8px;">🎁 Parceria Exclusiva CannaGuia & AirVape Brasil</h4>
-        <p style="color: #047857; font-size: 14px; margin-bottom: 16px;">Garanta <strong>5% DE DESCONTO EXCLUSIVO</strong> em qualquer vaporizador oficial da AirVape Brasil com o cupom da nossa comunidade!</p>
-        <div style="background: #ffffff; display: inline-block; padding: 8px 20px; border-radius: 10px; font-weight: 900; font-size: 18px; color: #047857; border: 1px dashed #10b981; margin-bottom: 16px;">CUPOM: CANNAGUIA</div>
+      <div style="background: #ecfdf5; border: 2px solid #10b981; padding: 24px; border-radius: 20px; margin: 28px 0; text-align: center; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);">
+        <h4 style="color: #064e3b; font-size: 20px; font-weight: 900; margin-bottom: 8px;">🎁 Parceria Exclusiva CannaGuia & AirVape Brasil</h4>
+        <p style="color: #047857; font-size: 14px; margin-bottom: 16px; font-weight: 600;">Garanta <strong>5% DE DESCONTO EXCLUSIVO</strong> em qualquer vaporizador oficial da AirVape Brasil com o cupom da nossa comunidade!</p>
+        <div style="background: #ffffff; display: inline-block; padding: 10px 24px; border-radius: 12px; font-weight: 900; font-size: 20px; color: #047857; border: 2px dashed #10b981; margin-bottom: 20px;">CUPOM: CANNAGUIA</div>
         <br />
-        <a href="https://www.airvapebrasil.com/?utm_source=cannaguia&utm_medium=affiliate&utm_campaign=parceria_cannaguia" target="_blank" rel="noopener noreferrer" style="background: #059669; color: #ffffff; padding: 14px 28px; border-radius: 12px; font-weight: 900; text-decoration: none; display: inline-block; font-size: 15px;">💨 Comprar Meu Vaporizador AirVape com Desconto (Clique Aqui) →</a>
+        <a href="https://www.airvapebrasil.com/?utm_source=cannaguia&utm_medium=affiliate&utm_campaign=parceria_cannaguia" target="_blank" rel="noopener noreferrer" style="background: #059669; color: #ffffff; padding: 16px 32px; border-radius: 14px; font-weight: 900; text-decoration: none; display: inline-block; font-size: 16px; box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3);">💨 Comprar Meu Vaporizador AirVape com 5% OFF (Clique Aqui) →</a>
       </div>
 
       <h3>2. Tabela de Temperaturas de Extração de Terpenos</h3>
@@ -133,8 +133,8 @@ export const MOCK_POSTS: BlogPost[] = [
       <h3>3. Qual o Melhor Modelo para Iniciantes no Brasil?</h3>
       <p>Para quem está iniciando o tratamento, recomendamos dispositivos com câmara de aquecimento híbrida (cerâmica/aço), fluxo de ar isolado e bateria removível de longa duração (como os modelos da linha AirVape).</p>
 
-      <div style="text-align: center; margin-top: 32px;">
-        <a href="https://www.airvapebrasil.com/?utm_source=cannaguia&utm_medium=affiliate&utm_campaign=parceria_cannaguia" target="_blank" rel="noopener noreferrer" style="background: #047857; color: #ffffff; padding: 16px 32px; border-radius: 14px; font-weight: 900; text-decoration: none; display: inline-block; font-size: 16px;">🔥 Ver Modelos Testados na Loja Oficial AirVape Brasil →</a>
+      <div style="text-align: center; margin-top: 36px;">
+        <a href="https://www.airvapebrasil.com/?utm_source=cannaguia&utm_medium=affiliate&utm_campaign=parceria_cannaguia" target="_blank" rel="noopener noreferrer" style="background: #047857; color: #ffffff; padding: 18px 36px; border-radius: 16px; font-weight: 900; text-decoration: none; display: inline-block; font-size: 17px; box-shadow: 0 6px 16px rgba(4, 120, 87, 0.3);">🔥 Ver Modelos Testados na Loja Oficial AirVape Brasil →</a>
       </div>
     `
   },
@@ -238,7 +238,7 @@ export const MOCK_POSTS: BlogPost[] = [
       </ul>
 
       <h3>Associação de Terapias (Uso Combinado)</h3>
-      <p>Muitos médicos prescrevem o **uso combinado**: o óleo como tratamento contínuo de fundo ao longo do dia, e a vaporização da flor apenas como resgate para crises agudas de dor ou estresse.</p>
+      <p>Muitos médicos prescrevem o <strong>uso combinado</strong>: o óleo como tratamento contínuo de fundo ao longo do dia, e a vaporização da flor apenas como resgate para crises agudas de dor ou estresse.</p>
     `
   }
 ];
