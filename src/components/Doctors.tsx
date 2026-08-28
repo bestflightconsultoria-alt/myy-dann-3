@@ -8,7 +8,7 @@ import {
   Video,
   UserPlus
 } from 'lucide-react';
-import { ContactModal } from './ContactModal';
+import { DoctorRegistrationModal } from './DoctorRegistrationModal';
 
 export interface Doctor {
   id: string;
@@ -27,7 +27,7 @@ export const MOCK_DOCTORS: Doctor[] = [];
 export const Doctors: React.FC = () => {
   const [search, setSearch] = useState('');
   const [onlyOnline, setOnlyOnline] = useState(false);
-  const [isContactOpen, setIsContactOpen] = useState(false);
+  const [isDoctorModalOpen, setIsDoctorModalOpen] = useState(false);
 
   const filteredDoctors = MOCK_DOCTORS.filter((doc) => {
     const matchSearch =
@@ -77,7 +77,7 @@ export const Doctors: React.FC = () => {
             Cadastre seu perfil de atendimento no diretório do CannaGuia.
           </p>
           <button
-            onClick={() => setIsContactOpen(true)}
+            onClick={() => setIsDoctorModalOpen(true)}
             className="w-full py-2.5 px-4 bg-emerald-500 hover:bg-emerald-400 text-emerald-950 font-black text-xs rounded-xl shadow-lg transition-all flex items-center justify-center gap-2"
           >
             <UserPlus className="w-4 h-4" />
@@ -128,7 +128,7 @@ export const Doctors: React.FC = () => {
             </p>
           </div>
           <button
-            onClick={() => setIsContactOpen(true)}
+            onClick={() => setIsDoctorModalOpen(true)}
             className="px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl shadow-md transition-all inline-flex items-center gap-2"
           >
             <UserPlus className="w-4 h-4" />
@@ -186,13 +186,10 @@ export const Doctors: React.FC = () => {
         </div>
       )}
 
-      {/* Modal de Formulário de Mensagem / Cadastro */}
-      <ContactModal
-        isOpen={isContactOpen}
-        onClose={() => setIsContactOpen(false)}
-        title="Cadastrar Registro de Prescritor"
-        subtitle="Envie os dados do seu CRM/CRO e nossa equipe retornará por e-mail."
-        defaultType="prescriber"
+      {/* Modal Dedicada de Credenciamento de Prescritores (CRM / CRO) */}
+      <DoctorRegistrationModal
+        isOpen={isDoctorModalOpen}
+        onClose={() => setIsDoctorModalOpen(false)}
       />
 
     </div>
