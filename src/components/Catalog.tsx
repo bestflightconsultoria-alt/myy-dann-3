@@ -55,10 +55,10 @@ export const Catalog: React.FC<CatalogProps> = ({
   ];
 
 const MOCK_COMMUNITY_STATS: CommunityReviewStats = {
-  'strain-gorila-freak': { avgRating: 4.9, count: 3, hasVerifiedReview: true },
-  'strain-24k-gold': { avgRating: 4.8, count: 3, hasVerifiedReview: true },
-  'strain-gelato-33': { avgRating: 4.7, count: 2, hasVerifiedReview: true },
-  'strain-gorila-kush': { avgRating: 4.8, count: 2, hasVerifiedReview: true },
+  'strain-gorila-freak': { avgRating: 4.7, count: 3, hasVerifiedReview: true },
+  'strain-24k-gold': { avgRating: 4.7, count: 3, hasVerifiedReview: true },
+  'strain-gelato-33': { avgRating: 4.5, count: 2, hasVerifiedReview: true },
+  'strain-gorila-kush': { avgRating: 4.5, count: 2, hasVerifiedReview: true }, // 2 mock + 1 Supabase = 3 relatos (4.7 avg)
   'strain-super-lemon-haze': { avgRating: 4.9, count: 2, hasVerifiedReview: true },
   'strain-zkittlez': { avgRating: 4.6, count: 2, hasVerifiedReview: true },
   'strain-sour-diesel': { avgRating: 4.8, count: 2, hasVerifiedReview: true },
@@ -66,7 +66,7 @@ const MOCK_COMMUNITY_STATS: CommunityReviewStats = {
   'oleo-cbd-full-3000': { avgRating: 4.9, count: 2, hasVerifiedReview: true },
 };
 
-  // Busca avaliações para exibir estrelas e contagem nos cards
+  // Busca avaliações para exibir estrelas e contagem nos cards perfeitamente sincronizadas
   useEffect(() => {
     async function loadStats() {
       const map: CommunityReviewStats = JSON.parse(JSON.stringify(MOCK_COMMUNITY_STATS));
@@ -75,23 +75,18 @@ const MOCK_COMMUNITY_STATS: CommunityReviewStats = {
         try {
           const { data, error } = await supabase.from('reviews').select('strain_id, rating, is_verified');
           if (!error && data) {
-            const dbMap: { [key: string]: { totalSum: number; count: number; hasVerified: boolean } } = {};
             data.forEach((r: any) => {
               const sId = r.strain_id;
-              if (!dbMap[sId]) {
-                dbMap[sId] = { totalSum: 0, count: 0, hasVerified: false };
-              }
-              dbMap[sId].count += 1;
-              dbMap[sId].totalSum += r.rating || 5;
-              if (r.is_verified) dbMap[sId].hasVerified = true;
-            });
-
-            Object.keys(dbMap).forEach(sId => {
-              if (!map[sId]) {
+              if (map[sId]) {
+                const newCount = map[sId].count + 1;
+                const newSum = (map[sId].avgRating * map[sId].count) + (r.rating || 5);
+                map[sId].count = newCount;
+                map[sId].avgRating = Number((newSum / newCount).toFixed(1));
+              } else {
                 map[sId] = {
-                  avgRating: Number((dbMap[sId].totalSum / dbMap[sId].count).toFixed(1)),
-                  count: dbMap[sId].count,
-                  hasVerifiedReview: dbMap[sId].hasVerified
+                  avgRating: r.rating || 5,
+                  count: 1,
+                  hasVerifiedReview: !!r.is_verified
                 };
               }
             });
@@ -101,10 +96,10 @@ const MOCK_COMMUNITY_STATS: CommunityReviewStats = {
         }
       }
 
-      // Garante que nenhuma média ultrapasse 5.0
+      // Garante teto máximo em 5.0
       Object.keys(map).forEach(sId => {
         if (map[sId].avgRating > 5.0) {
-          map[sId].avgRating = 4.8;
+          map[sId].avgRating = 5.0;
         }
       });
 
