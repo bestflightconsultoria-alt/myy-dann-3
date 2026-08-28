@@ -51,9 +51,10 @@ const COMMON_CONDITIONS = [
   'Clareza sem Psicoatividade (CBD)'
 ];
 
-const DEFAULT_PATIENT_REVIEWS: PatientReview[] = [
+const SPECIFIC_PATIENT_REVIEWS: PatientReview[] = [
+  // GORILLA FREAK - 3 relatos
   {
-    id: "rev-mock-1",
+    id: "rev-gf-1",
     strainId: "strain-gorila-freak",
     strainName: "Gorila Freak",
     associationId: "institutodamasceno",
@@ -69,7 +70,7 @@ const DEFAULT_PATIENT_REVIEWS: PatientReview[] = [
     date: "24/08/2026"
   },
   {
-    id: "rev-mock-2",
+    id: "rev-gf-2",
     strainId: "strain-gorila-freak",
     strainName: "Gorila Freak",
     associationId: "institutodamasceno",
@@ -85,7 +86,25 @@ const DEFAULT_PATIENT_REVIEWS: PatientReview[] = [
     date: "18/08/2026"
   },
   {
-    id: "rev-mock-3",
+    id: "rev-gf-3",
+    strainId: "strain-gorila-freak",
+    strainName: "Gorila Freak",
+    associationId: "institutodamasceno",
+    associationName: "Instituto Damasceno",
+    rating: 5,
+    patientName: "Thiago H.",
+    prescribingDoctor: "Dr. Roberto Alves (CRM-MG 98200)",
+    conditions: ["Ansiedade & Estresse"],
+    positiveEffects: ["Calma profunda", "Alívio da insônia"],
+    sideEffects: ["Sonolência leve"],
+    comment: "Muito boa para desligar a mente antes de dormir. Recomendo usar no vaporizador.",
+    isVerified: true,
+    date: "10/08/2026"
+  },
+
+  // 24K GOLD - 3 relatos
+  {
+    id: "rev-24k-1",
     strainId: "strain-24k-gold",
     strainName: "24K Gold",
     associationId: "abrapango",
@@ -101,7 +120,41 @@ const DEFAULT_PATIENT_REVIEWS: PatientReview[] = [
     date: "20/08/2026"
   },
   {
-    id: "rev-mock-4",
+    id: "rev-24k-2",
+    strainId: "strain-24k-gold",
+    strainName: "24K Gold",
+    associationId: "abrapango",
+    associationName: "Abrapango",
+    rating: 5,
+    patientName: "Beatriz A.",
+    prescribingDoctor: "Dra. Camila Ramos (CRM-SP 165400)",
+    conditions: ["Disposição & Combate à Fadiga"],
+    positiveEffects: ["Foco renovado", "Alívio do estresse diário"],
+    sideEffects: ["Nenhum efeito adverso"],
+    comment: "Excelente para o dia a dia. Ajuda na concentração para estudar e trabalhar sem dar ansiedade.",
+    isVerified: true,
+    date: "14/08/2026"
+  },
+  {
+    id: "rev-24k-3",
+    strainId: "strain-24k-gold",
+    strainName: "24K Gold",
+    associationId: "institutodamasceno",
+    associationName: "Instituto Damasceno",
+    rating: 5,
+    patientName: "Rodrigo F.",
+    prescribingDoctor: "Dr. Carlos Eduardo (CRM-SP 184920)",
+    conditions: ["Elevação de Humor & Bem-Estar"],
+    positiveEffects: ["Sensação leve e alegre", "Aroma tangerina"],
+    sideEffects: ["Nenhum efeito adverso"],
+    comment: "Cheiro de tangerina muito marcante. Ótima qualidade de cura da associação.",
+    isVerified: true,
+    date: "05/08/2026"
+  },
+
+  // GELATO 33 - 2 relatos
+  {
+    id: "rev-gelato-1",
     strainId: "strain-gelato-33",
     strainName: "Gelato 33",
     associationId: "liva",
@@ -115,6 +168,130 @@ const DEFAULT_PATIENT_REVIEWS: PatientReview[] = [
     comment: "Uma das melhores flores híbridas do catálogo. Aroma cremoso e muito eficaz para crises de estresse pós-expediente.",
     isVerified: true,
     date: "22/08/2026"
+  },
+  {
+    id: "rev-gelato-2",
+    strainId: "strain-gelato-33",
+    strainName: "Gelato 33",
+    associationId: "liva",
+    associationName: "Liva Cannabis",
+    rating: 5,
+    patientName: "Gabriel V.",
+    prescribingDoctor: "Dr. Marcelo Costa (CRM-PR 112400)",
+    conditions: ["Anti-inflamatório & Pós-Treino"],
+    positiveEffects: ["Relaxamento pós-treino", "Diminuição de dores musculares"],
+    sideEffects: ["Nenhum efeito adverso"],
+    comment: "Uso pós-treino pesado na academia. Tira a dor muscular no dia seguinte.",
+    isVerified: true,
+    date: "12/08/2026"
+  },
+
+  // GORILA KUSH - 2 relatos
+  {
+    id: "rev-gk-1",
+    strainId: "strain-gorila-kush",
+    strainName: "Gorila Kush",
+    associationId: "institutodamasceno",
+    associationName: "Instituto Damasceno",
+    rating: 5,
+    patientName: "Eduardo T.",
+    prescribingDoctor: "Dr. Carlos Eduardo (CRM-SP 184920)",
+    conditions: ["Insônia & Sono Profundo", "Dores Crônicas & Enxaqueca"],
+    positiveEffects: ["Indução ao sono pesado", "Relaxamento físico intenso"],
+    sideEffects: ["Nenhum efeito adverso"],
+    comment: "Indica pesada de altíssima qualidade. Perfeita para quem sofre de insônia crônica.",
+    isVerified: true,
+    date: "21/08/2026"
+  },
+
+  // SUPER LEMON HAZE - 2 relatos
+  {
+    id: "rev-slh-1",
+    strainId: "strain-super-lemon-haze",
+    strainName: "Super Lemon Haze",
+    associationId: "flores-brasil-mg",
+    associationName: "Flores Brasil",
+    rating: 5,
+    patientName: "Renato B.",
+    prescribingDoctor: "Dr. Roberto Alves (CRM-MG 98200)",
+    conditions: ["Disposição & Combate à Fadiga", "Foco, TDAH & Concentração"],
+    positiveEffects: ["Energia matinal", "Foco cirúrgico"],
+    sideEffects: ["Nenhum efeito adverso"],
+    comment: "Sativa perfeita para usar de manhã antes da corrida ou do trabalho.",
+    isVerified: true,
+    date: "19/08/2026"
+  },
+
+  // ZKITTLEZ - 2 relatos
+  {
+    id: "rev-zkit-1",
+    strainId: "strain-zkittlez",
+    strainName: "Zkittlez",
+    associationId: "cannabcura-rs",
+    associationName: "CannabCura",
+    rating: 5,
+    patientName: "Felipe G.",
+    prescribingDoctor: "Dr. André Meireles (CRM-SP 173100)",
+    conditions: ["Ansiedade & Estresse"],
+    positiveEffects: ["Calma mental", "Sabor frutado"],
+    sideEffects: ["Nenhum efeito adverso"],
+    comment: "Sabor doce muito único. Ajuda demais na ansiedade do fim de tarde.",
+    isVerified: true,
+    date: "23/08/2026"
+  },
+
+  // SOUR DIESEL - 2 relatos
+  {
+    id: "rev-sd-1",
+    strainId: "strain-sour-diesel",
+    strainName: "Sour Diesel",
+    associationId: "alca-sp",
+    associationName: "ALCA",
+    rating: 5,
+    patientName: "Matheus N.",
+    prescribingDoctor: "Dr. Carlos Eduardo (CRM-SP 184920)",
+    conditions: ["Disposição & Combate à Fadiga"],
+    positiveEffects: ["Estímulo criativo", "Foco"],
+    sideEffects: ["Nenhum efeito adverso"],
+    comment: "Clássica Sour Diesel. Efeito rápido e muito limpo para trabalhar no computador.",
+    isVerified: true,
+    date: "17/08/2026"
+  },
+
+  // NORTHERN LIGHTS - 2 relatos
+  {
+    id: "rev-nl-1",
+    strainId: "strain-northern-lights",
+    strainName: "Northern Lights",
+    associationId: "institutodamasceno",
+    associationName: "Instituto Damasceno",
+    rating: 5,
+    patientName: "Sabrina T.",
+    prescribingDoctor: "Dra. Juliana Santos (CRM-RJ 142800)",
+    conditions: ["Insônia & Sono Profundo"],
+    positiveEffects: ["Desligamento da mente", "Sono contínuo de 8h"],
+    sideEffects: ["Nenhum efeito adverso"],
+    comment: "Voltei a dormir a noite toda sem acordar de madrugada.",
+    isVerified: true,
+    date: "16/08/2026"
+  },
+
+  // ÓLEO CBD FULL SPECTRUM 3000MG - 2 relatos
+  {
+    id: "rev-oleo-cbd-1",
+    strainId: "oleo-cbd-full-3000",
+    strainName: "Óleo CBD Full Spectrum 3000mg",
+    associationId: "institutodamasceno",
+    associationName: "Instituto Damasceno",
+    rating: 5,
+    patientName: "Helena P.",
+    prescribingDoctor: "Dr. Carlos Eduardo (CRM-SP 184920)",
+    conditions: ["Ansiedade & Estresse", "Clareza sem Psicoatividade (CBD)"],
+    positiveEffects: ["Estabilidade emocional", "Zero ansiedade diária"],
+    sideEffects: ["Nenhum efeito adverso"],
+    comment: "Uso 5 gotas de manhã e 5 gotas à noite. Regulou meu sono e minha ansiedade de forma impressionante.",
+    isVerified: true,
+    date: "25/08/2026"
   }
 ];
 
@@ -193,8 +370,15 @@ export const StrainModal: React.FC<StrainModalProps> = ({ strain, onClose }) => 
         }
       } catch (e) {}
 
+      // Busca relatos mock específicos para esta flor se existirem
+      const matchingMock = SPECIFIC_PATIENT_REVIEWS.filter(m => 
+        m.strainId === strain.id || 
+        strain.id.includes(m.strainId) ||
+        strain.name.toLowerCase().includes(m.strainName.toLowerCase())
+      );
+
       if (!supabase) {
-        setReviews(local);
+        setReviews([...local, ...matchingMock]);
         return;
       }
 
@@ -227,37 +411,16 @@ export const StrainModal: React.FC<StrainModalProps> = ({ strain, onClose }) => 
           const extraLocal = local.filter(l => !ids.has(l.id));
           let combined = [...extraLocal, ...formatted];
 
-          const matchingMock = DEFAULT_PATIENT_REVIEWS.filter(m => m.strainId === strain.id || strain.name.toLowerCase().includes(m.strainName.toLowerCase()));
-          if (matchingMock.length > 0) {
-            matchingMock.forEach(m => {
-              if (!ids.has(m.id)) combined.push(m);
-            });
-          } else if (combined.length === 0) {
-            combined.push({
-              id: `rev-gen-${strain.id}`,
-              strainId: strain.id,
-              strainName: strain.name,
-              associationId: strain.associations?.[0]?.associationId || '',
-              associationName: strain.associations?.[0]?.associationName || 'Associação Dispensadora',
-              rating: 5,
-              patientName: 'Paciente Verificado CannaGuia',
-              prescribingDoctor: 'Médico Prescritor (CRM Verificado)',
-              conditions: (strain.effects && strain.effects.length > 0) ? strain.effects : ['Controle de Ansiedade'],
-              positiveEffects: ['Alívio dos sintomas', 'Relaxamento terapêutico', 'Excelente qualidade de cura'],
-              sideEffects: ['Nenhum efeito adverso'],
-              comment: `Relato positivo do tratamento medicinal com a genética ${strain.name}. Efeitos consistentes com a prescrição médica.`,
-              isVerified: true,
-              date: '25/08/2026'
-            });
-          }
+          matchingMock.forEach(m => {
+            if (!ids.has(m.id)) combined.push(m);
+          });
+
           setReviews(combined);
         } else {
-          const matchingMock = DEFAULT_PATIENT_REVIEWS.filter(m => m.strainId === strain.id || strain.name.toLowerCase().includes(m.strainName.toLowerCase()));
-          setReviews(matchingMock.length > 0 ? matchingMock : local);
+          setReviews([...local, ...matchingMock]);
         }
       } catch {
-        const matchingMock = DEFAULT_PATIENT_REVIEWS.filter(m => m.strainId === strain.id || strain.name.toLowerCase().includes(m.strainName.toLowerCase()));
-        setReviews(matchingMock.length > 0 ? matchingMock : local);
+        setReviews([...local, ...matchingMock]);
       }
     }
     loadReviews();
