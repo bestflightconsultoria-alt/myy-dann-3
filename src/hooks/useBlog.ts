@@ -98,27 +98,44 @@ export const MOCK_POSTS: BlogPost[] = [
   {
     id: "7",
     slug: "guia-vaporizadores-ervas-secas-uso-medicinal-brasil",
-    title: "Guia de Vaporizadores de Ervas Secas para Uso Medicinal no Brasil",
-    excerpt: "Aprenda a escolher o vaporizador de flor medicinal ideal, entenda as temperaturas de controle de terpenos e por que médicos contraindicam a combustão (fumaça).",
+    title: "Vaporização vs Combustão Medicinal: Por Que Médicos Proíbem Fumar Flores e Indicam Vaporizadores?",
+    excerpt: "Entenda a diferença científica entre queimar flores na seda e vaporizar com controle térmico, como preservar 100% dos terpenos e garanta 5% OFF com o cupom CANNAGUIA na AirVape Brasil.",
     category: "Dispositivos & Uso",
     readTime: "5 min de leitura",
-    date: "27 de Agosto de 2026",
+    date: "28 de Agosto de 2026",
     author: "Equipe CannaGuia",
-    tags: ["Vaporizadores", "Redução de Danos", "Temperaturas", "Terpenos", "Uso Medicinal"],
+    tags: ["Vaporizadores", "AirVape Brasil", "Redução de Danos", "Terpenos", "Cupom CANNAGUIA"],
     content: `
-      <h3>1. Por Que Médicos Contraindicam Fumar e Recomendam Vaporizar?</h3>
-      <p>Ao queimar uma flor (combustão), a temperatura ultrapassa 800°C, destruindo até 50% dos terpenos e canabinoides medicinais e gerando alcatrão e monóxido de carbono nocivos ao pulmão.</p>
-      <p>O <strong>vaporizador de ervas secas</strong> apenas aquece a flor até a temperatura de ebulição dos óleos essenciais (entre 160°C e 210°C), entregando um vapor limpo, saboroso e com preservação de 100% das propriedades terapêuticas.</p>
-
-      <h3>2. Tabela de Temperaturas para Extração de Terpenos</h3>
+      <h3>1. Por Que Médicos Proíbem Fumar e Exigem o Vaporizador de Ervas Secas?</h3>
+      <p>Ao queimar uma flor medicinal de cannabis na seda (combustão), a temperatura na ponta acesa ultrapassa <strong>800°C</strong>. Nessa temperatura extrema, ocorrem dois problemas críticos para o tratamento:</p>
       <ul>
-        <li><strong>160°C - 175°C (Baixa Temperatura):** Extrai Pineno e Beta-Cariofileno. Sabor muito intenso, clareza mental e zero sonolência (ideal para dia).</li>
-        <li><strong>175°C - 190°C (Média Temperatura):** Extrai Limoneno e Mirceno. Equilíbrio perfeito entre relaxamento corporal e alívio de estresse.</li>
-        <li><strong>190°C - 210°C (Alta Temperatura):** Extrai Linalol e canabinoides de maior massa. Sedação muscular profunda, indução ao sono e alívio de dores crônicas.</li>
+        <li><strong>Destruição de até 50% dos Remédios:</strong> Mais da metade dos canabinoides (CBD/THC) e óleos essenciais (terpenos) são destruídos antes de chegarem ao pulmão.</li>
+        <li><strong>Geração de Toxinas Nocivas:</strong> A queima produz alcatrão, monóxido de carbono e substâncias tóxicas que causam irritação nas vias aéreas.</li>
+      </ul>
+      <p>Por essa razão, os médicos prescritores recomendam exclusivamente o uso de <strong>vaporizadores de ervas secas</strong>. O dispositivo apenas aquece a flor até a temperatura exata de ebulição dos canabinoides (entre 160°C e 210°C), entregando um vapor 100% puro, saboroso e com máxima eficácia terapêutica em apenas 2 minutos.</p>
+
+      <div style="background: #ecfdf5; border: 2px solid #10b981; padding: 20px; border-radius: 16px; margin: 24px 0; text-align: center;">
+        <h4 style="color: #064e3b; font-size: 18px; margin-bottom: 8px;">🎁 Parceria Exclusiva CannaGuia & AirVape Brasil</h4>
+        <p style="color: #047857; font-size: 14px; margin-bottom: 16px;">Garanta <strong>5% DE DESCONTO EXCLUSIVO</strong> em qualquer vaporizador oficial da AirVape Brasil com o cupom da nossa comunidade!</p>
+        <div style="background: #ffffff; display: inline-block; padding: 8px 20px; border-radius: 10px; font-weight: 900; font-size: 18px; color: #047857; border: 1px dashed #10b981; margin-bottom: 16px;">CUPOM: CANNAGUIA</div>
+        <br />
+        <a href="https://www.airvapebrasil.com/?utm_source=cannaguia&utm_medium=affiliate&utm_campaign=parceria_cannaguia" target="_blank" rel="noopener noreferrer" style="background: #059669; color: #ffffff; padding: 14px 28px; border-radius: 12px; font-weight: 900; text-decoration: none; display: inline-block; font-size: 15px;">💨 Comprar Meu Vaporizador AirVape com Desconto (Clique Aqui) →</a>
+      </div>
+
+      <h3>2. Tabela de Temperaturas de Extração de Terpenos</h3>
+      <p>Com um vaporizador digital com controle grau a grau, você escolhe exatamente qual efeito deseja extrair da sua flor:</p>
+      <ul>
+        <li><strong>160°C - 175°C (Baixa Temperatura):</strong> Extrai Pineno e Beta-Cariofileno. Sabor cítrico e fresco muito intenso, foco mental e clareza (ideal para trabalhar durante o dia).</li>
+        <li><strong>175°C - 190°C (Média Temperatura):</strong> Extrai Limoneno e Mirceno. Equilíbrio perfeito para alívio imediato da ansiedade, estresse e relaxamento físico.</li>
+        <li><strong>190°C - 210°C (Alta Temperatura):</strong> Extrai Linalol e canabinoides mais pesados. Sedação profunda, combate à insônia e alívio de dores crônicas intensas.</li>
       </ul>
 
-      <h3>3. Como Escolher o Seu Dispositivo no Brasil</h3>
-      <p>Opte por vaporizadores com câmara de aquecimento em cerâmica ou aço inoxidável, com ajuste digital de temperatura grau a grau para garantir precisão no seu tratamento.</p>
+      <h3>3. Qual o Melhor Modelo para Iniciantes no Brasil?</h3>
+      <p>Para quem está iniciando o tratamento, recomendamos dispositivos com câmara de aquecimento híbrida (cerâmica/aço), fluxo de ar isolado e bateria removível de longa duração (como os modelos da linha AirVape).</p>
+
+      <div style="text-align: center; margin-top: 32px;">
+        <a href="https://www.airvapebrasil.com/?utm_source=cannaguia&utm_medium=affiliate&utm_campaign=parceria_cannaguia" target="_blank" rel="noopener noreferrer" style="background: #047857; color: #ffffff; padding: 16px 32px; border-radius: 14px; font-weight: 900; text-decoration: none; display: inline-block; font-size: 16px;">🔥 Ver Modelos Testados na Loja Oficial AirVape Brasil →</a>
+      </div>
     `
   },
   {

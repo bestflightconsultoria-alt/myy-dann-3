@@ -658,6 +658,31 @@ export const StrainModal: React.FC<StrainModalProps> = ({ strain, onClose }) => 
             </div>
           )}
 
+          {/* BANNER DE RECOMENDAÇÃO MÉDICA AIRVAPE BRASIL (CUPOM CANNAGUIA 5% OFF) */}
+          {strain.category === 'flores' && (
+            <div className="p-4 bg-gradient-to-br from-emerald-900 to-teal-950 text-white rounded-2xl border border-emerald-500/30 space-y-2.5 shadow-md">
+              <div className="flex items-center justify-between flex-wrap gap-2">
+                <span className="text-[11px] font-black uppercase tracking-wider text-emerald-400 flex items-center gap-1.5">
+                  💨 Recomendação Médica de Redução de Danos
+                </span>
+                <span className="text-[10px] font-extrabold bg-emerald-500/20 text-emerald-300 border border-emerald-400/40 px-2.5 py-0.5 rounded-full">
+                  Cupom: CANNAGUIA (5% OFF)
+                </span>
+              </div>
+              <p className="text-xs text-emerald-100 leading-relaxed font-medium">
+                Médicos prescrevem o uso de <strong>vaporizadores de ervas secas</strong> para extrair 100% dos terpenos e fitocanabinoides sem combustão ou fumaça tóxica.
+              </p>
+              <a
+                href="https://www.airvapebrasil.com/?utm_source=cannaguia&utm_medium=affiliate&utm_campaign=parceria_cannaguia"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center gap-2 w-full py-2.5 px-4 bg-emerald-500 hover:bg-emerald-400 text-emerald-950 font-black text-xs rounded-xl transition-all shadow-sm"
+              >
+                💨 Ver Vaporizadores na Loja Oficial AirVape Brasil (5% OFF) →
+              </a>
+            </div>
+          )}
+
           {/* ASSOCIAÇÕES DISPENSADORAS COM VALORES NÍTIDOS */}
           {strain.associations && strain.associations.length > 0 && (
             <div className="space-y-3 p-4 bg-emerald-50/50 rounded-2xl border border-emerald-200">
