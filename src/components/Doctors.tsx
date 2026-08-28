@@ -9,6 +9,7 @@ import {
   UserPlus
 } from 'lucide-react';
 import { DoctorRegistrationModal } from './DoctorRegistrationModal';
+import { useDoctors } from '../hooks/useDoctors';
 
 export interface Doctor {
   id: string;
@@ -21,15 +22,13 @@ export interface Doctor {
   appointmentUrl?: string;
 }
 
-// Lista zerada de prescritores conforme solicitação
-export const MOCK_DOCTORS: Doctor[] = [];
-
 export const Doctors: React.FC = () => {
+  const { doctors, refreshDoctors } = useDoctors();
   const [search, setSearch] = useState('');
   const [onlyOnline, setOnlyOnline] = useState(false);
   const [isDoctorModalOpen, setIsDoctorModalOpen] = useState(false);
 
-  const filteredDoctors = MOCK_DOCTORS.filter((doc) => {
+  const filteredDoctors = doctors.filter((doc) => {
     const matchSearch =
       search === '' ||
       doc.name.toLowerCase().includes(search.toLowerCase()) ||

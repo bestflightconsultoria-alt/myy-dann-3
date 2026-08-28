@@ -49,6 +49,8 @@ export const MyProfile: React.FC = () => {
   const [reviews, setReviews] = useState<UserReview[]>([]);
   const [allReviewsAdmin, setAllReviewsAdmin] = useState<any[]>([]);
   const [adminFilter, setAdminFilter] = useState<'all' | 'verified' | 'anonymous'>('all');
+  const [doctorRequests, setDoctorRequests] = useState<any[]>([]);
+  const [approvedDoctorIds, setApprovedDoctorIds] = useState<string[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [activeTab, setActiveTab] = useState<'profile' | 'reviews' | 'associations' | 'admin'>('profile');
   const [selectedAssoc, setSelectedAssoc] = useState<Association | null>(null);
@@ -114,6 +116,23 @@ export const MyProfile: React.FC = () => {
     const emailLower = user.email.toLowerCase();
     return ADMIN_EMAILS.some(adminKeyword => emailLower.includes(adminKeyword.toLowerCase()));
   }, [user]);
+
+  useEffect(() => {
+    if (isAdmin && supabase) {
+      supabase
+        .from('contact_requests')
+        .select('*')
+        .eq('type', 'prescriber')
+        .order('created_at', { ascending: false })
+        .then(({ data }) => {
+          if (data) setDoctorRequests(data);
+        });
+    }
+  }, [isAdmin]);
+
+  const handleApproveDoctor = (reqId: string) => {
+    setApprovedDoctorIds(prev => [...prev, reqId]);
+  };
 
   const handleGoogleLogin = async () => {
     if (!supabase) return;
@@ -485,6 +504,71 @@ export const MyProfile: React.FC = () => {
               <span className="text-2xl font-black text-teal-950 block">{associations.length}</span>
               <span className="text-xs font-bold text-teal-700">Associações Mapeadas</span>
             </div>
+          </div>
+
+          {/* Módulo Admin: Solicitações de Credenciamento de Prescritores (CRM / CRO) */}
+          <div className="p-5 bg-gradient-to-br from-slate-900 via-teal-950 to-emerald-950 text-white rounded-3xl border border-teal-500/30 space-y-4 shadow-xl">
+            <div className="flex items-center justify-between">
+              <div>
+                <h4 className="text-base font-black text-white flex items-center gap-2">
+                  <ShieldCheck className="w-5 h-5 text-teal-400" />
+                  <span>Solicitações de Credenciamento de Prescritores (CRM / CRO)</span>
+                </h4>
+                <p className="text-xs text-teal-200 mt-0.5">
+                  Aprove os dados dos médicos e dentistas para exibição imediata no diretório oficial do CannaGuia.
+                </p>
+              </div>
+              <span className="text-xs font-bold bg-teal-500/20 text-teal-300 border border-teal-400/30 px-3 py-1 rounded-full">
+                {doctorRequests.length} Solicitações
+              </span>
+            </div>
+
+            {doctorRequests.length === 0 ? (
+              <div className="p-6 bg-slate-900/60 rounded-2xl border border-teal-500/20 text-center text-xs text-teal-200/70">
+                Nenhuma solicitação de credenciamento pendente no momento.
+              </div>
+            ) : (
+              <div className="space-y-3">
+                {doctorRequests.map((req) => {
+                  const isApproved = approvedDoctorIds.includes(req.id);
+                  return (
+                    <div
+                      key={req.id}
+                      className="p-4 bg-slate-900/80 rounded-2xl border border-teal-500/30 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs"
+                    >
+                      <div className="space-y-1">
+                        <div className="flex items-center gap-2">
+                          <span className="font-black text-white text-sm">{req.entity_name}</span>
+                          <span className="bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 font-bold text-[10px] px-2 py-0.5 rounded-md">
+                            {req.responsible_name || 'CRM/CRO'}
+                          </span>
+                        </div>
+                        <p className="text-teal-200/90 text-[11px] leading-relaxed">{req.message}</p>
+                        <div className="flex items-center gap-3 text-[11px] text-teal-300/70">
+                          <span>📧 {req.email}</span>
+                          <span>📱 {req.phone}</span>
+                        </div>
+                      </div>
+
+                      <div className="shrink-0 flex items-center gap-2 w-full sm:w-auto pt-2 sm:pt-0">
+                        {isApproved ? (
+                          <span className="px-4 py-2 bg-emerald-600 text-white font-bold text-xs rounded-xl flex items-center gap-1.5 shadow-sm">
+                            <CheckCircle2 className="w-4 h-4" /> Aprovado & No Ar
+                          </span>
+                        ) : (
+                          <button
+                            onClick={() => handleApproveDoctor(req.id)}
+                            className="w-full sm:w-auto px-4 py-2 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-xs rounded-xl shadow-md transition-all flex items-center justify-center gap-1.5"
+                          >
+                            <Check className="w-4 h-4" /> Aprovar CRM/CRO
+                          </button>
+                        )}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
           </div>
 
           {/* Listagem Geral de Avaliações Registradas */}
