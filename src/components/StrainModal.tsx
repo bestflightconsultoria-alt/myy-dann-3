@@ -423,20 +423,35 @@ export const StrainModal: React.FC<StrainModalProps> = ({ strain, onClose }) => 
             date: new Date(item.created_at).toLocaleDateString('pt-BR')
           }));
 
+          const supabaseKeys = new Set(formatted.map(f => `${(f.patientName || '').toLowerCase().trim()}_${f.strainId}`));
           const ids = new Set(formatted.map(f => f.id));
-          const extraLocal = local.filter(l => !ids.has(l.id));
-          let combined = [...extraLocal, ...formatted];
 
+          // Filtra avaliações locais evitando duplicatas de mesmo paciente que já vieram do Supabase
+          const extraLocal = local.filter(l => {
+            const key = `${(l.patientName || '').toLowerCase().trim()}_${l.strainId}`;
+            return !ids.has(l.id) && !supabaseKeys.has(key);
+          });
+
+          let combined = [...formatted, ...extraLocal];
+
+          const existingKeys = new Set(combined.map(c => `${(c.patientName || '').toLowerCase().trim()}_${c.strainId}`));
           matchingMock.forEach(m => {
-            if (!ids.has(m.id)) combined.push(m);
+            const key = `${(m.patientName || '').toLowerCase().trim()}_${m.strainId}`;
+            if (!ids.has(m.id) && !existingKeys.has(key)) {
+              combined.push(m);
+            }
           });
 
           setReviews(combined);
         } else {
-          setReviews([...local, ...matchingMock]);
+          const localKeys = new Set(local.map(l => `${(l.patientName || '').toLowerCase().trim()}_${l.strainId}`));
+          const filteredMock = matchingMock.filter(m => !localKeys.has(`${(m.patientName || '').toLowerCase().trim()}_${m.strainId}`));
+          setReviews([...local, ...filteredMock]);
         }
       } catch {
-        setReviews([...local, ...matchingMock]);
+        const localKeys = new Set(local.map(l => `${(l.patientName || '').toLowerCase().trim()}_${l.strainId}`));
+        const filteredMock = matchingMock.filter(m => !localKeys.has(`${(m.patientName || '').toLowerCase().trim()}_${m.strainId}`));
+        setReviews([...local, ...filteredMock]);
       }
     }
     loadReviews();
