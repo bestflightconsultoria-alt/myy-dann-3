@@ -197,6 +197,15 @@ export function App() {
             📩 Contato: contato@cannaguia.com.br
           </a>
           <span className="text-gray-300">•</span>
+          <a
+            href="https://www.instagram.com/cannaguia.br"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-pink-900 font-bold hover:underline flex items-center gap-1.5 bg-pink-50 hover:bg-pink-100 px-3 py-1.5 rounded-xl border border-pink-200 shadow-xs transition-all"
+          >
+            📸 Instagram: @cannaguia.br
+          </a>
+          <span className="text-gray-300">•</span>
           <button
             onClick={() => setIsTermsOpen(true)}
             className="text-emerald-700 font-bold hover:underline"
