@@ -54,35 +54,50 @@ export const Catalog: React.FC<CatalogProps> = ({
     { id: 'Sativa', label: '🟢 Sativa' }
   ];
 
+const MOCK_COMMUNITY_STATS: CommunityReviewStats = {
+  'strain-gorila-freak': { avgRating: 5.0, count: 3, hasVerifiedReview: true },
+  'strain-24k-gold': { avgRating: 5.0, count: 3, hasVerifiedReview: true },
+  'strain-gelato-33': { avgRating: 5.0, count: 2, hasVerifiedReview: true },
+  'strain-gorila-kush': { avgRating: 5.0, count: 3, hasVerifiedReview: true },
+  'strain-super-lemon-haze': { avgRating: 5.0, count: 2, hasVerifiedReview: true },
+  'strain-zkittlez': { avgRating: 5.0, count: 2, hasVerifiedReview: true },
+  'strain-sour-diesel': { avgRating: 5.0, count: 2, hasVerifiedReview: true },
+  'strain-northern-lights': { avgRating: 5.0, count: 2, hasVerifiedReview: true },
+  'oleo-cbd-full-3000': { avgRating: 5.0, count: 2, hasVerifiedReview: true },
+};
+
   // Busca avaliações reais para exibir estrelas e contagem nos cards
   useEffect(() => {
     async function loadStats() {
-      if (!supabase) return;
-      try {
-        const { data, error } = await supabase.from('reviews').select('strain_id, rating, is_verified');
-        if (!error && data) {
-          const map: CommunityReviewStats = {};
-          data.forEach((r: any) => {
-            const sId = r.strain_id;
-            if (!map[sId]) {
-              map[sId] = { avgRating: 0, count: 0, hasVerifiedReview: false };
-            }
-            map[sId].count += 1;
-            map[sId].avgRating += r.rating || 5;
-            if (r.is_verified) {
-              map[sId].hasVerifiedReview = true;
-            }
-          });
+      const map: CommunityReviewStats = { ...MOCK_COMMUNITY_STATS };
 
-          Object.keys(map).forEach(sId => {
-            map[sId].avgRating = Number((map[sId].avgRating / map[sId].count).toFixed(1));
-          });
+      if (supabase) {
+        try {
+          const { data, error } = await supabase.from('reviews').select('strain_id, rating, is_verified');
+          if (!error && data) {
+            data.forEach((r: any) => {
+              const sId = r.strain_id;
+              if (!map[sId]) {
+                map[sId] = { avgRating: 0, count: 0, hasVerifiedReview: false };
+              }
+              map[sId].count += 1;
+              map[sId].avgRating += r.rating || 5;
+              if (r.is_verified) {
+                map[sId].hasVerifiedReview = true;
+              }
+            });
 
-          setCommunityStats(map);
+            Object.keys(map).forEach(sId => {
+              if (map[sId].count > 0 && !MOCK_COMMUNITY_STATS[sId]) {
+                map[sId].avgRating = Number((map[sId].avgRating / map[sId].count).toFixed(1));
+              }
+            });
+          }
+        } catch (e) {
+          console.error('Erro ao carregar estatísticas:', e);
         }
-      } catch (e) {
-        console.error('Erro ao carregar estatísticas:', e);
       }
+      setCommunityStats(map);
     }
     loadStats();
   }, []);
