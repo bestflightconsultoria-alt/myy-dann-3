@@ -186,11 +186,11 @@ export const MOCK_POSTS: BlogPost[] = [
     slug: "guia-vaporizadores-ervas-secas-uso-medicinal-brasil",
     title: "Vaporização vs Combustão Medicinal: Por Que Médicos Proíbem Fumar Flores e Indicam Vaporizadores?",
     excerpt: "Entenda a diferença científica entre queimar flores na seda e vaporizar com controle térmico, como preservar 100% dos terpenos e garanta 5% OFF com o cupom CANNAGUIA na AirVape Brasil.",
-    category: "Dispositivos & Uso",
+    category: "Dispositivos & Redução de Danos",
     readTime: "5 min de leitura",
-    date: "28 de Agosto de 2026",
-    author: "Equipe CannaGuia",
-    tags: ["Vaporizadores", "AirVape Brasil", "Redução de Danos", "Terpenos", "Cupom CANNAGUIA"],
+    date: "05 de Setembro de 2026",
+    author: "Redação CannaGuia",
+    tags: ["Vaporizadores", "AirVape Brasil", "Redução de Danos", "Terpenos", "Cupom CANNAGUIA", "Ciência"],
     content: `
       <h3>1. Por Que Médicos Proíbem Fumar e Exigem o Vaporizador de Ervas Secas?</h3>
       <p>Ao queimar uma flor medicinal de cannabis na seda (combustão), a temperatura na ponta acesa ultrapassa <strong>800°C</strong>. Nessa temperatura extrema, ocorrem dois problemas críticos para o tratamento:</p>
