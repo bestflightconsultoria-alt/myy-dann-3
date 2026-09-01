@@ -6,24 +6,17 @@ import {
   ShieldCheck, 
   Calendar, 
   Video,
-  UserPlus
+  UserPlus,
+  MessageCircle,
+  Sparkles,
+  Phone,
+  CheckCircle2
 } from 'lucide-react';
 import { DoctorRegistrationModal } from './DoctorRegistrationModal';
-import { useDoctors } from '../hooks/useDoctors';
-
-export interface Doctor {
-  id: string;
-  name: string;
-  crm: string;
-  city: string;
-  state: string;
-  isOnline: boolean;
-  contactPhone: string;
-  appointmentUrl?: string;
-}
+import { useDoctors, Doctor } from '../hooks/useDoctors';
 
 export const Doctors: React.FC = () => {
-  const { doctors, refreshDoctors } = useDoctors();
+  const { doctors, doctorClicks, trackDoctorClick } = useDoctors();
   const [search, setSearch] = useState('');
   const [onlyOnline, setOnlyOnline] = useState(false);
   const [isDoctorModalOpen, setIsDoctorModalOpen] = useState(false);
@@ -33,7 +26,8 @@ export const Doctors: React.FC = () => {
       search === '' ||
       doc.name.toLowerCase().includes(search.toLowerCase()) ||
       doc.city.toLowerCase().includes(search.toLowerCase()) ||
-      doc.crm.toLowerCase().includes(search.toLowerCase());
+      doc.crm.toLowerCase().includes(search.toLowerCase()) ||
+      (doc.specialties && doc.specialties.some(s => s.toLowerCase().includes(search.toLowerCase())));
 
     const matchOnline = !onlyOnline || doc.isOnline;
 
@@ -43,7 +37,7 @@ export const Doctors: React.FC = () => {
   return (
     <div className="space-y-6">
       
-      {/* Banner Principal de Prescritores + Botão de Cadastro por Mensagem */}
+      {/* Banner Principal de Prescritores + Botão de Cadastro */}
       <div className="bg-gradient-to-r from-teal-900 via-emerald-800 to-emerald-900 rounded-3xl p-6 sm:p-8 text-white shadow-xl relative overflow-hidden flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
         <div className="relative z-10 max-w-2xl space-y-3">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-teal-500/20 border border-teal-400/30 text-teal-200 text-xs font-semibold backdrop-blur-md">
@@ -64,7 +58,7 @@ export const Doctors: React.FC = () => {
               <ShieldCheck className="w-4 h-4 text-teal-400" /> Registro CRM / CRO Verificado
             </span>
             <span className="flex items-center gap-1.5">
-              <Video className="w-4 h-4 text-teal-400" /> Atendimento Online (Telemedicina)
+              <Video className="w-4 h-4 text-teal-400" /> Atendimento Online (Telemedicina Brasil)
             </span>
           </div>
         </div>
@@ -73,7 +67,7 @@ export const Doctors: React.FC = () => {
         <div className="relative z-10 shrink-0 w-full md:w-auto bg-white/10 backdrop-blur-md p-5 rounded-2xl border border-white/20 text-center space-y-3">
           <span className="text-xs font-extrabold text-teal-200 block uppercase tracking-wider">É Médico ou Dentista?</span>
           <p className="text-xs text-teal-100 max-w-xs mx-auto">
-            Cadastre seu perfil de atendimento no diretório do CannaGuia.
+            Cadastre seu perfil de atendimento no diretório do CannaGuia gratuitamente.
           </p>
           <button
             onClick={() => setIsDoctorModalOpen(true)}
@@ -95,7 +89,7 @@ export const Doctors: React.FC = () => {
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            placeholder="Buscar por nome, CRM/CRO ou cidade..."
+            placeholder="Buscar por nome, CRM/CRO, especialidade ou cidade..."
             className="w-full pl-10 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500"
           />
         </div>
@@ -121,9 +115,9 @@ export const Doctors: React.FC = () => {
             <Stethoscope className="w-8 h-8" />
           </div>
           <div className="space-y-1.5 max-w-md mx-auto">
-            <h3 className="text-lg font-black text-gray-900">Nenhum prescritor cadastrado no momento</h3>
+            <h3 className="text-lg font-black text-gray-900">Nenhum prescritor encontrado</h3>
             <p className="text-xs text-gray-500 leading-relaxed">
-              Você é médico (CRM) ou cirurgião-dentista (CRO)? Cadastre seu perfil de atendimento no CannaGuia e receba solicitações de novos pacientes.
+              Você é médico (CRM) ou cirurgião-dentista (CRO)? Cadastre seu perfil no CannaGuia e receba indicações diretas de pacientes.
             </p>
           </div>
           <button
@@ -131,7 +125,7 @@ export const Doctors: React.FC = () => {
             className="px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl shadow-md transition-all inline-flex items-center gap-2"
           >
             <UserPlus className="w-4 h-4" />
-            <span>Cadastrar Meu Registro de Prescritor</span>
+            <span>Cadastrar Meu Perfil</span>
           </button>
         </div>
       ) : (
@@ -139,44 +133,81 @@ export const Doctors: React.FC = () => {
           {filteredDoctors.map((doc) => (
             <div
               key={doc.id}
-              className="bg-white rounded-3xl border border-gray-200/90 p-6 shadow-sm hover:shadow-md transition-all space-y-4 flex flex-col justify-between"
+              className="bg-white rounded-3xl border-2 border-emerald-500/20 p-6 shadow-sm hover:shadow-xl hover:border-emerald-500/50 transition-all space-y-4 flex flex-col justify-between group"
             >
-              <div className="space-y-2.5">
-                <div className="flex items-center gap-2 flex-wrap mb-1">
-                  <span className="text-[10px] font-bold bg-emerald-100 text-emerald-800 px-2.5 py-0.5 rounded-full border border-emerald-200 flex items-center gap-1">
-                    <ShieldCheck className="w-3 h-3 text-emerald-600" /> Registro Verificado
-                  </span>
-                  {doc.isOnline && (
-                    <span className="text-[10px] font-bold bg-teal-100 text-teal-800 px-2.5 py-0.5 rounded-full flex items-center gap-1">
-                      <Video className="w-3 h-3 text-teal-600" /> Telemedicina
+              <div className="space-y-3">
+                {/* Topo com Badges */}
+                <div className="flex items-center justify-between gap-2 flex-wrap">
+                  <div className="flex items-center gap-2">
+                    <span className="text-[10px] font-extrabold bg-emerald-100 text-emerald-900 px-2.5 py-0.5 rounded-full border border-emerald-200 flex items-center gap-1">
+                      <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" /> Prescritor Verificado
                     </span>
-                  )}
+                    {doc.isOnline && (
+                      <span className="text-[10px] font-bold bg-teal-50 text-teal-800 px-2.5 py-0.5 rounded-full border border-teal-200 flex items-center gap-1">
+                        <Video className="w-3 h-3 text-teal-600" /> Telemedicina Brasil
+                      </span>
+                    )}
+                  </div>
+
+                  <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-lg border border-emerald-100">
+                    ⚡ Agendamento Direto
+                  </span>
                 </div>
 
-                <h3 className="text-lg font-black text-gray-900">{doc.name}</h3>
-                <span className="text-xs font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-lg inline-block">
-                  {doc.crm}
-                </span>
+                {/* Nome e CRM */}
+                <div>
+                  <h3 className="text-xl font-black text-gray-900 group-hover:text-emerald-800 transition-colors">
+                    {doc.name}
+                  </h3>
+                  <p className="text-xs font-bold text-emerald-700 mt-0.5">
+                    {doc.crm}
+                  </p>
+                </div>
 
+                {/* Especialidades / Foco */}
+                {doc.specialties && doc.specialties.length > 0 && (
+                  <div className="flex flex-wrap gap-1.5 pt-1">
+                    {doc.specialties.map((spec, idx) => (
+                      <span
+                        key={idx}
+                        className="text-[11px] font-semibold bg-gray-100 text-gray-700 px-2.5 py-0.5 rounded-md border border-gray-200"
+                      >
+                        {spec}
+                      </span>
+                    ))}
+                  </div>
+                )}
+
+                {/* Bio descritiva */}
+                {doc.bio && (
+                  <p className="text-xs text-gray-600 leading-relaxed line-clamp-2 pt-1">
+                    {doc.bio}
+                  </p>
+                )}
+
+                {/* Localização */}
                 <div className="flex items-center gap-2 text-xs text-gray-500 pt-1">
-                  <MapPin className="w-3.5 h-3.5 text-gray-400" />
-                  <span>{doc.city} - {doc.state}</span>
+                  <MapPin className="w-3.5 h-3.5 text-gray-400 shrink-0" />
+                  <span>{doc.city} - {doc.state} (Atende todo o Brasil online)</span>
                 </div>
               </div>
 
-              {/* Ação de Agendamento */}
-              <div className="pt-3 border-t border-gray-100 flex items-center justify-between gap-3">
-                <span className="text-xs text-gray-500 font-medium">
-                  {doc.contactPhone}
-                </span>
+              {/* Ação de Agendamento via WhatsApp com Rastreamento */}
+              <div className="pt-4 border-t border-gray-100 flex flex-col sm:flex-row items-center justify-between gap-3">
+                <div className="text-xs text-gray-500 font-medium flex items-center gap-1.5 self-start sm:self-center">
+                  <Phone className="w-3.5 h-3.5 text-gray-400" />
+                  <span>{doc.contactPhone}</span>
+                </div>
 
                 <a
                   href={doc.appointmentUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl shadow-md transition-all flex items-center gap-2"
+                  onClick={() => trackDoctorClick(doc)}
+                  className="w-full sm:w-auto px-5 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-black text-xs rounded-xl shadow-lg hover:shadow-emerald-600/30 transition-all flex items-center justify-center gap-2 group-hover:scale-[1.02] duration-200"
                 >
-                  <Calendar className="w-4 h-4" /> Agendar Consulta
+                  <MessageCircle className="w-4 h-4 text-emerald-100" />
+                  <span>Agendar Consulta no WhatsApp</span>
                 </a>
               </div>
 
