@@ -18,7 +18,7 @@ export const MOCK_POSTS: BlogPost[] = [
       
       <p>Em média, o custo inicial do tratamento divide-se em 3 pilares principais:</p>
       <ul>
-        <li><strong>1. Consulta Médica Especializada:</strong> R$ 250 a R$ 600 (paga uma vez no início, com retorno periódico a cada 3 a 6 meses).</li>
+        <li><strong>1. Consulta Médica Especializada:</strong> R$ 150 a R$ 600 (paga uma vez no início, com retorno periódico a cada 3 a 6 meses).</li>
         <li><strong>2. Taxa de Filiação à Associação (Anual ou Mensal):</strong> R$ 0 a R$ 50/mês (muitas associações possuem taxa zero ou anuidade simbólica).</li>
         <li><strong>3. Medicamento Mensal (Óleo ou Flores):</strong> R$ 150 a R$ 450/mês, dependendo da dosagem e da via de administração prescrita pelo seu médico.</li>
       </ul>
