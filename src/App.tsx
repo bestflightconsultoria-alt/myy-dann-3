@@ -1,19 +1,28 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense, lazy } from 'react';
 import { Header } from './components/Header';
 import { Catalog } from './components/Catalog';
-import { Associations } from './components/Associations';
-import { AiSommelier } from './components/AiSommelier';
-import { Doctors } from './components/Doctors';
-import { Blog } from './components/Blog';
-import { FAQ } from './components/FAQ';
-import { MyProfile } from './components/MyProfile';
-import { TermsModal } from './components/TermsModal';
-import { ContactModal } from './components/ContactModal';
-import { AuthModal } from './components/AuthModal';
 import { PwaInstallBanner } from './components/PwaInstallBanner';
 import { Strain } from './types/strain';
-import { Association } from './hooks/useAssociations';
+import { Association } from './types/association';
 import { BlogPost } from './types/blog';
+
+// Lazy loading das abas secundárias para diminuir o bundle inicial e acelerar o carregamento
+const Associations = lazy(() => import('./components/Associations').then(m => ({ default: m.Associations })));
+const AiSommelier = lazy(() => import('./components/AiSommelier').then(m => ({ default: m.AiSommelier })));
+const Doctors = lazy(() => import('./components/Doctors').then(m => ({ default: m.Doctors })));
+const Blog = lazy(() => import('./components/Blog').then(m => ({ default: m.Blog })));
+const FAQ = lazy(() => import('./components/FAQ').then(m => ({ default: m.FAQ })));
+const MyProfile = lazy(() => import('./components/MyProfile').then(m => ({ default: m.MyProfile })));
+const TermsModal = lazy(() => import('./components/TermsModal').then(m => ({ default: m.TermsModal })));
+const ContactModal = lazy(() => import('./components/ContactModal').then(m => ({ default: m.ContactModal })));
+const AuthModal = lazy(() => import('./components/AuthModal').then(m => ({ default: m.AuthModal })));
+
+const TabLoadingFallback = () => (
+  <div className="py-20 flex flex-col items-center justify-center gap-3 text-emerald-700 animate-pulse">
+    <div className="w-8 h-8 border-3 border-emerald-600 border-t-transparent rounded-full animate-spin"></div>
+    <span className="text-xs font-bold text-gray-500">Carregando informações...</span>
+  </div>
+);
 
 export function App() {
   const [activeTab, setActiveTab] = useState<string>('catalogo-flores');
@@ -164,30 +173,33 @@ export function App() {
             onSelectStrain={handleSelectStrain}
           />
         )}
-        {activeTab === 'associacoes' && (
-          <Associations 
-            setActiveTab={handleNavigateTab} 
-            openBlogArticle={handleOpenBlogArticle}
-            initialAssocId={selectedAssocId}
-            onSelectAssoc={handleSelectAssoc}
-          />
-        )}
-        {activeTab === 'sommelier' && <AiSommelier />}
-        {activeTab === 'medicos' && <Doctors />}
-        {activeTab === 'blog' && (
-          <Blog 
-            initialPostSlug={selectedArticleSlug} 
-            onSelectPost={handleSelectPost}
-          />
-        )}
-        {activeTab === 'blog-como-se-associar' && (
-          <Blog 
-            initialPostId="4" 
-            onSelectPost={handleSelectPost}
-          />
-        )}
-        {activeTab === 'faq' && <FAQ />}
-        {activeTab === 'perfil' && <MyProfile />}
+        
+        <Suspense fallback={<TabLoadingFallback />}>
+          {activeTab === 'associacoes' && (
+            <Associations 
+              setActiveTab={handleNavigateTab} 
+              openBlogArticle={handleOpenBlogArticle}
+              initialAssocId={selectedAssocId}
+              onSelectAssoc={handleSelectAssoc}
+            />
+          )}
+          {activeTab === 'sommelier' && <AiSommelier />}
+          {activeTab === 'medicos' && <Doctors />}
+          {activeTab === 'blog' && (
+            <Blog 
+              initialPostSlug={selectedArticleSlug} 
+              onSelectPost={handleSelectPost}
+            />
+          )}
+          {activeTab === 'blog-como-se-associar' && (
+            <Blog 
+              initialPostId="4" 
+              onSelectPost={handleSelectPost}
+            />
+          )}
+          {activeTab === 'faq' && <FAQ />}
+          {activeTab === 'perfil' && <MyProfile />}
+        </Suspense>
       </main>
 
       {/* Rodapé com Disclaimer Legal, Contato e LGPD */}
@@ -224,26 +236,32 @@ export function App() {
         </div>
       </footer>
 
-      {/* Modal de Termos de Uso e LGPD */}
-      <TermsModal
-        isOpen={isTermsOpen}
-        onClose={() => setIsTermsOpen(false)}
-      />
+      {/* Modais Lazy Loaded com Suspense */}
+      <Suspense fallback={null}>
+        {isTermsOpen && (
+          <TermsModal
+            isOpen={isTermsOpen}
+            onClose={() => setIsTermsOpen(false)}
+          />
+        )}
 
-      {/* Modal de Mensagem / Contato Geral */}
-      <ContactModal
-        isOpen={isContactOpen}
-        onClose={() => setIsContactOpen(false)}
-        title="Fale Conosco — CannaGuia"
-        subtitle="Envie suas dúvidas, sugestões ou pedido de cadastro. Retornaremos via e-mail."
-        defaultType="general"
-      />
+        {isContactOpen && (
+          <ContactModal
+            isOpen={isContactOpen}
+            onClose={() => setIsContactOpen(false)}
+            title="Fale Conosco — CannaGuia"
+            subtitle="Envie suas dúvidas, sugestões ou pedido de cadastro. Retornaremos via e-mail."
+            defaultType="general"
+          />
+        )}
 
-      {/* Modal de Autenticação Dual (Google + Email/Senha) */}
-      <AuthModal
-        isOpen={isAuthOpen}
-        onClose={() => setIsAuthOpen(false)}
-      />
+        {isAuthOpen && (
+          <AuthModal
+            isOpen={isAuthOpen}
+            onClose={() => setIsAuthOpen(false)}
+          />
+        )}
+      </Suspense>
 
       {/* Banner Flutuante de Instalação PWA no Celular */}
       <PwaInstallBanner />

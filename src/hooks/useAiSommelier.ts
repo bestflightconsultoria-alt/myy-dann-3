@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import type { Strain } from '@/types/strain';
+import type { Strain } from '../types/strain';
 
 export interface AiRecommendation {
   recommendation: Strain;
@@ -14,27 +14,27 @@ interface UseAiSommelierArgs {
 
 const PROFILE_KEYWORDS: Record<string, string[]> = {
   Sono: ['sono', 'dormir', 'relaxar', 'insônia', 'insomnia', 'noite', 'descansar'],
-  Estudo: ['estud', 'foco', 'trabalh', 'clareza', 'atenção', 'concentra', 'produtiv'],
-  'Dor Crônica': ['dor', 'muscular', 'cólica', 'inflama', 'analgesia', 'cãibra'],
-  Ansiedade: ['ansiedad', 'ansioso', 'estresse', 'stress', 'calma', 'trankilo', 'tranquilo'],
+  Estudo: ['estud', 'foco', 'trabalh', 'clareza', 'atenção', 'concentra', 'produtiv', 'tdah'],
+  'Dor Crônica': ['dor', 'muscular', 'cólica', 'inflama', 'analgesia', 'cãibra', 'enxaqueca'],
+  Ansiedade: ['ansiedad', 'ansioso', 'estresse', 'stress', 'calma', 'trankilo', 'tranquilo', 'pânico'],
   Criatividade: ['criativ', 'arte', 'inspir', 'imagina', 'música', 'escrever'],
 };
 
 function matchStrain(prompt: string, strains: Strain[]): Strain | null {
-  if (strains.length === 0) return null;
+  if (!strains || strains.length === 0) return null;
   const query = prompt.toLowerCase();
 
   for (const [profile, keywords] of Object.entries(PROFILE_KEYWORDS)) {
     if (keywords.some((k) => query.includes(k))) {
-      const match = strains.find((s) => s.usage_profiles.includes(profile));
+      const match = strains.find((s) => s.usageProfiles?.includes(profile) || s.effects?.some(e => e.toLowerCase().includes(profile.toLowerCase())));
       if (match) return match;
     }
   }
 
   if (query.includes('cbd') || query.includes('sem euforia') || query.includes('psicoat')) {
     const highCbd = strains.find((s) => {
-      const cbdNum = parseFloat(s.cbd);
-      return !isNaN(cbdNum) && cbdNum >= 5;
+      const cbdNum = parseFloat(s.cbd?.replace(/[^\d.]/g, '') || '0');
+      return !isNaN(cbdNum) && (cbdNum >= 5 || s.dominantCannabinoid === 'CBD');
     });
     if (highCbd) return highCbd;
   }
@@ -43,8 +43,9 @@ function matchStrain(prompt: string, strains: Strain[]): Strain | null {
 }
 
 function buildReasoning(prompt: string, strain: Strain): string {
-  const terpenes = strain.terpenes.join(' e ');
-  return `Com base na sua necessidade ("${prompt}"), indico a ${strain.name}. Seu perfil rico em ${terpenes} e proporção ${strain.thc} THC / ${strain.cbd} CBD atua diretamente nos receptores adequados para essa finalidade. Disponível em ${strain.association} (${strain.city}).`;
+  const terpenes = (strain.terpenes || ['Mirceno', 'Cariofileno']).join(' e ');
+  const assoc = strain.associations?.[0]?.associationName || 'associações parceiras';
+  return `Com base na sua necessidade ("${prompt}"), o Fummelier IA indica a ${strain.name}. Seu perfil rico em ${terpenes} e proporção de fitocanabinoides (${strain.thc || 'THC'} / ${strain.cbd || 'CBD'}) atua diretamente nos receptores do sistema endocanabinoide para essa finalidade clínica. Disponível em ${assoc}.`;
 }
 
 export function useAiSommelier({ strains }: UseAiSommelierArgs) {
@@ -54,7 +55,7 @@ export function useAiSommelier({ strains }: UseAiSommelierArgs) {
 
   function ask(input: string) {
     const trimmed = input.trim();
-    if (!trimmed || strains.length === 0) return;
+    if (!trimmed || !strains || strains.length === 0) return;
 
     setPrompt(trimmed);
     setState('searching');

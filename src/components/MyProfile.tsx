@@ -48,7 +48,7 @@ export const MyProfile: React.FC = () => {
   const [user, setUser] = useState<any>(null);
   const [reviews, setReviews] = useState<UserReview[]>([]);
   const [allReviewsAdmin, setAllReviewsAdmin] = useState<any[]>([]);
-  const [adminFilter, setAdminFilter] = useState<'all' | 'verified' | 'anonymous'>('all');
+  const [adminFilter, setAdminFilter] = useState<'all' | 'verified' | 'anonymous' | 'has_doctor'>('all');
   const [doctorRequests, setDoctorRequests] = useState<any[]>([]);
   const [approvedDoctorIds, setApprovedDoctorIds] = useState<string[]>([]);
   const [loading, setLoading] = useState<boolean>(true);

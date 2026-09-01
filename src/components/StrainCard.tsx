@@ -36,7 +36,7 @@ export const StrainCard: React.FC<StrainCardProps> = ({ strain, ratingStats, onC
   const renderAssociationsLabel = () => {
     const count = strain.associations?.length || 0;
     if (count === 0) return 'Consulte disponibilidade';
-    if (count === 1) return strain.associations[0].associationName;
+    if (count === 1) return strain.associations?.[0]?.associationName || 'Associação Parceira';
     return `Disponível em ${count} associações`;
   };
 
@@ -58,7 +58,7 @@ export const StrainCard: React.FC<StrainCardProps> = ({ strain, ratingStats, onC
               <span>{ratingStats.avgRating}</span>
               <span className="text-amber-800/80 font-medium">({ratingStats.count})</span>
             </span>
-          ) : strain.associations?.length > 1 ? (
+          ) : (strain.associations && strain.associations.length > 1) ? (
             <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
               {strain.associations.length} opções
             </span>

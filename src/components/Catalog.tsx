@@ -130,7 +130,7 @@ const MOCK_COMMUNITY_STATS: CommunityReviewStats = {
       const matchSearch =
         search === '' ||
         strain.name.toLowerCase().includes(searchLower) ||
-        strain.effects.some((e) => e.toLowerCase().includes(searchLower)) ||
+        (strain.effects && strain.effects.some((e) => e.toLowerCase().includes(searchLower))) ||
         (strain.aromaFlavor && strain.aromaFlavor.toLowerCase().includes(searchLower));
 
       return matchCategory && matchSubFilter && matchSearch;
