@@ -2,6 +2,93 @@ import { BlogPost } from "../types/blog";
 
 export const MOCK_POSTS: BlogPost[] = [
   {
+    id: "8",
+    slug: "quanto-custa-tratamento-cannabis-medicinal-brasil-precos",
+    title: "Quanto Custa o Tratamento com Cannabis Medicinal no Brasil em 2026? Guia Completo de Preços de Flores, Óleos e Consultas",
+    excerpt: "Descubra os valores reais de consultas médicas, taxas de associações, preços médios de flores por grama (R$ 35 a R$ 75) e óleos de CBD/THC, além de dicas para economizar até 50% no tratamento.",
+    category: "Economia & Preços",
+    readTime: "6 min de leitura",
+    date: "01 de Setembro de 2026",
+    author: "Redação CannaGuia",
+    tags: ["Preço Flor Medicinal", "Óleo CBD Preço", "Valor Consulta", "Associações", "Economia", "Transparência"],
+    isPinned: true,
+    content: `
+      <h3>1. Panorama Geral: Quanto Custa o Tratamento no Brasil?</h3>
+      <p>Uma das maiores dúvidas de quem deseja iniciar a terapia canabinoide é o <strong>custo real mensal</strong>. Antigamente, o tratamento era restrito a produtos importados que custavam milhares de reais por mês. Hoje, com o avanço das <strong>associações de pacientes brasileiras</strong> e a telemedicina, o tratamento tornou-se muito mais acessível.</p>
+      
+      <p>Em média, o custo inicial do tratamento divide-se em 3 pilares principais:</p>
+      <ul>
+        <li><strong>1. Consulta Médica Especializada:</strong> R$ 250 a R$ 600 (paga uma vez no início, com retorno periódico a cada 3 a 6 meses).</li>
+        <li><strong>2. Taxa de Filiação à Associação (Anual ou Mensal):</strong> R$ 0 a R$ 50/mês (muitas associações possuem taxa zero ou anuidade simbólica).</li>
+        <li><strong>3. Medicamento Mensal (Óleo ou Flores):</strong> R$ 150 a R$ 450/mês, dependendo da dosagem e da via de administração prescrita pelo seu médico.</li>
+      </ul>
+
+      <h3>2. Tabela de Preços Médios de Flores Medicinais In Natura (Por Grama)</h3>
+      <p>As flores in natura são dispensadas por associações registradas exclusivamente para associados com prescrição médica. Os valores variam conforme o método de cultivo (Indoor, Greenhouse ou Outdoor) e a genética:</p>
+      
+      <div style="overflow-x: auto; margin: 20px 0;">
+        <table style="width: 100%; border-collapse: collapse; font-size: 13px; text-align: left;">
+          <thead>
+            <tr style="background: #f0fdf4; border-bottom: 2px solid #10b981; color: #064e3b;">
+              <th style="padding: 10px 12px; font-weight: 800;">Tipo de Flor</th>
+              <th style="padding: 10px 12px; font-weight: 800;">Método de Cultivo</th>
+              <th style="padding: 10px 12px; font-weight: 800;">Preço Médio por Grama</th>
+              <th style="padding: 10px 12px; font-weight: 800;">Indicação Comum</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom: 1px solid #e5e7eb;">
+              <td style="padding: 10px 12px; font-weight: 700; color: #111827;">Flores Ricas em THC (Ex: Gorilla, Mimosa)</td>
+              <td style="padding: 10px 12px; color: #4b5563;">Indoor / Greenhouse</td>
+              <td style="padding: 10px 12px; font-weight: 800; color: #059669;">R$ 45,00 a R$ 70,00/g</td>
+              <td style="padding: 10px 12px; color: #4b5563;">Dor Crônica, Insônia e Enxaqueca</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #e5e7eb;">
+              <td style="padding: 10px 12px; font-weight: 700; color: #111827;">Flores Ricas em CBD (Ex: Solodiol, CBD Pure)</td>
+              <td style="padding: 10px 12px; color: #4b5563;">Greenhouse / Padronizado</td>
+              <td style="padding: 10px 12px; font-weight: 800; color: #059669;">R$ 35,00 a R$ 55,00/g</td>
+              <td style="padding: 10px 12px; color: #4b5563;">Ansiedade, Foco e Sem Psicoatividade</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #e5e7eb;">
+              <td style="padding: 10px 12px; font-weight: 700; color: #111827;">Flores Balanceadas 1:1 (THC / CBD)</td>
+              <td style="padding: 10px 12px; color: #4b5563;">Indoor Especial</td>
+              <td style="padding: 10px 12px; font-weight: 800; color: #059669;">R$ 50,00 a R$ 65,00/g</td>
+              <td style="padding: 10px 12px; color: #4b5563;">Espasticidade e Relaxamento Muscular</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div style="background: #f0fdf4; border: 1.5px solid #10b981; padding: 18px 24px; border-radius: 16px; margin: 24px 0; text-align: center;">
+        <p style="color: #064e3b; font-size: 14px; font-weight: 700; margin-bottom: 10px;">🔍 Quer consultar o cardápio completo com preços e avaliações de cada flor?</p>
+        <p style="color: #047857; font-size: 13px; margin-bottom: 0;">Navegue pela aba <strong>Catálogo</strong> no menu principal do CannaGuia para comparar os valores atualizados de mais de 95 produtos.</p>
+      </div>
+
+      <h3>3. Preços de Óleos Sublinguais (CBD Full Spectrum, Broad Spectrum e Isolado)</h3>
+      <p>Os óleos medicinais são a principal porta de entrada do tratamento. Os valores dependem da concentração de miligramas (mg) por frasco de 30ml:</p>
+      <ul>
+        <li><strong>Óleos Nacionais de Associações (300mg a 1500mg):</strong> R$ 140,00 a R$ 280,00 por frasco (dura de 1 a 2 meses dependendo da posologia).</li>
+        <li><strong>Óleos de Alta Concentração (3000mg a 6000mg):</strong> R$ 320,00 a R$ 550,00 por frasco.</li>
+        <li><strong>Óleos Importados via Anvisa (RDC 660):</strong> R$ 350,00 a R$ 900,00 por frasco + frete internacional.</li>
+        <li><strong>Óleos de Farmácia Convencional (RDC 327):</strong> R$ 250,00 a R$ 800,00 por frasco.</li>
+      </ul>
+
+      <h3>4. Como Economizar até 50% no Custo do seu Tratamento?</h3>
+      <ol>
+        <li><strong>Opte por Associações de Pacientes Brasileiras:</strong> As associações dispensam medicamentos a preço de custo operacional, chegando a ser 60% mais baratos que farmácias e importações.</li>
+        <li><strong>Use um Vaporizador de Ervas Secas (Economia de Flor):</strong> Pacientes que vaporizam em vez de queimar na seda economizam até 40% da quantidade de flores, pois a extração térmica aproveita praticamente 100% dos canabinoides.</li>
+        <li><strong>Aproveite Descontos da Comunidade:</strong> Na AirVape Brasil, leitores do CannaGuia têm 5% OFF com o cupom <strong>CANNAGUIA</strong>.</li>
+        <li><strong>Escolha Médicos com Retorno Incluso:</strong> Ao agendar sua consulta, opte por profissionais que oferecem acompanhamento e titulação de dosagem nos primeiros meses sem custo de consulta avulsa.</li>
+      </ol>
+
+      <div style="background: #ffffff; border: 2px solid #059669; padding: 22px; border-radius: 20px; margin: 30px 0; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.06);">
+        <h4 style="color: #064e3b; font-size: 18px; font-weight: 900; margin-bottom: 8px;">🩺 Precisa de Consulta Médica para Iniciar?</h4>
+        <p style="color: #374151; font-size: 13px; margin-bottom: 16px;">Consulte nosso <strong>Diretório de Prescritores Verificados</strong> e agende diretamente com médicos especialistas em terapia canabinoide.</p>
+        <p style="color: #059669; font-weight: 800; font-size: 14px;">Acesse a aba 'Prescritores' no CannaGuia!</p>
+      </div>
+    `
+  },
+  {
     id: "1",
     slug: "passo-a-passo-tratamento-cannabis-medicinal-brasil",
     title: "Como Iniciar o Tratamento com Cannabis Medicinal no Brasil: Guia Passo a Passo",
@@ -11,7 +98,7 @@ export const MOCK_POSTS: BlogPost[] = [
     date: "15 de Agosto de 2026",
     author: "Redação CannaGuia",
     tags: ["Prescrição Médica", "Associações", "Iniciantes", "Acolhimento"],
-    isPinned: true,
+    isPinned: false,
     content: `
       <h3>1. Consulta Médica e Prescrição</h3>
       <p>Qualquer médico registrado no CRM (ou odontólogo com CFO) pode prescrever cannabis medicinal no Brasil para qualquer condição em que haja justificativa clínica (como ansiedade, insônia, dor crônica, TDAH, entre outros).</p>
