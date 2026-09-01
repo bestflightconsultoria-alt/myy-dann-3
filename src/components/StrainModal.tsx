@@ -471,15 +471,6 @@ export const StrainModal: React.FC<StrainModalProps> = ({ strain, onClose }) => 
 
   const badge = displayBadge();
 
-  // Pega o valor oficial da primeira associação
-  const getHeaderPrice = () => {
-    if (!strain.associations || strain.associations.length === 0) return null;
-    const assoc: any = strain.associations[0];
-    return assoc.priceDisplay || assoc.priceDetail || assoc.unitPrice || (assoc.pricePerGram ? `R$ ${assoc.pricePerGram}/g` : null);
-  };
-
-  const headerPrice = getHeaderPrice();
-
   const toggleCondition = (cond: string) => {
     if (selectedConditions.includes(cond)) {
       setSelectedConditions(selectedConditions.filter(c => c !== cond));
@@ -600,13 +591,6 @@ export const StrainModal: React.FC<StrainModalProps> = ({ strain, onClose }) => 
               <span className={`px-2.5 py-0.5 text-xs font-bold rounded-full ${badge.bg}`}>
                 {badge.text}
               </span>
-
-              {headerPrice && (
-                <span className="text-xs font-black bg-emerald-100 text-emerald-950 px-2.5 py-0.5 rounded-full border border-emerald-200 flex items-center gap-1">
-                  <Tag className="w-3.5 h-3.5 text-emerald-700" />
-                  {headerPrice}
-                </span>
-              )}
 
               {avgRating && (
                 <span className="flex items-center gap-1 text-xs font-bold bg-amber-100 text-amber-900 px-2.5 py-0.5 rounded-full border border-amber-200">
