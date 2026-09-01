@@ -20,6 +20,7 @@ import {
 } from 'lucide-react';
 import { Strain } from '../types/strain';
 import { supabase } from '../lib/supabase';
+import { injectProductSchema, resetDefaultSchema } from '../lib/seoStructuredData';
 
 interface PatientReview {
   id: string;
@@ -577,6 +578,16 @@ export const StrainModal: React.FC<StrainModalProps> = ({ strain, onClose }) => 
   const avgRating = reviews.length > 0 
     ? (reviews.reduce((acc, r) => acc + r.rating, 0) / reviews.length).toFixed(1)
     : null;
+
+  // Injeção de Dados Estruturados para o Google (Rich Snippets: Estrelas, Preços e Reviews)
+  useEffect(() => {
+    if (strain) {
+      injectProductSchema(strain, reviews, avgRating, reviews.length);
+    }
+    return () => {
+      resetDefaultSchema();
+    };
+  }, [strain, reviews, avgRating]);
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/70 backdrop-blur-sm overflow-y-auto">
