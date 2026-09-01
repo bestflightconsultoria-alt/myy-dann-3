@@ -4,14 +4,15 @@ export const INITIAL_DOCTORS: Doctor[] = [
   {
     id: 'dr-rafa-eymael',
     name: 'Dr. Rafa Eymael',
-    crm: 'CRM Verificado • Medicina Integrativa & Canabinoide',
+    crm: 'CRM/SC 12805 • Medicina de Família & Canabinoide',
     specialties: [
       'Cannabis Medicinal',
+      'Medicina de Família e Comunidade',
       'Medicina Integrativa',
       'Dor Crônica & Enxaqueca',
       'Ansiedade & Insônia'
     ],
-    bio: 'Atendimento médico humanizado com foco em qualidade de vida, manejo individualizado de sintomas e prescrição terapêutica de fitocanabinoides.',
+    bio: 'Atendimento médico humanizado com foco em qualidade de vida, manejo individualizado de sintomas e prescrição terapêutica de fitocanabinoides no Jurerê Medical Center e via Telemedicina em todo o Brasil.',
     city: 'Florianópolis',
     state: 'SC',
     isOnline: true,
