@@ -371,30 +371,47 @@ export const StrainModal: React.FC<StrainModalProps> = ({ strain, onClose }) => 
             </div>
           )}
 
-          {/* ASSOCIAÇÕES DISPENSADORAS COM VALORES NÍTIDOS */}
+          {/* ASSOCIAÇÕES DISPENSADORAS COM ENQUADRAMENTO REGULATÓRIO */}
           {strain.associations && strain.associations.length > 0 && (
             <div className="space-y-3 p-4 bg-emerald-50/50 rounded-2xl border border-emerald-200">
-              <h3 className="text-xs font-black text-emerald-950 uppercase tracking-wider flex items-center gap-1.5">
-                <Building className="w-4 h-4 text-emerald-700" />
-                Associações Dispensadoras ({strain.associations.length})
-              </h3>
-              <div className="space-y-2.5">
+              <div className="flex items-center justify-between gap-2">
+                <h3 className="text-xs font-black text-emerald-950 uppercase tracking-wider flex items-center gap-1.5">
+                  <Building className="w-4 h-4 text-emerald-700" />
+                  Associações Autorizadas ({strain.associations.length})
+                </h3>
+                <span className="text-[10px] font-bold text-emerald-800 bg-emerald-100/80 px-2 py-0.5 rounded-full border border-emerald-200">
+                  RDC 1.015/2026
+                </span>
+              </div>
+
+              <p className="text-[11px] text-emerald-900/80 leading-snug">
+                ⚖️ Valores de referência de custeio e dispensação solidária praticados pelas associações para pacientes associados com laudo e receita médica válida. O CannaGuia não vende e não intermedeia medicamentos.
+              </p>
+
+              <div className="space-y-2.5 pt-1">
                 {strain.associations.map((assoc: any, idx: number) => {
                   const displayPrice = assoc.priceDisplay || assoc.priceDetail || assoc.unitPrice || (assoc.pricePerGram ? `R$ ${assoc.pricePerGram}/g` : 'Consulte Valor');
                   return (
                     <div key={idx} className="p-3.5 bg-white rounded-xl border border-gray-200 flex items-center justify-between gap-3 shadow-xs">
                       <div>
                         <span className="text-xs font-black text-gray-900 block">{assoc.associationName}</span>
-                        {assoc.inStock === false && (
+                        {assoc.inStock === false ? (
                           <span className="text-[10px] font-bold text-red-600 bg-red-50 px-2 py-0.5 rounded-md inline-block mt-0.5">
                             Indisponível no momento
+                          </span>
+                        ) : (
+                          <span className="text-[10px] text-gray-500 font-medium block mt-0.5">
+                            Dispensação sob prescrição
                           </span>
                         )}
                       </div>
                       
-                      <span className="text-xs font-black bg-emerald-100 text-emerald-950 px-3 py-1.5 rounded-xl border border-emerald-200 shrink-0">
-                        💰 {displayPrice}
-                      </span>
+                      <div className="text-right shrink-0">
+                        <span className="text-[10px] text-gray-400 font-bold block uppercase tracking-wider">Custo Solidário</span>
+                        <span className="text-xs font-black bg-emerald-100 text-emerald-950 px-2.5 py-1 rounded-lg border border-emerald-200 inline-block mt-0.5">
+                          {displayPrice}
+                        </span>
+                      </div>
                     </div>
                   );
                 })}

@@ -202,14 +202,23 @@ export function App() {
         </Suspense>
       </main>
 
-      {/* Rodapé com Disclaimer Legal, Contato e LGPD */}
-      <footer className="bg-white border-t border-gray-200 py-8 text-center text-xs text-gray-500 space-y-2">
-        <p className="font-semibold text-gray-700">
-          CannaGuia — Guia Informativo e Terapêutico de Cannabis Medicinal no Brasil.
+      {/* Rodapé com Disclaimer Legal Robusto (RDC 1.015/2026), Contato e LGPD */}
+      <footer className="bg-white border-t border-gray-200 py-8 text-center text-xs text-gray-500 space-y-3">
+        <p className="font-bold text-gray-800 text-sm">
+          CannaGuia — Seu Guia de Cannabis Medicinal no Brasil
         </p>
-        <p className="max-w-2xl mx-auto text-[11px] text-gray-400 px-4 leading-relaxed">
-          ⚖️ <strong>Aviso Legal:</strong> O CannaGuia é uma plataforma informativa e educativa. Não comercializamos, não intermediamos vendas e não fabricamos medicamentos. O uso de produtos à base de Cannabis Medicinal exige obrigatoriamente prescrição médica válida.
-        </p>
+        
+        <div className="max-w-3xl mx-auto px-4">
+          <div className="bg-gray-50/90 border border-gray-200 rounded-2xl p-4 text-[11px] text-gray-600 leading-relaxed text-left shadow-2xs">
+            <p className="font-extrabold text-gray-900 mb-1 flex items-center gap-1.5">
+              <span>⚖️</span> Aviso Legal & Conformidade Sanitária (RDC Anvisa nº 1.015/2026)
+            </p>
+            <p>
+              O <strong>CannaGuia</strong> é um portal estritamente educativo, científico e de transparência em saúde (amparado pelos arts. 5º, IX, XIV e 220 da Constituição Federal). <strong>Não comercializamos, não estocamos, não fabricamos e não intermediamos a venda de medicamentos ou substâncias controladas.</strong> Todas as informações sobre associações, genéticas e valores de custeio solidário têm finalidade puramente cadastral, jornalística e informativa. O acesso a terapias com Cannabis Medicinal no Brasil exige obrigatoriamente consulta prévia e prescrição emitida por médico ou odontólogo legalmente habilitado.
+            </p>
+          </div>
+        </div>
+
         <div className="pt-2 flex items-center justify-center gap-3 sm:gap-4 flex-wrap text-[11px]">
           <a
             href="mailto:contato@cannaguia.com.br"
@@ -231,7 +240,7 @@ export function App() {
             onClick={() => setIsTermsOpen(true)}
             className="text-emerald-700 font-bold hover:underline"
           >
-            Termos de Uso & LGPD
+            Termos de Uso, RDC 1.015/2026 & LGPD
           </button>
         </div>
       </footer>

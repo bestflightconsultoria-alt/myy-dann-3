@@ -184,6 +184,17 @@ const MOCK_COMMUNITY_STATS: CommunityReviewStats = {
         </div>
       </div>
 
+      {/* Aviso Regulatório de Conformidade com a RDC Anvisa nº 1.015/2026 */}
+      <div className="bg-emerald-50/90 border border-emerald-200/80 rounded-2xl px-4 py-2.5 flex items-center justify-between gap-3 text-xs text-emerald-950 font-medium shadow-2xs">
+        <div className="flex items-center gap-2">
+          <span className="text-sm">⚖️</span>
+          <span>Índice Botânico & Farmacológico • Conteúdo exclusivamente educativo e cadastral em conformidade com a <strong>RDC Anvisa nº 1.015/2026</strong>.</span>
+        </div>
+        <span className="text-[11px] font-bold text-emerald-800 bg-white px-2.5 py-1 rounded-lg border border-emerald-200 shrink-0 hidden sm:inline-block">
+          Exige Prescrição Médica
+        </span>
+      </div>
+
       {/* Bar Unificada de Categoria e Busca */}
       <div className="bg-white p-3.5 sm:p-4 rounded-2xl border border-gray-200 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-3">
         

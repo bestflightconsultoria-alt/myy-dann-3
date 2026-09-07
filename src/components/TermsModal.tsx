@@ -35,16 +35,24 @@ export const TermsModal: React.FC<TermsModalProps> = ({ isOpen, onClose }) => {
         {/* Conteúdo com Scroll limpo e sem cortes no Desktop */}
         <div className="p-5 sm:p-8 space-y-6 overflow-y-auto text-xs sm:text-sm text-gray-700 leading-relaxed flex-1">
           
-          {/* Seção 1: Natureza da Plataforma */}
+          {/* Seção 1: Natureza da Plataforma & Conformidade com a RDC Anvisa nº 1.015/2026 */}
           <div className="space-y-2">
             <h3 className="text-sm sm:text-base font-extrabold text-gray-900 flex items-center gap-1.5">
-              <FileText className="w-4 h-4 text-emerald-600" /> 1. Natureza Informativa e Isenção de Responsabilidade Médica
+              <FileText className="w-4 h-4 text-emerald-600" /> 1. Natureza da Plataforma e Conformidade com a RDC Anvisa nº 1.015/2026
             </h3>
             <p>
-              O <strong>CannaGuia</strong> é uma plataforma digital de caráter exclusivamente informativo, educativo e tecnológico. O CannaGuia <strong>NÃO realiza venda, comercialização, intermediação de pagamentos, estocagem ou distribuição de medicamentos ou plantas</strong>.
+              O <strong>CannaGuia</strong> é uma plataforma digital independente de caráter estritamente educativo, científico, cadastral e de apoio à pesquisa em saúde (amparada pelos arts. 5º, IX, XIV e 220 da Constituição Federal).
             </p>
+            <p>
+              Em estrita consonância com as diretrizes sanitárias da <strong>RDC Anvisa nº 1.015/2026</strong>:
+            </p>
+            <ul className="list-disc pl-5 space-y-1 text-gray-600">
+              <li><strong>Vedação a Comércio e Intermediação:</strong> O CannaGuia <strong>NÃO é uma farmácia, NÃO comercializa, NÃO fabrica, NÃO estoca e NÃO intermedeia vendas</strong> de produtos ou medicamentos à base de Cannabis.</li>
+              <li><strong>Vedação à Publicidade Comercial ao Público Leigo:</strong> O portal não realiza anúncios promocionais nem estimula o consumo de substâncias controladas. Os dados de produtos, terpenos e genéticas constituem repositório informativo e enciclopédico voltado ao conhecimento científico e à orientação de pacientes sob acompanhamento médico.</li>
+              <li><strong>Dados Associativos Solidários:</strong> Os valores médios mencionados no diretório referem-se a levantamentos estatísticos de taxas de rateio operacional praticadas por associações civis de pacientes sem fins lucrativos autorizadas, destinadas exclusivamente a associados devidamente registrados com laudo e receita médica.</li>
+            </ul>
             <p className="bg-amber-50 border border-amber-200 p-3.5 rounded-2xl text-amber-950 font-medium">
-              ⚖️ <strong>Aviso Importante:</strong> O uso de Cannabis Medicinal no Brasil exige obrigatoriamente consulta prévia, prescrição de profissional de saúde habilitado e cadastro junto às autoridades competentes (Anvisa ou Associações autorizadas). As informações contidas nesta plataforma não substituem a orientação médica profissional.
+              ⚖️ <strong>Obrigatoriedade de Prescrição Médica:</strong> Todo e qualquer tratamento com Cannabis Medicinal no Brasil exige imperativamente consulta prévia, avaliação individualizada e prescrição emitida por profissional de saúde habilitado (CRM/CRO). O CannaGuia não incentiva a automedicação e recomenda o acompanhamento clínico contínuo.
             </p>
           </div>
 
