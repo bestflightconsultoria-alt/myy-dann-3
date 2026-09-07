@@ -2,6 +2,106 @@ import { BlogPost } from "../types/blog";
 
 export const MOCK_POSTS: BlogPost[] = [
   {
+    id: "9",
+    slug: "gorila-kush-vs-gorila-freak-analise-comparativa-terpenos-canabinoides",
+    title: "Gorila Kush vs Gorila Freak: Análise Comparativa de Terpenos, Canabinoides e Indicações Medicinais",
+    excerpt: "Descubra as diferenças botânicas, perfis terpênicos e indicações terapêuticas entre as duas strains mais buscadas no CannaGuia: qual escolher para o dia a dia e qual para relaxamento noturno?",
+    category: "Comparativo de Genéticas",
+    readTime: "5 min de leitura",
+    date: "07 de Setembro de 2026",
+    author: "Redação CannaGuia",
+    tags: ["Gorila Kush", "Gorila Freak", "Terpenos", "Cariofileno", "Flores Medicinais", "Damasceno", "Comparativo"],
+    isPinned: false,
+    content: `
+      <h3>1. Por que a Linha Gorilla é Tão Buscada no Brasil?</h3>
+      <p>Nos últimos levantamentos do catálogo do CannaGuia, duas genéticas ganharam destaque absoluto nas buscas de pacientes associados: a <strong>Gorila Kush</strong> e a <strong>Gorila Freak</strong>. Ambas descendem da célebre família Gorilla (conhecida historicamente pela altíssima densidade de tricomas glandulares, produção rica de resina e alta concentração de canabinoides).</p>
+      
+      <p>No entanto, apesar de compartilharem essa raiz genética, seus perfis terpênicos e o cruzamento botânico criam <strong>respostas terapêuticas distintas</strong> no organismo através do Efeito Entourage (sinergia entre canabinoides e terpenos).</p>
+
+      <h3>2. Tabela Comparativa Direta: Ficha Técnica</h3>
+      <div style="overflow-x: auto; margin: 20px 0;">
+        <table style="width: 100%; border-collapse: collapse; font-size: 13px; text-align: left;">
+          <thead>
+            <tr style="background: #f0fdf4; border-bottom: 2px solid #10b981; color: #064e3b;">
+              <th style="padding: 10px 12px; font-weight: 800;">Característica</th>
+              <th style="padding: 10px 12px; font-weight: 800;">Gorila Kush 🦍</th>
+              <th style="padding: 10px 12px; font-weight: 800;">Gorila Freak 🦍👾</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom: 1px solid #e5e7eb;">
+              <td style="padding: 10px 12px; font-weight: 700; color: #111827;">Linhagem Genética</td>
+              <td style="padding: 10px 12px; color: #4b5563;">Gorilla Glue #4 x OG Kush</td>
+              <td style="padding: 10px 12px; color: #4b5563;">Gorila Kush x Strolona Freak</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #e5e7eb;">
+              <td style="padding: 10px 12px; font-weight: 700; color: #111827;">Perfil Botânico</td>
+              <td style="padding: 10px 12px; font-weight: 700; color: #059669;">Indica Predominante</td>
+              <td style="padding: 10px 12px; font-weight: 700; color: #059669;">Híbrida Equilibrada</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #e5e7eb;">
+              <td style="padding: 10px 12px; font-weight: 700; color: #111827;">Concentração Média de THC</td>
+              <td style="padding: 10px 12px; color: #4b5563;">20% a 24%</td>
+              <td style="padding: 10px 12px; color: #4b5563;">18% a 22%</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #e5e7eb;">
+              <td style="padding: 10px 12px; font-weight: 700; color: #111827;">Terpeno Dominante</td>
+              <td style="padding: 10px 12px; font-weight: 800; color: #d97706;">Beta-Cariofileno</td>
+              <td style="padding: 10px 12px; font-weight: 800; color: #d97706;">Beta-Cariofileno</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #e5e7eb;">
+              <td style="padding: 10px 12px; font-weight: 700; color: #111827;">Terpenos Secundários</td>
+              <td style="padding: 10px 12px; color: #4b5563;">Limoneno, Mirceno</td>
+              <td style="padding: 10px 12px; color: #4b5563;">Mirceno, Humuleno</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #e5e7eb;">
+              <td style="padding: 10px 12px; font-weight: 700; color: #111827;">Aroma e Notas Sensoriais</td>
+              <td style="padding: 10px 12px; color: #4b5563;">Terroso, picante, amadeirado e resinoso</td>
+              <td style="padding: 10px 12px; color: #4b5563;">Terroso, especiado, amadeirado e resina marcante</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #e5e7eb;">
+              <td style="padding: 10px 12px; font-weight: 700; color: #111827;">Disponibilidade Associativa</td>
+              <td style="padding: 10px 12px; color: #4b5563;">Instituto Damasceno / Abrapango</td>
+              <td style="padding: 10px 12px; color: #4b5563;">Instituto Damasceno</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>3. A Ciência dos Terpenos: Entenda a Diferença no Corpo</h3>
+      <p>Embora ambas as flores apresentem o <strong>Beta-Cariofileno</strong> como terpeno principal — que tem a propriedade exclusiva de agir diretamente nos receptores canabinoides <strong>CB2</strong> do sistema imune como anti-inflamatório —, a presença dos terpenos secundários muda a direção do tratamento:</p>
+
+      <ul>
+        <li><strong>Na Gorila Kush (Cariofileno + Limoneno + Mirceno):</strong> A combinação de Mirceno em proporção relevante com a genética OG Kush proporciona um efeito de <em>relaxamento muscular profundo</em> e sensação corpórea pesada (*body high*). O Limoneno atua regulando a ansiedade antecipatória, preparando o paciente para o descanso.</li>
+        <li><strong>Na Gorila Freak (Cariofileno + Mirceno + Humuleno):</strong> O cruzamento com a linha <em>Strolona Freak</em> aporta uma concentração notável de <strong>Humuleno</strong>, terpeno com propriedades analgésicas e anti-inflamatórias potentes que equilibra o perfil sem gerar sonolência excessiva. É ideal para quem busca alívio funcional durante o dia ou entardecer.</li>
+      </ul>
+
+      <div style="background: #f0fdf4; border: 1.5px solid #10b981; padding: 18px 24px; border-radius: 16px; margin: 24px 0;">
+        <h4 style="color: #064e3b; font-size: 15px; font-weight: 800; margin-bottom: 8px;">💡 Quando o Médico Geralmente Prescreve Cada Uma?</h4>
+        <p style="color: #047857; font-size: 13px; margin-bottom: 6px;"><strong>🌙 Gorila Kush:</strong> Indicada frequentemente para insônia refratária, dores noturnas intensas, espasmos musculares e alívio do bruxismo noturno.</p>
+        <p style="color: #047857; font-size: 13px; margin-bottom: 0;"><strong>☀️ Gorila Freak:</strong> Indicada para fibromialgia, estresse agudo, dores articulares e quadros em que o paciente precisa continuar produtivo e concentrado.</p>
+      </div>
+
+      <h3>4. Administração Segura: Vaporização de Ervas Secas</h3>
+      <p>Para pacientes com prescrição de flores in natura, os consensos médicos recomendam estritamente a <strong>via inalatória por vaporização térmica</strong> (sem fumaça e sem combustão):</p>
+      <ul>
+        <li><strong>Temperatura Recomendada:</strong> 175°C a 190°C para extrair terpenos como o Cariofileno (evapora a ~119°C) e canabinoides sem degradação térmica.</li>
+        <li><strong>Início da Ação:</strong> Em até 3 minutos, permitindo ao paciente titular a dose ideal sob orientação médica.</li>
+        <li><strong>Redução de Danos:</strong> A vaporização elimina mais de 95% dos compostos tóxicos da fumaça convencional (como alcatrão e monóxido de carbono).</li>
+      </ul>
+
+      <div style="background: #ffffff; border: 2px solid #059669; padding: 22px; border-radius: 20px; margin: 30px 0; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.06);">
+        <h4 style="color: #064e3b; font-size: 18px; font-weight: 900; margin-bottom: 8px;">🔍 Consulte as Fichas Técnicas no Catálogo CannaGuia</h4>
+        <p style="color: #374151; font-size: 13px; margin-bottom: 16px;">Veja relatos reais de outros pacientes verificados, faixas de custos por grama e disponibilidade nas associações autorizadas.</p>
+        <a href="/catalogo-flores" style="display: inline-block; background: #059669; color: #ffffff; font-weight: 800; font-size: 13px; padding: 10px 20px; border-radius: 12px; text-decoration: none;">Ver Gorila Kush e Gorila Freak no Catálogo</a>
+      </div>
+
+      <p style="font-size: 12px; color: #6b7280; font-style: italic; margin-top: 20px;">
+        ⚖️ <strong>Aviso Legal & Regulatório (RDC Anvisa nº 1.015/2026):</strong> O CannaGuia é uma plataforma exclusivamente informativa e educativa. Não comercializamos, não intermediamos vendas e não fabricamos medicamentos. O acesso a produtos medicinais de associações de pacientes exige obrigatoriamente consulta prévia e prescrição médica ou odontológica individualizada.
+      </p>
+    `
+  },
+  {
     id: "8",
     slug: "quanto-custa-tratamento-cannabis-medicinal-brasil-precos",
     title: "Quanto Custa o Tratamento com Cannabis Medicinal no Brasil em 2026? Guia Completo de Preços de Flores, Óleos e Consultas",
