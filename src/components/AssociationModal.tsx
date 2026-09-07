@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import { X, Phone, CheckCircle2, DollarSign, MapPin, Tag, Globe } from 'lucide-react';
 import { Association } from '../hooks/useAssociations';
 import { useStrains } from '../hooks/useStrains';
+import { trackCustomEvent } from '../lib/analytics';
 
 interface AssociationModalProps {
   association: Association | null;
@@ -119,6 +120,14 @@ export const AssociationModal: React.FC<AssociationModalProps> = ({ association,
                 href={association.website.startsWith('http') ? association.website : `https://${association.website}`}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => {
+                  trackCustomEvent('association_click', {
+                    association_id: association.id,
+                    association_name: association.name,
+                    association_state: association.state,
+                    event_category: 'Association Referral'
+                  });
+                }}
                 className="text-xs font-bold text-emerald-700 hover:underline"
               >
                 {association.website.replace(/^https?:\/\//, '')} →

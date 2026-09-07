@@ -4,6 +4,7 @@ import { useStrains } from '../hooks/useStrains';
 import { Strain } from '../types/strain';
 import { StrainModal } from './StrainModal';
 import { supabase } from '../lib/supabase';
+import { trackCustomEvent } from '../lib/analytics';
 
 interface ConditionStats {
   sum: number;
@@ -276,6 +277,15 @@ export const AiSommelier: React.FC = () => {
     // Seleciona as 8 melhores recomendações
     setRecommendations(scoredStrains.slice(0, 8));
     setHasSearched(true);
+
+    // Dispara evento GA4 para métricas de conversão
+    trackCustomEvent('sommelier_search', {
+      selected_objectives: selectedObjectives.join(', '),
+      time_of_day: timeOfDay,
+      preferred_format: preferredFormat,
+      results_count: scoredStrains.length,
+      event_category: 'AI Recommendation'
+    });
 
     // Rola a tela suavemente para o resultado
     setTimeout(() => {
