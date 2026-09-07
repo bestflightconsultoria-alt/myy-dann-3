@@ -60,7 +60,7 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab, onOpenA
   ];
 
   return (
-    <header className="sticky top-0 z-40 bg-white/98 backdrop-blur-md border-b border-gray-200/90 shadow-xs">
+    <header className="sticky top-0 z-50 bg-white border-b border-gray-200/90 shadow-md">
       <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
         
         {/* DESKTOP LAYOUT (Single Row) & MOBILE TOP ROW */}
@@ -80,10 +80,10 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab, onOpenA
                 <button
                   key={item.id}
                   onClick={() => setActiveTab(item.id)}
-                  className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs md:text-sm font-medium transition-all whitespace-nowrap ${
+                  className={`flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs md:text-sm font-semibold transition-all whitespace-nowrap ${
                     isActive
-                      ? 'bg-emerald-600 text-white shadow-md shadow-emerald-600/20 font-bold scale-[1.02]'
-                      : 'text-gray-600 hover:text-emerald-700 hover:bg-emerald-50/80'
+                      ? 'bg-emerald-600 text-white shadow-md shadow-emerald-600/25 font-bold scale-[1.02]'
+                      : 'text-gray-700 hover:text-emerald-700 hover:bg-emerald-50/90'
                   }`}
                 >
                   <Icon className={`w-4 h-4 ${isActive ? 'text-white' : 'text-emerald-600'}`} />
