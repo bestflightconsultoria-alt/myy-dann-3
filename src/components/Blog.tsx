@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { BookOpen, Clock, Calendar, ArrowRight, ArrowLeft } from 'lucide-react';
 import { useBlog } from '../hooks/useBlog';
 import { BlogPost } from '../types/blog';
+import { injectBlogArticleSchema, resetDefaultSchema } from '../lib/seoStructuredData';
 
 interface BlogProps {
   initialPostId?: string;
@@ -25,6 +26,18 @@ export const Blog: React.FC<BlogProps> = ({ initialPostId, initialPostSlug, onSe
       setSelectedPost(null);
     }
   }, [initialPostId, initialPostSlug, posts]);
+
+  // Injeção de Dados Estruturados de Artigo/Notícia Médica (Article Schema)
+  useEffect(() => {
+    if (selectedPost) {
+      injectBlogArticleSchema(selectedPost);
+    } else if (posts.length > 0) {
+      injectBlogArticleSchema(posts[0]);
+    }
+    return () => {
+      resetDefaultSchema();
+    };
+  }, [selectedPost, posts]);
 
   const handleBackToList = () => {
     setSelectedPost(null);

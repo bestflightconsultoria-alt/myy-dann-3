@@ -1,4 +1,6 @@
 import { Strain } from '../types/strain';
+import { Doctor } from '../types/doctor';
+import { BlogPost } from '../types/blog';
 
 interface ReviewItem {
   patientName: string;
@@ -9,9 +11,14 @@ interface ReviewItem {
 }
 
 /**
- * Utilitário de Injeção de Dados Estruturados (Schema.org / JSON-LD)
- * Habilita Rich Snippets (Estrelas Amarelas, Preços e Estoque) no Google Search
+ * Utilitário Completo de Injeção de Dados Estruturados (Schema.org / JSON-LD)
+ * Habilita Rich Snippets (Estrelas Amarelas, Preços, FAQ e Médicos) no Google Search
  */
+
+export const resetDefaultSchema = () => {
+  const existingScript = document.getElementById('cannaguia-jsonld-dynamic');
+  if (existingScript) existingScript.remove();
+};
 
 export const injectProductSchema = (
   strain: Strain, 
@@ -20,8 +27,7 @@ export const injectProductSchema = (
   totalCount?: number
 ) => {
   try {
-    const existingScript = document.getElementById('cannaguia-jsonld-dynamic');
-    if (existingScript) existingScript.remove();
+    resetDefaultSchema();
 
     // Extração de preços numéricos das associações
     let lowPrice = 45.0;
@@ -109,21 +115,121 @@ export const injectProductSchema = (
     script.innerHTML = JSON.stringify(schemaData);
     document.head.appendChild(script);
 
-    // Atualiza meta tags dinâmicas
     let metaDesc = document.querySelector('meta[name="description"]');
     if (!metaDesc) {
       metaDesc = document.createElement('meta');
       metaDesc.setAttribute('name', 'description');
       document.head.appendChild(metaDesc);
     }
-    metaDesc.setAttribute('content', `Consulte avaliações de pacientes, terpenos, preço por grama e associações autorizadas para ${strain.name} no CannaGuia.`);
+    metaDesc.setAttribute('content', `Consulte avaliações de pacientes, terpenos, custo solidário por grama e associações autorizadas para ${strain.name} no CannaGuia.`);
 
   } catch (e) {
     console.error('Erro ao injetar schema do produto:', e);
   }
 };
 
-export const resetDefaultSchema = () => {
-  const existingScript = document.getElementById('cannaguia-jsonld-dynamic');
-  if (existingScript) existingScript.remove();
+export const injectDoctorSchema = (doctor: Doctor) => {
+  try {
+    resetDefaultSchema();
+
+    const schemaData = {
+      "@context": "https://schema.org",
+      "@type": ["Physician", "MedicalBusiness"],
+      "name": doctor.name,
+      "identifier": doctor.crm,
+      "medicalSpecialty": doctor.specialties,
+      "description": doctor.bio,
+      "telephone": doctor.contactPhone,
+      "image": "https://www.cannaguia.com.br/logo_cannaguia_transparente.png",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": doctor.city,
+        "addressRegion": doctor.state,
+        "addressCountry": "BR"
+      },
+      "priceRange": "$$",
+      "isAcceptingNewPatients": true,
+      "availableService": {
+        "@type": "MedicalTherapy",
+        "name": "Consulta e Prescrição de Cannabis Medicinal / Telemedicina"
+      },
+      "url": `https://www.cannaguia.com.br/medicos/${doctor.id}`
+    };
+
+    const script = document.createElement('script');
+    script.id = 'cannaguia-jsonld-dynamic';
+    script.type = 'application/ld+json';
+    script.innerHTML = JSON.stringify(schemaData);
+    document.head.appendChild(script);
+  } catch (e) {
+    console.error('Erro ao injetar schema do médico:', e);
+  }
+};
+
+export const injectBlogArticleSchema = (post: BlogPost) => {
+  try {
+    resetDefaultSchema();
+
+    const schemaData = {
+      "@context": "https://schema.org",
+      "@type": ["Article", "MedicalWebPage"],
+      "headline": post.title,
+      "description": post.excerpt,
+      "image": "https://www.cannaguia.com.br/logo_cannaguia_transparente.png",
+      "author": {
+        "@type": "Person",
+        "name": post.author || "Redação CannaGuia"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "CannaGuia — Seu Guia de Cannabis Medicinal",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://www.cannaguia.com.br/logo_cannaguia_transparente.png"
+        }
+      },
+      "datePublished": "2026-09-01",
+      "dateModified": "2026-09-07",
+      "keywords": post.tags.join(', '),
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": `https://www.cannaguia.com.br/blog/${post.slug}`
+      }
+    };
+
+    const script = document.createElement('script');
+    script.id = 'cannaguia-jsonld-dynamic';
+    script.type = 'application/ld+json';
+    script.innerHTML = JSON.stringify(schemaData);
+    document.head.appendChild(script);
+  } catch (e) {
+    console.error('Erro ao injetar schema do blog:', e);
+  }
+};
+
+export const injectFAQSchema = (items: { question: string; answer: string }[]) => {
+  try {
+    resetDefaultSchema();
+
+    const schemaData = {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": items.map(item => ({
+        "@type": "Question",
+        "name": item.question,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": item.answer
+        }
+      }))
+    };
+
+    const script = document.createElement('script');
+    script.id = 'cannaguia-jsonld-dynamic';
+    script.type = 'application/ld+json';
+    script.innerHTML = JSON.stringify(schemaData);
+    document.head.appendChild(script);
+  } catch (e) {
+    console.error('Erro ao injetar schema de FAQ:', e);
+  }
 };

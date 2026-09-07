@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Sitemap Oficial CannaGuia
+Sitemap: https://www.cannaguia.com.br/sitemap.xml

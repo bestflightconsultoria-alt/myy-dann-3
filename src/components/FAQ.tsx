@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { HelpCircle, ChevronDown, ChevronUp, Search, ShieldCheck, FileText, Stethoscope, Sparkles } from 'lucide-react';
+import { injectFAQSchema, resetDefaultSchema } from '../lib/seoStructuredData';
 
 interface FaqItem {
   question: string;
@@ -54,6 +55,14 @@ export const FAQ: React.FC = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [selectedCategory, setSelectedCategory] = useState<string>('todos');
+
+  // Injeta FAQPage Schema.org para Rich Snippets no Google Search
+  useEffect(() => {
+    injectFAQSchema(FAQ_DATA);
+    return () => {
+      resetDefaultSchema();
+    };
+  }, []);
 
   const filteredFaqs = FAQ_DATA.filter((item) => {
     const matchCategory = selectedCategory === 'todos' || item.category === selectedCategory;
