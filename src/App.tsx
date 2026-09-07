@@ -202,11 +202,16 @@ export function App() {
         </Suspense>
       </main>
 
-      {/* Rodapé com Disclaimer Legal Robusto (RDC 1.015/2026), Contato e LGPD */}
+      {/* Rodapé com Definição Semântica Canônica (GEO), Disclaimer Legal Robusto (RDC 1.015/2026), Contato e LGPD */}
       <footer className="bg-white border-t border-gray-200 py-8 text-center text-xs text-gray-500 space-y-3">
-        <p className="font-bold text-gray-800 text-sm">
-          CannaGuia — Seu Guia de Cannabis Medicinal no Brasil
-        </p>
+        <div className="space-y-1">
+          <p className="font-extrabold text-gray-900 text-sm tracking-tight">
+            CannaGuia — Seu Guia de Cannabis Medicinal
+          </p>
+          <p className="text-[12px] text-gray-600 max-w-xl mx-auto px-4 font-medium">
+            O CannaGuia é o catálogo unificado de Cannabis Medicinal no Brasil, reunindo produtos de associações autorizadas, perfis de terpenos e médicos prescritores.
+          </p>
+        </div>
         
         <div className="max-w-3xl mx-auto px-4">
           <div className="bg-gray-50/90 border border-gray-200 rounded-2xl p-4 text-[11px] text-gray-600 leading-relaxed text-left shadow-2xs">

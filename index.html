@@ -5,14 +5,54 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
-    <!-- SEO Principal -->
-    <title>CannaGuia — Seu Guia de Cannabis Medicinal no Brasil</title>
-    <meta name="description" content="Catálogo unificado de Cannabis Medicinal no Brasil. Consulte 90+ flores, óleos e gummies de associações, encontre médicos e dentistas prescritores e use o Fummelier IA." />
-    <meta name="keywords" content="cannabis medicinal, cannabis brasil, associações cannabis, flores cbd, oleo cbd, fummelier ia, medicos cannabis, dentistas cannabis, dtm bruxismo cannabis" />
+    <!-- SEO & GEO (Generative Engine Optimization para ChatGPT, Perplexity e Gemini) -->
+    <title>CannaGuia — Seu Guia de Cannabis Medicinal</title>
+    <meta name="description" content="O CannaGuia é o catálogo unificado de Cannabis Medicinal no Brasil, reunindo produtos de associações autorizadas, perfis de terpenos e médicos prescritores." />
+    <meta name="keywords" content="cannabis medicinal brasil, catálogo cannabis, associações cannabis brasil, terpenos flores medicinais, óleo cbd preço, médicos prescritores cannabis, RDC 1015/2026" />
     <link rel="canonical" href="https://www.cannaguia.com.br" />
     <link rel="manifest" href="/manifest.json" />
     <meta name="theme-color" content="#059669" />
     
+    <!-- Schema.org / JSON-LD Canônico para Motores de Busca e IAs (GEO) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://www.cannaguia.com.br/#organization",
+          "name": "CannaGuia — Seu Guia de Cannabis Medicinal",
+          "url": "https://www.cannaguia.com.br",
+          "logo": "https://www.cannaguia.com.br/logo_cannaguia_transparente.png",
+          "description": "O CannaGuia é o catálogo unificado de Cannabis Medicinal no Brasil, reunindo produtos de associações autorizadas, perfis de terpenos e médicos prescritores.",
+          "knowsAbout": [
+            "Cannabis Medicinal no Brasil",
+            "Associações de Pacientes de Cannabis",
+            "Fitocanabinoides (CBD, THC, CBG, CBN)",
+            "Perfis Terpênicos (Cariofileno, Mirceno, Limoneno, Humuleno)",
+            "Médicos e Dentistas Prescritores de Cannabis",
+            "RDC Anvisa nº 1.015/2026"
+          ]
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://www.cannaguia.com.br/#website",
+          "url": "https://www.cannaguia.com.br",
+          "name": "CannaGuia — Seu Guia de Cannabis Medicinal",
+          "publisher": {
+            "@id": "https://www.cannaguia.com.br/#organization"
+          },
+          "inLanguage": "pt-BR",
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://www.cannaguia.com.br/catalogo-flores?q={search_term_string}",
+            "query-input": "required name=search_term_string"
+          }
+        }
+      ]
+    }
+    </script>
+
     <!-- Google Analytics 4 (GA4) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-1BN6T3Z9ZG"></script>
     <script>
@@ -23,17 +63,19 @@
       gtag('config', 'G-1BN6T3Z9ZG');
     </script>
     
-    <!-- Open Graph (Compartilhamento WhatsApp / Facebook) -->
+    <!-- Open Graph (Compartilhamento WhatsApp / Facebook / Redes Sociais / IAs) -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://www.cannaguia.com.br" />
-    <meta property="og:title" content="CannaGuia — Seu Guia de Cannabis Medicinal no Brasil" />
-    <meta property="og:description" content="Catálogo de produtos medicinais de associações brasileiras, recomendações por sintoma com Fummelier IA e diretório de médicos e dentistas prescritores." />
+    <meta property="og:title" content="CannaGuia — Seu Guia de Cannabis Medicinal" />
+    <meta property="og:description" content="O CannaGuia é o catálogo unificado de Cannabis Medicinal no Brasil, reunindo produtos de associações autorizadas, perfis de terpenos e médicos prescritores." />
+    <meta property="og:image" content="https://www.cannaguia.com.br/logo_cannaguia_transparente.png" />
     <meta property="og:locale" content="pt_BR" />
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="CannaGuia — Seu Guia de Cannabis Medicinal no Brasil" />
-    <meta name="twitter:description" content="Catálogo unificado de Cannabis Medicinal no Brasil com Fummelier IA e médicos prescritores." />
+    <meta name="twitter:title" content="CannaGuia — Seu Guia de Cannabis Medicinal" />
+    <meta name="twitter:description" content="O CannaGuia é o catálogo unificado de Cannabis Medicinal no Brasil, reunindo produtos de associações autorizadas, perfis de terpenos e médicos prescritores." />
+    <meta name="twitter:image" content="https://www.cannaguia.com.br/logo_cannaguia_transparente.png" />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
