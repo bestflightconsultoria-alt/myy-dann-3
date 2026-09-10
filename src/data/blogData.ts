@@ -2,6 +2,188 @@ import { BlogPost } from "../types/blog";
 
 export const MOCK_POSTS: BlogPost[] = [
   {
+    id: "10",
+    slug: "melhores-associacoes-cannabis-medicinal-brasil-2026-guia-acolhimento-valores",
+    title: "Melhores Associações de Cannabis Medicinal no Brasil em 2026: Guia Completo de Acolhimento, Cardápios e Valores",
+    excerpt: "Confira a análise comparativa detalhada entre as principais associações de pacientes do Brasil (Damasceno, ALCA, Abrapango e AdaptaCann): requisitos legais, processos de filiação, laudos laboratoriais e transparência de valores.",
+    category: "Acolhimento e Associações",
+    readTime: "7 min de leitura",
+    date: "10 de Setembro de 2026",
+    author: "Redação CannaGuia",
+    tags: ["Associações", "Instituto Damasceno", "ALCA", "Abrapango", "AdaptaCann", "Acolhimento", "Valores", "RDC 1015/2026"],
+    isPinned: true,
+    content: `
+      <h3>1. O Papel Vital das Associações no Modelo Brasileiro</h3>
+      <p>No Brasil, o acesso à Cannabis Medicinal não depende apenas de farmácias com produtos importados com altos custos em dólar. Graças à mobilização de famílias, decisões judiciais e ao marco regulatório da <strong>RDC Anvisa nº 1.015/2026</strong>, as <strong>associações de pacientes sem fins lucrativos</strong> tornaram-se o pilar central da democratização do tratamento terapêutico no país.</p>
+      
+      <p>Essas entidades operam sob o modelo de <em>cultivo coletivo solidário</em>, onde os associados rateiam exclusivamente os custos operacionais (insumos agrícolas, luz, laudos analíticos e equipe farmacêutica). O resultado é uma redução expressiva de custo: óleos com laudos certificados que começam na faixa de <strong>R$ 150 a R$ 250</strong> e flores medicinais com custo de rateio até 70% menor do que o mercado convencional.</p>
+
+      <h3>2. Comparativo Direto das Principais Associações</h3>
+      <div style="overflow-x: auto; margin: 20px 0;">
+        <table style="width: 100%; border-collapse: collapse; font-size: 13px; text-align: left;">
+          <thead>
+            <tr style="background: #f0fdf4; border-bottom: 2px solid #10b981; color: #064e3b;">
+              <th style="padding: 10px 12px; font-weight: 800;">Associação</th>
+              <th style="padding: 10px 12px; font-weight: 800;">Sede</th>
+              <th style="padding: 10px 12px; font-weight: 800;">Catálogo de Destaque</th>
+              <th style="padding: 10px 12px; font-weight: 800;">Controle Laboratorial</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom: 1px solid #e5e7eb;">
+              <td style="padding: 10px 12px; font-weight: 700; color: #111827;">Instituto Damasceno</td>
+              <td style="padding: 10px 12px; color: #4b5563;">Fortaleza - CE</td>
+              <td style="padding: 10px 12px; color: #059669; font-weight: 600;">Líder em Flores Medicinais (Gorila Freak, Kush, 24K Gold) e Óleos Full Spectrum</td>
+              <td style="padding: 10px 12px; color: #4b5563;">Laudos cromatográficos detalhados com perfil de canabinoides e terpenos</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #e5e7eb;">
+              <td style="padding: 10px 12px; font-weight: 700; color: #111827;">ALCA Cannabis</td>
+              <td style="padding: 10px 12px; color: #4b5563;">Paraná - PR</td>
+              <td style="padding: 10px 12px; color: #059669; font-weight: 600;">Ampla variedade de óleos sublinguais, pomadas terapêuticas e flores selecionadas</td>
+              <td style="padding: 10px 12px; color: #4b5563;">Controle de contaminantes, metais pesados e potência padronizada</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #e5e7eb;">
+              <td style="padding: 10px 12px; font-weight: 700; color: #111827;">Abrapango</td>
+              <td style="padding: 10px 12px; color: #4b5563;">Brasília - DF</td>
+              <td style="padding: 10px 12px; color: #059669; font-weight: 600;">Foco em patologias graves, acolhimento pediátrico e óleos de alta concentração de CBD</td>
+              <td style="padding: 10px 12px; color: #4b5563;">Análises microbiológicas rigorosas e loteamento rastreável</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #e5e7eb;">
+              <td style="padding: 10px 12px; font-weight: 700; color: #111827;">AdaptaCann</td>
+              <td style="padding: 10px 12px; color: #4b5563;">São Paulo - SP</td>
+              <td style="padding: 10px 12px; color: #059669; font-weight: 600;">Formatações inovadoras, cápsulas e acolhimento multidisciplinar de pacientes</td>
+              <td style="padding: 10px 12px; color: #4b5563;">Certificações laboratoriais e acompanhamento pós-acolhimento</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>3. Como se Associar Legalmente Passo a Passo</h3>
+      <p>Para se filiar e solicitar medicamentos em qualquer associação autorizada no Brasil, o paciente precisa apresentar:</p>
+      <ul>
+        <li><strong>Prescrição Médica Válida:</strong> Emitida por médico devidamente registrado no CRM (conforme Resolução CFM nº 2.324/2022).</li>
+        <li><strong>Relatório ou Laudo Clínico:</strong> Descrevendo o diagnóstico, histórico do paciente e a justificativa terapêutica.</li>
+        <li><strong>Termo de Adesão e Consentimento:</strong> Assinado pelo paciente ou responsável legal, formalizando o vínculo associativo.</li>
+      </ul>
+
+      <div style="background: #ecfdf5; border-left: 4px solid #10b981; padding: 16px; border-radius: 8px; margin: 20px 0;">
+        <strong style="color: #065f46;">💡 Transparência CannaGuia:</strong>
+        <p style="margin: 6px 0 0 0; color: #047857; font-size: 14px;">Você pode comparar os cardápios de todas essas entidades, verificar fichas botânicas e acionar o botão oficial de acolhimento diretamente no nosso <a href="/associacoes" style="color: #059669; font-weight: 700; text-decoration: underline;">Diretório Unificado de Associações</a>.</p>
+      </div>
+    `
+  },
+  {
+    id: "11",
+    slug: "top-5-strains-associacoes-ansiedade-insonia-terpenos",
+    title: "Top 5 Strains das Associações para Ansiedade e Insônia: Como os Terpenos Definem o Tratamento",
+    excerpt: "Entenda por que a concentração de canabinoides isolada não explica o efeito calmante e descubra as 5 genéticas das associações brasileiras com melhores perfis de Mirceno, Linalol e Cariofileno para noites restauradoras e controle do estresse.",
+    category: "Ciência dos Terpenos",
+    readTime: "6 min de leitura",
+    date: "10 de Setembro de 2026",
+    author: "Redação CannaGuia",
+    tags: ["Ansiedade", "Insônia", "Terpenos", "Mirceno", "Linalol", "Sommelier IA", "Strains", "Catálogo"],
+    isPinned: false,
+    content: `
+      <h3>1. Por Que a Porcentagem de THC ou CBD Não Conta a História Inteira?</h3>
+      <p>Um dos erros mais comuns de novos pacientes é escolher flores medicinais baseando-se apenas na porcentagem de THC ou CBD. A ciência farmacológica contemporânea demonstrou que o verdadeiro direcionamento do efeito terapêutico é regido pelo <strong>Efeito Entourage</strong>, proporcionado pelos <strong>terpenos</strong> — os óleos essenciais aromáticos sintetizados nos tricomas da planta.</p>
+      
+      <p>Enquanto o Limoneno e o Terpinoleno ativam vias de foco e clareza mental, terpenos como o <strong>Mirceno</strong> (sedativo muscular e facilitador da barreira hematoencefálica) e o <strong>Linalol</strong> (modulador ansiolítico que atua nos receptores GABAérgicos) são indispensáveis para desacelerar a mente e induzir o sono profundo.</p>
+
+      <h3>2. As 5 Strains de Destaque no Catálogo Nacional</h3>
+      <ol style="padding-left: 20px; line-height: 1.8;">
+        <li>
+          <strong>Gorila Kush (Indica Predominante):</strong> Rica em Beta-Cariofileno e Mirceno. Excelente para pacientes com dores crônicas associadas à dificuldade para iniciar o sono.
+        </li>
+        <li>
+          <strong>24K Gold (Híbrida Relaxante):</strong> Aroma cítrico e doce com alta carga de Mirceno e Limoneno equilibrado. Ideal para relaxamento no final da tarde, reduzindo o estresse sem causar sedação excessiva imediata.
+        </li>
+        <li>
+          <strong>Mango Kush (Perfil Alto Mirceno):</strong> Famosa pelo teor expressivo de Mirceno, que potencializa a absorção dos canabinoides, indicada para quadros severos de insônia inicial e espasmos musculares.
+        </li>
+        <li>
+          <strong>Mimosa (Modulação de Humor e Ansiedade Diurna):</strong> Perfil rico em Linalol e Cariofileno, excelente para crises de ansiedade diurnas em que o paciente precisa de tranquilidade sem perder a funcionalidade.
+        </li>
+        <li>
+          <strong>Gorila Freak (Híbrida Potente de Transição):</strong> Combinação de notas amadeiradas com ação sistêmica gradual, ótima para pacientes que acordam diversas vezes durante a madrugada.
+        </li>
+      </ol>
+
+      <div style="background: #f0fdf4; border: 1.5px solid #34d399; padding: 20px; border-radius: 12px; margin: 24px 0; text-align: center;">
+        <h4 style="color: #065f46; margin-bottom: 8px;">Dúvida sobre qual perfil terpênico você precisa?</h4>
+        <p style="color: #047857; font-size: 14px; margin-bottom: 14px;">Utilize gratuitamente o nosso recomendador por inteligência artificial que cruza seus sintomas com as mais de 90 variedades catalogadas no Brasil.</p>
+        <a href="/sommelier" style="display: inline-block; background: #059669; color: #ffffff; padding: 10px 24px; border-radius: 999px; font-weight: 700; text-decoration: none;">Acessar o Sommelier IA CannaGuia</a>
+      </div>
+    `
+  },
+  {
+    id: "12",
+    slug: "vaporizador-ervas-secas-vs-fumar-ciencia-temperatura-economia-terpenos",
+    title: "Vaporizador de Ervas Secas vs Fumar: A Ciência da Temperatura, Economia da Flor e Preservação de Terpenos",
+    excerpt: "Por que médicos prescrevem a vaporização térmica e proíbem o fumo na seda? Análise científica de temperaturas (175°C a 195°C vs 800°C), redução de alcatrão, preservação de terpenos e como economizar até 40% das suas flores medicinais.",
+    category: "Redução de Danos",
+    readTime: "6 min de leitura",
+    date: "10 de Setembro de 2026",
+    author: "Redação CannaGuia",
+    tags: ["Vaporizador", "Redução de Danos", "AirVape", "Terpenos", "Flores Medicinais", "Economia", "Saúde Pulmonar"],
+    isPinned: false,
+    content: `
+      <h3>1. O Dilema Clínico: Por que Fumar Não é Terapêutico?</h3>
+      <p>Quando um médico prescritor indica o uso de flores medicinais <em>in natura</em>, uma regra é enfática em qualquer receita: <strong>a via de administração deve ser exclusivamente inalatória por vaporização térmica</strong>. Fumar a flor na seda tradicional nunca é uma conduta aceita pela medicina canabinoide moderna.</p>
+      
+      <p>A razão está na física e na química da combustão. Ao queimar a matéria vegetal com fogo:</p>
+      <ul>
+        <li>A brasa ultrapassa <strong>800°C a 900°C</strong>, destruindo piroliticamente mais de 50% dos canabinoides e terpenos antes mesmo de chegarem aos pulmões.</li>
+        <li>A queima gera subprodutos tóxicos inevitáveis, como <strong>monóxido de carbono, alcatrão, benzeno e hidrocarbonetos aromáticos policíclicos</strong>, que causam inflamação broncopulmonar e tosse crônica.</li>
+      </ul>
+
+      <h3>2. Como Funciona a Vaporização Térmica Precisa (175°C a 195°C)</h3>
+      <p>Os vaporizadores de ervas secas operam por convecção ou condução controlada eletronicamente. Eles apenas aquecem a câmara cerâmica até a temperatura exata de ebulição dos canabinoides e terpenos (geralmente entre 175°C e 195°C), sem atingir o ponto de queima da celulose da planta.</p>
+
+      <div style="overflow-x: auto; margin: 20px 0;">
+        <table style="width: 100%; border-collapse: collapse; font-size: 13px; text-align: left;">
+          <thead>
+            <tr style="background: #f0fdf4; border-bottom: 2px solid #10b981; color: #064e3b;">
+              <th style="padding: 10px 12px; font-weight: 800;">Fator</th>
+              <th style="padding: 10px 12px; font-weight: 800;">Combustão (Seda / Fogo)</th>
+              <th style="padding: 10px 12px; font-weight: 800;">Vaporização Térmica 💨</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom: 1px solid #e5e7eb;">
+              <td style="padding: 10px 12px; font-weight: 700; color: #111827;">Temperatura de Operação</td>
+              <td style="padding: 10px 12px; color: #dc2626; font-weight: 700;">800°C a 900°C (destrutiva)</td>
+              <td style="padding: 10px 12px; color: #059669; font-weight: 700;">175°C a 195°C (precisa e controlada)</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #e5e7eb;">
+              <td style="padding: 10px 12px; font-weight: 700; color: #111827;">Preservação dos Terpenos</td>
+              <td style="padding: 10px 12px; color: #dc2626;">Destrói mais de 60% dos aromas e propriedades</td>
+              <td style="padding: 10px 12px; color: #059669; font-weight: 700;">Preserva 95%+ do perfil aromático terapêutico</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #e5e7eb;">
+              <td style="padding: 10px 12px; font-weight: 700; color: #111827;">Rendimento do Medicamento</td>
+              <td style="padding: 10px 12px; color: #4b5563;">Desperdício alto (fumaça contínua)</td>
+              <td style="padding: 10px 12px; color: #059669; font-weight: 700;">Economia de até 40% na flor medicinal</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #e5e7eb;">
+              <td style="padding: 10px 12px; font-weight: 700; color: #111827;">Impacto Pulmonar</td>
+              <td style="padding: 10px 12px; color: #dc2626;">Alcatrão e monóxido de carbono</td>
+              <td style="padding: 10px 12px; color: #059669; font-weight: 700;">Vapor limpo e puro, sem alcatrão</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>3. Economia Real no Tratamento</h3>
+      <p>Além da proteção biológica, a vaporização gera uma economia direta impressionante no bolso do paciente. Em um vaporizador, uma quantidade minúscula de 0,1g a 0,15g de flor rende uma sessão terapêutica completa e eficaz. Enquanto no método tradicional 10g de flor duram poucas semanas, no vaporizador o mesmo frasco dura frequentemente o dobro do tempo.</p>
+
+      <div style="background: #f8fafc; border: 2px solid #38bdf8; padding: 20px; border-radius: 12px; margin: 24px 0;">
+        <h4 style="color: #0369a1; margin-bottom: 8px;">Parceria Oficial AirVape Brasil & CannaGuia</h4>
+        <p style="color: #0f172a; font-size: 14px; margin-bottom: 12px;">Para incentivar a redução de danos nos pacientes associados, todos os leitores do CannaGuia têm acesso ao cupom de 5% de desconto em qualquer modelo oficial da AirVape Brasil com garantia estendida de fábrica.</p>
+        <p style="font-size: 15px; color: #0284c7; font-weight: 800;">🏷️ Utilize o cupom: <span style="background: #e0f2fe; padding: 4px 10px; border-radius: 6px; letter-spacing: 1px;">CANNAGUIA</span> no checkout oficial da AirVape.</p>
+      </div>
+    `
+  },
+  {
     id: "9",
     slug: "gorila-kush-vs-gorila-freak-analise-comparativa-terpenos-canabinoides",
     title: "Gorila Kush vs Gorila Freak: Análise Comparativa de Terpenos, Canabinoides e Indicações Medicinais",
