@@ -88,8 +88,10 @@ export const Blog: React.FC<BlogProps> = ({ initialPostId, initialPostSlug, onSe
               </div>
             </article>
 
-            {/* Banner Horizontal de Conversão no Final do Artigo */}
-            <EbookCard variant="horizontal" />
+            {/* Banner no final do artigo exibido apenas no mobile (já que no desktop fica apenas a coluna lateral) */}
+            <div className="block lg:hidden">
+              <EbookCard variant="horizontal" />
+            </div>
           </div>
 
           {/* Coluna Lateral Vertical (Ad Sticky no Desktop) */}
