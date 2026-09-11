@@ -92,6 +92,7 @@ export function App() {
     if (tab === 'blog') {
       setBlogNavKey(prev => prev + 1);
     }
+    window.scrollTo(0, 0);
 
     let newUrl = '/';
     if (tab === 'catalogo-flores') newUrl = '/catalogo';

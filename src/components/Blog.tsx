@@ -40,10 +40,18 @@ export const Blog: React.FC<BlogProps> = ({ initialPostId, initialPostSlug, onSe
     };
   }, [selectedPost, posts]);
 
+  // Rola a página automaticamente para o topo ao abrir um artigo
+  useEffect(() => {
+    if (selectedPost) {
+      window.scrollTo(0, 0);
+    }
+  }, [selectedPost]);
+
   const handleBackToList = () => {
     setSelectedPost(null);
     if (onSelectPost) onSelectPost(null);
     window.history.pushState(null, '', '/blog');
+    window.scrollTo(0, 0);
   };
 
   if (selectedPost) {
