@@ -34,6 +34,7 @@ export function App() {
   const [selectedStrainId, setSelectedStrainId] = useState<string | undefined>(undefined);
   const [selectedAssocId, setSelectedAssocId] = useState<string | undefined>(undefined);
   const [selectedArticleSlug, setSelectedArticleSlug] = useState<string | undefined>(undefined);
+  const [blogNavKey, setBlogNavKey] = useState<number>(0);
 
   // Leitura inicial da URL ao carregar a página
   useEffect(() => {
@@ -88,6 +89,9 @@ export function App() {
     setSelectedStrainId(undefined);
     setSelectedAssocId(undefined);
     setSelectedArticleSlug(undefined);
+    if (tab === 'blog') {
+      setBlogNavKey(prev => prev + 1);
+    }
 
     let newUrl = '/';
     if (tab === 'catalogo-flores') newUrl = '/catalogo';
@@ -129,9 +133,11 @@ export function App() {
   // Callback de seleção de artigo para URL limpa e SEO
   const handleSelectPost = (post: BlogPost | null) => {
     if (post) {
+      setSelectedArticleSlug(post.slug);
       window.history.pushState(null, '', `/blog/${post.slug}`);
       document.title = `${post.title} | CannaGuia`;
     } else {
+      setSelectedArticleSlug(undefined);
       window.history.pushState(null, '', '/blog');
       document.title = 'Guia do Paciente & Artigos — CannaGuia';
     }
@@ -187,6 +193,7 @@ export function App() {
           {activeTab === 'medicos' && <Doctors />}
           {activeTab === 'blog' && (
             <Blog 
+              key={blogNavKey}
               initialPostSlug={selectedArticleSlug} 
               onSelectPost={handleSelectPost}
             />
