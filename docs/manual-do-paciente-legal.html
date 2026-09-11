@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>O Manual do Paciente Legal (Edição 2026)</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+  --primary: #133B2B;
+  --primary-dark: #0D281E;
+  --secondary: #EBF3EE;
+  --bg-page: #FAFAF8;
+  --text-main: #1E2623;
+  --text-muted: #55635C;
+  --amber: #C88A2C;
+  --amber-light: #FFFDF7;
+  --border: #D6E0D9;
+  --border-light: #E8EFEA;
+  --red-light: #FEF2F2;
+  --red-border: #EF4444;
+}
+
+@page {
+  size: A4;
+  margin: 18mm 18mm 20mm 18mm;
+  @bottom-right {
+    content: counter(page);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 8pt;
+    color: #888;
+  }
+  @bottom-left {
+    content: "O Manual do Paciente Legal • Edição 2026";
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 8pt;
+    color: #888;
+  }
+}
+
+@page:first {
+  margin: 0;
+  @bottom-right { content: normal; }
+  @bottom-left { content: normal; }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  color: var(--text-main);
+  background-color: var(--bg-page);
+  line-height: 1.65;
+  font-size: 10.5pt;
+  margin: 0;
+  padding: 0;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+/* Front Cover Page */
+.cover-page-container {
+  width: 100vw;
+  height: 100vh;
+  page-break-after: always;
+  break-after: page;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #FAFAF8;
+  overflow: hidden;
+  position: relative;
+}
+
+.cover-page-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.page-break {
+  page-break-before: always;
+  break-before: page;
+}
+
+.avoid-break {
+  page-break-inside: avoid;
+  break-inside: avoid;
+}
+
+/* Internal Title Page */
+.title-page {
+  padding: 40px 20px 30px 20px;
+  text-align: center;
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 2px solid var(--border);
+}
+
+.title-badge {
+  display: inline-block;
+  background-color: var(--secondary);
+  color: var(--primary);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 8.5pt;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  margin-bottom: 24px;
+}
+
+.main-title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 26pt;
+  font-weight: 800;
+  color: var(--primary);
+  line-height: 1.2;
+  margin: 0 0 16px 0;
+  letter-spacing: -0.5px;
+}
+
+.main-subtitle {
+  font-family: 'Inter', sans-serif;
+  font-size: 12pt;
+  font-weight: 400;
+  color: var(--text-muted);
+  max-width: 580px;
+  margin: 0 auto 36px auto;
+  line-height: 1.5;
+}
+
+.title-metadata {
+  font-size: 9pt;
+  color: var(--text-muted);
+  border-top: 1px solid var(--border);
+  padding-top: 20px;
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.title-metadata p {
+  margin: 4px 0;
+}
+
+/* Disclaimer Box */
+.disclaimer-box {
+  background-color: var(--amber-light);
+  border: 1px solid #E6D2B5;
+  border-left: 5px solid var(--amber);
+  border-radius: 8px;
+  padding: 16px 20px;
+  margin: 30px 0;
+}
+
+.disclaimer-title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 10pt;
+  font-weight: 700;
+  color: #92580E;
+  margin: 0 0 8px 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.disclaimer-box p, .disclaimer-box li {
+  font-size: 9pt;
+  color: #4B3B22;
+  line-height: 1.55;
+  margin: 6px 0;
+}
+
+/* Table of Contents */
+.toc {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 24px 28px;
+  margin: 30px 0;
+}
+
+.toc h2 {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 15pt;
+  color: var(--primary);
+  margin-top: 0;
+  border-bottom: 2px solid var(--secondary);
+  padding-bottom: 10px;
+}
+
+.toc-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.toc-item {
+  margin-bottom: 10px;
+  font-size: 9.5pt;
+}
+
+.toc-item strong {
+  color: var(--primary);
+}
+
+/* Typography & Content */
+h1.section-title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 18pt;
+  font-weight: 800;
+  color: var(--primary);
+  border-bottom: 3px solid var(--primary);
+  padding-bottom: 8px;
+  margin-top: 40px;
+  margin-bottom: 20px;
+}
+
+h2.chapter-title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 14pt;
+  font-weight: 700;
+  color: var(--primary);
+  margin-top: 32px;
+  margin-bottom: 14px;
+}
+
+h3 {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 11.5pt;
+  font-weight: 600;
+  color: var(--primary-dark);
+  margin-top: 22px;
+  margin-bottom: 8px;
+}
+
+p {
+  margin: 0 0 14px 0;
+  text-align: justify;
+}
+
+ul, ol {
+  margin: 0 0 16px 0;
+  padding-left: 22px;
+}
+
+li {
+  margin-bottom: 6px;
+}
+
+strong {
+  font-weight: 600;
+  color: var(--primary-dark);
+}
+
+/* Callout Boxes */
+.callout {
+  border-radius: 8px;
+  padding: 14px 18px;
+  margin: 20px 0;
+  font-size: 9.5pt;
+}
+
+.callout-summary {
+  background-color: var(--secondary);
+  border-left: 4px solid var(--primary);
+  color: var(--primary-dark);
+}
+
+.callout-summary .callout-header {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-size: 9pt;
+}
+
+.callout-warning {
+  background-color: #FFFBEB;
+  border: 1px solid #FDE68A;
+  border-left: 4px solid var(--amber);
+  color: #78350F;
+}
+
+.callout-warning .callout-header {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 700;
+  color: #B45309;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-size: 9pt;
+}
+
+.callout-caution {
+  background-color: var(--red-light);
+  border: 1px solid #FECACA;
+  border-left: 4px solid var(--red-border);
+  color: #7F1D1D;
+}
+
+.callout-caution .callout-header {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 700;
+  color: #991B1B;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-size: 9pt;
+}
+
+/* Cards & Grid */
+.grid-cards {
+  display: flex;
+  gap: 14px;
+  margin: 20px 0;
+}
+
+.card {
+  flex: 1;
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+}
+
+.card-title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 10pt;
+  font-weight: 700;
+  color: var(--primary);
+  margin-top: 0;
+  margin-bottom: 8px;
+  border-bottom: 1px solid var(--border-light);
+  padding-bottom: 6px;
+}
+
+.card ul {
+  padding-left: 16px;
+  margin: 0;
+  font-size: 9pt;
+}
+
+/* Tables */
+table.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 9pt;
+  background: white;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+
+table.data-table th {
+  background-color: var(--primary);
+  color: white;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 600;
+  padding: 10px 12px;
+  text-align: left;
+  border-bottom: 2px solid var(--primary-dark);
+}
+
+table.data-table td {
+  padding: 9px 12px;
+  border-bottom: 1px solid var(--border-light);
+  color: var(--text-main);
+  vertical-align: top;
+}
+
+table.data-table tr:nth-child(even) {
+  background-color: #F8FAF9;
+}
+
+/* Printable Patient Card */
+.printable-card-container {
+  border: 2px dashed var(--amber);
+  background-color: white;
+  border-radius: 12px;
+  padding: 24px;
+  margin: 30px auto;
+  max-width: 520px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+}
+
+.card-inner-header {
+  text-align: center;
+  border-bottom: 2px solid var(--primary);
+  padding-bottom: 12px;
+  margin-bottom: 16px;
+}
+
+.card-inner-title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 12pt;
+  font-weight: 800;
+  color: var(--primary);
+  letter-spacing: 0.5px;
+}
+
+.card-inner-sub {
+  font-size: 8pt;
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.form-row {
+  margin-bottom: 10px;
+  font-size: 9pt;
+  display: flex;
+}
+
+.form-label {
+  font-weight: 600;
+  color: var(--primary-dark);
+  min-width: 140px;
+}
+
+.form-value-line {
+  flex: 1;
+  border-bottom: 1px dotted #999;
+}
+
+.card-legal-notice {
+  margin-top: 18px;
+  padding: 10px;
+  background-color: var(--secondary);
+  border-radius: 6px;
+  font-size: 8pt;
+  color: var(--primary-dark);
+  line-height: 1.4;
+  text-align: justify;
+}
+
+/* Footer / Closing */
+.closing-box {
+  margin-top: 40px;
+  text-align: center;
+  padding: 24px;
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+}
+
+.closing-title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 800;
+  color: var(--primary);
+  font-size: 13pt;
+  margin-bottom: 6px;
+}
+
+.closing-tagline {
+  font-size: 9pt;
+  color: var(--text-muted);
+}
+</style>
+</head>
+<body>
+
+<!-- PÁGINA 1: CAPA OFICIAL EM ALTA DEFINIÇÃO -->
+<div class="cover-page-container">
+  <img src="capa_final_com_titulo.png" alt="Capa Oficial - O Manual do Paciente Legal">
+</div>
+
+<!-- FOLHA DE ROSTO INTERNA -->
+<div class="title-page">
+  <span class="title-badge">Edição do Paciente (2026)</span>
+  <h1 class="main-title">O MANUAL DO<br>PACIENTE LEGAL</h1>
+  <p class="main-subtitle">O Passo a Passo Simples para Conseguir sua Receita, Comprar seu Remédio Legalmente e Conhecer seus Direitos no Brasil</p>
+  
+  <div class="title-metadata">
+    <p><strong>Base Legal:</strong> RDC Anvisa nº 327/2019 e RDC nº 660/2022</p>
+    <p><strong>Natureza da Publicação:</strong> Material Educativo e Informativo Independente sobre Saúde</p>
+  </div>
+</div>
+
+<!-- AVISO OBRIGATÓRIO -->
+<div class="disclaimer-box avoid-break">
+  <div class="disclaimer-title">AVISO IMPORTANTE E OBRIGATÓRIO</div>
+  <p>Este guia foi escrito apenas para ensinar e informar. Ele não substitui de jeito nenhum uma consulta com um médico de verdade.</p>
+  <p>Apenas um médico pode dizer se você precisa desse tratamento, qual a dose certa para o seu corpo e qual o melhor produto para a sua saúde.</p>
+  <p>A cannabis medicinal não é milagre nem cura todas as doenças. Ela é um tratamento de apoio comprovado pela ciência. Nunca pare de tomar os remédios que o seu médico já passou sem falar com ele antes.</p>
+  <p>No Brasil, para comprar ou receber qualquer produto de cannabis dentro da lei, você sempre vai precisar de uma receita médica em seu nome.</p>
+</div>
+
+<!-- SUMÁRIO GERAL -->
+<div class="toc avoid-break">
+  <h2>SUMÁRIO</h2>
+  <ul class="toc-list">
+    <li class="toc-item"><strong>Introdução:</strong> Você Não Está Fazendo Nada de Errado</li>
+    <li class="toc-item"><strong>Capítulo 1:</strong> O "Freio" que Você Já Tem no Corpo: Por Que a Cannabis Funciona?</li>
+    <li class="toc-item"><strong>Capítulo 2:</strong> CBD e THC Sem Segredos: Afinal, Isso Deixa a Pessoa "Chapada"?</li>
+    <li class="toc-item"><strong>Capítulo 3:</strong> O Que Esse Remédio Realmente Trata? (Dores, Sono, Ansiedade e Mais)</li>
+    <li class="toc-item"><strong>Capítulo 4:</strong> Como Se Toma? Óleo em Gotas vs Vaporizador (E Como Guardar em Casa)</li>
+    <li class="toc-item"><strong>Capítulo 5:</strong> Quanto Custa Esse Tratamento de Verdade? (A Conta Real no Fim do Mês)</li>
+    <li class="toc-item"><strong>Capítulo 6:</strong> Como Achar o Médico Certo e o Que Falar na Consulta</li>
+    <li class="toc-item"><strong>Capítulo 7:</strong> O Caminho das Associações Brasileiras (O Remédio Mais Acessível)</li>
+    <li class="toc-item"><strong>Capítulo 8:</strong> Como Importar Direto com a Anvisa pelo Gov.br (Passo a Passo em 10 Minutos)</li>
+    <li class="toc-item"><strong>Capítulo 9:</strong> Se a Polícia Parar Você: O Que Fazer, O Que Dizer e a Dica de Ouro do QR Code</li>
+    <li class="toc-item"><strong>Capítulo 10:</strong> Carteira de Motorista (CNH), Exame de Cabelo e Trabalho</li>
+    <li class="toc-item"><strong>Capítulo 11:</strong> Viajando com Seu Remédio de Avião ou Ônibus Sem Dor de Cabeça</li>
+    <li class="toc-item"><strong>Caderno de Bônus Práticos:</strong> Roteiro da Consulta, Tabela de Gotas e Cartão de Direitos</li>
+  </ul>
+</div>
+
+<div class="page-break"></div>
+
+<!-- INTRODUÇÃO -->
+<h1 class="section-title">INTRODUÇÃO: Você Não Está Fazendo Nada de Errado</h1>
+
+<p>Se você abriu este livro, muito provavelmente está passando por uma destas duas situações:</p>
+<ol>
+  <li>Você (ou alguém da sua família) convive com uma dor que não passa, passa noites rolando na cama sem conseguir dormir, vive com o peito apertado de ansiedade ou cuida de alguém com problemas neurológicos, e os remédios normais da farmácia já não ajudam mais ou dão efeitos colaterais horríveis.</li>
+  <li>Você já ouviu falar que o óleo de cannabis funciona, mas tem receio. Receio do que os parentes vão falar, medo de estar quebrando a lei, ou medo de "ficar doidão" e perder o controle da própria mente.</li>
+</ol>
+
+<p>A primeira coisa que você precisa saber é: <strong>o seu medo é perfeitamente normal.</strong></p>
+
+<p>Por quase cem anos, colocaram na cabeça do brasileiro que essa planta servia apenas para o crime. Enquanto as pessoas discutiam preconceito, os maiores cientistas do mundo descobriram algo impressionante: o corpo humano tem um sistema feito especialmente para se conectar com as substâncias dessa planta.</p>
+
+<p>Você não está colocando nada estranho no seu corpo. Você está apenas devolvendo para o seu organismo o equilíbrio que a rotina, o estresse e a idade desgastaram.</p>
+
+<p>Hoje, no Brasil, pacientes comuns compram produtos na farmácia da esquina, recebem encomendas em casa pelo Correio com nota fiscal e viajam de avião pelo país inteiro com o remédio na bolsa, sem medo da polícia.</p>
+
+<p>Este guia foi feito para ser uma conversa direta, simples e transparente. Sem palavras difíceis, sem enrolação e sem rodeios. A partir de agora, você vai entender tudo de forma clara.</p>
+
+<div class="page-break"></div>
+
+<!-- CAPÍTULO 1 -->
+<h2 class="chapter-title">CAPÍTULO 1: O "Freio" que Você Já Tem no Corpo: Por Que a Cannabis Funciona?</h2>
+
+<p>Para entender por que a cannabis funciona, você não precisa ser médico. Basta pensar no seu corpo como um carro.</p>
+
+<p>Quando você acelera na estrada, o carro anda. Mas se ele não tiver freio, ele bate.</p>
+
+<p>No seu corpo acontece a mesma coisa:</p>
+<ul>
+  <li>Quando você se queima ou bate o joelho, o corpo liga o sinal de dor para avisar que algo está errado.</li>
+  <li>Quando você toma um susto ou passa por um perrengue no trabalho, o corpo acelera o coração e joga adrenalina para você reagir.</li>
+</ul>
+
+<p>O problema de quem tem dor crônica, insônia ou ansiedade constante é um só: <strong>o freio do corpo quebrou.</strong> O alarme de perigo fica disparado dia e noite, e o corpo não consegue mais voltar sozinho para a calma.</p>
+
+<h3>Quem É o Maestro do Seu Corpo?</h3>
+<p>Dentro de você existe uma rede de sensores chamada <strong>Sistema Endocanabinoide</strong>. O nome parece complicado, mas a função dele é simples: ele é o <strong>termostato</strong> ou o <strong>freio</strong> do organismo.</p>
+<p>Ele é responsável por baixar a febre quando você está com infecção, desligar a dor depois que o machucado começa a sarar e acalmar os pensamentos acelerados na hora de deitar para dormir.</p>
+
+<h3>A Chave e a Fechadura</h3>
+<p>O mais incrível é que o seu próprio corpo fabrica substâncias muito parecidas com as da planta cannabis todos os dias.</p>
+<p>Pense nas suas células como se fossem portas cheias de fechaduras. Quando você está bem e tranquilo, o seu corpo produz as "chaves" certas, encaixa nessas fechaduras e mantém a casa em ordem.</p>
+<p>Mas quando você passa anos com dor, estresse ou inflamações, o corpo para de produzir chaves suficientes. A casa fica bagunçada.</p>
+<p>É aí que o remédio de cannabis entra. Ele traz chaves naturais da planta que se encaixam com perfeição nas mesmas fechaduras do seu corpo, ajudando ele a puxar o freio de mão e voltar ao normal.</p>
+
+<div class="callout callout-summary avoid-break">
+  <div class="callout-header">Em Resumo</div>
+  Você não toma cannabis medicinal para alterar a sua mente. Você toma para devolver ao corpo o freio natural que ele perdeu.
+</div>
+
+<!-- CAPÍTULO 2 -->
+<h2 class="chapter-title">CAPÍTULO 2: CBD e THC Sem Segredos: Afinal, Isso Deixa a Pessoa "Chapada"?</h2>
+
+<p>A maior dúvida de quem nunca usou é: <em>"Se eu tomar isso, vou ficar rindo à toa, alucinado ou desorientado?"</em>.</p>
+<p>A resposta direta é: <strong>não, se você tomar o remédio certo, na dose certa recomendada pelo médico.</strong></p>
+
+<div class="grid-cards avoid-break">
+  <div class="card">
+    <div class="card-title">1. O CBD: Remédio da Calma</div>
+    <ul>
+      <li><strong>Não inebria:</strong> Mente 100% lúcida</li>
+      <li><strong>Ação:</strong> Acalma nervos e ansiedade</li>
+      <li><strong>Inflamação:</strong> Desinflama músculos e juntas</li>
+      <li><strong>Público:</strong> Crianças atípicas, adultos e idosos</li>
+    </ul>
+  </div>
+  <div class="card">
+    <div class="card-title">2. O THC: Remédio da Dor Forte</div>
+    <ul>
+      <li><strong>Microdoses:</strong> Gotinhas bem pequenas</li>
+      <li><strong>Ação:</strong> Apaga dores muito intensas</li>
+      <li><strong>Músculos:</strong> Destrava rigidez motora</li>
+      <li><strong>Sono:</strong> Ajuda a dormir a noite toda</li>
+    </ul>
+  </div>
+</div>
+
+<h3>Os Terpenos: O Cheiro que Cura</h3>
+<p>Sabe quando você descasca uma laranja ou sente o cheirinho de um chá de camomila e já sente uma calma gostosa? Esse cheiro vem dos <strong>terpenos</strong>.</p>
+<ul>
+  <li><strong>Mirceno (cheiro de terra/manga):</strong> ótimo para relaxar os músculos e dar sono.</li>
+  <li><strong>Limoneno (cheiro de limão):</strong> ótimo para levantar o ânimo e dar disposição de manhã.</li>
+  <li><strong>Linalol (cheiro de lavanda):</strong> um calmante natural contra o nervosismo.</li>
+</ul>
+
+<div class="page-break"></div>
+
+<!-- CAPÍTULO 3 -->
+<h2 class="chapter-title">CAPÍTULO 3: O Que Esse Remédio Realmente Trata?</h2>
+
+<p>A cannabis não é remédio mágico para tudo. A ciência médica séria já comprovou que ela funciona de verdade nas seguintes situações:</p>
+
+<ol>
+  <li><strong>Dores Crônicas e Fibromialgia:</strong> Os remédios comuns atacam o estômago e os rins. A cannabis atua direto nos fios que transmitem o sinal da dor para o cérebro, diminuindo o volume desse alarme.</li>
+  <li><strong>Insônia:</strong> Remédios tarja preta pesados deixam a pessoa grogue no dia seguinte e viciam rápido. A cannabis ajuda o corpo a relaxar de forma natural, permitindo que você durma sem acordar com a cabeça pesada.</li>
+  <li><strong>Ansiedade e Estresse Severo:</strong> O óleo age diminuindo a tempestade de pensamentos que não param na cabeça, sem deixar você dopado durante o trabalho.</li>
+  <li><strong>Suporte no Autismo (TEA):</strong> Em muitas famílias, crianças e jovens no espectro autista passam por crises intensas de agitação. O uso de óleos adequados ajuda a acalmar as crises sensoriais, melhorando o convívio em família.</li>
+  <li><strong>Convulsões e Tremores (Epilepsia e Parkinson):</strong> Pacientes que tinham dezenas de convulsões por dia conseguiram reduzir as crises para quase zero com o óleo prescrito.</li>
+</ol>
+
+<!-- CAPÍTULO 4 -->
+<h2 class="chapter-title">CAPÍTULO 4: Como Se Toma? Óleo em Gotas vs Vaporizador (E Como Guardar em Casa)</h2>
+
+<p>Você não precisa e <strong>não deve fumar</strong> para se tratar com cannabis. Aliás, nenhum médico sério manda fumar nada.</p>
+
+<table class="data-table avoid-break">
+  <thead>
+    <tr>
+      <th>Forma de Uso</th>
+      <th>Como Funciona</th>
+      <th>Tempo de Início</th>
+      <th>Duração do Efeito</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Óleo Sublingual (Gotas)</strong></td>
+      <td>Pinga embaixo da língua, segura por 1 minuto e engole. Uso diário basal.</td>
+      <td>40 a 90 minutos</td>
+      <td>6 a 8 horas (longa duração)</td>
+    </tr>
+    <tr>
+      <td><strong>Vaporizador de Ervas Secas</strong></td>
+      <td>Aparelho fechado que esquenta a flor a 180°C sem fogo nem fumaça.</td>
+      <td>2 a 5 minutos</td>
+      <td>1 a 3 horas (resgate rápido)</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Atenção: Vaporizador de Ervas Secas NÃO É Vape de Nicotina/Essência</strong></p>
+<p>Vapes descartáveis e pods contêm líquidos com nicotina e aromatizantes artificiais proibidos pela Anvisa. Já o vaporizador medicinal esquenta a flor natural em câmara de cerâmica ou inox a 180 graus. Não tem fogo, não tem cinza e não tem alcatrão, liberando apenas o vapor com o princípio ativo.</p>
+
+<h3>Como Guardar Seu Remédio em Casa:</h3>
+<ul>
+  <li>Mantenha o frasco sempre em pé, em local fresco, arejado e longe do sol (dentro do armário do quarto).</li>
+  <li>Não precisa de geladeira a não ser que o rótulo mande expressamente.</li>
+  <li>Mantenha sempre fora do alcance de crianças e animais.</li>
+</ul>
+
+<div class="page-break"></div>
+
+<!-- CAPÍTULO 5 -->
+<h2 class="chapter-title">CAPÍTULO 5: Quanto Custa Esse Tratamento de Verdade? (A Conta Real no Fim do Mês)</h2>
+
+<p>Muita gente desiste antes mesmo de tentar porque ouviu falar que o tratamento custa dois ou três mil reais por mês. Isso era verdade anos atrás. Hoje o mercado mudou completamente.</p>
+
+<div class="grid-cards avoid-break">
+  <div class="card">
+    <div class="card-title">Opção 1: Farmácia de Rua</div>
+    <p style="font-size: 8.5pt;">Compra direta no balcão com receita especial.</p>
+    <p style="font-size: 9pt; font-weight: bold; color: var(--primary);">R$ 250 a R$ 800 por vidro</p>
+  </div>
+  <div class="card">
+    <div class="card-title">Opção 2: Importar de Fora</div>
+    <p style="font-size: 8.5pt;">Pede autorização na Anvisa e compra do exterior.</p>
+    <p style="font-size: 9pt; font-weight: bold; color: var(--primary);">R$ 200 a R$ 500 + Frete Dólar</p>
+  </div>
+  <div class="card">
+    <div class="card-title">Opção 3: Associações</div>
+    <p style="font-size: 8.5pt;">Entidades sem fins lucrativos. Recebe pelo Correio.</p>
+    <p style="font-size: 9pt; font-weight: bold; color: var(--amber);">R$ 90 a R$ 220 (Até 60% OFF)</p>
+  </div>
+</div>
+
+<p>Para a maioria dos pacientes que usam uma dose normal de manutenção, o gasto fica entre <strong>R$ 120 e R$ 200 por mês</strong> comprando de associações brasileiras. Algumas entidades cobram uma pequena anuidade ou mensalidade social (geralmente entre R$ 30 e R$ 50) para custear suporte social e jurídico.</p>
+
+<!-- CAPÍTULO 6 -->
+<h2 class="chapter-title">CAPÍTULO 6: Como Achar o Médico Certo e o Que Falar na Consulta</h2>
+
+<p>Pela lei brasileira, <strong>qualquer médico com CRM ativo pode receitar cannabis medicinal</strong> (psiquiatra, neurologista, ortopedista ou clínico geral). Como muitos médicos tradicionais ainda têm insegurança, o caminho mais rápido é buscar profissionais que já atuam na área.</p>
+
+<p>A maioria das pessoas faz a consulta por <strong>telemedicina</strong> (pelo celular ou computador). O médico atende de casa e envia a receita oficial no seu WhatsApp com assinatura digital válida em todo o Brasil.</p>
+
+<h3>O Que Falar na Sua Consulta:</h3>
+<ol>
+  <li><strong>Conte o seu histórico:</strong> <em>"Doutor, já tomei tais remédios, mas tive efeitos colaterais e continuo sofrendo com dores/insônia."</em></li>
+  <li><strong>Diga o impacto na sua rotina:</strong> <em>"Não consigo trabalhar direito nem dormir por causa da crise."</em></li>
+  <li><strong>Seja sincero:</strong> O médico está ali para te ajudar e o sigilo médico é protegido por lei.</li>
+</ol>
+
+<!-- CAPÍTULO 7 -->
+<h2 class="chapter-title">CAPÍTULO 7: O Caminho das Associações Brasileiras</h2>
+
+<p>As associações de pacientes são entidades sem fins lucrativos criadas por famílias que precisavam do remédio e conseguiram na Justiça o direito de plantar a cannabis, produzir o óleo e entregar aos associados a preço de custo.</p>
+
+<h3>O Passo a Passo para se Cadastrar:</h3>
+<ol>
+  <li>Tenha em mãos sua <strong>receita médica</strong> e seu <strong>laudo com o código CID</strong> da doença.</li>
+  <li>Acesse o site da associação de pacientes (como Instituto Damasceno, ALCA, Abrapango ou AdaptaCann).</li>
+  <li>Preencha a ficha de cadastro e anexe as fotos dos seus documentos.</li>
+  <li>Em 24h a 48h úteis o setor social aprova o cadastro.</li>
+  <li>Você escolhe o produto prescrito, faz o pagamento da contribuição e recebe o vidro pelo Sedex ou transportadora na sua casa com nota fiscal.</li>
+</ol>
+
+<div class="page-break"></div>
+
+<!-- CAPÍTULO 8 -->
+<h2 class="chapter-title">CAPÍTULO 8: Como Importar Direto com a Anvisa pelo Gov.br (Passo a Passo em 10 Minutos)</h2>
+
+<p>Se o seu médico receitou um produto que é fabricado fora do Brasil (nos Estados Unidos ou Europa), você mesmo pode pedir a autorização da Anvisa pelo celular em 10 minutos, de graça.</p>
+
+<h3>O Que Você Precisa Ter em Mãos:</h3>
+<ul>
+  <li>Sua conta no portal <strong>Gov.br</strong> (a mesma usada para SUS, FGTS ou Carteira de Trabalho).</li>
+  <li>Foto ou PDF legível da sua <strong>receita médica</strong> recente com assinatura do médico.</li>
+  <li>Foto do seu comprovante de residência.</li>
+</ul>
+
+<h3>O Passo a Passo no Celular ou Computador:</h3>
+<ol>
+  <li>Acesse o site oficial: <strong>gov.br</strong>.</li>
+  <li>Na barra de busca, digite: <em>"Importar cannabis medicinal"</em> e clique no serviço <em>"Solicitar autorização para a importação excepcional de produtos à base de Canabidiol"</em>.</li>
+  <li>Clique no botão azul <strong>Iniciar</strong>.</li>
+  <li>Confirme seus dados pessoais na tela.</li>
+  <li>Digite o nome do produto e do fabricante exatamente como o seu médico escreveu na receita.</li>
+  <li>Anexe a foto da sua receita médica e clique em <strong>Enviar solicitação</strong>.</li>
+</ol>
+
+<p>A aprovação costuma sair no mesmo dia ou em pouquíssimos dias direto no seu e-mail, gerando um documento em PDF válido por 2 anos. Com essa autorização, você compra no site da marca internacional e a encomenda passa pela alfândega da Receita Federal sem risco de apreensão.</p>
+
+<!-- CAPÍTULO 9 -->
+<h2 class="chapter-title">CAPÍTULO 9: Se a Polícia Parar Você: O Que Fazer, O Que Dizer e a Dica de Ouro do QR Code</h2>
+
+<p>Se a polícia fizer uma blitz e achar o seu remédio, <strong>você não pode ser preso se estiver com a documentação em ordem.</strong> Você é um paciente em tratamento de saúde, amparado pela Constituição.</p>
+
+<div class="callout callout-warning avoid-break">
+  <div class="callout-header">Os 4 Documentos para Guardar no Celular ou Bolsa</div>
+  <ol style="margin-top: 6px;">
+    <li>Foto ou PDF da <strong>Receita Médica válida</strong>;</li>
+    <li>Seu <strong>Laudo Médico com o código CID</strong>;</li>
+    <li>Comprovante da associação OU autorização da Anvisa;</li>
+    <li>A <strong>Nota Fiscal</strong> da compra em seu nome.</li>
+  </ol>
+</div>
+
+<p><strong>Regra de Ouro da Embalagem:</strong> Nunca ande com o remédio solto em potes sem identificação. Deixe sempre dentro do frasco original da associação ou farmácia, com rótulo e lote visíveis.</p>
+
+<p><strong>O Que Falar na Abordagem:</strong> <em>"Boa tarde, senhor policial. Sou paciente em tratamento de saúde com prescrição médica. Aqui está a minha receita, o meu laudo e a nota fiscal em meu nome."</em></p>
+
+<p><strong>A Dica de Ouro do QR Code:</strong> Se o policial tiver dúvida, mostre o QR Code impresso na sua receita digital ICP-Brasil e convide o policial a apontar a câmera do celular dele: o site oficial <strong>validar.iti.gov.br</strong> confirma na hora a assinatura médica e a validade jurídica do documento.</p>
+
+<div class="page-break"></div>
+
+<!-- CAPÍTULO 10 -->
+<h2 class="chapter-title">CAPÍTULO 10: Carteira de Motorista (CNH), Exame de Cabelo e Trabalho</h2>
+
+<p><strong>Você Tem Carteira A ou B (Carro de Passeio ou Moto)?</strong></p>
+<p>Se você tem carteira de motorista normal de passeio (A ou B), <strong>você NÃO faz exame toxicológico para renovar a CNH!</strong> O Detran só exige exame de vista e médico simples. Pode fazer o seu tratamento em paz sem risco de perder sua habilitação.</p>
+
+<p><strong>E Quem Tem Carteira Profissional (C, D ou E)?</strong></p>
+<p>Motoristas de transporte remunerado e cargas pesadas passam pela análise de queratina (cabelo ou pelo):</p>
+<ul>
+  <li>O <strong>CBD puro (isolado)</strong> NÃO acusa no teste de drogas.</li>
+  <li>Óleos que contêm <strong>microdoses de THC</strong> podem acusar positivo, pois o cabelo retém a substância por meses.</li>
+</ul>
+
+<p><strong>Como se proteger:</strong> No momento da coleta no laboratório, informe que você usa medicamento prescrito com canabinoides e exija a declaração na ficha de custódia. Se a Junta Médica do Detran criar empecilho, o laudo médico e a receita comprovam a finalidade estritamente terapêutica, resguardando o seu direito de trabalhar.</p>
+
+<!-- CAPÍTULO 11 -->
+<h2 class="chapter-title">CAPÍTULO 11: Viajando com Seu Remédio de Avião ou Ônibus Sem Dor de Cabeça</h2>
+
+<p>Em voos dentro do Brasil (domésticos):</p>
+<ul>
+  <li>Transporte seus óleos e flores sempre na <strong>bagagem de mão</strong>, acompanhados da receita médica legível.</li>
+  <li>Aparelhos vaporizadores a bateria têm que ir <strong>obrigatoriamente na mala de mão</strong> (proibidos no porão por segurança contra incêndio da ANAC).</li>
+</ul>
+
+<div class="callout callout-caution avoid-break">
+  <div class="callout-header">Aviso Crítico para Viagens Internacionais</div>
+  <strong>NUNCA viaje de avião para o exterior com produtos de cannabis</strong>, mesmo com receita brasileira. As leis de outros países são diferentes e o porte de derivados de cannabis pode ser enquadrado como tráfico internacional de drogas em outros aeroportos.
+</div>
+
+<div class="page-break"></div>
+
+<!-- CADERNO DE BÔNUS -->
+<h1 class="section-title">CADERNO DE BÔNUS PRÁTICOS</h1>
+
+<h2 class="chapter-title">BÔNUS 1: O Roteiro Completo para a Sua Primeira Consulta Médica</h2>
+<p style="font-size: 9pt; color: var(--text-muted);"><em>Imprima esta página ou anote as respostas no celular antes da sua telemedicina.</em></p>
+
+<div class="card avoid-break">
+  <div class="card-title">1. Perguntas para Você Responder Antes da Consulta</div>
+  <ul>
+    <li>Qual dor ou sintoma mais estraga a minha rotina e há quanto tempo sofro com isso?</li>
+    <li>Quais remédios convencionais já tomei no passado e quais efeitos colaterais tive?</li>
+    <li>O que eu deixei de fazer no meu dia a dia por causa desse problema de saúde?</li>
+  </ul>
+  
+  <div class="card-title" style="margin-top: 14px;">2. As 5 Perguntas Obrigatórias para Fazer ao Médico</div>
+  <ol>
+    <li><em>"Doutor, para o meu quadro clínico, é melhor começar com CBD puro ou com uma fórmula que tenha um pouquinho de THC também?"</em></li>
+    <li><em>"Quantas gotas devo tomar no primeiro dia e como aumento a dose se a dor persistir?"</em></li>
+    <li><em>"Qual o melhor horário do dia para tomar a minha dose principal?"</em></li>
+    <li><em>"Em quantas semanas devemos agendar a reavaliação de retorno?"</em></li>
+    <li><em>"O senhor pode me emitir, além da receita, um Laudo Médico detalhado com o código CID para eu me cadastrar na associação e andar protegido na rua?"</em></li>
+  </ol>
+</div>
+
+<h2 class="chapter-title">BÔNUS 2: A Tabela Simples de Gotas (Para Saber se Está Fazendo Efeito)</h2>
+<p style="font-size: 9pt; color: var(--text-muted);"><em>Use este quadrinho nas primeiras quatro semanas para registrar a sua resposta.</em></p>
+
+<table class="data-table avoid-break">
+  <thead>
+    <tr>
+      <th style="width: 20%;">Semana</th>
+      <th style="width: 25%;">Dose / Horário</th>
+      <th style="width: 15%;">Sintoma (0-10)</th>
+      <th style="width: 15%;">Descanso (0-10)</th>
+      <th style="width: 25%;">O Que Senti de Diferente?</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Semana 1</strong></td>
+      <td>2 gotas às 20h</td>
+      <td>_____ / 10</td>
+      <td>_____ / 10</td>
+      <td>Adaptação inicial</td>
+    </tr>
+    <tr>
+      <td><strong>Semana 2</strong></td>
+      <td>3 gotas às 20h</td>
+      <td>_____ / 10</td>
+      <td>_____ / 10</td>
+      <td>Sem efeitos colaterais</td>
+    </tr>
+    <tr>
+      <td><strong>Semana 3</strong></td>
+      <td>Ajuste orientado</td>
+      <td>_____ / 10</td>
+      <td>_____ / 10</td>
+      <td>Alívio percebido</td>
+    </tr>
+    <tr>
+      <td><strong>Semana 4</strong></td>
+      <td>Dose estável</td>
+      <td>_____ / 10</td>
+      <td>_____ / 10</td>
+      <td>Controle dos sintomas</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="page-break"></div>
+
+<h2 class="chapter-title">BÔNUS 3: O Cartão de Direitos do Paciente</h2>
+<p style="font-size: 9pt; color: var(--text-muted);"><em>Tire uma foto ou recorte para guardar dentro da sua carteira junto aos documentos.</em></p>
+
+<div class="printable-card-container avoid-break">
+  <div class="card-inner-header">
+    <div class="card-inner-title">DECLARAÇÃO DE TRATAMENTO MÉDICO</div>
+    <div class="card-inner-sub">Amparo Legal: Constituição Federal Art. 5º e 196</div>
+  </div>
+  
+  <div class="form-row">
+    <span class="form-label">Nome do Paciente:</span>
+    <span class="form-value-line"></span>
+  </div>
+  <div class="form-row">
+    <span class="form-label">CPF:</span>
+    <span class="form-value-line"></span>
+  </div>
+  <div class="form-row">
+    <span class="form-label">RG / Órgão:</span>
+    <span class="form-value-line"></span>
+  </div>
+  <div class="form-row">
+    <span class="form-label">Médico Assistente:</span>
+    <span class="form-value-line"></span>
+  </div>
+  <div class="form-row">
+    <span class="form-label">CRM / Estado:</span>
+    <span class="form-value-line"></span>
+  </div>
+  <div class="form-row">
+    <span class="form-label">Diagnóstico (CID):</span>
+    <span class="form-value-line"></span>
+  </div>
+  <div class="form-row">
+    <span class="form-label">Dispensado Por:</span>
+    <span class="form-value-line"></span>
+  </div>
+
+  <div class="card-legal-notice">
+    <strong>AVISO PARA FISCALIZAÇÃO OU AUTORIDADE POLICIAL:</strong><br>
+    O portador deste cartão realiza tratamento de saúde contínuo sob acompanhamento médico regular. A documentação completa com Receita Médica com certificado digital ICP-Brasil, Laudo Médico e Nota Fiscal de compra encontra-se disponível no aparelho celular do paciente para conferência imediata.
+  </div>
+</div>
+
+<div class="closing-box avoid-break">
+  <div class="closing-title">O Manual do Paciente Legal</div>
+  <div class="closing-tagline">Informação clara é a maior proteção da sua saúde e dos seus direitos.</div>
+</div>
+
+</body>
+</html>

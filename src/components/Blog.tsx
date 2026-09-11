@@ -3,6 +3,7 @@ import { BookOpen, Clock, Calendar, ArrowRight, ArrowLeft } from 'lucide-react';
 import { useBlog } from '../hooks/useBlog';
 import { BlogPost } from '../types/blog';
 import { injectBlogArticleSchema, resetDefaultSchema } from '../lib/seoStructuredData';
+import { EbookCard } from './EbookCard';
 
 interface BlogProps {
   initialPostId?: string;
@@ -47,7 +48,7 @@ export const Blog: React.FC<BlogProps> = ({ initialPostId, initialPostSlug, onSe
 
   if (selectedPost) {
     return (
-      <div className="max-w-3xl mx-auto space-y-6 animate-in fade-in duration-200">
+      <div className="max-w-6xl mx-auto space-y-6 animate-in fade-in duration-200">
         <button
           onClick={handleBackToList}
           className="flex items-center gap-1.5 text-xs font-bold text-emerald-700 bg-emerald-50 hover:bg-emerald-100 px-3.5 py-2 rounded-xl transition-all"
@@ -55,34 +56,47 @@ export const Blog: React.FC<BlogProps> = ({ initialPostId, initialPostSlug, onSe
           <ArrowLeft className="w-4 h-4" /> Voltar para os Guias
         </button>
 
-        <article className="bg-white rounded-3xl border border-gray-200 p-6 sm:p-10 shadow-sm space-y-6">
-          <div className="space-y-3">
-            <span className="px-3 py-1 text-xs font-bold rounded-full bg-emerald-100 text-emerald-800">
-              {selectedPost.category}
-            </span>
-            <h1 className="text-2xl sm:text-4xl font-extrabold text-gray-900 leading-tight">
-              {selectedPost.title}
-            </h1>
-            <div className="flex flex-wrap items-center gap-4 text-xs text-gray-500 pt-2 border-b pb-4">
-              <span className="flex items-center gap-1"><Calendar className="w-3.5 h-3.5" /> {selectedPost.date}</span>
-              <span className="flex items-center gap-1"><Clock className="w-3.5 h-3.5" /> {selectedPost.readTime}</span>
-              <span>Por <strong>{selectedPost.author}</strong></span>
-            </div>
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px] gap-8 items-start">
+          {/* Conteúdo Principal do Artigo */}
+          <div className="min-w-0 space-y-8">
+            <article className="bg-white rounded-3xl border border-gray-200 p-6 sm:p-10 shadow-sm space-y-6">
+              <div className="space-y-3">
+                <span className="px-3 py-1 text-xs font-bold rounded-full bg-emerald-100 text-emerald-800">
+                  {selectedPost.category}
+                </span>
+                <h1 className="text-2xl sm:text-4xl font-extrabold text-gray-900 leading-tight">
+                  {selectedPost.title}
+                </h1>
+                <div className="flex flex-wrap items-center gap-4 text-xs text-gray-500 pt-2 border-b pb-4">
+                  <span className="flex items-center gap-1"><Calendar className="w-3.5 h-3.5" /> {selectedPost.date}</span>
+                  <span className="flex items-center gap-1"><Clock className="w-3.5 h-3.5" /> {selectedPost.readTime}</span>
+                  <span>Por <strong>{selectedPost.author}</strong></span>
+                </div>
+              </div>
+
+              <div
+                className="prose prose-emerald max-w-none text-gray-700 leading-relaxed space-y-4 text-sm sm:text-base [&>h3]:text-lg [&>h3]:font-bold [&>h3]:text-gray-900 [&>h3]:mt-6 [&>ul]:list-disc [&>ul]:pl-5 [&>ul]:space-y-1.5 [&>ol]:list-decimal [&>ol]:pl-5 [&>ol]:space-y-1.5"
+                dangerouslySetInnerHTML={{ __html: selectedPost.content }}
+              />
+
+              <div className="pt-6 border-t flex flex-wrap gap-2">
+                {selectedPost.tags.map((tag, idx) => (
+                  <span key={idx} className="text-xs bg-gray-100 text-gray-700 px-2.5 py-1 rounded-lg font-medium">
+                    #{tag}
+                  </span>
+                ))}
+              </div>
+            </article>
+
+            {/* Banner Horizontal de Conversão no Final do Artigo */}
+            <EbookCard variant="horizontal" />
           </div>
 
-          <div
-            className="prose prose-emerald max-w-none text-gray-700 leading-relaxed space-y-4 text-sm sm:text-base [&>h3]:text-lg [&>h3]:font-bold [&>h3]:text-gray-900 [&>h3]:mt-6 [&>ul]:list-disc [&>ul]:pl-5 [&>ul]:space-y-1.5 [&>ol]:list-decimal [&>ol]:pl-5 [&>ol]:space-y-1.5"
-            dangerouslySetInnerHTML={{ __html: selectedPost.content }}
-          />
-
-          <div className="pt-6 border-t flex flex-wrap gap-2">
-            {selectedPost.tags.map((tag, idx) => (
-              <span key={idx} className="text-xs bg-gray-100 text-gray-700 px-2.5 py-1 rounded-lg font-medium">
-                #{tag}
-              </span>
-            ))}
+          {/* Coluna Lateral Vertical (Ad Sticky no Desktop) */}
+          <div className="hidden lg:block sticky top-24">
+            <EbookCard variant="sidebar" />
           </div>
-        </article>
+        </div>
       </div>
     );
   }
@@ -98,6 +112,9 @@ export const Blog: React.FC<BlogProps> = ({ initialPostId, initialPostSlug, onSe
           Artigos educativos, passo a passo de acolhimento e guias para descomplicar seu tratamento canabinoide.
         </p>
       </div>
+
+      {/* Destaque do Livro no Topo da Lista do Blog */}
+      <EbookCard variant="horizontal" />
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {posts.map((post) => (
