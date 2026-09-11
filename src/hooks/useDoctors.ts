@@ -2,12 +2,21 @@ import { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
 import { Doctor } from '../types/doctor';
 import { INITIAL_DOCTORS } from '../data/doctorsData';
+import { trackCustomEvent } from '../lib/analytics';
 
 export { type Doctor } from '../types/doctor';
 export { INITIAL_DOCTORS } from '../data/doctorsData';
 
 const STORAGE_KEY = 'cannaguia_approved_doctors_v2';
 const CLICKS_STORAGE_KEY = 'cannaguia_doctor_clicks_v1';
+
+interface ContactRequestDoctorRow {
+  id?: string;
+  entity_name?: string;
+  responsible_name?: string;
+  phone?: string;
+  message?: string;
+}
 
 export function useDoctors() {
   const [doctors, setDoctors] = useState<Doctor[]>(INITIAL_DOCTORS);
@@ -18,14 +27,16 @@ export function useDoctors() {
     try {
       const stored = localStorage.getItem(CLICKS_STORAGE_KEY);
       if (stored) {
-        setDoctorClicks(JSON.parse(stored));
+        setDoctorClicks(JSON.parse(stored) as Record<string, number>);
       }
-    } catch {}
+    } catch (err) {
+      console.warn('Falha ao ler métricas locais de médicos:', err);
+    }
   };
 
   const loadDoctors = async () => {
     setLoading(true);
-    let list: Doctor[] = [...INITIAL_DOCTORS];
+    const list: Doctor[] = [...INITIAL_DOCTORS];
 
     // 1. Carrega do localStorage local se houver novos cadastrados
     try {
@@ -37,7 +48,9 @@ export function useDoctors() {
           if (!existingIds.has(d.id)) list.push(d);
         });
       }
-    } catch {}
+    } catch (err) {
+      console.warn('Falha ao ler médicos do cache local:', err);
+    }
 
     // 2. Carrega solicitações aprovadas do Supabase contact_requests se disponível
     if (supabase) {
@@ -48,7 +61,7 @@ export function useDoctors() {
           .eq('type', 'prescriber');
 
         if (!error && data) {
-          const approvedFromDb: Doctor[] = data.map((item: any) => {
+          const approvedFromDb: Doctor[] = (data as ContactRequestDoctorRow[]).map((item) => {
             const isOnline = item.message?.includes('TELEMEDICINA: SIM') ?? true;
             const crmStr = item.responsible_name || 'CRM / CRO Verificado';
             
@@ -90,25 +103,25 @@ export function useDoctors() {
 
   const trackDoctorClick = async (doc: Doctor) => {
     // 1. Envia evento customizado para o Google Analytics 4 (GA4)
-    if (typeof window !== 'undefined' && (window as any).gtag) {
-      (window as any).gtag('event', 'doctor_whatsapp_click', {
-        doctor_id: doc.id,
-        doctor_name: doc.name,
-        doctor_crm: doc.crm,
-        doctor_state: doc.state,
-        event_category: 'Prescriber Leads',
-        event_label: `WhatsApp Click - ${doc.name}`
-      });
-    }
+    trackCustomEvent('doctor_whatsapp_click', {
+      doctor_id: doc.id,
+      doctor_name: doc.name,
+      doctor_crm: doc.crm,
+      doctor_state: doc.state,
+      event_category: 'Prescriber Leads',
+      event_label: `WhatsApp Click - ${doc.name}`
+    });
 
     // 2. Salva incremento local para métricas visíveis
     try {
       const stored = localStorage.getItem(CLICKS_STORAGE_KEY);
-      const current = stored ? JSON.parse(stored) : {};
+      const current: Record<string, number> = stored ? JSON.parse(stored) : {};
       current[doc.id] = (current[doc.id] || 0) + 1;
       localStorage.setItem(CLICKS_STORAGE_KEY, JSON.stringify(current));
       setDoctorClicks(current);
-    } catch {}
+    } catch (err) {
+      console.warn('Falha ao salvar métrica de clique local:', err);
+    }
 
     // 3. Registra log de métricas no Supabase
     if (supabase) {
@@ -120,7 +133,9 @@ export function useDoctors() {
           phone: doc.contactPhone,
           message: `[LEAD CANNAGUIA] Clique no botão de WhatsApp para o médico ${doc.name} (${doc.crm})`
         });
-      } catch (e) {}
+      } catch (err) {
+        console.warn('Falha ao enviar telemetria para o Supabase:', err);
+      }
     }
   };
 
@@ -129,7 +144,9 @@ export function useDoctors() {
       const updated = [newDoc, ...prev];
       try {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
-      } catch {}
+      } catch (err) {
+        console.warn('Falha ao salvar médico no localStorage:', err);
+      }
       return updated;
     });
   };

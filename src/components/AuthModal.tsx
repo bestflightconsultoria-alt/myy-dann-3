@@ -49,8 +49,9 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
           redirectTo: window.location.origin
         }
       });
-    } catch (err: any) {
-      setErrorMessage(err.message || 'Erro ao conectar com a conta do Google.');
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : 'Erro ao conectar com a conta do Google.';
+      setErrorMessage(msg);
       setLoading(false);
     }
   };
@@ -78,8 +79,9 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
       } else {
         setSuccessMessage('📩 Link de redefinição enviado! Verifique seu e-mail e a pasta de spam.');
       }
-    } catch (err: any) {
-      setErrorMessage(err.message || 'Erro ao solicitar redefinição de senha.');
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : 'Erro ao solicitar redefinição de senha.';
+      setErrorMessage(msg);
     } finally {
       setLoading(false);
     }
@@ -152,8 +154,9 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
           }, 1500);
         }
 
-      } catch (err: any) {
-        setErrorMessage(err.message || 'Erro ao criar conta.');
+      } catch (err: unknown) {
+        const msg = err instanceof Error ? err.message : 'Erro ao criar conta.';
+        setErrorMessage(msg);
       } finally {
         setLoading(false);
       }
@@ -161,7 +164,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
     } else {
       // LOGIN COM EMAIL E SENHA
       try {
-        const { data, error } = await supabase.auth.signInWithPassword({
+        const { error } = await supabase.auth.signInWithPassword({
           email: email.trim(),
           password: password
         });
@@ -184,8 +187,9 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
           if (onSuccess) onSuccess();
         }, 1000);
 
-      } catch (err: any) {
-        setErrorMessage(err.message || 'Erro ao realizar login.');
+      } catch (err: unknown) {
+        const msg = err instanceof Error ? err.message : 'Erro ao realizar login.';
+        setErrorMessage(msg);
       } finally {
         setLoading(false);
       }

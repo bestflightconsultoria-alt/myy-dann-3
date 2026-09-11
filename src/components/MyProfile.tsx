@@ -8,16 +8,13 @@ import {
   Building2, 
   Save, 
   Check, 
-  Sparkles, 
   Users, 
-  SlidersHorizontal,
-  ChevronRight,
-  AlertTriangle,
-  CheckCircle2,
-  Lock,
-  ArrowUpRight,
-  Filter
+  AlertTriangle, 
+  CheckCircle2, 
+  Lock, 
+  ArrowUpRight 
 } from 'lucide-react';
+import type { User as SupabaseUser } from '@supabase/supabase-js';
 import { supabase } from '../lib/supabase';
 import { useAssociations, Association } from '../hooks/useAssociations';
 import { AssociationModal } from './AssociationModal';
@@ -35,6 +32,18 @@ interface UserReview {
   created_at: string;
   patient_name?: string;
   is_verified?: boolean;
+  user_id?: string;
+  prescribing_doctor?: string;
+}
+
+interface DoctorContactRequest {
+  id: string;
+  entity_name?: string;
+  responsible_name?: string;
+  email?: string;
+  phone?: string;
+  message?: string;
+  created_at: string;
 }
 
 // Lista de e-mails autorizados para visualizar o Painel Admin Secreto
@@ -45,11 +54,11 @@ const ADMIN_EMAILS = [
 ];
 
 export const MyProfile: React.FC = () => {
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<SupabaseUser | null>(null);
   const [reviews, setReviews] = useState<UserReview[]>([]);
-  const [allReviewsAdmin, setAllReviewsAdmin] = useState<any[]>([]);
+  const [allReviewsAdmin, setAllReviewsAdmin] = useState<UserReview[]>([]);
   const [adminFilter, setAdminFilter] = useState<'all' | 'verified' | 'anonymous' | 'has_doctor'>('all');
-  const [doctorRequests, setDoctorRequests] = useState<any[]>([]);
+  const [doctorRequests, setDoctorRequests] = useState<DoctorContactRequest[]>([]);
   const [approvedDoctorIds, setApprovedDoctorIds] = useState<string[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [activeTab, setActiveTab] = useState<'profile' | 'reviews' | 'associations' | 'admin'>('profile');
@@ -91,9 +100,10 @@ export const MyProfile: React.FC = () => {
             .order('created_at', { ascending: false });
 
           if (!error && data) {
-            setAllReviewsAdmin(data);
+            const adminData = data as UserReview[];
+            setAllReviewsAdmin(adminData);
 
-            const filtered = data.filter((r: any) => 
+            const filtered = adminData.filter((r: UserReview) => 
               (r.user_id && r.user_id === user.id) ||
               (uName && r.patient_name?.toLowerCase().includes(uName.toLowerCase())) ||
               (uEmail && r.patient_name?.toLowerCase().includes(uEmail.toLowerCase()))
@@ -174,7 +184,9 @@ export const MyProfile: React.FC = () => {
               .from('reviews')
               .update({ prescribing_doctor: prescribingDoctor.trim() })
               .eq('user_id', user.id);
-          } catch (e) {}
+          } catch (err) {
+            console.warn('Falha ao atualizar prescritor retroativamente no Supabase:', err);
+          }
         }
 
         setAllReviewsAdmin(prev => prev.map(r => {

@@ -4,20 +4,17 @@ import {
   Search, 
   MapPin, 
   ShieldCheck, 
-  Calendar, 
   Video,
   UserPlus,
   MessageCircle,
-  Sparkles,
-  Phone,
-  CheckCircle2
+  Phone
 } from 'lucide-react';
 import { DoctorRegistrationModal } from './DoctorRegistrationModal';
-import { useDoctors, Doctor } from '../hooks/useDoctors';
+import { useDoctors } from '../hooks/useDoctors';
 import { injectDoctorSchema, resetDefaultSchema } from '../lib/seoStructuredData';
 
 export const Doctors: React.FC = () => {
-  const { doctors, doctorClicks, trackDoctorClick } = useDoctors();
+  const { doctors, trackDoctorClick } = useDoctors();
   const [search, setSearch] = useState('');
   const [onlyOnline, setOnlyOnline] = useState(false);
   const [isDoctorModalOpen, setIsDoctorModalOpen] = useState(false);

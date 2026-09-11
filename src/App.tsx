@@ -143,8 +143,12 @@ export function App() {
     }
   };
 
-  const handleOpenBlogArticle = (articleId: string) => {
-    setActiveTab('blog');
+  const handleOpenBlogArticle = (articleId?: string) => {
+    if (articleId === '4') {
+      setActiveTab('blog-como-se-associar');
+    } else {
+      setActiveTab('blog');
+    }
     setSelectedArticleSlug('como-se-associar-associacao-cannabis-medicinal-brasil');
     window.history.pushState(null, '', '/blog/como-se-associar-associacao-cannabis-medicinal-brasil');
   };

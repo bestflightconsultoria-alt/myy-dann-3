@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { HelpCircle, ChevronDown, ChevronUp, Search, ShieldCheck, FileText, Stethoscope, Sparkles } from 'lucide-react';
+import { HelpCircle, ChevronDown, ChevronUp, Search } from 'lucide-react';
 import { injectFAQSchema, resetDefaultSchema } from '../lib/seoStructuredData';
 
 interface FaqItem {
@@ -196,5 +196,3 @@ export const FAQ: React.FC = () => {
     </div>
   );
 };
-
-export default FAQ;

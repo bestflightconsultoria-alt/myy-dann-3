@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, Stethoscope, ShieldCheck, Video, MapPin, Phone, Mail, CheckCircle2, Sparkles, Building2 } from 'lucide-react';
+import { X, Stethoscope, ShieldCheck, Video, CheckCircle2 } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 
 interface DoctorRegistrationModalProps {
@@ -21,14 +21,12 @@ export const DoctorRegistrationModal: React.FC<DoctorRegistrationModalProps> = (
 
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
-  const [errorMsg, setErrorMsg] = useState('');
 
   if (!isOpen) return null;
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    setErrorMsg('');
 
     const fullRegistration = `${docType}-${uf.toUpperCase()} ${docNumber.trim()}`;
     const payload = {
@@ -45,7 +43,8 @@ export const DoctorRegistrationModal: React.FC<DoctorRegistrationModalProps> = (
         await supabase.from('contact_requests').insert([payload]);
       }
       setSubmitted(true);
-    } catch {
+    } catch (err) {
+      console.warn('Falha ao registrar médico no Supabase:', err);
       setSubmitted(true);
     } finally {
       setLoading(false);

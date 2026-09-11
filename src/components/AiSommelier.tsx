@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Sparkles, ArrowRight, ShieldCheck, Flame, Award, ThumbsUp, Check, SlidersHorizontal, MessageSquare, Star, RotateCcw } from 'lucide-react';
+import { Sparkles, ArrowRight, Award, Check, SlidersHorizontal, Star, RotateCcw } from 'lucide-react';
 import { useStrains } from '../hooks/useStrains';
 import { Strain } from '../types/strain';
 import { StrainModal } from './StrainModal';
@@ -10,6 +10,15 @@ interface ConditionStats {
   sum: number;
   count: number;
   avg: number;
+}
+
+interface RawReviewItem {
+  id?: string;
+  strain_id?: string;
+  rating?: number | string;
+  comment?: string;
+  treated_conditions?: string[];
+  [key: string]: unknown;
 }
 
 interface CommunityReviewStats {
@@ -51,24 +60,28 @@ export const AiSommelier: React.FC = () => {
   // Busca avaliações da comunidade no Supabase e localStorage para alimentar a IA
   useEffect(() => {
     async function loadCommunityReviews() {
-      let localReviews: any[] = [];
+      let localReviews: RawReviewItem[] = [];
       try {
         const saved = localStorage.getItem('cannaguia_local_reviews');
-        if (saved) localReviews = JSON.parse(saved);
-      } catch (e) {}
+        if (saved) localReviews = JSON.parse(saved) as RawReviewItem[];
+      } catch (err) {
+        console.warn('Falha ao ler avaliações locais:', err);
+      }
 
-      let dbReviews: any[] = [];
+      let dbReviews: RawReviewItem[] = [];
       if (supabase) {
         try {
           const { data, error } = await supabase.from('reviews').select('*');
-          if (!error && data) dbReviews = data;
-        } catch (e) {}
+          if (!error && data) dbReviews = data as RawReviewItem[];
+        } catch (err) {
+          console.warn('Falha ao consultar avaliações no Supabase:', err);
+        }
       }
 
       const allData = [...localReviews, ...dbReviews];
       const statsMap: CommunityReviewStats = {};
 
-      allData.forEach((rev: any) => {
+      allData.forEach((rev: RawReviewItem) => {
         const sId = rev.strain_id;
         if (!sId) return;
 

@@ -6,7 +6,7 @@ import { AssociationModal } from './AssociationModal';
 
 interface AssociationsProps {
   setActiveTab?: (tab: string) => void;
-  openBlogArticle?: (articleId: string) => void;
+  openBlogArticle?: (articleId?: string) => void;
   initialAssocId?: string;
   onSelectAssoc?: (assoc: Association | null) => void;
 }
@@ -54,7 +54,7 @@ export const Associations: React.FC<AssociationsProps> = ({
   }, [associations]);
 
   const filteredAssociations = useMemo(() => {
-    let result = associations.filter((assoc) => {
+    const result = associations.filter((assoc) => {
       const matchesState = selectedState === 'ALL' || assoc.state === selectedState;
       const searchLower = search.toLowerCase();
       const matchesSearch =
@@ -144,7 +144,7 @@ export const Associations: React.FC<AssociationsProps> = ({
         <div className="relative w-full sm:w-auto">
           <select
             value={sortBy}
-            onChange={(e: any) => setSortBy(e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setSortBy(e.target.value as 'rating' | 'reviews' | 'name')}
             className="w-full sm:w-auto pl-8 pr-4 py-2 bg-gray-50 border border-gray-200 rounded-xl text-xs font-bold text-gray-700 outline-none focus:border-emerald-500 shadow-xs cursor-pointer"
           >
             <option value="rating">⭐ Mais Relevantes (Maior Nota)</option>

@@ -1,24 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { 
   X, 
-  DollarSign, 
   Building, 
-  MessageSquarePlus, 
-  AlertTriangle, 
-  CheckCircle2, 
-  UserCheck, 
   Send,
   ShieldCheck,
   Globe,
   Star,
   Plus,
   Sparkles,
-  Tag,
-  Stethoscope,
-  Share2,
-  Check
+  Stethoscope
 } from 'lucide-react';
-import { Strain } from '../types/strain';
+import type { User as SupabaseUser } from '@supabase/supabase-js';
+import { Strain, StrainAssociationOffer } from '../types/strain';
 import { supabase } from '../lib/supabase';
 import { injectProductSchema, resetDefaultSchema } from '../lib/seoStructuredData';
 import { PatientReview, COMMON_CONDITIONS, SPECIFIC_PATIENT_REVIEWS } from '../data/patientReviewsData';
@@ -29,7 +22,7 @@ interface StrainModalProps {
 }
 
 export const StrainModal: React.FC<StrainModalProps> = ({ strain, onClose }) => {
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<SupabaseUser | null>(null);
   const [reviews, setReviews] = useState<PatientReview[]>([]);
   const [showReviewForm, setShowReviewForm] = useState<boolean>(false);
   const [submitting, setSubmitting] = useState<boolean>(false);
@@ -42,7 +35,7 @@ export const StrainModal: React.FC<StrainModalProps> = ({ strain, onClose }) => 
   const [selectedConditions, setSelectedConditions] = useState<string[]>([]);
   const [customCondition, setCustomCondition] = useState<string>('');
   const [positiveEffectInput, setPositiveEffectInput] = useState<string>('');
-  const [selectedSideEffects, setSelectedSideEffects] = useState<string[]>(['Nenhum efeito adverso']);
+  const selectedSideEffects = ['Nenhum efeito adverso'];
   const [customSideEffect, setCustomSideEffect] = useState<string>('');
   const [comment, setComment] = useState<string>('');
 
@@ -78,7 +71,9 @@ export const StrainModal: React.FC<StrainModalProps> = ({ strain, onClose }) => 
           const parsed = JSON.parse(saved);
           local = parsed.filter((r: PatientReview) => r.strainId === strain.id);
         }
-      } catch (e) {}
+      } catch (err) {
+        console.warn('Falha ao ler avaliações locais:', err);
+      }
 
       // Busca relatos mock específicos para esta flor se existirem
       const matchingMock = SPECIFIC_PATIENT_REVIEWS.filter(m => 
@@ -126,7 +121,7 @@ export const StrainModal: React.FC<StrainModalProps> = ({ strain, onClose }) => 
             return !ids.has(l.id) && !supabaseKeys.has(key);
           });
 
-          let combined = [...formatted, ...extraLocal];
+          const combined = [...formatted, ...extraLocal];
 
           const existingKeys = new Set(combined.map(c => `${(c.patientName || '').toLowerCase().trim()}_${c.strainId}`));
           matchingMock.forEach(m => {
@@ -142,7 +137,8 @@ export const StrainModal: React.FC<StrainModalProps> = ({ strain, onClose }) => 
           const filteredMock = matchingMock.filter(m => !localKeys.has(`${(m.patientName || '').toLowerCase().trim()}_${m.strainId}`));
           setReviews([...local, ...filteredMock]);
         }
-      } catch {
+      } catch (err) {
+        console.warn('Falha ao consultar avaliações no Supabase:', err);
         const localKeys = new Set(local.map(l => `${(l.patientName || '').toLowerCase().trim()}_${l.strainId}`));
         const filteredMock = matchingMock.filter(m => !localKeys.has(`${(m.patientName || '').toLowerCase().trim()}_${m.strainId}`));
         setReviews([...local, ...filteredMock]);
@@ -237,7 +233,9 @@ export const StrainModal: React.FC<StrainModalProps> = ({ strain, onClose }) => 
       const saved = localStorage.getItem('cannaguia_local_reviews');
       const list = saved ? JSON.parse(saved) : [];
       localStorage.setItem('cannaguia_local_reviews', JSON.stringify([newReview, ...list]));
-    } catch (e) {}
+    } catch (err) {
+      console.warn('Falha ao salvar avaliação localmente:', err);
+    }
 
     // Salva no Supabase se conectado
     if (supabase) {
@@ -389,7 +387,7 @@ export const StrainModal: React.FC<StrainModalProps> = ({ strain, onClose }) => 
               </p>
 
               <div className="space-y-2.5 pt-1">
-                {strain.associations.map((assoc: any, idx: number) => {
+                {strain.associations.map((assoc: StrainAssociationOffer, idx: number) => {
                   const displayPrice = assoc.priceDisplay || assoc.priceDetail || assoc.unitPrice || (assoc.pricePerGram ? `R$ ${assoc.pricePerGram}/g` : 'Consulte Valor');
                   return (
                     <div key={idx} className="p-3.5 bg-white rounded-xl border border-gray-200 flex items-center justify-between gap-3 shadow-xs">

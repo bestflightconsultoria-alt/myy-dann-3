@@ -14,6 +14,12 @@ function cleanStr(str: string): string {
     .replace(/[^a-z0-9]/g, '');
 }
 
+interface ReviewAssociationRow {
+  association_id: string | null;
+  association_name: string | null;
+  rating: number | string | null;
+}
+
 export function useAssociations() {
   const [associations, setAssociations] = useState<Association[]>(MOCK_ASSOCIATIONS);
   const [loading, setLoading] = useState<boolean>(false);
@@ -28,7 +34,7 @@ export function useAssociations() {
           .select('association_id, association_name, rating');
 
         if (!error && data && data.length > 0) {
-          const rawReviews = data;
+          const rawReviews = data as ReviewAssociationRow[];
 
           setAssociations((prevList) =>
             prevList.map((assoc) => {
@@ -36,7 +42,7 @@ export function useAssociations() {
               const assocCleanAcronym = cleanStr(assoc.acronym);
               const assocCleanId = cleanStr(assoc.id.replace(/-[a-z]{2}$/, ''));
 
-              const matched = rawReviews.filter((r: any) => {
+              const matched = rawReviews.filter((r: ReviewAssociationRow) => {
                 const rName = cleanStr(r.association_name || '');
                 const rId = cleanStr(r.association_id || '');
 
@@ -51,7 +57,7 @@ export function useAssociations() {
               });
 
               if (matched.length > 0) {
-                const total = matched.reduce((acc: number, curr: any) => acc + Number(curr.rating || 5), 0);
+                const total = matched.reduce((acc: number, curr: ReviewAssociationRow) => acc + Number(curr.rating || 5), 0);
                 return {
                   ...assoc,
                   rating: Number((total / matched.length).toFixed(1)),

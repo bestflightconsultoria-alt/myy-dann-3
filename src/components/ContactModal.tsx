@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, Send, CheckCircle2, Building2, Mail, Phone, User, MessageSquare } from 'lucide-react';
+import { X, Send, CheckCircle2, Building2, Mail, Phone, User } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 
 interface ContactModalProps {
@@ -55,7 +55,9 @@ export const ContactModal: React.FC<ContactModalProps> = ({
       const saved = localStorage.getItem('cannaguia_contact_leads');
       const list = saved ? JSON.parse(saved) : [];
       localStorage.setItem('cannaguia_contact_leads', JSON.stringify([payload, ...list]));
-    } catch (e) {}
+    } catch (err) {
+      console.warn('Falha ao salvar lead de contato localmente:', err);
+    }
 
     setSubmitting(false);
     setSubmitted(true);

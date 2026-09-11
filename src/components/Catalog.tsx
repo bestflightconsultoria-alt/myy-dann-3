@@ -67,6 +67,12 @@ const MOCK_COMMUNITY_STATS: CommunityReviewStats = {
 };
 
   // Busca avaliações para exibir estrelas e contagem nos cards perfeitamente sincronizadas
+interface ReviewStrainStatRow {
+  strain_id: string;
+  rating: number | null;
+  is_verified: boolean | null;
+}
+
   useEffect(() => {
     async function loadStats() {
       const map: CommunityReviewStats = JSON.parse(JSON.stringify(MOCK_COMMUNITY_STATS));
@@ -75,7 +81,7 @@ const MOCK_COMMUNITY_STATS: CommunityReviewStats = {
         try {
           const { data, error } = await supabase.from('reviews').select('strain_id, rating, is_verified');
           if (!error && data) {
-            data.forEach((r: any) => {
+            (data as ReviewStrainStatRow[]).forEach((r) => {
               const sId = r.strain_id;
               if (map[sId]) {
                 const newCount = map[sId].count + 1;
@@ -106,6 +112,7 @@ const MOCK_COMMUNITY_STATS: CommunityReviewStats = {
       setCommunityStats(map);
     }
     loadStats();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const categoryTabs = [
@@ -115,7 +122,7 @@ const MOCK_COMMUNITY_STATS: CommunityReviewStats = {
   ];
 
   const processedStrains = useMemo(() => {
-    let result = strains.filter((strain) => {
+    const result = strains.filter((strain) => {
       // 1. Categoria Principal
       const matchCategory = activeCategory ? strain.category === activeCategory : true;
 

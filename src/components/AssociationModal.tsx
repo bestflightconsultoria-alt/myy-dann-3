@@ -2,7 +2,12 @@ import React, { useMemo } from 'react';
 import { X, Phone, CheckCircle2, DollarSign, MapPin, Tag, Globe } from 'lucide-react';
 import { Association } from '../hooks/useAssociations';
 import { useStrains } from '../hooks/useStrains';
+import { Strain, StrainAssociationOffer } from '../types/strain';
 import { trackCustomEvent } from '../lib/analytics';
+
+interface LinkedStrainItem extends Strain {
+  matchedPrice: StrainAssociationOffer;
+}
 
 interface AssociationModalProps {
   association: Association | null;
@@ -143,7 +148,7 @@ export const AssociationModal: React.FC<AssociationModalProps> = ({ association,
 
             {linkedStrains.length > 0 ? (
               <div className="space-y-2.5">
-                {linkedStrains.map((item: any) => (
+                {((linkedStrains as unknown) as LinkedStrainItem[]).map((item) => (
                   <div
                     key={item.id}
                     className="p-3.5 bg-white rounded-2xl border border-gray-200/90 shadow-sm flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2"

@@ -1,8 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Smartphone, Download, X, Sparkles } from 'lucide-react';
 
+interface BeforeInstallPromptEvent extends Event {
+  prompt: () => Promise<void>;
+  userChoice: Promise<{ outcome: 'accepted' | 'dismissed'; platform: string }>;
+}
+
 export const PwaInstallBanner: React.FC = () => {
-  const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
+  const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
   const [showBanner, setShowBanner] = useState<boolean>(false);
 
   useEffect(() => {
@@ -12,7 +17,7 @@ export const PwaInstallBanner: React.FC = () => {
 
     const handleBeforeInstallPrompt = (e: Event) => {
       e.preventDefault();
-      setDeferredPrompt(e);
+      setDeferredPrompt(e as BeforeInstallPromptEvent);
       setShowBanner(true);
     };
 
@@ -75,5 +80,3 @@ export const PwaInstallBanner: React.FC = () => {
     </div>
   );
 };
-
-export default PwaInstallBanner;

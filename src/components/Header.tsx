@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Building2, Flame, BookOpen, LogOut, UserCheck, LayoutGrid, Stethoscope, HelpCircle, User } from 'lucide-react';
+import type { User as SupabaseUser } from '@supabase/supabase-js';
 import { supabase } from '../lib/supabase';
 import { Logo } from './Logo';
-import { AuthModal } from './AuthModal';
 
 interface HeaderProps {
   activeTab: string;
@@ -11,7 +11,7 @@ interface HeaderProps {
 }
 
 export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab, onOpenAuth }) => {
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<SupabaseUser | null>(null);
 
   useEffect(() => {
     if (!supabase) return;
@@ -28,16 +28,6 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab, onOpenA
 
     return () => subscription.unsubscribe();
   }, []);
-
-  const handleLogin = async () => {
-    if (!supabase) return;
-    await supabase.auth.signInWithOAuth({
-      provider: 'google',
-      options: {
-        redirectTo: window.location.origin
-      }
-    });
-  };
 
   const handleLogout = async (e: React.MouseEvent) => {
     e.stopPropagation();
