@@ -11,9 +11,33 @@ interface ReviewItem {
 }
 
 /**
- * Utilitário Completo de Injeção de Dados Estruturados (Schema.org / JSON-LD)
- * Habilita Rich Snippets (Estrelas Amarelas, Preços, FAQ e Médicos) no Google Search
+ * Utilitário Completo de Injeção de Dados Estruturados (Schema.org / JSON-LD) e Tags Canônicas
+ * Habilita Rich Snippets e Indexação Canônica Individual por Página no Google Search
  */
+
+export const updateCanonicalUrl = (canonicalPath?: string) => {
+  try {
+    const origin = 'https://www.cannaguia.com.br';
+    let fullUrl = origin;
+    if (canonicalPath) {
+      const cleanPath = canonicalPath.startsWith('/') ? canonicalPath : `/${canonicalPath}`;
+      fullUrl = cleanPath === '/' ? origin : `${origin}${cleanPath}`;
+    } else if (typeof window !== 'undefined') {
+      const currentPath = window.location.pathname.replace(/\/$/, '') || '/';
+      fullUrl = currentPath === '/' ? origin : `${origin}${currentPath}`;
+    }
+
+    let linkEl = document.querySelector<HTMLLinkElement>('link[rel="canonical"]');
+    if (!linkEl) {
+      linkEl = document.createElement('link');
+      linkEl.setAttribute('rel', 'canonical');
+      document.head.appendChild(linkEl);
+    }
+    linkEl.setAttribute('href', fullUrl);
+  } catch {
+    // Falha silenciosa em ambientes sem DOM
+  }
+};
 
 export const resetDefaultSchema = () => {
   const existingScript = document.getElementById('cannaguia-jsonld-dynamic');
@@ -28,6 +52,7 @@ export const injectProductSchema = (
 ) => {
   try {
     resetDefaultSchema();
+    updateCanonicalUrl(`/strains/${strain.id}`);
 
     // Extração de preços numéricos das associações
     let lowPrice = 45.0;
@@ -131,6 +156,7 @@ export const injectProductSchema = (
 export const injectDoctorSchema = (doctor: Doctor) => {
   try {
     resetDefaultSchema();
+    updateCanonicalUrl(`/medicos/${doctor.id}`);
 
     const schemaData = {
       "@context": "https://schema.org",
@@ -169,6 +195,7 @@ export const injectDoctorSchema = (doctor: Doctor) => {
 export const injectBlogArticleSchema = (post: BlogPost) => {
   try {
     resetDefaultSchema();
+    updateCanonicalUrl(`/blog/${post.slug}`);
 
     const schemaData = {
       "@context": "https://schema.org",
@@ -210,6 +237,7 @@ export const injectBlogArticleSchema = (post: BlogPost) => {
 export const injectFAQSchema = (items: { question: string; answer: string }[]) => {
   try {
     resetDefaultSchema();
+    updateCanonicalUrl('/faq');
 
     const schemaData = {
       "@context": "https://schema.org",

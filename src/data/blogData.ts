@@ -2,6 +2,106 @@ import { BlogPost } from "../types/blog";
 
 export const MOCK_POSTS: BlogPost[] = [
   {
+    id: "13",
+    slug: "qual-melhor-cannabis-medicinal-para-dor-cronica-strains-terpenos",
+    title: "Qual a Melhor Cannabis para Dor Crônica? Guia Completo de Strains, Canabinoides e Terpenos",
+    excerpt: "Entenda como o sistema endocanabinoide atua no bloqueio da dor neuropática e inflamatória, o papel crucial do Beta-Cariofileno e quais genéticas das associações brasileiras oferecem o melhor suporte para fibromialgia, artrite e dores na coluna.",
+    category: "Guia Terapêutico",
+    readTime: "7 min de leitura",
+    date: "16 de Setembro de 2026",
+    author: "Redação CannaGuia",
+    tags: ["Dor Crônica", "Fibromialgia", "Terpenos", "Beta-Cariofileno", "Flores Medicinais", "Óleo Full Spectrum", "Catálogo", "Sommelier IA"],
+    isPinned: true,
+    content: `
+      <h3>1. Como a Cannabis Interrompe o Circuito da Dor no Organismo?</h3>
+      <p>A dor crônica não é apenas um sintoma passageiro: é uma condição neurológica complexa onde o sistema nervoso permanece em estado permanente de alerta e hiperalgesia. Diferente dos anti-inflamatórios convencionais (que agridem a mucosa gástrica e renal) e dos opioides (que geram tolerância severa e risco de dependência), a cannabis medicinal atua diretamente no <strong>Sistema Endocanabinoide (SEC)</strong>.</p>
+      
+      <p>O SEC é uma rede regulatória distribuída por todo o corpo humano, com dois receptores principais:</p>
+      <ul>
+        <li><strong>Receptores CB1 (Centrais):</strong> Localizados no cérebro e na medula espinhal. A ativação desses receptores modula as vias nociceptivas, alterando a interpretação e a intensidade emocional da dor crônica.</li>
+        <li><strong>Receptores CB2 (Periféricos):</strong> Concentrados no sistema imunológico e tecidos periféricos. Sua ativação inibe a liberação de citocinas pró-inflamatórias (como TNF-alfa e IL-6), atacando a origem biológica da inflamação.</li>
+      </ul>
+
+      <h3>2. Dor Inflamatória vs. Dor Neuropática: Qual Canabinoide Escolher?</h3>
+      <p>A eficácia do tratamento depende do tipo exato de dor diagnosticada pelo médico prescritor:</p>
+      
+      <div style="overflow-x: auto; margin: 20px 0;">
+        <table style="width: 100%; border-collapse: collapse; font-size: 13px; text-align: left;">
+          <thead>
+            <tr style="background: #f0fdf4; border-bottom: 2px solid #10b981; color: #064e3b;">
+              <th style="padding: 10px 12px; font-weight: 800;">Tipo de Dor</th>
+              <th style="padding: 10px 12px; font-weight: 800;">Exemplos Clínicos</th>
+              <th style="padding: 10px 12px; font-weight: 800;">Canabinoide Chave</th>
+              <th style="padding: 10px 12px; font-weight: 800;">Mecanismo de Ação</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom: 1px solid #e5e7eb;">
+              <td style="padding: 10px 12px; font-weight: 700; color: #111827;">Dor Inflamatória</td>
+              <td style="padding: 10px 12px; color: #4b5563;">Artrite, artrose, tendinite, dor lombar mecânica</td>
+              <td style="padding: 10px 12px; color: #059669; font-weight: 700;">CBD (Canabidiol) + CBG</td>
+              <td style="padding: 10px 12px; color: #4b5563;">Redução do edema tecidual e modulação de canais TRPV1</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #e5e7eb;">
+              <td style="padding: 10px 12px; font-weight: 700; color: #111827;">Dor Neuropática</td>
+              <td style="padding: 10px 12px; color: #4b5563;">Neuropatia diabética, neuralgia do trigêmeo, sequelas pós-herpéticas</td>
+              <td style="padding: 10px 12px; color: #059669; font-weight: 700;">THC + CBD (Equilibrados)</td>
+              <td style="padding: 10px 12px; color: #4b5563;">Bloqueio da transmissão de impulsos anômalos na medula espinhal</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #e5e7eb;">
+              <td style="padding: 10px 12px; font-weight: 700; color: #111827;">Dor Central / Disfuncional</td>
+              <td style="padding: 10px 12px; color: #4b5563;">Fibromialgia, enxaqueca crônica, dores associadas a fadiga extrema</td>
+              <td style="padding: 10px 12px; color: #059669; font-weight: 700;">Full Spectrum (Canabinoides + Terpenos)</td>
+              <td style="padding: 10px 12px; color: #4b5563;">Reequilíbrio do tônus endocanabinoide basal e relaxamento miofascial</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>3. O Segredo dos Terpenos no Manejo da Dor</h3>
+      <p>Muitos pacientes relatam que utilizaram apenas óleo de CBD isolado e não obtiveram resposta clínica significativa. A explicação científica está na ausência dos terpenos e no bloqueio do <strong>Efeito Entourage</strong>. Os compostos aromáticos da flor exercem ação farmacológica ativa:</p>
+      <ul>
+        <li><strong>Beta-Cariofileno (BCP):</strong> É o único terpeno que se comporta diretamente como um canabinoide no corpo, ligando-se aos receptores CB2 sem causar qualquer efeito psicoativo. É um dos anti-inflamatórios naturais mais potentes catalogados pela ciência.</li>
+        <li><strong>Mirceno:</strong> Potencializa a permeabilidade da barreira hematoencefálica e age como relaxante muscular profundo, essencial para pacientes cuja dor gera contraturas e espasmos.</li>
+        <li><strong>Humuleno:</strong> Atua em sinergia com o cariofileno na inibição de prostaglandinas inflamatórias.</li>
+      </ul>
+
+      <h3>4. As Melhores Strains do Catálogo Nacional para Alívio da Dor</h3>
+      <p>Com base nos laudos laboratoriais e fichas botânicas disponíveis nas principais associações brasileiras (como Instituto Damasceno, ALCA e Abrapango), destacam-se quatro perfis genéticos:</p>
+      
+      <ol style="padding-left: 20px; line-height: 1.8;">
+        <li>
+          <strong>Gorila Kush (Indica Dominante):</strong> Perfil rico em Beta-Cariofileno e Mirceno. Indicada para dores articulares e musculares noturnas, auxiliando também no relaxamento pré-sono.
+        </li>
+        <li>
+          <strong>Gorila Freak (Híbrida Equilibrada):</strong> Apresenta combinação de terpenos amadeirados e teor robusto de canabinoides. Muito utilizada por pacientes com espasticidade e dores pós-cirúrgicas refratárias.
+        </li>
+        <li>
+          <strong>24K Gold:</strong> Excelente perfil para pacientes que necessitam de redução da tensão miofascial e controle do estresse somatizado durante o entardecer.
+        </li>
+        <li>
+          <strong>Harlequin ou Strains Ricas em CBD:</strong> Proporção equilibrada ou predominante em CBD com baixo THC, perfeita para dor neuropática ou inflamatória durante o dia sem comprometer a capacidade de trabalho e concentração.
+        </li>
+      </ol>
+
+      <h3>5. Inalação Térmica vs. Óleo Sublingual: Como Combinar as Vias?</h3>
+      <p>A melhor estratégia terapêutica frequentemente envolve a associação de duas vias de administração complementares:</p>
+      <ul>
+        <li><strong>Via Oral / Sublingual (Óleo Full Spectrum):</strong> Fornece cobertura basal de longo prazo (duração de 6 a 8 horas), mantendo a concentração sanguínea estável ao longo do dia.</li>
+        <li><strong>Via Inalatória (Vaporizador de Ervas Secas):</strong> Tem início de ação ultrarrápido (1 a 3 minutos), sendo o método de resgate ideal para crises agudas ou espasmos repentinos de dor, evitando a queima e a formação de substâncias tóxicas da combustão.</li>
+      </ul>
+
+      <div style="background: #f0fdf4; border: 1.5px solid #34d399; padding: 20px; border-radius: 12px; margin: 24px 0; text-align: center;">
+        <h4 style="color: #065f46; margin-bottom: 8px;">Quer saber qual strain atende exatamente ao seu histórico de dor?</h4>
+        <p style="color: #047857; font-size: 14px; margin-bottom: 14px;">Utilize o nosso recomendador gratuito Fummelier IA ou consulte o cardápio atualizado de produtos das associações autorizadas.</p>
+        <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+          <a href="/sommelier" style="display: inline-block; background: #059669; color: #ffffff; padding: 10px 20px; border-radius: 999px; font-weight: 700; text-decoration: none; font-size: 13px;">Testar Fummelier IA</a>
+          <a href="/catalogo-flores" style="display: inline-block; background: #065f46; color: #ffffff; padding: 10px 20px; border-radius: 999px; font-weight: 700; text-decoration: none; font-size: 13px;">Ver Catálogo de Strains</a>
+        </div>
+      </div>
+    `
+  },
+  {
     id: "10",
     slug: "melhores-associacoes-cannabis-medicinal-brasil-2026-guia-acolhimento-valores",
     title: "Melhores Associações de Cannabis Medicinal no Brasil em 2026: Guia Completo de Acolhimento, Cardápios e Valores",

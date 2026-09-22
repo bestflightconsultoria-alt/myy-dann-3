@@ -5,6 +5,7 @@ import { PwaInstallBanner } from './components/PwaInstallBanner';
 import { Strain } from './types/strain';
 import { Association } from './types/association';
 import { BlogPost } from './types/blog';
+import { updateCanonicalUrl } from './lib/seoStructuredData';
 
 // Lazy loading das abas secundárias para diminuir o bundle inicial e acelerar o carregamento
 const Associations = lazy(() => import('./components/Associations').then(m => ({ default: m.Associations })));
@@ -42,6 +43,8 @@ export function App() {
       const rawPath = window.location.pathname.toLowerCase().replace(/\/$/, '') || '/';
       const hash = window.location.hash.toLowerCase();
 
+      updateCanonicalUrl(rawPath);
+
       if (rawPath.startsWith('/strains/') || hash.startsWith('#strain=')) {
         const id = rawPath.replace('/strains/', '') || hash.replace('#strain=', '');
         setActiveTab('catalogo-flores');
@@ -68,9 +71,9 @@ export function App() {
         setActiveTab('faq');
       } else if (rawPath === '/perfil') {
         setActiveTab('perfil');
-      } else if (rawPath === '/catalogo/oleos') {
+      } else if (rawPath === '/catalogo/oleos' || rawPath === '/catalogo-oleos') {
         setActiveTab('catalogo-oleos');
-      } else if (rawPath === '/catalogo/outros') {
+      } else if (rawPath === '/catalogo/outros' || rawPath === '/catalogo-outros') {
         setActiveTab('catalogo-outros');
       } else {
         setActiveTab('catalogo-flores');
@@ -95,17 +98,18 @@ export function App() {
     window.scrollTo(0, 0);
 
     let newUrl = '/';
-    if (tab === 'catalogo-flores') newUrl = '/catalogo';
-    else if (tab === 'catalogo-oleos') newUrl = '/catalogo/oleos';
+    if (tab === 'catalogo-flores') newUrl = '/catalogo-flores';
+    else if (tab === 'catalogo-oleos') newUrl = '/catalogo-oleos';
     else if (tab === 'catalogo-outros') newUrl = '/catalogo/outros';
     else if (tab === 'associacoes') newUrl = '/associacoes';
-    else if (tab === 'sommelier') newUrl = '/fummelier-ia';
-    else if (tab === 'medicos') newUrl = '/prescritores';
+    else if (tab === 'sommelier') newUrl = '/sommelier';
+    else if (tab === 'medicos') newUrl = '/medicos';
     else if (tab === 'blog') newUrl = '/blog';
     else if (tab === 'faq') newUrl = '/faq';
     else if (tab === 'perfil') newUrl = '/perfil';
 
     window.history.pushState(null, '', newUrl);
+    updateCanonicalUrl(newUrl);
     document.title = 'CannaGuia — Seu Guia de Cannabis Medicinal no Brasil';
   };
 
@@ -113,9 +117,11 @@ export function App() {
   const handleSelectStrain = (strain: Strain | null) => {
     if (strain) {
       window.history.pushState(null, '', `/strains/${strain.id}`);
+      updateCanonicalUrl(`/strains/${strain.id}`);
       document.title = `${strain.name} — Flor Medicinal | CannaGuia`;
     } else {
-      window.history.pushState(null, '', '/catalogo');
+      window.history.pushState(null, '', '/catalogo-flores');
+      updateCanonicalUrl('/catalogo-flores');
       document.title = 'CannaGuia — Seu Guia de Cannabis Medicinal no Brasil';
     }
   };
@@ -124,9 +130,11 @@ export function App() {
   const handleSelectAssoc = (assoc: Association | null) => {
     if (assoc) {
       window.history.pushState(null, '', `/associacoes/${assoc.id}`);
+      updateCanonicalUrl(`/associacoes/${assoc.id}`);
       document.title = `${assoc.name} — Associação de Cannabis | CannaGuia`;
     } else {
       window.history.pushState(null, '', '/associacoes');
+      updateCanonicalUrl('/associacoes');
       document.title = 'Associações de Cannabis Medicinal no Brasil — CannaGuia';
     }
   };
@@ -136,10 +144,12 @@ export function App() {
     if (post) {
       setSelectedArticleSlug(post.slug);
       window.history.pushState(null, '', `/blog/${post.slug}`);
+      updateCanonicalUrl(`/blog/${post.slug}`);
       document.title = `${post.title} | CannaGuia`;
     } else {
       setSelectedArticleSlug(undefined);
       window.history.pushState(null, '', '/blog');
+      updateCanonicalUrl('/blog');
       document.title = 'Guia do Paciente & Artigos — CannaGuia';
     }
   };
@@ -150,8 +160,10 @@ export function App() {
     } else {
       setActiveTab('blog');
     }
-    setSelectedArticleSlug('como-se-associar-associacao-cannabis-medicinal-brasil');
-    window.history.pushState(null, '', '/blog/como-se-associar-associacao-cannabis-medicinal-brasil');
+    const slug = 'como-se-associar-associacao-cannabis-medicinal-brasil';
+    setSelectedArticleSlug(slug);
+    window.history.pushState(null, '', `/blog/${slug}`);
+    updateCanonicalUrl(`/blog/${slug}`);
   };
 
   return (

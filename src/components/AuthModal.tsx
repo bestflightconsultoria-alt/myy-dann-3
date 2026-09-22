@@ -14,6 +14,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
   // Form fields
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [fullName, setFullName] = useState('');
   const [prescribingDoctor, setPrescribingDoctor] = useState('');
 
@@ -27,6 +28,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
   const resetForm = () => {
     setEmail('');
     setPassword('');
+    setConfirmPassword('');
     setFullName('');
     setPrescribingDoctor('');
     setErrorMessage('');
@@ -110,6 +112,11 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
       }
       if (password.length < 6) {
         setErrorMessage('A senha deve ter pelo menos 6 caracteres.');
+        setLoading(false);
+        return;
+      }
+      if (password !== confirmPassword) {
+        setErrorMessage('As senhas não coincidem. Por favor, confirme a mesma senha.');
         setLoading(false);
         return;
       }
@@ -354,6 +361,24 @@ export const AuthModal: React.FC<AuthModalProps> = ({ isOpen, onClose, onSuccess
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder={mode === 'signup' ? 'Mínimo 6 caracteres' : '••••••••'}
+                    className="w-full pl-10 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-xs font-medium focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500"
+                  />
+                </div>
+              </div>
+            )}
+
+            {/* Confirmar Senha (Apenas no Cadastro) */}
+            {mode === 'signup' && (
+              <div>
+                <label className="block text-xs font-bold text-gray-700 mb-1">Confirmar Senha</label>
+                <div className="relative">
+                  <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+                  <input
+                    type="password"
+                    required
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    placeholder="Repita sua senha"
                     className="w-full pl-10 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-xs font-medium focus:outline-none focus:ring-2 focus:ring-emerald-500/20 focus:border-emerald-500"
                   />
                 </div>

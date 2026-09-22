@@ -1,4 +1,9 @@
 {
+  "redirects": [
+    { "source": "/catalogo", "destination": "/catalogo-flores", "permanent": true },
+    { "source": "/fummelier-ia", "destination": "/sommelier", "permanent": true },
+    { "source": "/prescritores", "destination": "/medicos", "permanent": true }
+  ],
   "rewrites": [
     { "source": "/(.*)", "destination": "/index.html" }
   ]
