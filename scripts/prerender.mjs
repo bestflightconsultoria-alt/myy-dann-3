@@ -388,7 +388,11 @@ async function prerender() {
       pageHtml = pageHtml.replace('<div id="root"></div>', `<div id="root">${page.contentHtml}</div>`);
     }
 
+    const targetHtmlFile = path.resolve(distDir, `${cleanRoute}.html`);
+    fs.mkdirSync(path.dirname(targetHtmlFile), { recursive: true });
+
     fs.writeFileSync(targetFile, pageHtml, 'utf-8');
+    fs.writeFileSync(targetHtmlFile, pageHtml, 'utf-8');
     generatedCount++;
   }
 

@@ -1,4 +1,5 @@
 {
+  "cleanUrls": true,
   "redirects": [
     { "source": "/catalogo", "destination": "/catalogo-flores", "permanent": true },
     { "source": "/fummelier-ia", "destination": "/sommelier", "permanent": true },
