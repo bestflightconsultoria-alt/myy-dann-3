@@ -2994,5 +2994,37 @@ export const INITIAL_STRAINS: Strain[] = [
         "cultivationType": "Padronizado"
       }
     ]
+  },
+  {
+    "id": "strain-og-kush",
+    "name": "OG Kush",
+    "category": "flores",
+    "type": "Híbrida",
+    "dominantCannabinoid": "THC",
+    "thc": "18% - 24%",
+    "cbd": "< 1%",
+    "genetics": "OG Kush",
+    "terpenes": [
+      "Cariofileno",
+      "Mirceno",
+      "Limoneno"
+    ],
+    "aromaFlavor": "Flores de alta qualidade, com aroma intenso com notas terrosas, cítricas e amadeiradas. Uma genética clássica mundialmente reconhecida pelo seu perfil potente e relaxante.",
+    "description": "Flores de alta qualidade, com aroma intenso com notas terrosas, cítricas e amadeiradas. Uma genética clássica mundialmente reconhecida pelo seu perfil potente e relaxante.",
+    "effects": [
+      "Equilíbrio Físico e Mental",
+      "Ansiolítico Suave",
+      "Alívio de Estresse"
+    ],
+    "associations": [
+      {
+        "associationId": "alca",
+        "associationName": "ALCA",
+        "pricePerGram": 55.0,
+        "priceDisplay": "R$ 55,00/g",
+        "inStock": true,
+        "cultivationType": "Padronizado"
+      }
+    ]
   }
 ];

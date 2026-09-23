@@ -50,7 +50,8 @@ DESCRICOES_EXATAS_ALCA = {
     "jack-herer": "Flores de alta qualidade, com aroma marcante e excelente produção de resina. Uma genética clássica, reconhecida pela sua qualidade consistente e perfil equilibrado.",
     "bubba-kush": "Flores de alta qualidade, com aroma marcante e excelente produção de resina. Uma genética reconhecida pela sua qualidade consistente e perfil clássico.",
     "gorilla-glue": "Flores de alta qualidade, com aroma intenso e excelente produção de resina. Uma genética muito apreciada pela qualidade consistente e perfil marcante das flores.",
-    "afghan-kush": "Genética clássica de predominância índica, originária da região do Hindu Kush, conhecida por seu perfil terpeno terroso."
+    "afghan-kush": "Genética clássica de predominância índica, originária da região do Hindu Kush, conhecida por seu perfil terpeno terroso.",
+    "og-kush": "Flores de alta qualidade, com aroma intenso com notas terrosas, cítricas e amadeiradas. Uma genética clássica mundialmente reconhecida pelo seu perfil potente e relaxante."
 }
 
 def extrair_chave_canonica(nome):
@@ -84,6 +85,7 @@ def extrair_chave_canonica(nome):
     if "pineapple" in n: return "pineappleexpress"
     if "jackherer" in n: return "jackherer"
     if "northernlights" in n: return "northernlights"
+    if "ogkush" in n: return "ogkush"
     return n
 
 def e_nome_valido(nome):
@@ -169,7 +171,7 @@ async def raspar_alca(page):
             slug = criar_slug(nome, categoria)
 
             # Busca descrição exata limpa
-            desc = " ".join([l for l in linhas[2:] if "Disponível" not in l and "unidades" not in l and "Renova" not in l and "R$" not in l and "SKU" not in l and "Dashboard" not in l])
+            desc = " ".join([l for l in linhas[2:] if "Disponível" not in l and "unidades" not in l and "Renova" not in l and "R$" not in l and "SKU" not in l and "Dashboard" not in l and "dark_mode" not in l and "©" not in l and "Uso restrito" not in l and "Português" not in l and "Inglês" not in l])
             for key, desc_oficial in DESCRICOES_EXATAS_ALCA.items():
                 if key in slug or key.replace("-", "") in nome.lower().replace(" ", "").replace("#", ""):
                     desc = desc_oficial
