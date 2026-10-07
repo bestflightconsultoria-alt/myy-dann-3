@@ -3026,5 +3026,360 @@ export const INITIAL_STRAINS: Strain[] = [
         "cultivationType": "Padronizado"
       }
     ]
+  },
+  {
+    "id": "strain-biscotti",
+    "name": "Biscotti",
+    "category": "flores",
+    "type": "Indica",
+    "dominantCannabinoid": "THC",
+    "thc": "21% - 25%",
+    "cbd": "< 1%",
+    "genetics": "Gelato #25 x South Florida OG",
+    "terpenes": [
+      "Cariofileno",
+      "Limoneno",
+      "Mirceno"
+    ],
+    "aromaFlavor": "Biscotti 🍪 Genética: Gelato #25 x South Florida OG. Terpeno dominante: Cariofileno. Aroma doce de biscoito assado, baunilha e notas de combustível terroso. Efeitos: Relaxamento corporal profundo, alívio de dor neuropática, redução de ansiedade e indução ao repouso.",
+    "description": "Biscotti 🍪 Genética: Gelato #25 x South Florida OG. Terpeno dominante: Cariofileno. Aroma doce de biscoito assado, baunilha e notas de combustível terroso. Efeitos: Relaxamento corporal profundo, alívio de dor neuropática, redução de ansiedade e indução ao repouso.",
+    "effects": [
+      "Indução ao Sono",
+      "Controle de Ansiedade",
+      "Alívio de Dores"
+    ],
+    "associations": [
+      {
+        "associationId": "institutodamasceno",
+        "associationName": "Instituto Damasceno",
+        "pricePerGram": 60.0,
+        "priceDisplay": "R$ 60,00 (1g) | R$ 400,00 (10g)",
+        "inStock": true,
+        "cultivationType": "Padronizado"
+      },
+      {
+        "associationId": "adaptacann",
+        "associationName": "Adapta-Cann",
+        "pricePerGram": 65.0,
+        "priceDisplay": "R$ 65,00/g",
+        "inStock": true,
+        "cultivationType": "Padronizado"
+      }
+    ]
+  },
+  {
+    "id": "strain-wedding-cake",
+    "name": "Wedding Cake",
+    "category": "flores",
+    "type": "Indica",
+    "dominantCannabinoid": "THC",
+    "thc": "20% - 25%",
+    "cbd": "< 1%",
+    "genetics": "Triangle Kush x Animal Mints",
+    "terpenes": [
+      "Cariofileno",
+      "Limoneno",
+      "Humuleno"
+    ],
+    "aromaFlavor": "Wedding Cake (Pink Cookies) 🍰 Genética: Triangle Kush x Animal Mints. Terpeno dominante: Cariofileno. Aroma terroso doce, baunilha cremosa e toque apimentado. Efeitos: Calmante muscular intenso, alívio de estresse pós-traumático, dores articulares e suporte contra insônia.",
+    "description": "Wedding Cake (Pink Cookies) 🍰 Genética: Triangle Kush x Animal Mints. Terpeno dominante: Cariofileno. Aroma terroso doce, baunilha cremosa e toque apimentado. Efeitos: Calmante muscular intenso, alívio de estresse pós-traumático, dores articulares e suporte contra insônia.",
+    "effects": [
+      "Indução ao Sono",
+      "Controle de Ansiedade",
+      "Alívio de Dores"
+    ],
+    "associations": [
+      {
+        "associationId": "institutodamasceno",
+        "associationName": "Instituto Damasceno",
+        "pricePerGram": 60.0,
+        "priceDisplay": "R$ 60,00 (1g) | R$ 400,00 (10g)",
+        "inStock": true,
+        "cultivationType": "Padronizado"
+      },
+      {
+        "associationId": "abrapango",
+        "associationName": "Abrapango",
+        "pricePerGram": 500.0,
+        "priceDisplay": "R$ 500,00 (10g)",
+        "inStock": true,
+        "cultivationType": "Padronizado"
+      },
+      {
+        "associationId": "alca",
+        "associationName": "ALCA",
+        "pricePerGram": 45.0,
+        "priceDisplay": "R$ 45,00/g",
+        "inStock": true,
+        "cultivationType": "Padronizado"
+      }
+    ]
+  },
+  {
+    "id": "strain-super-lemon-haze",
+    "name": "Super Lemon Haze",
+    "category": "flores",
+    "type": "Sativa",
+    "dominantCannabinoid": "THC",
+    "thc": "19% - 24%",
+    "cbd": "< 1%",
+    "genetics": "Lemon Skunk x Super Silver Haze",
+    "terpenes": [
+      "Terpinoleno",
+      "Limoneno",
+      "Ocimeno"
+    ],
+    "aromaFlavor": "Super Lemon Haze 🍋 Genética: Lemon Skunk x Super Silver Haze. Terpeno dominante: Terpinoleno e Limoneno. Aroma cítrico penetrante de limão siciliano doce e notas florais. Efeitos: Estímulo cognitivo límpido, aumento de energia, combate à apatia e alívio de enxaquecas diurnas.",
+    "description": "Super Lemon Haze 🍋 Genética: Lemon Skunk x Super Silver Haze. Terpeno dominante: Terpinoleno e Limoneno. Aroma cítrico penetrante de limão siciliano doce e notas florais. Efeitos: Estímulo cognitivo límpido, aumento de energia, combate à apatia e alívio de enxaquecas diurnas.",
+    "effects": [
+      "Foco & Criatividade",
+      "Alívio de Dores"
+    ],
+    "associations": [
+      {
+        "associationId": "alca",
+        "associationName": "ALCA",
+        "pricePerGram": 45.0,
+        "priceDisplay": "R$ 45,00/g",
+        "inStock": true,
+        "cultivationType": "Padronizado"
+      },
+      {
+        "associationId": "liva",
+        "associationName": "Liva",
+        "pricePerGram": 55.0,
+        "priceDisplay": "R$ 55,00/g",
+        "inStock": true,
+        "cultivationType": "Padronizado"
+      },
+      {
+        "associationId": "institutodamasceno",
+        "associationName": "Instituto Damasceno",
+        "pricePerGram": 60.0,
+        "priceDisplay": "R$ 60,00 (1g) | R$ 400,00 (10g)",
+        "inStock": true,
+        "cultivationType": "Padronizado"
+      }
+    ]
+  },
+  {
+    "id": "strain-gelato-33",
+    "name": "Gelato 33 (Larry Bird)",
+    "category": "flores",
+    "type": "Híbrida",
+    "dominantCannabinoid": "THC",
+    "thc": "20% - 24%",
+    "cbd": "< 1%",
+    "genetics": "Sunset Sherbet x Thin Mint GSC",
+    "terpenes": [
+      "Cariofileno",
+      "Mirceno",
+      "Linalol"
+    ],
+    "aromaFlavor": "Gelato 33 (Larry Bird) 🍧 Genética: Sunset Sherbet x Thin Mint GSC. Terpeno dominante: Cariofileno e Mirceno. Aroma frutado cremoso, mentol e frutas cítricas. Efeitos: Equilíbrio psicofísico, elevação do humor, relaxamento muscular sem sedação profunda e alívio de espasticidade.",
+    "description": "Gelato 33 (Larry Bird) 🍧 Genética: Sunset Sherbet x Thin Mint GSC. Terpeno dominante: Cariofileno e Mirceno. Aroma frutado cremoso, mentol e frutas cítricas. Efeitos: Equilíbrio psicofísico, elevação do humor, relaxamento muscular sem sedação profunda e alívio de espasticidade.",
+    "effects": [
+      "Indução ao Sono",
+      "Alívio de Dores",
+      "Elevação de Humor"
+    ],
+    "associations": [
+      {
+        "associationId": "adaptacann",
+        "associationName": "Adapta-Cann",
+        "pricePerGram": 68.0,
+        "priceDisplay": "R$ 68,00/g",
+        "inStock": true,
+        "cultivationType": "Padronizado"
+      },
+      {
+        "associationId": "abrapango",
+        "associationName": "Abrapango",
+        "pricePerGram": 500.0,
+        "priceDisplay": "R$ 500,00 (10g)",
+        "inStock": true,
+        "cultivationType": "Padronizado"
+      },
+      {
+        "associationId": "institutodamasceno",
+        "associationName": "Instituto Damasceno",
+        "pricePerGram": 60.0,
+        "priceDisplay": "R$ 60,00 (1g) | R$ 400,00 (10g)",
+        "inStock": true,
+        "cultivationType": "Padronizado"
+      }
+    ]
+  },
+  {
+    "id": "strain-black-domina",
+    "name": "Black Domina",
+    "category": "flores",
+    "type": "Indica",
+    "dominantCannabinoid": "THC",
+    "thc": "19% - 23%",
+    "cbd": "< 1%",
+    "genetics": "Afghani x Northern Lights x Ortega x Hash Plant",
+    "terpenes": [
+      "Mirceno",
+      "Cariofileno",
+      "Pineno"
+    ],
+    "aromaFlavor": "Black Domina 🖤 Genética clássica quadri-híbrida Kush. Terpeno dominante: Mirceno. Aroma amadeirado, resinoso, pimenta preta e terra úmida. Efeitos: Sedação noturna potente, combate a dores lombares severas, relaxamento miofascial e indução de sono reparador.",
+    "description": "Black Domina 🖤 Genética clássica quadri-híbrida Kush. Terpeno dominante: Mirceno. Aroma amadeirado, resinoso, pimenta preta e terra úmida. Efeitos: Sedação noturna potente, combate a dores lombares severas, relaxamento miofascial e indução de sono reparador.",
+    "effects": [
+      "Indução ao Sono",
+      "Alívio de Dores"
+    ],
+    "associations": [
+      {
+        "associationId": "institutodamasceno",
+        "associationName": "Instituto Damasceno",
+        "pricePerGram": 60.0,
+        "priceDisplay": "R$ 60,00 (1g) | R$ 400,00 (10g)",
+        "inStock": true,
+        "cultivationType": "Padronizado"
+      },
+      {
+        "associationId": "alca",
+        "associationName": "ALCA",
+        "pricePerGram": 42.0,
+        "priceDisplay": "R$ 42,00/g",
+        "inStock": true,
+        "cultivationType": "Padronizado"
+      }
+    ]
+  },
+  {
+    "id": "strain-charlottes-web",
+    "name": "Charlotte's Web (Alta CBD)",
+    "category": "flores",
+    "type": "Sativa",
+    "dominantCannabinoid": "CBD",
+    "thc": "< 0.3%",
+    "cbd": "14% - 18%",
+    "genetics": "Hemp Selection x Sativa",
+    "terpenes": [
+      "Bisabolol",
+      "Mirceno",
+      "Pineno"
+    ],
+    "aromaFlavor": "Charlotte's Web 🕸️ Genética referência mundial em canabidiol medicinal. Terpeno dominante: Bisabolol e Mirceno. Aroma terroso suave, pinho fresco e notas florais. Efeitos: Modulação ansiolítica pura sem psicoatividade, neuroproteção, controle de crises convulsivas e suporte para TEA.",
+    "description": "Charlotte's Web 🕸️ Genética referência mundial em canabidiol medicinal. Terpeno dominante: Bisabolol e Mirceno. Aroma terroso suave, pinho fresco e notas florais. Efeitos: Modulação ansiolítica pura sem psicoatividade, neuroproteção, controle de crises convulsivas e suporte para TEA.",
+    "effects": [
+      "Alívio de Ansiedade",
+      "Anti-inflamatório",
+      "Clareza sem Psicoatividade"
+    ],
+    "associations": [
+      {
+        "associationId": "institutodamasceno",
+        "associationName": "Instituto Damasceno",
+        "pricePerGram": 60.0,
+        "priceDisplay": "R$ 60,00 (1g) | R$ 400,00 (10g)",
+        "inStock": true,
+        "cultivationType": "Padronizado"
+      },
+      {
+        "associationId": "abrapango",
+        "associationName": "Abrapango",
+        "pricePerGram": 450.0,
+        "priceDisplay": "R$ 450,00 (10g)",
+        "inStock": true,
+        "cultivationType": "Padronizado"
+      },
+      {
+        "associationId": "liva",
+        "associationName": "Liva",
+        "pricePerGram": 50.0,
+        "priceDisplay": "R$ 50,00/g",
+        "inStock": true,
+        "cultivationType": "Padronizado"
+      }
+    ]
+  },
+  {
+    "id": "strain-acdc-cbd",
+    "name": "ACDC (Alto CBD)",
+    "category": "flores",
+    "type": "Híbrida",
+    "dominantCannabinoid": "CBD",
+    "thc": "< 1%",
+    "cbd": "15% - 20%",
+    "genetics": "Cannatonic Phenotype",
+    "terpenes": [
+      "Mirceno",
+      "Pineno",
+      "Cariofileno"
+    ],
+    "aromaFlavor": "ACDC ⚡ Fenótipo medicinal selecionado para proporção CBD:THC de até 20:1. Terpeno dominante: Mirceno. Aroma herbal refrescante, notas cítricas e grama doce. Efeitos: Alívio da dor neuropática, clareza mental para jornada de trabalho, controle de tremores e ausência de embriaguez.",
+    "description": "ACDC ⚡ Fenótipo medicinal selecionado para proporção CBD:THC de até 20:1. Terpeno dominante: Mirceno. Aroma herbal refrescante, notas cítricas e grama doce. Efeitos: Alívio da dor neuropática, clareza mental para jornada de trabalho, controle de tremores e ausência de embriaguez.",
+    "effects": [
+      "Foco & Criatividade",
+      "Alívio de Dores"
+    ],
+    "associations": [
+      {
+        "associationId": "institutodamasceno",
+        "associationName": "Instituto Damasceno",
+        "pricePerGram": 60.0,
+        "priceDisplay": "R$ 60,00 (1g) | R$ 400,00 (10g)",
+        "inStock": true,
+        "cultivationType": "Padronizado"
+      },
+      {
+        "associationId": "alca",
+        "associationName": "ALCA",
+        "pricePerGram": 40.0,
+        "priceDisplay": "R$ 40,00/g",
+        "inStock": true,
+        "cultivationType": "Padronizado"
+      },
+      {
+        "associationId": "cannabcura",
+        "associationName": "CannabCura",
+        "pricePerGram": 48.0,
+        "priceDisplay": "R$ 48,00/g",
+        "inStock": true,
+        "cultivationType": "Padronizado"
+      }
+    ]
+  },
+  {
+    "id": "strain-cinderella-99",
+    "name": "Cinderella 99 (C99)",
+    "category": "flores",
+    "type": "Sativa",
+    "dominantCannabinoid": "THC",
+    "thc": "19% - 23%",
+    "cbd": "< 1%",
+    "genetics": "Princess x Cinderella 88 (Brothers Grimm)",
+    "terpenes": [
+      "Pineno",
+      "Limoneno",
+      "Mirceno"
+    ],
+    "aromaFlavor": "Cinderella 99 (C99) 👑 Conhecida como o Santo Graal das sativas medicinais. Terpeno dominante: Pineno e Limoneno. Aroma tropical doce de abacaxi e maracujá fresco. Efeitos: Estímulo cognitivo límpido, foco, desinibição criativa e alívio da fadiga crônica sem induzir taquicardia.",
+    "description": "Cinderella 99 (C99) 👑 Conhecida como o Santo Graal das sativas medicinais. Terpeno dominante: Pineno e Limoneno. Aroma tropical doce de abacaxi e maracujá fresco. Efeitos: Estímulo cognitivo límpido, foco, desinibição criativa e alívio da fadiga crônica sem induzir taquicardia.",
+    "effects": [
+      "Foco & Criatividade"
+    ],
+    "associations": [
+      {
+        "associationId": "institutodamasceno",
+        "associationName": "Instituto Damasceno",
+        "pricePerGram": 60.0,
+        "priceDisplay": "R$ 60,00 (1g) | R$ 400,00 (10g)",
+        "inStock": true,
+        "cultivationType": "Padronizado"
+      },
+      {
+        "associationId": "abrapango",
+        "associationName": "Abrapango",
+        "pricePerGram": 500.0,
+        "priceDisplay": "R$ 500,00 (10g)",
+        "inStock": true,
+        "cultivationType": "Padronizado"
+      }
+    ]
   }
 ];
