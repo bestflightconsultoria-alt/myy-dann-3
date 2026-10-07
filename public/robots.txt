@@ -1,21 +1,5 @@
 User-agent: *
 Allow: /
 
-# Motores de Inteligência Artificial & GEO (Generative Engine Optimization)
-User-agent: GPTBot
-Allow: /
-
-User-agent: ChatGPT-User
-Allow: /
-
-User-agent: PerplexityBot
-Allow: /
-
-User-agent: ClaudeBot
-Allow: /
-
-User-agent: Google-Extended
-Allow: /
-
 # Sitemap Oficial CannaGuia
 Sitemap: https://www.cannaguia.com.br/sitemap.xml

@@ -34,6 +34,7 @@ export const Doctors: React.FC = () => {
       search === '' ||
       doc.name.toLowerCase().includes(search.toLowerCase()) ||
       doc.city.toLowerCase().includes(search.toLowerCase()) ||
+      (doc.state && doc.state.toLowerCase().includes(search.toLowerCase())) ||
       doc.crm.toLowerCase().includes(search.toLowerCase()) ||
       (doc.specialties && doc.specialties.some(s => s.toLowerCase().includes(search.toLowerCase())));
 
