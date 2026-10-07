@@ -2,6 +2,185 @@ import { BlogPost } from "../types/blog";
 
 export const MOCK_POSTS: BlogPost[] = [
   {
+    id: "14",
+    slug: "mimosa-vs-24k-gold-comparativo-terpenos-ansiedade-efeitos",
+    title: "Mimosa vs 24K Gold: Análise Comparativa de Terpenos, Efeitos e Indicação para Ansiedade",
+    excerpt: "Descubra as diferenças fitoquímicas entre Mimosa e 24K Gold, duas genéticas de grande procura nas associações brasileiras. Avaliação técnica de terpenos, efeito no humor, rotina diurna e relaxamento corporal.",
+    category: "Comparativo Botânico",
+    readTime: "6 min de leitura",
+    date: "07 de Outubro de 2026",
+    author: "Redação CannaGuia",
+    tags: ["Ansiedade", "Mimosa", "24K Gold", "Terpenos", "Limoneno", "Mirceno", "Flores Medicinais", "Sommelier IA"],
+    isPinned: true,
+    content: `
+      <h3>1. Linhagem Genética e Perfil Fitoterápico</h3>
+      <p>A escolha de uma flor medicinal para manejo da ansiedade demanda precisão bioquímica. Cada organismo responde de forma particular à proporção de fitocanabinoides e compostos aromáticos. A Mimosa e a 24K Gold representam perfis complementares do espectro fitoterápico utilizado por pacientes de associações no Brasil.</p>
+      <p>A Mimosa resulta do cruzamento genético entre Clementine e Purple Punch. Sua predominância sativa moderada entrega alta densidade de tricomas carregados de monoterpenos cítricos, promovendo sensação revigorante e clareza mental.</p>
+      <p>A 24K Gold, conhecida na literatura botânica como Kosher Tangie, combina a linhagem pesada da Kosher Kush com o perfil aromático da Tangie. Apresenta predominância indica marcante no alívio de tensões somatizadas e rigidez muscular periférica.</p>
+
+      <h3>2. O Papel Decisivo dos Terpenos no Sistema Nervoso</h3>
+      <p>A resposta clínica ao tratamento ultrapassa a simples porcentagem de THC ou CBD. A interação dos terpenos com neurotransmissores e receptores de membrana define a direção do efeito terapêutico:</p>
+      <ul>
+        <li><strong>Limoneno (Dominante na Mimosa):</strong> Estimula receptores de serotonina 5-HT1A e vias dopaminérgicas. Induz sensação de bem-estar, melhora do humor e alívio do desânimo matinal.</li>
+        <li><strong>Beta-Cariofileno (Presente em ambas):</strong> Atua diretamente nos receptores canabinoides CB2 periféricos. Diminui marcadores inflamatórios sistêmicos e modula respostas de estresse agudo sem sedação excessiva.</li>
+        <li><strong>Mirceno e Linalol (Marcantes na 24K Gold):</strong> O mirceno eleva a permeabilidade da barreira hematoencefálica e relaxa o tônus muscular. O linalol atua nos receptores GABAérgicos, promovendo tranquilidade profunda e descompressão corporal ao final da tarde.</li>
+      </ul>
+
+      <h3>3. Tabela Comparativa de Propriedades</h3>
+      <div style="overflow-x: auto; margin: 20px 0;">
+        <table style="width: 100%; border-collapse: collapse; font-size: 13px; text-align: left;">
+          <thead>
+            <tr style="background: #f0fdf4; border-bottom: 2px solid #10b981; color: #064e3b;">
+              <th style="padding: 10px 12px; font-weight: 800;">Critério</th>
+              <th style="padding: 10px 12px; font-weight: 800;">Mimosa</th>
+              <th style="padding: 10px 12px; font-weight: 800;">24K Gold (Kosher Tangie)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom: 1px solid #e5e7eb;">
+              <td style="padding: 10px 12px; font-weight: 700; color: #111827;">Linhagem</td>
+              <td style="padding: 10px 12px; color: #4b5563;">Clementine x Purple Punch</td>
+              <td style="padding: 10px 12px; color: #4b5563;">Kosher Kush x Tangie</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #e5e7eb;">
+              <td style="padding: 10px 12px; font-weight: 700; color: #111827;">Dominância Botânica</td>
+              <td style="padding: 10px 12px; color: #059669; font-weight: 700;">Híbrida Sativa (70/30)</td>
+              <td style="padding: 10px 12px; color: #059669; font-weight: 700;">Híbrida Indica (60/40)</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #e5e7eb;">
+              <td style="padding: 10px 12px; font-weight: 700; color: #111827;">Terpenos Dominantes</td>
+              <td style="padding: 10px 12px; color: #4b5563;">D-Limoneno, Beta-Cariofileno, Linalol</td>
+              <td style="padding: 10px 12px; color: #4b5563;">Mirceno, Cariofileno, Pineno</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #e5e7eb;">
+              <td style="padding: 10px 12px; font-weight: 700; color: #111827;">Efeito Clínico Principal</td>
+              <td style="padding: 10px 12px; color: #4b5563;">Clareza mental, motivação, redução de apatia</td>
+              <td style="padding: 10px 12px; color: #4b5563;">Desaceleração física, relaxamento miofascial, preparo para o sono</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #e5e7eb;">
+              <td style="padding: 10px 12px; font-weight: 700; color: #111827;">Melhor Momento de Uso</td>
+              <td style="padding: 10px 12px; color: #4b5563;">Manhã e início da tarde</td>
+              <td style="padding: 10px 12px; color: #4b5563;">Final de tarde e período noturno</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #e5e7eb;">
+              <td style="padding: 10px 12px; font-weight: 700; color: #111827;">Associações Produtoras</td>
+              <td style="padding: 10px 12px; color: #4b5563;">Instituto Damasceno, ALCA, AdaptaCann</td>
+              <td style="padding: 10px 12px; color: #4b5563;">Instituto Damasceno, Abrapango</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>4. Indicação Clínica para Quadros de Ansiedade</h3>
+      <p>A ansiedade clínica manifesta-se em padrões sintomáticos distintos:</p>
+      <p>Para pacientes com ruminação mental paralisante, lentidão psicomotora e dificuldade de iniciar compromissos diários, a Mimosa oferece suporte eficiente sem gerar névoa mental.</p>
+      <p>Para pacientes cuja ansiedade cursa com taquicardia, rigidez cervical, bruxismo e insônia inicial, a 24K Gold atua com eficácia comprovada na regulação física do estresse.</p>
+
+      <h3>5. Temperaturas Ideais de Vaporização</h3>
+      <p>A extração eficiente dos terpenos exige controle térmico no vaporizador de ervas secas:</p>
+      <ul>
+        <li><strong>Faixa de 165°C a 175°C (Mimosa):</strong> Evapora Limoneno e Pineno com máxima pureza, preservando o sabor cítrico e o estímulo mental límpido.</li>
+        <li><strong>Faixa de 180°C a 190°C (24K Gold):</strong> Libera Mirceno, Beta-Cariofileno e canabinoides mais densos, consolidando relaxamento corporal completo.</li>
+      </ul>
+
+      <div style="background: #f0fdf4; border: 1.5px solid #34d399; padding: 20px; border-radius: 12px; margin: 24px 0; text-align: center;">
+        <h4 style="color: #065f46; margin-bottom: 8px;">Deseja comparar o perfil de terpenos completo com seu laudo médico?</h4>
+        <p style="color: #047857; font-size: 14px; margin-bottom: 14px;">Utilize o Sommelier IA do CannaGuia ou navegue pelo cardápio completo de genéticas autorizadas no Brasil.</p>
+        <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+          <a href="/sommelier" style="display: inline-block; background: #059669; color: #ffffff; padding: 10px 20px; border-radius: 999px; font-weight: 700; text-decoration: none; font-size: 13px;">Acessar Sommelier IA</a>
+          <a href="/catalogo-flores" style="display: inline-block; background: #065f46; color: #ffffff; padding: 10px 20px; border-radius: 999px; font-weight: 700; text-decoration: none; font-size: 13px;">Explorar Catálogo de Flores</a>
+        </div>
+      </div>
+    `
+  },
+  {
+    id: "15",
+    slug: "cannabis-medicinal-trabalho-viagens-direitos-paciente-blitz-aeroporto",
+    title: "Cannabis Medicinal no Trabalho e em Viagens: Direitos do Paciente, Blitz e Aeroportos no Brasil",
+    excerpt: "Guia prático e jurídico sobre o transporte de óleos, flores e vaporizadores no território nacional. Procedimentos da ANAC em voos domésticos, modelo de conduta em abordagens policiais e proteção trabalhista.",
+    category: "Direitos do Paciente",
+    readTime: "7 min de leitura",
+    date: "07 de Outubro de 2026",
+    author: "Redação CannaGuia",
+    tags: ["Direito do Paciente", "Legislação", "Viagem de Avião", "Blitz Policial", "CNH", "Manual do Paciente", "Trabalho"],
+    content: `
+      <h3>1. O Respaldo Jurídico do Paciente com Tratamento Regular</h3>
+      <p>O acesso a produtos derivados de cannabis para fins terapêuticos é um direito reconhecido pela Anvisa e fundamentado em decisões consolidadas dos Tribunais Superiores. O paciente munido de prescrição médica possui legitimidade plena para portar, transportar e utilizar seus medicamentos em todo o território nacional.</p>
+      <p>Essa proteção contempla produtos adquiridos em drogarias pela RDC 327/2019, importações individuais autorizadas pelo sistema Gov.br conforme a RDC 660/2022 e remédios fornecidos por associações de pacientes amparadas pela RDC 1.015/2026.</p>
+
+      <h3>2. Documentos Obrigatórios para Porte Seguro</h3>
+      <p>A tranquilidade jurídica durante deslocamentos decorre da organização documental. Mantenha em pasta física e em arquivo digital no celular:</p>
+      <ul>
+        <li><strong>Laudo Médico Circunstanciado:</strong> Documento emitido por médico com CRM ativo, detalhando o diagnóstico com CID, a justificativa da prescrição e o plano terapêutico.</li>
+        <li><strong>Prescrição Médica Digital Válida:</strong> Receita com assinatura eletrônica padrão ICP-Brasil e código de validação pública.</li>
+        <li><strong>Frasco Original com Rótulo Íntegro:</strong> Medicamento mantido na embalagem de origem com dados legíveis do paciente, dosagem e lote.</li>
+        <li><strong>Autorização Sanitária da Anvisa ou Comprovante de Associação:</strong> Documento emitido pelo órgão regulador ou ficha cadastral da entidade fornecedora.</li>
+      </ul>
+
+      <h3>3. Procedimento em Aeroportos e Voos Nacionais</h3>
+      <p>A Agência Nacional de Aviação Civil (ANAC) autoriza o transporte de medicamentos de uso contínuo na bagagem de mão em voos domésticos:</p>
+      <ul>
+        <li><strong>Inspeção de Raio-X:</strong> Avise preventivamente o agente de segurança sobre a presença de frascos medicinais na bagagem de mão e apresente a receita digital para conferência imediata.</li>
+        <li><strong>Vaporizadores de Ervas Secas:</strong> Devem viajar obrigatoriamente na bagagem de mão devido às baterias de lítio. Os dispositivos precisam estar completamente limpos, sem resíduos vegetais soltos na câmara.</li>
+        <li><strong>Atenção a Destinos Internacionais:</strong> Cada nação exerce soberania jurídica própria. A posse de cannabis é rigorosamente punida em diversos países. Nunca embarque para o exterior com cannabis sem autorização diplomática prévia do país de destino.</li>
+      </ul>
+
+      <h3>4. Abordagens Policiais e Fiscalização Rodoviária</h3>
+      <p>Durante blitze de trânsito ou averiguações em rodovias:</p>
+      <ul>
+        <li><strong>Postura Cooperativa e Firme:</strong> Declare de imediato a condição de paciente em tratamento médico continuado.</li>
+        <li><strong>Apresentação Documental Rápida:</strong> Entregue a prescrição médica digital acompanhada de documento oficial com foto.</li>
+        <li><strong>Inviolabilidade do Remédio:</strong> A retenção arbitrária de medicamentos devidamente autorizados configura conduta passível de apuração correcional.</li>
+      </ul>
+
+      <h3>5. Ambiente Corporativo e Instituições de Ensino</h3>
+      <p>A jurisprudência do Tribunal Superior do Trabalho (TST) veda qualquer ato de demissão discriminatória fundamentado em tratamento de saúde comprovado. O paciente tem respaldo para administrar suas doses nos intervalos programados, zelando pela discrição e pela rotina clínica prescrita.</p>
+
+      <h3>6. Tabela Síntese de Conduta por Ambiente</h3>
+      <div style="overflow-x: auto; margin: 20px 0;">
+        <table style="width: 100%; border-collapse: collapse; font-size: 13px; text-align: left;">
+          <thead>
+            <tr style="background: #f0fdf4; border-bottom: 2px solid #10b981; color: #064e3b;">
+              <th style="padding: 10px 12px; font-weight: 800;">Ambiente</th>
+              <th style="padding: 10px 12px; font-weight: 800;">Documentos Exigidos</th>
+              <th style="padding: 10px 12px; font-weight: 800;">Base Legal</th>
+              <th style="padding: 10px 12px; font-weight: 800;">Recomendação Prática</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom: 1px solid #e5e7eb;">
+              <td style="padding: 10px 12px; font-weight: 700; color: #111827;">Aeroportos (Voos Domésticos)</td>
+              <td style="padding: 10px 12px; color: #4b5563;">Receita digital ICP-Brasil + Laudo com CID</td>
+              <td style="padding: 10px 12px; color: #059669; font-weight: 700;">Resolução ANAC 515/2019</td>
+              <td style="padding: 10px 12px; color: #4b5563;">Transportar na mala de mão junto aos documentos originais</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #e5e7eb;">
+              <td style="padding: 10px 12px; font-weight: 700; color: #111827;">Blitz e Trânsito</td>
+              <td style="padding: 10px 12px; color: #4b5563;">CNH + Receita válida + Frasco rotulado</td>
+              <td style="padding: 10px 12px; color: #059669; font-weight: 700;">RDC 1.015/2026 e RDC 660/2022</td>
+              <td style="padding: 10px 12px; color: #4b5563;">Informar a condição médica com calma logo no início da abordagem</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #e5e7eb;">
+              <td style="padding: 10px 12px; font-weight: 700; color: #111827;">Empresas e Universidades</td>
+              <td style="padding: 10px 12px; color: #4b5563;">Declaração médica para medicina do trabalho</td>
+              <td style="padding: 10px 12px; color: #059669; font-weight: 700;">Súmula 443 do TST</td>
+              <td style="padding: 10px 12px; color: #4b5563;">Priorizar uso de óleo sublingual ou vaporização discreta em locais ventilados</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div style="background: #f0fdf4; border: 1.5px solid #34d399; padding: 20px; border-radius: 12px; margin: 24px 0; text-align: center;">
+        <h4 style="color: #065f46; margin-bottom: 8px;">Precisa de orientação jurídica e modelos oficiais de declaração?</h4>
+        <p style="color: #047857; font-size: 14px; margin-bottom: 14px;">Acesse o Manual do Paciente Legal do CannaGuia ou encontre profissionais prescritores verificados em nosso diretório.</p>
+        <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+          <a href="/medicos" style="display: inline-block; background: #059669; color: #ffffff; padding: 10px 20px; border-radius: 999px; font-weight: 700; text-decoration: none; font-size: 13px;">Encontrar Médicos Prescritores</a>
+          <a href="https://pay.kiwify.com.br/LrBHu6E" target="_blank" rel="noopener noreferrer" style="display: inline-block; background: #065f46; color: #ffffff; padding: 10px 20px; border-radius: 999px; font-weight: 700; text-decoration: none; font-size: 13px;">Baixar Manual do Paciente Legal</a>
+        </div>
+      </div>
+    `
+  },
+  {
     id: "13",
     slug: "qual-melhor-cannabis-medicinal-para-dor-cronica-strains-terpenos",
     title: "Qual a Melhor Cannabis para Dor Crônica? Guia Completo de Strains, Canabinoides e Terpenos",
