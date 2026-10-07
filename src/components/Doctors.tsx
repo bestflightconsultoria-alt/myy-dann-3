@@ -54,11 +54,11 @@ export const Doctors: React.FC = () => {
           </div>
 
           <h1 className="text-2xl sm:text-4xl font-black tracking-tight text-white leading-tight">
-            Médicos & Dentistas Prescritores
+            Médico Cannabis: Prescritores Verificados no Brasil
           </h1>
 
           <p className="text-sm sm:text-base text-teal-100/90 leading-relaxed">
-            Consulte profissionais habilitados com registro ativo no CRM e CRO com atendimento presencial ou via Telemedicina em todo o Brasil.
+            Encontre médico especialista em cannabis e cirurgiões-dentistas com CRM e CRO ativos para consulta presencial ou Telemedicina em todo o Brasil.
           </p>
 
           <div className="pt-2 flex flex-wrap items-center gap-4 text-xs font-medium text-teal-200/80">

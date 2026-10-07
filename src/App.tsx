@@ -110,7 +110,11 @@ export function App() {
 
     window.history.pushState(null, '', newUrl);
     updateCanonicalUrl(newUrl);
-    document.title = 'CannaGuia — Seu Guia de Cannabis Medicinal no Brasil';
+    if (tab === 'medicos') {
+      document.title = 'Médico Cannabis: Prescritores de Cannabis Medicinal no Brasil | CannaGuia';
+    } else {
+      document.title = 'CannaGuia — Seu Guia de Cannabis Medicinal no Brasil';
+    }
   };
 
   // Callback de seleção de flor/produto para URL limpa e SEO

@@ -126,13 +126,13 @@ async function prerender() {
 
   pages.push({
     route: '/medicos',
-    title: 'Medicos Prescritores de Cannabis Medicinal no Brasil | CannaGuia',
-    description: 'Encontre medicos e profissionais de saude especialistas em prescricao de cannabis medicinal e telemedicina em todo o Brasil.',
+    title: 'Médico Cannabis: Prescritores de Cannabis Medicinal no Brasil | CannaGuia',
+    description: 'Encontre médico de cannabis e especialistas em prescrição de cannabis medicinal e telemedicina em todo o Brasil. Atendimento com CRM e CRO verificado.',
     contentHtml: `
       <main style="max-width: 1200px; margin: 0 auto; padding: 2rem 1rem;">
         <header>
-          <h1>Medicos Prescritores de Cannabis Medicinal</h1>
-          <p>Profissionais de saude cadastrados para avaliacao de patologias, acompanhamento terapeutico e emissao de laudo e receita.</p>
+          <h1>Médico Cannabis: Prescritores de Cannabis Medicinal no Brasil</h1>
+          <p>Profissionais de saúde cadastrados para avaliação clínica, acompanhamento terapêutico e emissão de laudo e receita com validação eletrônica.</p>
         </header>
         <section>
           <ul>
