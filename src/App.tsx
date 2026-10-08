@@ -269,6 +269,15 @@ export function App() {
             📸 Instagram: @cannaguia.br
           </a>
           <span className="text-gray-300">•</span>
+          <a
+            href="https://www.youtube.com/@cannaguia_br"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-red-900 font-bold hover:underline flex items-center gap-1.5 bg-red-50 hover:bg-red-100 px-3 py-1.5 rounded-xl border border-red-200 shadow-xs transition-all"
+          >
+            ▶️ YouTube: @cannaguia_br
+          </a>
+          <span className="text-gray-300">•</span>
           <button
             onClick={() => setIsTermsOpen(true)}
             className="text-emerald-700 font-bold hover:underline"

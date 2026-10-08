@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Building2, Flame, BookOpen, LogOut, UserCheck, LayoutGrid, Stethoscope, HelpCircle, User } from 'lucide-react';
+import { Building2, Flame, BookOpen, LogOut, UserCheck, LayoutGrid, Stethoscope, HelpCircle, User, Youtube } from 'lucide-react';
 import type { User as SupabaseUser } from '@supabase/supabase-js';
 import { supabase } from '../lib/supabase';
 import { Logo } from './Logo';
@@ -85,6 +85,16 @@ export const Header: React.FC<HeaderProps> = ({ activeTab, setActiveTab, onOpenA
 
           {/* Área de Autenticação / Perfil (Sempre visível no topo à direita) */}
           <div className="shrink-0 flex items-center gap-1.5">
+            <a
+              href="https://www.youtube.com/@cannaguia_br"
+              target="_blank"
+              rel="noopener noreferrer"
+              title="Canal Oficial no YouTube (@cannaguia_br)"
+              className="flex items-center gap-1.5 px-2.5 py-1.5 sm:py-2 text-xs font-bold text-red-700 bg-red-50 hover:bg-red-100 border border-red-200 rounded-xl shadow-xs transition-all"
+            >
+              <Youtube className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-red-600" />
+              <span className="hidden md:inline">YouTube</span>
+            </a>
             {user ? (
               <div className="flex items-center gap-1">
                 <button
