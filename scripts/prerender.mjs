@@ -30,6 +30,7 @@ async function prerender() {
   let initialStrains = [];
   let initialDoctors = [];
   let mockAssociations = [];
+  let mockReviews = [];
 
   try {
     const blogModule = await vite.ssrLoadModule('/src/data/blogData.ts');
@@ -43,6 +44,9 @@ async function prerender() {
 
     const associationsModule = await vite.ssrLoadModule('/src/data/associationsData.ts');
     mockAssociations = associationsModule.MOCK_ASSOCIATIONS || [];
+
+    const reviewsModule = await vite.ssrLoadModule('/src/data/patientReviewsData.ts');
+    mockReviews = reviewsModule.SPECIFIC_PATIENT_REVIEWS || [];
   } catch (err) {
     console.error('Erro ao carregar dados TypeScript via Vite:', err);
     await vite.close();
@@ -51,7 +55,7 @@ async function prerender() {
 
   await vite.close();
 
-  console.log(`Dados carregados: ${mockPosts.length} posts, ${initialStrains.length} strains, ${initialDoctors.length} medicos, ${mockAssociations.length} associacoes.`);
+  console.log(`Dados carregados: ${mockPosts.length} posts, ${initialStrains.length} strains, ${initialDoctors.length} medicos, ${mockAssociations.length} associacoes, ${mockReviews.length} avaliacoes.`);
 
   const pages = [];
 
@@ -227,6 +231,12 @@ async function prerender() {
 
   // 3. Strains do Catalogo (Rotas /strains/:id)
   for (const strain of initialStrains) {
+    const matchingReviews = mockReviews.filter(m => 
+      m.strainId === strain.id || 
+      strain.id.includes(m.strainId) || 
+      (m.strainName && strain.name.toLowerCase().includes(m.strainName.toLowerCase()))
+    );
+
     const productSchema = {
       '@context': 'https://schema.org',
       '@type': ['Product', 'MedicalWebPage'],
@@ -248,6 +258,32 @@ async function prerender() {
       }
     };
 
+    if (matchingReviews.length > 0) {
+      const avgRating = (matchingReviews.reduce((acc, r) => acc + r.rating, 0) / matchingReviews.length).toFixed(1);
+      productSchema.aggregateRating = {
+        '@type': 'AggregateRating',
+        'ratingValue': avgRating,
+        'reviewCount': matchingReviews.length,
+        'bestRating': '5',
+        'worstRating': '1'
+      };
+      productSchema.review = matchingReviews.slice(0, 5).map(r => ({
+        '@type': 'Review',
+        'author': {
+          '@type': 'Person',
+          'name': r.patientName || 'Paciente Verificado'
+        },
+        'datePublished': r.date && r.date.includes('/') ? r.date.split('/').reverse().join('-') : '2026-08-27',
+        'reviewRating': {
+          '@type': 'Rating',
+          'ratingValue': r.rating,
+          'bestRating': '5',
+          'worstRating': '1'
+        },
+        'reviewBody': r.comment || `Avaliação terapêutica de eficácia no alívio de ${r.conditions?.join(', ') || 'sintomas clínicos'}.`
+      }));
+    }
+
     pages.push({
       route: `/strains/${strain.id}`,
       title: `${strain.name} - ${strain.category === 'flores' ? 'Flor Medicinal' : 'Oleo de Cannabis'} | CannaGuia`,
@@ -266,6 +302,18 @@ async function prerender() {
             <p><strong>Terpenos dominantes:</strong> ${strain.terpenes?.join(', ') || 'Equilibrado'}</p>
             <p><strong>Efeitos e indicacoes clinicas:</strong> ${strain.effects?.join(', ') || 'Consulte seu medico prescritor'}</p>
           </section>
+          ${matchingReviews.length > 0 ? `
+          <section style="margin-top: 1.5rem; border-top: 1px solid #e5e7eb; padding-top: 1.5rem;">
+            <h2>Avaliações de Pacientes (⭐ ${(matchingReviews.reduce((acc, r) => acc + r.rating, 0) / matchingReviews.length).toFixed(1)} / 5.0)</h2>
+            <p style="color: #4b5563;">${matchingReviews.length} paciente(s) avaliaram esta genética no CannaGuia.</p>
+            ${matchingReviews.map(r => `
+              <div style="margin-top: 0.75rem; padding: 0.75rem; background: #f9fafb; border-radius: 8px;">
+                <p><strong>${r.patientName}</strong> (${r.rating}★) • <em>${r.conditions?.join(', ') || 'Tratamento'}</em></p>
+                ${r.comment ? `<p style="font-style: italic; color: #374151;">"${r.comment}"</p>` : ''}
+              </div>
+            `).join('')}
+          </section>
+          ` : ''}
         </article>
       `
     });

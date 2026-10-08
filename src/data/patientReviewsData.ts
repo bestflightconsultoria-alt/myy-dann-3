@@ -285,5 +285,41 @@ export const SPECIFIC_PATIENT_REVIEWS: PatientReview[] = [
     comment: "",
     isVerified: true,
     date: "25/08/2026"
+  },
+
+  // MIMOSA
+  {
+    id: "rev-mimosa-lucas",
+    strainId: "strain-mimosa",
+    strainName: "Mimosa",
+    associationId: "institutodamasceno",
+    associationName: "Instituto Damasceno",
+    rating: 5,
+    patientName: "Lucas Ricardo",
+    prescribingDoctor: "",
+    conditions: ["Ansiedade & Estresse", "Relaxamento Físico"],
+    positiveEffects: ["Eficácia no tratamento"],
+    sideEffects: ["Nenhum efeito adverso"],
+    comment: "Planta muito cheirosa e de ótimo sabor",
+    isVerified: true,
+    date: "27/08/2026"
+  },
+
+  // PIPOQUINHAS THC
+  {
+    id: "rev-pipoquinhas-lucas",
+    strainId: "strain-pipoquinhas-thc",
+    strainName: "Pipoquinhas THC",
+    associationId: "abrapango",
+    associationName: "Abrapango",
+    rating: 2,
+    patientName: "Lucas Ricardo",
+    prescribingDoctor: "",
+    conditions: ["Ansiedade & Estresse", "Elevação de Humor & Bem-Estar"],
+    positiveEffects: ["Eficácia no tratamento"],
+    sideEffects: ["Nenhum efeito adverso"],
+    comment: "Flores menores e efeito mais suave do que o esperado.",
+    isVerified: true,
+    date: "27/08/2026"
   }
 ];

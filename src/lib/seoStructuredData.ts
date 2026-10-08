@@ -78,7 +78,7 @@ export const injectProductSchema = (
     const ratingVal = calculatedAvg ? parseFloat(String(calculatedAvg)) : 4.8;
     const reviewCount = totalCount && totalCount > 0 ? totalCount : Math.max(reviews.length, 3);
 
-    const schemaData = {
+    const schemaData: Record<string, any> = {
       "@context": "https://schema.org",
       "@type": ["Product", "MedicalWebPage"],
       "name": `${strain.name} — ${strain.category === 'flores' ? 'Flor Medicinal' : 'Óleo de Cannabis'}`,
@@ -109,21 +109,28 @@ export const injectProductSchema = (
             "name": assoc.associationName
           }
         })) || []
-      },
-      "aggregateRating": {
+      }
+    };
+
+    if (reviews && reviews.length > 0) {
+      const ratingVal = calculatedAvg ? parseFloat(String(calculatedAvg)) : (reviews.reduce((acc, r) => acc + r.rating, 0) / reviews.length);
+      const reviewCount = totalCount && totalCount > 0 ? totalCount : reviews.length;
+
+      schemaData.aggregateRating = {
         "@type": "AggregateRating",
         "ratingValue": ratingVal.toFixed(1),
         "reviewCount": reviewCount,
         "bestRating": "5",
         "worstRating": "1"
-      },
-      "review": reviews.slice(0, 5).map(rev => ({
+      };
+
+      schemaData.review = reviews.slice(0, 5).map(rev => ({
         "@type": "Review",
         "author": {
           "@type": "Person",
           "name": rev.patientName || "Paciente Verificado"
         },
-        "datePublished": rev.date ? rev.date.split('/').reverse().join('-') : "2026-08-28",
+        "datePublished": rev.date && rev.date.includes('/') ? rev.date.split('/').reverse().join('-') : "2026-08-28",
         "reviewRating": {
           "@type": "Rating",
           "ratingValue": rev.rating || 5,
@@ -131,8 +138,8 @@ export const injectProductSchema = (
           "worstRating": "1"
         },
         "reviewBody": rev.comment || `Avaliação positiva de eficácia terapêutica no alívio de ${rev.conditions?.join(', ') || 'sintomas clínicos'}.`
-      }))
-    };
+      }));
+    }
 
     const script = document.createElement('script');
     script.id = 'cannaguia-jsonld-dynamic';
