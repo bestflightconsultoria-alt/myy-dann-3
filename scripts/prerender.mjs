@@ -31,6 +31,7 @@ async function prerender() {
   let initialDoctors = [];
   let mockAssociations = [];
   let mockReviews = [];
+  let mockFaqs = [];
 
   try {
     const blogModule = await vite.ssrLoadModule('/src/data/blogData.ts');
@@ -47,6 +48,9 @@ async function prerender() {
 
     const reviewsModule = await vite.ssrLoadModule('/src/data/patientReviewsData.ts');
     mockReviews = reviewsModule.SPECIFIC_PATIENT_REVIEWS || [];
+
+    const faqModule = await vite.ssrLoadModule('/src/data/faqData.ts');
+    mockFaqs = faqModule.FAQ_DATA || [];
   } catch (err) {
     console.error('Erro ao carregar dados TypeScript via Vite:', err);
     await vite.close();
@@ -55,7 +59,7 @@ async function prerender() {
 
   await vite.close();
 
-  console.log(`Dados carregados: ${mockPosts.length} posts, ${initialStrains.length} strains, ${initialDoctors.length} medicos, ${mockAssociations.length} associacoes, ${mockReviews.length} avaliacoes.`);
+  console.log(`Dados carregados: ${mockPosts.length} posts, ${initialStrains.length} strains, ${initialDoctors.length} medicos, ${mockAssociations.length} associacoes, ${mockReviews.length} avaliacoes, ${mockFaqs.length} faqs.`);
 
   const pages = [];
 
@@ -167,16 +171,39 @@ async function prerender() {
     `
   });
 
+  const faqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    'mainEntity': mockFaqs.map(item => ({
+      '@type': 'Question',
+      'name': item.question,
+      'acceptedAnswer': {
+        '@type': 'Answer',
+        'text': item.answer
+      }
+    }))
+  };
+
   pages.push({
     route: '/faq',
     title: 'Duvidas Frequentes sobre Cannabis Medicinal no Brasil (FAQ) | CannaGuia',
-    description: 'Respostas para as principais duvidas sobre legalidade, processo de prescricao medica, filiacao a associacoes e uso terapeutico de cannabis.',
+    description: 'Respostas tecnicas e fundamentadas sobre legalidade, processo de prescricao medica, filiacao a associacoes e uso terapeutico de fitocanabinoides no Brasil.',
+    schema: faqSchema,
     contentHtml: `
-      <main style="max-width: 1200px; margin: 0 auto; padding: 2rem 1rem;">
+      <main style="max-width: 900px; margin: 0 auto; padding: 2rem 1rem;">
         <header>
-          <h1>Perguntas Frequentes (FAQ) - Cannabis Medicinal no Brasil</h1>
-          <p>Tire suas duvidas sobre o tratamento legal com canabinoides no Brasil.</p>
+          <span style="font-size: 13px; font-weight: 700; color: #059669;">Guia Juridico e Clinico</span>
+          <h1>Perguntas Frequentes (FAQ) — Cannabis Medicinal no Brasil</h1>
+          <p style="color: #4b5563;">Respostas tecnicas sobre regulamentacao da Anvisa, prescricao por medicos e dentistas, acesso via associacoes e uso de fitocanabinoides.</p>
         </header>
+        <section style="margin-top: 2rem;">
+          ${mockFaqs.map(item => `
+            <article style="margin-bottom: 1.5rem; padding: 1.25rem; background: #f9fafb; border-radius: 8px; border: 1px solid #e5e7eb;">
+              <h2 style="font-size: 1.15rem; color: #065f46; margin-bottom: 0.5rem;">${item.question}</h2>
+              <p style="color: #374151; line-height: 1.6;">${item.answer}</p>
+            </article>
+          `).join('')}
+        </section>
       </main>
     `
   });
