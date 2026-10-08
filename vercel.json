@@ -3,7 +3,10 @@
   "redirects": [
     { "source": "/catalogo", "destination": "/catalogo-flores", "permanent": true },
     { "source": "/fummelier-ia", "destination": "/sommelier", "permanent": true },
-    { "source": "/prescritores", "destination": "/medicos", "permanent": true }
+    { "source": "/prescritores", "destination": "/medicos", "permanent": true },
+    { "source": "/strains/strain-sour-diesel", "destination": "/strains/strain-sour-diesel-thc", "permanent": true },
+    { "source": "/associacoes/alca-pb", "destination": "/associacoes/alca-se", "permanent": true },
+    { "source": "/associacoes/abrapango-rj", "destination": "/associacoes/abrapango-df", "permanent": true }
   ],
   "rewrites": [
     { "source": "/(.*)", "destination": "/index.html" }
