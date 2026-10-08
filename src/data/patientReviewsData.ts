@@ -321,5 +321,23 @@ export const SPECIFIC_PATIENT_REVIEWS: PatientReview[] = [
     comment: "Flores menores e efeito mais suave do que o esperado.",
     isVerified: true,
     date: "27/08/2026"
+  },
+
+  // PINEAPPLE EXPRESS
+  {
+    id: "rev-pineapple-lucas",
+    strainId: "strain-pineapple-express",
+    strainName: "Pineapple Express",
+    associationId: "alca-se",
+    associationName: "ALCA",
+    rating: 4,
+    patientName: "Lucas Ricardo",
+    prescribingDoctor: "",
+    conditions: ["Ansiedade & Estresse"],
+    positiveEffects: ["Eficácia no tratamento"],
+    sideEffects: ["Nenhum efeito adverso"],
+    comment: "Flor poderia ter mais sabor/cheiro, mas os efeitos são agradáveis.",
+    isVerified: true,
+    date: "27/08/2026"
   }
 ];

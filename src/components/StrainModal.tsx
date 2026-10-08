@@ -240,7 +240,7 @@ export const StrainModal: React.FC<StrainModalProps> = ({ strain, onClose }) => 
     // Salva no Supabase se conectado
     if (supabase) {
       try {
-        await supabase.from('reviews').insert({
+        const { error: insertError } = await supabase.from('reviews').insert({
           strain_id: strain.id,
           strain_name: strain.name,
           association_id: assocId,
@@ -255,6 +255,9 @@ export const StrainModal: React.FC<StrainModalProps> = ({ strain, onClose }) => 
           comment: finalComment,
           is_verified: isVerified
         });
+        if (insertError) {
+          console.error('Erro ao salvar no Supabase:', insertError);
+        }
       } catch (err) {
         console.error('Erro ao salvar no Supabase:', err);
       }
