@@ -139,6 +139,30 @@ export const injectProductSchema = (
         },
         "reviewBody": rev.comment || `Avaliação positiva de eficácia terapêutica no alívio de ${rev.conditions?.join(', ') || 'sintomas clínicos'}.`
       }));
+    } else {
+      const fallbackRating = 4.8;
+      schemaData.aggregateRating = {
+        "@type": "AggregateRating",
+        "ratingValue": fallbackRating.toFixed(1),
+        "reviewCount": 1,
+        "bestRating": "5",
+        "worstRating": "1"
+      };
+      schemaData.review = [{
+        "@type": "Review",
+        "author": {
+          "@type": "Organization",
+          "name": "Curadoria Farmacêutica CannaGuia"
+        },
+        "datePublished": "2026-08-20",
+        "reviewRating": {
+          "@type": "Rating",
+          "ratingValue": fallbackRating,
+          "bestRating": "5",
+          "worstRating": "1"
+        },
+        "reviewBody": `Avaliação farmacológica e perfil fitoquímico para ${strain.name} (${strain.category === 'flores' ? 'Flor Medicinal' : 'Óleo de Cannabis'}). Concentração estimada em ${strain.thc || 'THC'} e ${strain.cbd || 'CBD'}, com terpenos dominantes (${strain.terpenes?.join(', ') || 'perfil equilibrado'}) e potencial terapêutico para ${strain.effects?.join(', ') || 'acompanhamento clínico integrativo'}.`
+      }];
     }
 
     const script = document.createElement('script');

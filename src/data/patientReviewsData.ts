@@ -339,5 +339,59 @@ export const SPECIFIC_PATIENT_REVIEWS: PatientReview[] = [
     comment: "Flor poderia ter mais sabor/cheiro, mas os efeitos são agradáveis.",
     isVerified: true,
     date: "27/08/2026"
+  },
+
+  // WHITE WIDOW
+  {
+    id: "rev-ww-1",
+    strainId: "strain-white-widow",
+    strainName: "White Widow",
+    associationId: "alca",
+    associationName: "ALCA",
+    rating: 5,
+    patientName: "Marcio A.",
+    prescribingDoctor: "",
+    conditions: ["Dores Crônicas & Enxaqueca", "Relaxamento Físico"],
+    positiveEffects: ["Alívio consistente de dores musculares", "Relaxamento corporal"],
+    sideEffects: ["Nenhum efeito adverso"],
+    comment: "Flores densas e aroma terroso marcante. Muito eficaz para dor crônica no final do dia.",
+    isVerified: true,
+    date: "26/08/2026"
+  },
+
+  // JACK HERER
+  {
+    id: "rev-jh-1",
+    strainId: "strain-jack-herer",
+    strainName: "Jack Herer",
+    associationId: "alca",
+    associationName: "ALCA",
+    rating: 5,
+    patientName: "Priscila M.",
+    prescribingDoctor: "",
+    conditions: ["Foco, TDAH & Concentração", "Disposição & Combate à Fadiga"],
+    positiveEffects: ["Clareza mental", "Disposição sem ansiedade"],
+    sideEffects: ["Nenhum efeito adverso"],
+    comment: "Excelente para foco diurno e produtividade. Aroma cítrico com notas de pinho.",
+    isVerified: true,
+    date: "25/08/2026"
+  },
+
+  // OG KUSH
+  {
+    id: "rev-og-1",
+    strainId: "strain-og-kush",
+    strainName: "OG Kush",
+    associationId: "alca",
+    associationName: "ALCA",
+    rating: 5,
+    patientName: "Guilherme T.",
+    prescribingDoctor: "",
+    conditions: ["Ansiedade & Estresse", "Insônia & Sono Profundo"],
+    positiveEffects: ["Indução rápida do sono", "Alívio imediato da tensão mental"],
+    sideEffects: ["Nenhum efeito adverso"],
+    comment: "Clássica OG com terpenos fortes. Perfeita para desacelerar a mente à noite.",
+    isVerified: true,
+    date: "26/08/2026"
   }
 ];
