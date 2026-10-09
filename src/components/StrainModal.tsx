@@ -112,35 +112,91 @@ export const StrainModal: React.FC<StrainModalProps> = ({ strain, onClose }) => 
             date: new Date(item.created_at).toLocaleDateString('pt-BR')
           }));
 
-          const supabaseKeys = new Set(formatted.map(f => `${(f.patientName || '').toLowerCase().trim()}_${f.strainId}`));
-          const ids = new Set(formatted.map(f => f.id));
+          const isReviewDuplicate = (candidate: PatientReview, list: PatientReview[]) => {
+            const candName = (candidate.patientName || '').toLowerCase().trim();
+            const candComment = (candidate.comment || '').toLowerCase().trim();
 
-          // Filtra avaliações locais evitando duplicatas de mesmo paciente que já vieram do Supabase
-          const extraLocal = local.filter(l => {
-            const key = `${(l.patientName || '').toLowerCase().trim()}_${l.strainId}`;
-            return !ids.has(l.id) && !supabaseKeys.has(key);
-          });
+            return list.some(existing => {
+              if (existing.id === candidate.id) return true;
 
+              const existName = (existing.patientName || '').toLowerCase().trim();
+              const existComment = (existing.comment || '').toLowerCase().trim();
+
+              // 1. Mesmo comentário não vazio para a mesma strain
+              if (candComment && existComment && candComment === existComment) {
+                return true;
+              }
+
+              // 2. Mesmo autor ou variação de nome (ex: Lucas / Lucas Ricardo)
+              if (candName && existName) {
+                if (candName === existName) return true;
+                if ((candName.includes(existName) || existName.includes(candName)) && candidate.rating === existing.rating) {
+                  return true;
+                }
+              }
+
+              return false;
+            });
+          };
+
+          // Filtra avaliações locais evitando duplicatas com o Supabase
+          const extraLocal = local.filter(l => !isReviewDuplicate(l, formatted));
           const combined = [...formatted, ...extraLocal];
 
-          const existingKeys = new Set(combined.map(c => `${(c.patientName || '').toLowerCase().trim()}_${c.strainId}`));
+          // Filtra avaliações mock estáticas evitando duplicatas com relatos reais
           matchingMock.forEach(m => {
-            const key = `${(m.patientName || '').toLowerCase().trim()}_${m.strainId}`;
-            if (!ids.has(m.id) && !existingKeys.has(key)) {
+            if (!isReviewDuplicate(m, combined)) {
               combined.push(m);
             }
           });
 
+          // Limpa do localStorage avaliações locais já consolidadas no Supabase
+          try {
+            const saved = localStorage.getItem('cannaguia_local_reviews');
+            if (saved) {
+              const allLocal: PatientReview[] = JSON.parse(saved);
+              const remaining = allLocal.filter(l => {
+                if (l.strainId !== strain.id) return true;
+                return !isReviewDuplicate(l, formatted);
+              });
+              if (remaining.length !== allLocal.length) {
+                localStorage.setItem('cannaguia_local_reviews', JSON.stringify(remaining));
+              }
+            }
+          } catch {
+            // Ignora falha em ambientes restritos
+          }
+
           setReviews(combined);
         } else {
-          const localKeys = new Set(local.map(l => `${(l.patientName || '').toLowerCase().trim()}_${l.strainId}`));
-          const filteredMock = matchingMock.filter(m => !localKeys.has(`${(m.patientName || '').toLowerCase().trim()}_${m.strainId}`));
+          const nonSupabaseDuplicates = (candidate: PatientReview, list: PatientReview[]) => {
+            const cName = (candidate.patientName || '').toLowerCase().trim();
+            const cComment = (candidate.comment || '').toLowerCase().trim();
+            return list.some(e => {
+              if (e.id === candidate.id) return true;
+              const eComment = (e.comment || '').toLowerCase().trim();
+              if (cComment && eComment && cComment === eComment) return true;
+              const eName = (e.patientName || '').toLowerCase().trim();
+              return cName && eName && (cName === eName || cName.includes(eName) || eName.includes(cName));
+            });
+          };
+          const filteredMock = matchingMock.filter(m => !nonSupabaseDuplicates(m, local));
           setReviews([...local, ...filteredMock]);
         }
       } catch (err) {
         console.warn('Falha ao consultar avaliações no Supabase:', err);
-        const localKeys = new Set(local.map(l => `${(l.patientName || '').toLowerCase().trim()}_${l.strainId}`));
-        const filteredMock = matchingMock.filter(m => !localKeys.has(`${(m.patientName || '').toLowerCase().trim()}_${m.strainId}`));
+        const nonSupabaseDuplicates = (candidate: PatientReview, list: PatientReview[]) => {
+          const cName = (candidate.patientName || '').toLowerCase().trim();
+          const cComment = (candidate.comment || '').toLowerCase().trim();
+          return list.some(e => {
+            if (e.id === candidate.id) return true;
+            const eComment = (e.comment || '').toLowerCase().trim();
+            if (cComment && eComment && cComment === eComment) return true;
+            const eName = (e.patientName || '').toLowerCase().trim();
+            return cName && eName && (cName === eName || cName.includes(eName) || eName.includes(cName));
+          });
+        };
+        const filteredMock = matchingMock.filter(m => !nonSupabaseDuplicates(m, local));
         setReviews([...local, ...filteredMock]);
       }
     }

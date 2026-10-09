@@ -64,7 +64,6 @@ const MOCK_COMMUNITY_STATS: CommunityReviewStats = {
   'strain-sour-diesel': { avgRating: 4.8, count: 2, hasVerifiedReview: true },
   'strain-northern-lights': { avgRating: 4.7, count: 2, hasVerifiedReview: true },
   'oleo-cbd-full-3000': { avgRating: 4.9, count: 2, hasVerifiedReview: true },
-  'strain-pineapple-express': { avgRating: 4.0, count: 1, hasVerifiedReview: true },
 };
 
   // Busca avaliações para exibir estrelas e contagem nos cards perfeitamente sincronizadas
